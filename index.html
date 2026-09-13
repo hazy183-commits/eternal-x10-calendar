@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#090909" />
+    <title>Eternal x10 Main — Kalendarz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body>
+    <div class="page-glow"></div>
+    <header class="topbar">
+      <div class="topbar-inner wrap">
+        <a class="brand" href="#top" aria-label="Eternal x10 Main"><span class="brand-mark">E</span><span class="brand-copy">ETERNAL <i>x10</i><small>Lineage 2 Reborn</small></span></a>
+        <nav class="main-nav" aria-label="Główna nawigacja"><a href="#top">Strona główna</a><a href="#calendar">Kalendarz</a><a href="#statistics">Statystyki</a><a href="#guides">Poradniki</a><a href="#community">Linki</a></nav>
+        <div class="header-actions"><div class="header-clock"><span>Server time</span><b id="headerTime">—</b></div><button class="admin-trigger" id="adminTrigger" type="button"><span>✦</span> Panel administratora</button></div>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero wrap">
+        <div class="hero-emblem">✦</div>
+        <div class="eyebrow">Wspólny kalendarz klanu</div>
+        <h1>ETERNAL <span>X10 MAIN</span></h1>
+        <p class="hero-subtitle">Lineage 2 Reborn</p><p class="hero-tagline">More than a game — it’s a community</p>
+        <div class="server-clock" aria-live="polite"><span class="pulse"></span><span id="serverDate">—</span><b id="serverTime">—</b><small>Czas serwera</small></div>
+      </section>
+
+      <section class="wrap focus-section" aria-labelledby="nextTitle">
+        <div class="section-heading"><div><span class="eyebrow">Najbliższe wydarzenie</span><h2 id="nextTitle">Przygotuj się do bitwy</h2></div><span class="live-status" id="nextStatus">—</span></div>
+        <article class="next-event-card" id="nextEventCard">
+          <div class="event-art event-art-large"><span>Boss artwork<br />coming soon</span></div><div class="event-aura"></div>
+          <div class="next-event-content">
+            <span class="type-chip" id="nextType">—</span>
+            <h3 id="nextName">Brak nadchodzących wydarzeń</h3>
+            <p id="nextMeta">Dodaj wydarzenie w panelu administratora.</p>
+            <p class="next-description" id="nextDescription"></p>
+          </div>
+          <div class="countdown-block"><span>Do rozpoczęcia</span><div class="countdown" id="countdown" aria-live="polite"><b>00</b><i>:</i><b>00</b><i>:</i><b>00</b><i>:</i><b>00</b></div><small><span>dni</span><span>godz.</span><span>min.</span><span>sek.</span></small></div>
+        </article>
+      </section>
+
+      <div class="schedule-layout wrap">
+      <section id="calendar" class="calendar-section" aria-labelledby="calendarTitle">
+        <div class="section-heading calendar-heading"><div><span class="eyebrow">Harmonogram</span><h2 id="calendarTitle">Kalendarz wydarzeń</h2></div><div class="calendar-nav"><button class="icon-btn" id="previousDay" aria-label="Poprzedni dzień">←</button><button class="today-btn" id="todayButton">Dzisiaj</button><button class="icon-btn" id="nextDay" aria-label="Następny dzień">→</button></div></div>
+        <div class="calendar-toolbar"><div class="selected-date" id="selectedDate">—</div><div class="filters" id="filters" aria-label="Filtry wydarzeń"></div></div>
+        <div class="event-list" id="dailyEvents"></div>
+      </section>
+
+      <section id="statistics" class="overview">
+        <div class="overview-card"><div class="section-heading compact"><div><span class="eyebrow">Na dziś</span><h2>Dzisiejsze wydarzenia</h2></div><span class="count-badge" id="todayCount">0</span></div><div id="todayEvents" class="mini-event-list"></div></div>
+        <div class="overview-card"><div class="section-heading compact"><div><span class="eyebrow">W kolejce</span><h2>Nadchodzące wydarzenia</h2></div></div><div id="upcomingEvents" class="mini-event-list"></div></div>
+      </section>
+      </div>
+
+      <section class="quick-add wrap" aria-label="Szybkie dodawanie wydarzenia"><div><span class="eyebrow">Dowództwo klanu</span><h2>Masz nowy plan na rajd?</h2><p>Dodaj wydarzenie i udostępnij je całemu klanowi.</p></div><button class="primary-btn quick-add-button" id="quickAdd" type="button"><span>＋</span> Dodaj wydarzenie</button></section>
+
+      <section id="guides" class="boss-gallery wrap" aria-labelledby="galleryTitle"><div class="section-heading"><div><span class="eyebrow">Hall of legends</span><h2 id="galleryTitle">Epic Raid Boss</h2></div><p class="section-aside">Miejsca na grafiki bossów</p></div><div class="boss-grid"><article class="boss-card"><span>Queen Ant<small>Raid Boss</small></span></article><article class="boss-card"><span>Core<small>Raid Boss</small></span></article><article class="boss-card"><span>Orfen<small>Raid Boss</small></span></article><article class="boss-card"><span>Baium<small>Epic Raid</small></span></article><article class="boss-card"><span>Zaken<small>Epic Raid</small></span></article><article class="boss-card"><span>Frintezza<small>Epic Raid</small></span></article><article class="boss-card"><span>Antharas<small>Epic Raid</small></span></article><article class="boss-card"><span>Valakas<small>Epic Raid</small></span></article></div></section>
+
+      <section id="community" class="community wrap"><div><span class="eyebrow">Eternal together</span><h2>Community</h2><p>Wszystko, czego potrzebujesz, aby pozostać w kontakcie z klanem.</p></div><div class="community-links"><a href="#community"><b>Discord</b><span>Rozmowy i powiadomienia</span></a><a href="#community"><b>Forum</b><span>Dyskusje społeczności</span></a><a href="#community"><b>Server</b><span>Lineage 2 Reborn</span></a><a href="#community"><b>Clan</b><span>Dołącz do Eternal</span></a></div></section>
+    </main>
+
+    <footer class="wrap footer">Eternal x10 Main <span>·</span> Kalendarz klanu <span>·</span> Dane demonstracyjne</footer>
+
+    <div class="modal" id="adminModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
+      <div class="modal-backdrop" data-close-modal></div>
+      <section class="admin-panel">
+        <div class="modal-header"><div><span class="eyebrow">Zarządzanie</span><h2 id="adminTitle">Panel administratora</h2></div><button class="close-btn" type="button" data-close-modal aria-label="Zamknij">×</button></div>
+        <p class="admin-note">Wersja demonstracyjna zapisuje dane lokalnie. Interfejs repozytorium jest gotowy do podłączenia Supabase.</p>
+        <form id="eventForm" class="event-form">
+          <input type="hidden" id="eventId" />
+          <label>Nazwa wydarzenia<input id="eventName" required maxlength="80" placeholder="np. Queen Ant" /></label>
+          <label>Typ<select id="eventType" required></select></label>
+          <label>Data<input id="eventDate" type="date" required /></label>
+          <label>Godzina<input id="eventTime" type="time" required /></label>
+          <label>Czas trwania (min)<input id="eventDuration" type="number" min="1" max="1440" placeholder="np. 60" /></label>
+          <label class="full">Lokalizacja (opcjonalnie)<input id="eventLocation" maxlength="100" placeholder="np. Ant Nest" /></label>
+          <label class="full">Opis (opcjonalnie)<textarea id="eventDescription" rows="3" maxlength="240" placeholder="Dodatkowe informacje dla klanu..."></textarea></label>
+          <div class="form-actions"><button class="secondary-btn" id="cancelEdit" type="button">Wyczyść</button><button class="primary-btn" type="submit">Zapisz wydarzenie</button></div>
+        </form>
+        <div class="demo-actions"><button class="secondary-btn" id="restoreDemo" type="button">Przywróć dane demo</button><small>Usuwa bieżącą listę i wczytuje wydarzenia demonstracyjne na dzisiaj.</small></div>
+        <div class="admin-list-title"><h3>Wszystkie wydarzenia</h3><span id="adminCount">0</span></div><div id="adminEventList" class="admin-event-list"></div>
+      </section>
+    </div>
+    <template id="eventTemplate"><article class="event-row"><div class="event-time"></div><div class="event-info"><div class="event-title-line"><h3></h3><span class="type-chip"></span></div><p class="event-details"></p><p class="event-description"></p></div></article></template>
+    <script src="./src/eventRepository.js" defer></script>
+    <script src="./src/main.js" defer></script>
+  </body>
+</html>
