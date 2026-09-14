@@ -30,6 +30,10 @@
       </section>
 
       <section class="wrap focus-section" aria-labelledby="nextTitle">
+        <section class="pvp-hero-panel" aria-labelledby="pvpHeroTitle">
+          <div class="pvp-hero-heading"><h2 id="pvpHeroTitle">AUTO PVP EVENTS</h2><span>FOR FUN EVENTS</span></div>
+          <div id="pvpSidebarEvents"></div>
+        </section>
         <div class="section-heading"><div><span class="eyebrow">Najbliższe wydarzenie</span><h2 id="nextTitle">Przygotuj się do bitwy</h2></div><span class="live-status" id="nextStatus">—</span></div>
         <article class="next-event-card" id="nextEventCard">
           <div class="event-art event-art-large"><span>Boss artwork<br />coming soon</span></div><div class="event-aura"></div>
@@ -39,7 +43,7 @@
             <p id="nextMeta">Dodaj wydarzenie w panelu administratora.</p>
             <p class="next-description" id="nextDescription"></p>
           </div>
-          <div class="countdown-block"><span>Do rozpoczęcia</span><div class="countdown" id="countdown" aria-live="polite"><b>00</b><i>:</i><b>00</b><i>:</i><b>00</b><i>:</i><b>00</b></div><small><span>dni</span><span>godz.</span><span>min.</span><span>sek.</span></small></div>
+          <div class="countdown-block"><span id="countdownLabel">Do rozpoczęcia</span><div class="countdown" id="countdown" aria-live="polite"><b>00</b><i>:</i><b>00</b><i>:</i><b>00</b><i>:</i><b>00</b></div><small><span>dni</span><span>godz.</span><span>min.</span><span>sek.</span></small></div>
         </article>
       </section>
 
@@ -63,30 +67,68 @@
       <section id="community" class="community wrap"><div><span class="eyebrow">Eternal together</span><h2>Community</h2><p>Wszystko, czego potrzebujesz, aby pozostać w kontakcie z klanem.</p></div><div class="community-links"><a href="#community"><b>Discord</b><span>Rozmowy i powiadomienia</span></a><a href="#community"><b>Forum</b><span>Dyskusje społeczności</span></a><a href="#community"><b>Server</b><span>Lineage 2 Reborn</span></a><a href="#community"><b>Clan</b><span>Dołącz do Eternal</span></a></div></section>
     </main>
 
-    <footer class="wrap footer">Eternal x10 Main <span>·</span> Kalendarz klanu <span>·</span> Dane demonstracyjne</footer>
+    <footer class="wrap footer">Eternal x10 Main <span>·</span> Kalendarz klanu</footer>
 
     <div class="modal" id="adminModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
       <div class="modal-backdrop" data-close-modal></div>
       <section class="admin-panel">
-        <div class="modal-header"><div><span class="eyebrow">Zarządzanie</span><h2 id="adminTitle">Panel administratora</h2></div><button class="close-btn" type="button" data-close-modal aria-label="Zamknij">×</button></div>
-        <p class="admin-note">Wersja demonstracyjna zapisuje dane lokalnie. Interfejs repozytorium jest gotowy do podłączenia Supabase.</p>
-        <form id="eventForm" class="event-form">
+        <div class="modal-header"><div><span class="eyebrow">Zarządzanie</span><h2 id="adminTitle">Panel administratora</h2></div><div class="modal-header-actions"><button id="adminLogout" class="secondary-btn" type="button">Wyloguj</button><button class="close-btn" type="button" data-close-modal aria-label="Zamknij">×</button></div></div>
+        <p class="admin-note">Dodawaj i edytuj wydarzenia w Supabase. Zmiany są od razu widoczne na stronie.</p>
+        <p id="adminFeedback" role="status" aria-live="polite"></p><div id="adminListView"><button id="adminAdd" class="primary-btn" type="button">+ DODAJ WYDARZENIE</button><div id="adminListTools" class="admin-list-tools"><div id="adminFilters" class="admin-filter-buttons" aria-label="Filtruj wydarzenia"></div><label class="admin-sort">Sortowanie<select id="adminSort"></select></label><label class="admin-search">Szukaj<input id="adminSearch" type="search" placeholder="Nazwa lub boss" autocomplete="off" /></label></div><div class="admin-list-title"><h3>LISTA WYDARZEŃ</h3><span id="adminCount">0</span></div><div id="adminEventList" class="admin-event-list"></div></div>
+        <div id="adminFormView" hidden><h3 id="formTitle">Nowe wydarzenie</h3>
+        <form id="eventForm" class="event-form" novalidate>
           <input type="hidden" id="eventId" />
+          <section id="quickTemplates" class="quick-templates full" aria-labelledby="quickTemplatesTitle"><span id="quickTemplatesTitle" class="form-section-label">Szybki wybór</span><div id="quickTemplateButtons" class="quick-template-buttons"></div></section>
+          <fieldset id="eventModeChooser" class="event-mode full"><legend>Tryb tworzenia</legend><div class="mode-toggle"><label><input type="radio" name="eventMode" value="single" checked />Pojedyncze</label><label><input type="radio" name="eventMode" value="recurring" />Cykliczne</label></div></fieldset>
           <label>Nazwa wydarzenia<input id="eventName" required maxlength="80" placeholder="np. Queen Ant" /></label>
           <label>Typ<select id="eventType" required></select></label>
+          <label class="full">Boss / grafika<select id="eventBoss"></select></label>
+          <div id="bossPreview" class="boss-preview full" aria-live="polite"><img id="bossPreviewImage" hidden alt="" /><span id="bossPreviewPlaceholder">Wybierz bossa, aby zobaczyć grafikę.</span></div>
           <label>Data<input id="eventDate" type="date" required /></label>
           <label>Godzina<input id="eventTime" type="time" required /></label>
           <label>Czas trwania (min)<input id="eventDuration" type="number" min="1" max="1440" placeholder="np. 60" /></label>
+          <section id="recurrenceSection" class="recurrence-section full" hidden aria-labelledby="recurrenceTitle"><span id="recurrenceTitle" class="form-section-label">Powtarzanie</span><div class="recurrence-fields"><label>Częstotliwość<select id="recurrencePattern"></select></label><label id="recurrenceIntervalField" hidden>Co ile dni<input id="recurrenceInterval" type="number" min="1" max="100" value="3" /></label><label>Generuj wydarzenia do<input id="recurrenceEndDate" type="date" /></label></div><div id="recurrencePreview" class="recurrence-preview" hidden><b>Terminy do utworzenia</b><ul id="recurrencePreviewList"></ul><p id="recurrencePreviewSummary"></p></div></section>
           <label class="full">Lokalizacja (opcjonalnie)<input id="eventLocation" maxlength="100" placeholder="np. Ant Nest" /></label>
           <label class="full">Opis (opcjonalnie)<textarea id="eventDescription" rows="3" maxlength="240" placeholder="Dodatkowe informacje dla klanu..."></textarea></label>
-          <div class="form-actions"><button class="secondary-btn" id="cancelEdit" type="button">Wyczyść</button><button class="primary-btn" type="submit">Zapisz wydarzenie</button></div>
-        </form>
-        <div class="demo-actions"><button class="secondary-btn" id="restoreDemo" type="button">Przywróć dane demo</button><small>Usuwa bieżącą listę i wczytuje wydarzenia demonstracyjne na dzisiaj.</small></div>
-        <div class="admin-list-title"><h3>Wszystkie wydarzenia</h3><span id="adminCount">0</span></div><div id="adminEventList" class="admin-event-list"></div>
+          <div class="form-actions"><button class="secondary-btn" id="cancelEdit" type="button">Anuluj</button><button id="saveEvent" class="primary-btn" type="submit">Zapisz wydarzenie</button></div>
+        </form></div>
+        <section id="bossRespawnManager" class="boss-respawn-manager" aria-labelledby="bossRespawnTitle"><div class="admin-list-title"><div><span class="eyebrow">Monitoring bossów</span><h3 id="bossRespawnTitle">BOSS RESPAWN MANAGER</h3></div><span>8</span></div><p class="boss-respawn-note">Ręczne okna z gry i stałe harmonogramy są obsługiwane niezależnie od zwykłych wydarzeń.</p><div id="bossRespawnCards" class="boss-respawn-cards"></div></section>
+        <section id="siegeManager" class="siege-manager" aria-labelledby="siegeManagerTitle"><div class="admin-list-title"><div><span class="eyebrow">Harmonogram zamków</span><h3 id="siegeManagerTitle">SIEGE MANAGER</h3></div><span>9</span></div><p class="siege-manager-note">Przechowujemy jeden punkt referencyjny zamku, a kolejne miesiące wyliczamy automatycznie.</p><div id="siegeScheduleCards" class="siege-schedule-cards"></div></section>
+        <section id="olympiadSchedule" class="olympiad-schedule" aria-labelledby="olympiadScheduleTitle">
+          <div class="admin-list-title"><div><span class="eyebrow">Poniedziałek–piątek · Cykl tygodniowy</span><h3 id="olympiadScheduleTitle">OLYMPIAD SCHEDULE</h3></div></div>
+          <dl>
+            <div><dt>Najbliższy termin</dt><dd data-olympiad-date>—</dd></div>
+            <div><dt>Godzina lokalna</dt><dd data-olympiad-time>—</dd></div>
+            <div><dt>Status</dt><dd data-olympiad-status>—</dd></div>
+            <div><dt data-olympiad-countdown-label>Do rozpoczęcia</dt><dd data-olympiad-countdown>—</dd></div>
+          </dl>
+          <p data-olympiad-server>Server time: 20:30–21:30 UTC</p>
+        </section>
+        <section id="pvpEventSchedule" class="pvp-event-schedule" aria-labelledby="pvpEventScheduleTitle">
+          <div class="admin-list-title"><div><span class="eyebrow">Codziennie · Stały harmonogram UTC</span><h3 id="pvpEventScheduleTitle">AUTO PVP EVENTS</h3></div></div>
+          <p class="pvp-schedule-note">Godziny harmonogramu oznaczają start zapisów. Rejestracja trwa 5 minut, a event kolejne 10 minut. Godziny lokalne: Europe/Warsaw.</p>
+          <div id="pvpEventCards" class="pvp-event-cards"></div>
+        </section>
+
       </section>
     </div>
+    <div class="modal" id="loginModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+      <div class="modal-backdrop" data-close-modal></div>
+      <section class="admin-panel login-panel">
+        <div class="modal-header"><div><span class="eyebrow">Dostęp chroniony</span><h2 id="loginTitle">Logowanie administratora</h2></div><button class="close-btn" type="button" data-close-modal aria-label="Zamknij">×</button></div>
+        <p class="admin-note">Zaloguj się kontem administratora Supabase, aby zarządzać wydarzeniami.</p>
+        <p id="loginFeedback" role="alert" aria-live="polite"></p>
+        <form id="loginForm" class="event-form login-form">
+          <label class="full">Email<input id="loginEmail" type="email" autocomplete="username" required placeholder="admin@example.com" /></label>
+          <label class="full">Hasło<input id="loginPassword" type="password" autocomplete="current-password" required placeholder="Hasło" /></label>
+          <div class="form-actions"><button id="loginSubmit" class="primary-btn" type="submit">Zaloguj</button></div>
+        </form>
+      </section>
+    </div>
+    <dialog id="deleteDialog" aria-labelledby="deleteQuestion"><form method="dialog"><h3 id="deleteQuestion"></h3><p>To wydarzenie zostanie usunięte z kalendarza.</p><div class="form-actions"><button class="secondary-btn" value="cancel" autofocus>Anuluj</button><button class="delete-btn" value="delete">Usuń wydarzenie</button></div></form></dialog>
+    <dialog id="bossRespawnDialog" aria-labelledby="bossRespawnDialogTitle"><form id="bossRespawnForm"><input type="hidden" id="bossRespawnBoss" /><input type="hidden" id="bossRespawnAction" /><h3 id="bossRespawnDialogTitle">Boss zabity</h3><p id="bossRespawnDialogHint"></p><div class="boss-respawn-dialog-fields"><label>Data<input id="bossRespawnDate" type="date" required /></label><label>Godzina<input id="bossRespawnTime" type="time" required /></label></div><p id="bossRespawnFeedback" role="alert" aria-live="polite"></p><div class="form-actions"><button class="secondary-btn" id="bossRespawnCancel" type="button">Anuluj</button><button class="primary-btn" id="bossRespawnSubmit" type="submit">Zapisz</button></div></form></dialog>
+    <dialog id="siegeScheduleDialog" aria-labelledby="siegeScheduleDialogTitle"><form id="siegeScheduleForm"><input type="hidden" id="siegeScheduleCastle" /><h3 id="siegeScheduleDialogTitle">Ustaw termin Siege</h3><p id="siegeScheduleDialogHint"></p><div class="siege-dialog-fields"><label>Data<input id="siegeScheduleDate" type="date" required /></label><label>Godzina<input id="siegeScheduleTime" type="time" required /></label></div><p id="siegeScheduleFeedback" role="alert" aria-live="polite"></p><div class="form-actions"><button class="secondary-btn" id="siegeScheduleCancel" type="button">Anuluj</button><button class="primary-btn" id="siegeScheduleSubmit" type="submit">Zapisz termin</button></div></form></dialog>
     <template id="eventTemplate"><article class="event-row"><div class="event-time"></div><div class="event-info"><div class="event-title-line"><h3></h3><span class="type-chip"></span></div><p class="event-details"></p><p class="event-description"></p></div></article></template>
-    <script src="./src/eventRepository.js" defer></script>
-    <script src="./src/main.js" defer></script>
+    <script type="module" src="./src/main.js"></script>
   </body>
 </html>
