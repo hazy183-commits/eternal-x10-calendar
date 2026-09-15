@@ -19,7 +19,8 @@ async function read(result, disconnected = false) {
   };
   const context = vm.createContext({ supabase: disconnected ? null : client, AbortSignal, console: { info() {} } });
   vm.runInContext(source, context);
-  const data = await vm.runInContext('new SupabaseEventRepository().getAll()', context);
+  // Exercise the read adapter, not the repository's separate Clan Hall schedule.
+  const data = await vm.runInContext('readSupabaseEvents()', context) ?? [];
   return { data: JSON.parse(JSON.stringify(data)), calls };
 }
 

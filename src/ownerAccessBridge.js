@@ -1,3 +1,12 @@
+export function normalizeClanHeader(root=document){
+  const entry=[...root.querySelectorAll('.member-auth-entry')].find((button)=>!button.classList.contains('logout'));
+  if(!entry)return;
+  // This runs inside a subtree observer. Replacing even identical text
+  // creates another mutation and can starve app startup and all timers.
+  if(entry.textContent!=='♟ STREFA KLANU')entry.textContent='♟ STREFA KLANU';
+  if(entry.getAttribute('aria-label')!=='Otwórz Strefę Klanu')entry.setAttribute('aria-label','Otwórz Strefę Klanu');
+}
+
 export function installOwnerAccessBridge(supabase){
   if(!supabase||window.__obOwnerAccessBridgeInstalled)return;
   window.__obOwnerAccessBridgeInstalled=true;
@@ -70,14 +79,6 @@ export function installOwnerAccessBridge(supabase){
       trigger=replacement;
     }
     trigger.hidden=!isOwner;
-  };
-
-  const normalizeClanHeader=()=>{
-    const entry=[...document.querySelectorAll('.member-auth-entry')].find((button)=>!button.classList.contains('logout'));
-    if(entry){
-      entry.textContent='♟ STREFA KLANU';
-      entry.setAttribute('aria-label','Otwórz Strefę Klanu');
-    }
   };
 
   const openEditor=()=>{
