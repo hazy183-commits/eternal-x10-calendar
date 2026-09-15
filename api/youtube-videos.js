@@ -6,6 +6,8 @@ const HEADERS={
   'cookie':'SOCS=CAI; CONSENT=YES+cb.20210328-17-p0.en+FX+667'
 };
 
+const FALLBACK_TITLE='Orzeł Biały — akcja klanu';
+
 function decodeXml(value=''){
   return value
     .replace(/&amp;/g,'&')
@@ -45,15 +47,17 @@ function videosFromHtml(html=''){
     const id=match[1];
     if(seen.has(id))continue;
     seen.add(id);
-    const start=Math.max(0,(match.index||0)-350);
-    const end=Math.min(html.length,(match.index||0)+1800);
+    const start=Math.max(0,(match.index||0)-600);
+    const end=Math.min(html.length,(match.index||0)+2800);
     const nearby=html.slice(start,end);
     const rawTitle=nearby.match(/"title":\{"runs":\[\{"text":"((?:\\.|[^"\\])+)"/)?.[1]
+      || nearby.match(/"title":\{"simpleText":"((?:\\.|[^"\\])+)"/)?.[1]
       || nearby.match(/"headline":\{"simpleText":"((?:\\.|[^"\\])+)"/)?.[1]
+      || nearby.match(/"accessibility":\{"accessibilityData":\{"label":"((?:\\.|[^"\\])+)"/)?.[1]
       || '';
     videos.push({
       id,
-      title:rawTitle?decodeJsonText(rawTitle):'Orzeł Biały — akcja klanu',
+      title:rawTitle?decodeJsonText(rawTitle):FALLBACK_TITLE,
       published:null,
       thumbnail:`https://i.ytimg.com/vi/${id}/hqdefault.jpg`
     });
@@ -70,7 +74,7 @@ function parseFeed(xml){
     const title=decodeXml(block.match(/<media:title>([\s\S]*?)<\/media:title>/)?.[1]?.trim()||'');
     const published=block.match(/<published>([^<]+)<\/published>/)?.[1]||null;
     if(!id)return null;
-    return {id,title:title||'Orzeł Biały — akcja klanu',published,thumbnail:`https://i.ytimg.com/vi/${id}/hqdefault.jpg`};
+    return {id,title:title||FALLBACK_TITLE,published,thumbnail:`https://i.ytimg.com/vi/${id}/hqdefault.jpg`};
   }).filter(Boolean);
 }
 
@@ -84,6 +88,27 @@ async function fetchFeed(url){
   const videos=parseFeed(await fetchText(url));
   if(!videos.length)throw new Error(`empty feed ${url}`);
   return videos;
+}
+
+async function fetchOriginalTitle(id){
+  try{
+    const url=`https://www.youtube.com/oembed?url=${encodeURIComponent(`https://www.youtube.com/watch?v=${id}`)}&format=json`;
+    const response=await fetch(url,{headers:{'user-agent':HEADERS['user-agent']},redirect:'follow'});
+    if(!response.ok)return null;
+    const data=await response.json();
+    return typeof data?.title==='string'&&data.title.trim()?data.title.trim():null;
+  }catch{
+    return null;
+  }
+}
+
+async function enrichOriginalTitles(videos=[]){
+  const limited=videos.slice(0,30);
+  const enriched=await Promise.all(limited.map(async(video)=>{
+    const original=await fetchOriginalTitle(video.id);
+    return original?{...video,title:original}:video;
+  }));
+  return [...enriched,...videos.slice(30)];
 }
 
 async function discoverFromYoutube(){
@@ -128,7 +153,7 @@ function normalizeExternalVideos(data){
     if(!id||!/^[-_a-zA-Z0-9]{11}$/.test(id)||seen.has(id))continue;
     seen.add(id);
     const thumb=item?.thumbnail || item?.thumbnailUrl || item?.videoThumbnails?.[0]?.url || item?.thumbnails?.[0]?.url || `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
-    videos.push({id,title:item?.title||'Orzeł Biały — akcja klanu',published:null,thumbnail:thumb});
+    videos.push({id,title:item?.title||FALLBACK_TITLE,published:null,thumbnail:thumb});
   }
   return videos;
 }
@@ -158,7 +183,7 @@ export default async function handler(req,res){
   try{
     if(process.env.YOUTUBE_CHANNEL_ID?.startsWith('UC')){
       try{
-        const videos=await fetchFeed(`https://www.youtube.com/feeds/videos.xml?channel_id=${encodeURIComponent(process.env.YOUTUBE_CHANNEL_ID)}`);
+        const videos=await enrichOriginalTitles(await fetchFeed(`https://www.youtube.com/feeds/videos.xml?channel_id=${encodeURIComponent(process.env.YOUTUBE_CHANNEL_ID)}`));
         res.setHeader('Cache-Control','s-maxage=300, stale-while-revalidate=900');
         return res.status(200).json({channelId:process.env.YOUTUBE_CHANNEL_ID,videos,source:'env-rss'});
       }catch(error){attempts.push(error instanceof Error?error.message:'env rss failed')}
@@ -168,6 +193,7 @@ export default async function handler(req,res){
       try{
         const result=await discover();
         if(result.videos?.length){
+          result.videos=await enrichOriginalTitles(result.videos);
           res.setHeader('Cache-Control','s-maxage=180, stale-while-revalidate=600');
           return res.status(200).json(result);
         }
