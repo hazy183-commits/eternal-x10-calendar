@@ -12,6 +12,12 @@ export const CLAN_HALLS = Object.freeze([
 const pad = (value) => String(value).padStart(2, '0');
 const dateKey = (date) => `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
 
+if (typeof document !== 'undefined') {
+  document.querySelectorAll('.boss-gallery .boss-card small').forEach((label) => {
+    label.textContent = 'EPIC RAID BOSS';
+  });
+}
+
 if (typeof document !== 'undefined' && !document.getElementById('calendar-filter-polish')) {
   const style = document.createElement('style');
   style.id = 'calendar-filter-polish';
