@@ -39,9 +39,14 @@ export function installPremiumLanding(){
           <div><small>KLAN</small><b>Orzeł Biały</b></div>
           <div><small>GRA</small><b>Lineage 2 Reborn</b></div>
         </div>
-        <div class="ob-gate-links">
-          <a href="https://discord.gg/HtTrJpp7K" target="_blank" rel="noopener noreferrer">◉ Discord klanu</a>
-          <a href="https://l2reborn.org/" target="_blank" rel="noopener noreferrer">◎ Strona serwera</a>
+        <div class="ob-recruit-box">
+          <span>DOŁĄCZ DO NAS</span>
+          <h3>Szukasz aktywnego klanu na Eternal x10?</h3>
+          <p>Jeśli cenisz wspólną grę, dobrą atmosferę i ludzi, na których można liczyć — jesteś w dobrym miejscu. Nie musisz być top graczem. Liczy się aktywność, chęć grania razem i normalne podejście. Orzeł Biały to przede wszystkim ekipa, a pixele są tylko dodatkiem.</p>
+          <div class="ob-recruit-actions">
+            <b>Wpadnij, poznaj nas i zostań na dłużej.</b>
+            <a href="https://l2reborn.org/" target="_blank" rel="noopener noreferrer">Strona serwera ↗</a>
+          </div>
         </div>
       </aside>
     </div>
