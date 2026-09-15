@@ -1,8 +1,11 @@
+import { installAdminDashboard } from './adminDashboard.js';
+
 const TECH_DOMAIN = 'members.orzelbialy.local';
 const emailForNick = (nick) => `${nick.trim().toLocaleLowerCase().replace(/[^a-z0-9_-]/g, '')}@${TECH_DOMAIN}`;
 
 export function installMemberAuth(supabase) {
   if (!supabase || document.querySelector('#memberAuthLayer')) return;
+  installAdminDashboard(supabase);
   const layer = document.createElement('div');
   layer.id = 'memberAuthLayer';
   layer.innerHTML = `<div class="member-auth-box"><button class="member-auth-close" type="button" aria-label="Zamknij">×</button><img src="/images/logo-orzel-bialy.png" alt="Orzeł Biały"><span class="member-kicker">ORZEŁ BIAŁY · ETERNAL X10</span><h2>STREFA KLANU</h2><p class="member-auth-lead">Logowanie i rejestracja członków klanu.</p><div class="member-tabs"><button type="button" data-member-tab="login" class="active">Zaloguj się</button><button type="button" data-member-tab="register">Zarejestruj się</button></div><form id="memberAuthForm" autocomplete="off"><input type="text" name="prevent_autofill_username" autocomplete="username" tabindex="-1" aria-hidden="true" class="auth-autofill-trap"><input type="password" name="prevent_autofill_password" autocomplete="current-password" tabindex="-1" aria-hidden="true" class="auth-autofill-trap"><label>Nick w grze<input id="memberNick" name="clan_nickname" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" maxlength="24" required placeholder="np. KiRY"></label><label>Hasło<input id="memberPassword" name="clan_secret" type="password" autocomplete="new-password" minlength="6" required placeholder="Minimum 6 znaków"></label><button class="member-submit" type="submit">ZALOGUJ SIĘ</button><p id="memberAuthFeedback"></p></form></div>`;
