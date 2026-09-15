@@ -2,6 +2,9 @@ import { createClient } from '@supabase/supabase-js';
 import { installMemberAuth } from './memberAuth.js';
 import { installMemberEventSignups } from './memberEventSignups.js';
 import { installRecruitment } from './recruitment.js';
+import { installClanContentManager } from './clanContentManager.js';
+import { installMemberRoster } from './memberRoster.js';
+import { installOwnerAccessBridge } from './ownerAccessBridge.js';
 
 const url = import.meta.env.VITE_SUPABASE_URL;
 const key = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
@@ -18,6 +21,9 @@ if (typeof document !== 'undefined') {
     installMemberAuth(supabase);
     installMemberEventSignups(supabase);
     installRecruitment(supabase);
+    installClanContentManager(supabase);
+    installMemberRoster(supabase);
+    installOwnerAccessBridge(supabase);
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', startMemberFeatures, { once: true });
   else queueMicrotask(startMemberFeatures);
