@@ -18,14 +18,14 @@ export function installRecruitment(supabase) {
     #memberAuthLayer{overflow:auto}
     .ob-recruit-entry{width:100%;margin-top:10px;padding:14px;border:1px solid #775c2d;background:linear-gradient(180deg,#17130c,#0b0d0d);color:#e6bf6b;font-size:10px;font-weight:900;letter-spacing:.08em;cursor:pointer}
     .ob-recruit-entry:hover{border-color:#c99640;color:#f0d084}
-    .ob-recruit-box{display:none;margin-top:16px;padding-top:16px;border-top:1px solid #3b301f;text-align:left}
-    .ob-recruit-box.open{display:block}
-    .ob-recruit-box h3{margin:0 0 5px;color:#e7c574;font:700 18px Georgia,serif;text-align:center}
-    .ob-recruit-box>p{margin:0 0 12px;color:#858078;font-size:11px;line-height:1.5;text-align:center}
-    .ob-recruit-box label{display:block;margin:10px 0;color:#a79f90;font-size:10px;font-weight:800}
-    .ob-recruit-box input,.ob-recruit-box textarea{box-sizing:border-box;width:100%;margin-top:6px;padding:11px 12px;border:1px solid #423729;background:#080c0c;color:#eee;font:inherit;resize:vertical}
-    .ob-recruit-box textarea{min-height:88px}
-    .ob-recruit-actions{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin-top:10px}
+    .ob-recruit-form-box{display:none;margin-top:16px;padding-top:16px;border-top:1px solid #3b301f;text-align:left}
+    .ob-recruit-form-box.open{display:block}
+    .ob-recruit-form-box h3{margin:0 0 5px;color:#e7c574;font:700 18px Georgia,serif;text-align:center}
+    .ob-recruit-form-box>p{margin:0 0 12px;color:#858078;font-size:11px;line-height:1.5;text-align:center}
+    .ob-recruit-form-box label{display:block;margin:10px 0;color:#a79f90;font-size:10px;font-weight:800}
+    .ob-recruit-form-box input,.ob-recruit-form-box textarea{box-sizing:border-box;width:100%;margin-top:6px;padding:11px 12px;border:1px solid #423729;background:#080c0c;color:#eee;font:inherit;resize:vertical}
+    .ob-recruit-form-box textarea{min-height:88px}
+    .ob-recruit-form-box .ob-recruit-actions{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin-top:10px;padding-top:0;border-top:0}
     .ob-recruit-send,.ob-recruit-cancel{padding:12px;border:1px solid #8c672d;background:linear-gradient(#3b2812,#21170b);color:#f0cb78;font-weight:900;cursor:pointer}
     .ob-recruit-cancel{border-color:#3f392f;background:#0b0e0e;color:#8e887d}
     .ob-recruit-feedback{min-height:18px;margin:8px 0 0!important;color:#d8b15e!important;font-size:11px!important;text-align:left!important}
@@ -54,7 +54,7 @@ export function installRecruitment(supabase) {
       .ob-recruit-nav{min-width:0}.ob-recruit-nav span:not(.ob-recruit-badge){display:none}
       .ob-recruit-head{display:grid;grid-template-columns:1fr auto}
     }
-    @media(max-width:480px){.member-auth-box{padding:24px 18px!important}.ob-recruit-actions{grid-template-columns:1fr}.ob-recruit-cancel{order:2}.ob-recruit-toolbar{align-items:flex-start;flex-direction:column}}
+    @media(max-width:480px){.member-auth-box{padding:24px 18px!important}.ob-recruit-form-box .ob-recruit-actions{grid-template-columns:1fr}.ob-recruit-cancel{order:2}.ob-recruit-toolbar{align-items:flex-start;flex-direction:column}}
   `;
   document.head.appendChild(style);
 
@@ -65,7 +65,7 @@ export function installRecruitment(supabase) {
   authBox.appendChild(entry);
 
   const formWrap = document.createElement('section');
-  formWrap.className = 'ob-recruit-box';
+  formWrap.className = 'ob-recruit-form-box';
   formWrap.innerHTML = `
     <h3>Dołącz do Orła Białego</h3>
     <p>Zostaw nick i kilka słów o sobie. Liderzy zobaczą wiadomość i odezwiemy się do Ciebie w grze lub przez podany kontakt.</p>
@@ -78,6 +78,13 @@ export function installRecruitment(supabase) {
       <p id="obRecruitFeedback" class="ob-recruit-feedback" role="status" aria-live="polite"></p>
     </form>`;
   authBox.appendChild(formWrap);
+
+  const openPublicForm = () => {
+    formWrap.classList.add('open');
+    entry.hidden = true;
+    formWrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => formWrap.querySelector('#obRecruitNick')?.focus(), 250);
+  };
 
   const nav = document.createElement('button');
   nav.type = 'button';
@@ -107,10 +114,12 @@ export function installRecruitment(supabase) {
     entry.hidden = false;
   };
 
-  entry.addEventListener('click', () => {
-    formWrap.classList.add('open');
-    entry.hidden = true;
-    formWrap.querySelector('#obRecruitNick')?.focus();
+  entry.addEventListener('click', openPublicForm);
+  document.addEventListener('click', (event) => {
+    if (event.target.closest('[data-ob-recruit-write]')) {
+      event.preventDefault();
+      openPublicForm();
+    }
   });
   formWrap.querySelector('.ob-recruit-cancel')?.addEventListener('click', closePublicForm);
 
