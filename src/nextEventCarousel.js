@@ -1,50 +1,15 @@
-export function installNextEventCarousel({ getEvents, onChange }) {
-  if (typeof document === 'undefined') return { current: () => 0, clamp: () => {} };
-  const card = document.querySelector('#nextEventCard');
-  if (!card || document.querySelector('#nextEventCarouselControls')) return { current: () => 0, clamp: () => {} };
+import { applyBossArtwork } from './bossArtwork.js';
 
-  let index = 0;
-  const controls = document.createElement('div');
-  controls.id = 'nextEventCarouselControls';
-  controls.className = 'next-event-carousel-controls';
-  controls.innerHTML = `<button type="button" class="next-event-arrow" data-next-event-prev aria-label="Poprzednie wydarzenie">‹</button><div class="next-event-dots" aria-label="Najbliższe wydarzenia"></div><span class="next-event-position" aria-live="polite"></span><button type="button" class="next-event-arrow" data-next-event-next aria-label="Następne wydarzenie">›</button>`;
-  card.appendChild(controls);
-
-  const style = document.createElement('style');
-  style.id = 'next-event-carousel-style';
-  style.textContent = `
-.next-event-carousel-controls{position:absolute;right:20px;bottom:16px;z-index:8;display:flex;align-items:center;gap:9px;padding:5px 7px;border:1px solid rgba(205,159,70,.36);background:#070b0ce8;box-shadow:0 5px 18px #0008}.next-event-arrow{width:34px;height:34px;border:1px solid rgba(205,159,70,.55);background:#111617;color:#e2b75f;font:700 25px/1 Georgia,serif;cursor:pointer;transition:.18s ease}.next-event-arrow:hover,.next-event-arrow:focus{outline:none;border-color:#e5bd69;background:#2b2113;color:#ffe0a0}.next-event-arrow:disabled{opacity:.28;cursor:default}.next-event-dots{display:flex;gap:6px;align-items:center}.next-event-dot{width:8px;height:8px;padding:0;border:1px solid #a47d37;background:#1b1c19;transform:rotate(45deg);cursor:pointer}.next-event-dot.active{background:#e2b75f;box-shadow:0 0 8px #e2b75f88}.next-event-position{min-width:28px;color:#8f887a;font:700 9px Inter,Arial,sans-serif;letter-spacing:.08em;text-align:center}.next-event-card{position:relative}.next-event-card.carousel-changing .next-event-content,.next-event-card.carousel-changing .event-art-large,.next-event-card.carousel-changing .countdown-block{opacity:.42}.next-event-content,.event-art-large,.countdown-block{transition:opacity .13s ease}
-@media(max-width:700px){.next-event-carousel-controls{right:10px;bottom:10px}.next-event-arrow{width:40px;height:40px}.next-event-position{font-size:9px}}
-`;
-  document.head.appendChild(style);
-
-  const dots = controls.querySelector('.next-event-dots');
-  const position = controls.querySelector('.next-event-position');
-  const prev = controls.querySelector('[data-next-event-prev]');
-  const next = controls.querySelector('[data-next-event-next]');
-
-  function list() { return (getEvents?.() || []).slice(0, 3); }
-  function sync() {
-    const items = list();
-    index = Math.max(0, Math.min(index, Math.max(0, items.length - 1)));
-    dots.innerHTML = items.map((_, i) => `<button type="button" class="next-event-dot ${i === index ? 'active' : ''}" data-next-event-index="${i}" aria-label="Pokaż wydarzenie ${i + 1}"></button>`).join('');
-    position.textContent = items.length ? `${index + 1}/${items.length}` : '0/0';
-    prev.disabled = items.length < 2;
-    next.disabled = items.length < 2;
-  }
-  function select(nextIndex) {
-    const items = list();
-    if (!items.length) { index = 0; sync(); onChange?.(); return; }
-    index = (nextIndex + items.length) % items.length;
-    card.classList.add('carousel-changing');
-    window.setTimeout(() => { sync(); onChange?.(); card.classList.remove('carousel-changing'); }, 90);
-  }
-  prev.addEventListener('click', () => select(index - 1));
-  next.addEventListener('click', () => select(index + 1));
-  dots.addEventListener('click', (event) => {
-    const button = event.target.closest('[data-next-event-index]');
-    if (button) select(Number(button.dataset.nextEventIndex));
-  });
-  sync();
-  return { current: () => index, clamp: sync, select };
+export function installNextEventCarousel() {
+  if (typeof document === 'undefined') return;
+  const card=document.querySelector('#nextEventCard'); if(!card||document.querySelector('#nextEventCarouselControls'))return;
+  let index=0,first=null;
+  const controls=document.createElement('div');controls.id='nextEventCarouselControls';controls.className='next-event-carousel-controls';controls.innerHTML=`<button type="button" class="next-event-arrow" data-prev aria-label="Poprzednie wydarzenie">‹</button><div class="next-event-dots"></div><span class="next-event-position" aria-live="polite">1/3</span><button type="button" class="next-event-arrow" data-next aria-label="Następne wydarzenie">›</button>`;card.appendChild(controls);
+  const style=document.createElement('style');style.id='next-event-carousel-style';style.textContent=`.next-event-card{position:relative}.next-event-carousel-controls{position:absolute;right:18px;bottom:14px;z-index:20;display:flex;align-items:center;gap:8px;padding:5px 7px;border:1px solid #8d6a2f;background:#070b0cf2;box-shadow:0 5px 18px #000a}.next-event-arrow{width:34px;height:34px;border:1px solid #8d6a2f;background:#111617;color:#e3b85f;font:700 25px/1 Georgia,serif;cursor:pointer}.next-event-arrow:hover,.next-event-arrow:focus{outline:none;border-color:#e3b85f;background:#2a2012}.next-event-dots{display:flex;gap:7px}.next-event-dot{width:9px;height:9px;padding:0;border:1px solid #a47d37;background:#191b18;transform:rotate(45deg);cursor:pointer}.next-event-dot.active{background:#e3b85f;box-shadow:0 0 8px #e3b85f88}.next-event-position{min-width:28px;color:#aaa294;font:700 9px Inter,Arial,sans-serif;text-align:center}.next-event-card.carousel-changing .next-event-content,.next-event-card.carousel-changing .event-art-large,.next-event-card.carousel-changing .countdown-block{opacity:.35}.next-event-content,.event-art-large,.countdown-block{transition:opacity .12s ease}@media(max-width:700px){.next-event-carousel-controls{right:9px;bottom:9px}.next-event-arrow{width:40px;height:40px}}`;document.head.appendChild(style);
+  const rows=()=>[...document.querySelectorAll('#upcomingEvents .mini-event')].slice(0,3);
+  const capture=()=>{if(!first&&document.querySelector('#nextName')?.textContent&&!document.querySelector('#nextName')?.textContent.includes('Brak nadchodzących'))first={name:document.querySelector('#nextName').textContent,type:document.querySelector('#nextType').textContent,typeClass:document.querySelector('#nextType').className,meta:document.querySelector('#nextMeta').textContent,description:document.querySelector('#nextDescription').textContent,status:document.querySelector('#nextStatus').textContent,statusClass:document.querySelector('#nextStatus').className,art:document.querySelector('#nextName').textContent}};
+  function dots(total){controls.querySelector('.next-event-dots').innerHTML=Array.from({length:total},(_,i)=>`<button type="button" class="next-event-dot ${i===index?'active':''}" data-index="${i}" aria-label="Pokaż wydarzenie ${i+1}"></button>`).join('');controls.querySelector('.next-event-position').textContent=total?`${index+1}/${total}`:'0/0';}
+  function show(i){const list=rows();if(!list.length)return;capture();index=(i+list.length)%list.length;card.classList.add('carousel-changing');setTimeout(()=>{if(index===0&&first){const s=first;document.querySelector('#nextName').textContent=s.name;document.querySelector('#nextType').textContent=s.type;document.querySelector('#nextType').className=s.typeClass;document.querySelector('#nextMeta').textContent=s.meta;document.querySelector('#nextDescription').textContent=s.description;document.querySelector('#nextStatus').textContent=s.status;document.querySelector('#nextStatus').className=s.statusClass;applyBossArtwork(document.querySelector('.event-art-large'),s.art);}else{const row=list[index],name=row.querySelector('b')?.textContent?.trim()||'Wydarzenie',detail=row.querySelector('span')?.textContent?.trim()||'',when=row.querySelector('time')?.textContent?.trim()||'',art=row.dataset.bossName||name,parts=detail.split(' · '),type=parts.shift()||'Event',location=parts.join(' · ');document.querySelector('#nextName').textContent=name;document.querySelector('#nextType').textContent=type;document.querySelector('#nextType').className=`type-chip ${type.toLowerCase().replaceAll(' ','-')}`;document.querySelector('#nextMeta').textContent=`${when}${location?` · ${location}`:''}`;document.querySelector('#nextDescription').textContent='Jedno z 3 najbliższych wydarzeń w kalendarzu klanu.';document.querySelector('#nextStatus').textContent='NADCHODZI';document.querySelector('#nextStatus').className='live-status nadchodzi';applyBossArtwork(document.querySelector('.event-art-large'),art);}dots(list.length);card.classList.remove('carousel-changing');},80);}
+  controls.addEventListener('click',e=>{const dot=e.target.closest('[data-index]');if(dot)return show(Number(dot.dataset.index));if(e.target.closest('[data-prev]'))show(index-1);if(e.target.closest('[data-next]'))show(index+1);});
+  const target=document.querySelector('#upcomingEvents');if(target)new MutationObserver(()=>{capture();const list=rows();if(index>=list.length)index=0;dots(list.length)}).observe(target,{childList:true,subtree:true});setTimeout(()=>{capture();dots(rows().length)},400);
 }
