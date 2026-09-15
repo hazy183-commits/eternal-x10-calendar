@@ -16,6 +16,19 @@ if (typeof document !== 'undefined') {
   document.querySelectorAll('.boss-gallery .boss-card small').forEach((label) => {
     label.textContent = 'EPIC RAID BOSS';
   });
+
+  const communityLinks = [...document.querySelectorAll('#community .community-links a')];
+  const serverLink = communityLinks.find((link) => link.querySelector('b')?.textContent.trim().toLowerCase() === 'server');
+  if (serverLink) {
+    serverLink.href = 'https://lineage2wiki.org/interlude/';
+    serverLink.target = '_blank';
+    serverLink.rel = 'noopener noreferrer';
+    serverLink.classList.add('community-external');
+    const title = serverLink.querySelector('b');
+    const subtitle = serverLink.querySelector('span');
+    if (title) title.textContent = 'Drop Kalkulator';
+    if (subtitle) subtitle.textContent = 'Lineage 2 Interlude';
+  }
 }
 
 if (typeof document !== 'undefined' && !document.getElementById('calendar-filter-polish')) {
