@@ -1,5 +1,6 @@
 import { supabase } from './supabaseClient.js';
 import { eventIdentity } from './adminScheduling.js';
+import { clanHallEvents } from './clanHallSchedule.js';
 
 const EVENT_TYPES = new Map(
   ['RB', 'Epic RB', 'Clan Hall', 'Siege', 'Olympiad', 'Event'].map((type) => [type.toUpperCase(), type]),
@@ -84,7 +85,8 @@ export class SupabaseEventRepository {
 
   async getAll() {
     const remote = await readSupabaseEvents();
-    return this.clone(remote ?? []);
+    const ordinary = (remote ?? []).filter((event) => event.type !== 'Clan Hall');
+    return this.clone([...ordinary, ...clanHallEvents(new Date(), 14, 70)]);
   }
 
   async save(event) {
@@ -121,6 +123,4 @@ export class SupabaseEventRepository {
     const { error } = await supabase.schema('public').from('events').delete().eq('id', id);
     if (error) throw new Error(`Nie udało się usunąć wydarzenia: ${error.message}`);
   }
-
 }
-
