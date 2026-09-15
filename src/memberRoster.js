@@ -1,0 +1,40 @@
+const STAFF_ROLES=new Set(['owner','admin','leader']);
+const ROLE_LABELS={owner:'Owner',admin:'Administrator',leader:'Lider',member:'Członek'};
+const STATUS_LABELS={approved:'Aktywny',pending:'Oczekuje',blocked:'Zablokowany'};
+const esc=(v='')=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+export function installMemberRoster(supabase){
+  if(!supabase||window.__obMemberRosterInstalled)return;
+  window.__obMemberRosterInstalled=true;
+  const zone=document.querySelector('#memberZoneLayer');
+  if(!zone)return;
+
+  const style=document.createElement('style');
+  style.textContent=`
+  .ob-roster-nav[hidden]{display:none!important}.ob-roster-shell{display:grid;gap:12px}.ob-roster-toolbar{display:grid;grid-template-columns:repeat(4,1fr) minmax(180px,1.4fr);gap:8px;align-items:stretch}.ob-roster-stat{padding:12px;border:1px solid #352d21;background:#0a0e0e;text-align:center}.ob-roster-stat b{display:block;color:#e1b85e;font-size:22px}.ob-roster-stat span{color:#7d776c;font-size:8px;letter-spacing:.08em;text-transform:uppercase}.ob-roster-search{width:100%;box-sizing:border-box;border:1px solid #4a3b26;background:#090d0d;color:#eee;padding:10px 12px}.ob-roster-list{display:grid;gap:8px}.ob-roster-row{display:grid;grid-template-columns:minmax(150px,1fr) 120px 110px auto;gap:10px;align-items:center;padding:12px 14px;border:1px solid #332b20;background:linear-gradient(90deg,#0f1313,#090c0c)}.ob-roster-user b{display:block;color:#eee;font-size:14px}.ob-roster-user small{color:#706b62;font-size:9px}.ob-roster-role{color:#d3aa5c;font-size:10px;font-weight:900}.ob-roster-status{font-size:9px;font-weight:900}.ob-roster-status.approved{color:#70bf7d}.ob-roster-status.pending{color:#dcae58}.ob-roster-status.blocked{color:#d66d63}.ob-roster-actions{display:flex;gap:5px;justify-content:flex-end;flex-wrap:wrap}.ob-roster-actions button{padding:7px 8px;border:1px solid #574525;background:#15120d;color:#d8b364;font-size:8px;font-weight:900;cursor:pointer}.ob-roster-actions button.active{border-color:#bd8b36;background:#30200d;color:#f0cc80}.ob-roster-actions .danger{border-color:#64352e;color:#df8278}.ob-roster-empty{padding:28px;border:1px dashed #4d4028;color:#8b806e;text-align:center}
+  @media(max-width:900px){.ob-roster-toolbar{grid-template-columns:repeat(2,1fr)}.ob-roster-search{grid-column:1/-1}.ob-roster-row{grid-template-columns:minmax(0,1fr) auto;gap:7px;padding:11px}.ob-roster-role,.ob-roster-status{font-size:8px}.ob-roster-actions{grid-column:1/-1;justify-content:flex-start}.ob-roster-actions button{flex:1 1 90px;min-height:34px}}
+  `;document.head.appendChild(style);
+
+  const nav=document.createElement('button');
+  nav.type='button';nav.className='zone-nav ob-roster-nav';nav.dataset.zoneView='members';nav.hidden=true;nav.innerHTML='♟ <span>Członkowie</span>';
+  zone.querySelector('.zone-side-spacer')?.before(nav);
+
+  const panel=document.createElement('section');
+  panel.className='zone-view';panel.dataset.zonePanel='members';
+  panel.innerHTML=`<div class="zone-section-head"><small>DOWÓDZTWO KLANU</small><h3>CZŁONKOWIE KLANU</h3><p>Lista kont, ról i statusów. Owner może zmieniać role i blokować konta bezpośrednio tutaj.</p></div><div class="ob-roster-shell"><div class="ob-roster-toolbar"><div class="ob-roster-stat"><b data-rs="all">0</b><span>Razem</span></div><div class="ob-roster-stat"><b data-rs="member">0</b><span>Członkowie</span></div><div class="ob-roster-stat"><b data-rs="leader">0</b><span>Liderzy</span></div><div class="ob-roster-stat"><b data-rs="admin">0</b><span>Admini</span></div><input id="obRosterSearch" class="ob-roster-search" placeholder="Szukaj po nicku..."></div><div id="obRosterList" class="ob-roster-list"><div class="ob-roster-empty">Ładowanie…</div></div></div>`;
+  zone.querySelector('.member-zone-main')?.appendChild(panel);
+
+  let me=null,rows=[];
+  async function profile(){const {data:{session}}=await supabase.auth.getSession();if(!session)return null;const {data}=await supabase.from('profiles').select('id,nickname,role,status').eq('id',session.user.id).maybeSingle();return data||null}
+  function canSee(p){return p?.status==='approved'&&STAFF_ROLES.has(String(p.role||'').toLowerCase())}
+  function setStat(k,v){const e=panel.querySelector(`[data-rs="${k}"]`);if(e)e.textContent=String(v)}
+  function render(){const q=(panel.querySelector('#obRosterSearch')?.value||'').trim().toLowerCase();const filtered=rows.filter(x=>!q||String(x.nickname||'').toLowerCase().includes(q));const list=panel.querySelector('#obRosterList');if(!filtered.length){list.innerHTML='<div class="ob-roster-empty">Brak pasujących osób.</div>';return}const ownerMode=me?.role==='owner';list.innerHTML=filtered.map(u=>{const self=u.id===me?.id,isOwner=u.role==='owner';const actions=ownerMode&&!self&&!isOwner?`<button data-roster-role="member" data-id="${u.id}" class="${u.role==='member'&&u.status==='approved'?'active':''}">Członek</button><button data-roster-role="leader" data-id="${u.id}" class="${u.role==='leader'&&u.status==='approved'?'active':''}">Lider</button><button data-roster-role="admin" data-id="${u.id}" class="${u.role==='admin'&&u.status==='approved'?'active':''}">Admin</button>${u.status==='blocked'?`<button data-roster-unblock data-id="${u.id}">Odblokuj</button>`:`<button class="danger" data-roster-block data-id="${u.id}">Zablokuj</button>`}`:'<span></span>';return `<article class="ob-roster-row"><div class="ob-roster-user"><b>${esc(u.nickname||'Bez nicku')}</b><small>${self?'Twoje konto':ROLE_LABELS[u.role]||u.role||'—'}</small></div><div class="ob-roster-role">${esc(ROLE_LABELS[u.role]||u.role||'—')}</div><div class="ob-roster-status ${esc(u.status)}">${esc(STATUS_LABELS[u.status]||u.status||'—')}</div><div class="ob-roster-actions">${actions}</div></article>`}).join('')}
+  async function load(){me=await profile();nav.hidden=!canSee(me);if(!canSee(me))return;const {data,error}=await supabase.from('profiles').select('id,nickname,role,status,created_at').order('nickname',{ascending:true});const list=panel.querySelector('#obRosterList');if(error){list.innerHTML='<div class="ob-roster-empty">Nie udało się pobrać członków.</div>';return}rows=data||[];setStat('all',rows.filter(x=>x.status==='approved').length);setStat('member',rows.filter(x=>x.status==='approved'&&x.role==='member').length);setStat('leader',rows.filter(x=>x.status==='approved'&&x.role==='leader').length);setStat('admin',rows.filter(x=>x.status==='approved'&&x.role==='admin').length);render()}
+  async function update(id,patch){const {error}=await supabase.from('profiles').update(patch).eq('id',id);if(!error)await load()}
+  panel.querySelector('#obRosterSearch')?.addEventListener('input',render);
+  panel.addEventListener('click',e=>{const r=e.target.closest('[data-roster-role]');if(r){update(r.dataset.id,{role:r.dataset.rosterRole,status:'approved'});return}const b=e.target.closest('[data-roster-block]');if(b){update(b.dataset.id,{status:'blocked'});return}const u=e.target.closest('[data-roster-unblock]');if(u)update(u.dataset.id,{status:'approved'})});
+  nav.addEventListener('click',()=>setTimeout(load,0));
+  document.addEventListener('click',e=>{if(e.target.closest('.member-auth-entry'))setTimeout(load,120)},true);
+  supabase.auth.onAuthStateChange(()=>setTimeout(load,0));
+  setTimeout(load,500);
+}
