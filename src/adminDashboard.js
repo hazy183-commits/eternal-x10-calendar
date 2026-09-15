@@ -1,4 +1,6 @@
 const esc = (value='') => String(value).replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+const ROLE_LABELS={owner:'Właściciel',admin:'Administrator',leader:'Lider',member:'Członek',pending:'Oczekuje'};
+const roleLabel=(role)=>ROLE_LABELS[role]||role||'—';
 
 export function installAdminDashboard(supabase) {
   const panel = document.querySelector('#adminModal .admin-panel');
@@ -12,6 +14,7 @@ export function installAdminDashboard(supabase) {
   const pvp = document.querySelector('#pvpEventSchedule');
   const adminTrigger = document.querySelector('#adminTrigger');
   const quickAdd = document.querySelector('#quickAdd');
+  const adminAdd = document.querySelector('#adminAdd');
 
   const tabs = document.createElement('div');
   tabs.id='adminDashboardTabs';
@@ -23,52 +26,124 @@ export function installAdminDashboard(supabase) {
   users.id='ownerUsersPanel';
   users.className='owner-users-panel';
   users.hidden=true;
-  users.innerHTML=`<div class="owner-users-head"><div><span class="eyebrow">Dostęp do strefy klanu</span><h3>UŻYTKOWNICY</h3></div><button id="refreshUsers" class="secondary-btn" type="button">↻ Odśwież</button></div><div class="owner-user-stats"><div><b id="usersPending">0</b><span>Oczekuje</span></div><div><b id="usersApproved">0</b><span>Aktywnych</span></div><div><b id="usersAdmins">0</b><span>Adminów</span></div><div><b id="usersBlocked">0</b><span>Zablokowanych</span></div></div><div id="ownerUsersMessage" class="owner-users-message"></div><div id="ownerUsersList" class="owner-users-list"></div>`;
+  users.innerHTML=`
+    <div class="owner-users-head"><div><span class="eyebrow">Dostęp do strefy klanu</span><h3>UŻYTKOWNICY I UPRAWNIENIA</h3><p>Przyjmując gracza wybierz: Członek, Lider albo Administrator.</p></div><button id="refreshUsers" class="secondary-btn" type="button">↻ Odśwież</button></div>
+    <div class="owner-user-stats"><div><b id="usersPending">0</b><span>Oczekuje</span></div><div><b id="usersMembers">0</b><span>Członków</span></div><div><b id="usersLeaders">0</b><span>Liderów</span></div><div><b id="usersAdmins">0</b><span>Administratorów</span></div><div><b id="usersBlocked">0</b><span>Zablokowanych</span></div></div>
+    <div class="owner-role-legend"><div><b>CZŁONEK</b><span>Strefa klanu, wydarzenia i własne deklaracje.</span></div><div><b>LIDER</b><span>Jak członek + statystyki frekwencji dla wydarzeń.</span></div><div><b>ADMINISTRATOR</b><span>Edycja terminów wydarzeń. Bez zarządzania użytkownikami.</span></div></div>
+    <div id="ownerUsersMessage" class="owner-users-message"></div><div id="ownerUsersList" class="owner-users-list"></div>`;
   pvp.after(users);
 
   const style=document.createElement('style');
-  style.textContent=`#adminModal .admin-panel{width:min(1180px,94vw);max-height:92vh;padding:0 28px 30px;overflow:auto}#adminModal .modal-header{position:sticky;top:0;z-index:20;margin:0 -28px;padding:22px 28px 16px;background:linear-gradient(#101414f8,#0b0e0ef2);border-bottom:1px solid #302819;backdrop-filter:blur(10px)}#adminModal .admin-note{margin:18px 0 12px}.admin-dashboard-tabs{position:sticky;top:83px;z-index:19;display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin:0 0 22px;padding:8px;background:#080b0bee;border:1px solid #302819;backdrop-filter:blur(8px)}.admin-dashboard-tabs button{position:relative;min-height:54px;border:1px solid transparent;background:#111515;color:#8f8b82;font-weight:800;cursor:pointer}.admin-dashboard-tabs button:hover{color:#e5c373;border-color:#5d4725}.admin-dashboard-tabs button.active{color:#f0d18b;border-color:#a77a31;background:linear-gradient(#33240f,#171109);box-shadow:inset 0 0 18px #b9822b16}.admin-dashboard-tabs b{position:absolute;right:7px;top:6px;min-width:18px;padding:2px 5px;border-radius:20px;background:#9d3c2d;color:#fff;font-size:10px}.owner-users-panel{padding:4px 0 10px}.owner-users-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:16px}.owner-users-head h3{margin:3px 0;color:#ead08f;font-family:Georgia,serif;font-size:24px}.owner-user-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}.owner-user-stats div{padding:15px;border:1px solid #342b1d;background:#0b0e0e;text-align:center}.owner-user-stats b{display:block;color:#e1b85e;font-size:24px}.owner-user-stats span{color:#817b70;font-size:11px;text-transform:uppercase;letter-spacing:.08em}.owner-users-list{display:grid;gap:9px}.owner-user-row{display:grid;grid-template-columns:minmax(150px,1fr) 110px 120px minmax(260px,auto);align-items:center;gap:12px;padding:13px 15px;border:1px solid #30291e;background:linear-gradient(90deg,#101414,#0a0c0c)}.owner-user-name b{display:block;color:#eee;font-size:15px}.owner-user-name small{color:#68645d}.owner-user-role,.owner-user-status{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.07em}.owner-user-role{color:#d2aa5a}.owner-user-status.pending{color:#e6ad55}.owner-user-status.approved{color:#70b77b}.owner-user-status.blocked{color:#d06b61}.owner-user-actions{display:flex;justify-content:flex-end;gap:6px;flex-wrap:wrap}.owner-user-actions button{padding:8px 10px;border:1px solid #5c4928;background:#15120d;color:#d6b46d;font-size:11px;font-weight:800;cursor:pointer}.owner-user-actions button:hover{border-color:#c79743;color:#f1d38d}.owner-user-actions .danger{border-color:#66372f;color:#d98275}.owner-users-message{min-height:18px;margin-bottom:8px;color:#d6b46d;font-size:12px}body.admin-modal-open .next-carousel-controls,body.admin-modal-open .next-event-carousel-controls,body.admin-modal-open [class*="next-carousel"],body.admin-modal-open #nextEventCarouselControls{display:none!important}.topbar .topbar-inner{gap:14px}.topbar .brand{flex:0 0 auto}.topbar .brand-logo{max-width:112px}.topbar .main-nav{gap:18px}.topbar .main-nav a{font-size:11px;white-space:nowrap}.topbar .header-actions{gap:10px;flex:0 0 auto}.topbar .header-actions .admin-trigger{padding-left:18px;padding-right:18px;white-space:nowrap}.topbar .header-clock{min-width:88px}@media(max-width:1250px){.topbar .main-nav{gap:11px}.topbar .main-nav a{font-size:10px}.topbar .header-actions .admin-trigger{padding-left:12px;padding-right:12px;font-size:10px}.topbar .brand-copy{font-size:20px}}@media(max-width:760px){#adminModal .admin-panel{width:96vw;padding:0 14px 20px}#adminModal .modal-header{margin:0 -14px;padding:16px 14px 12px}.admin-dashboard-tabs{top:72px;grid-template-columns:repeat(5,minmax(66px,1fr));overflow-x:auto}.admin-dashboard-tabs button{font-size:17px}.admin-dashboard-tabs button span{display:block;font-size:9px;margin-top:3px}.owner-user-stats{grid-template-columns:1fr 1fr}.owner-user-row{grid-template-columns:1fr 1fr}.owner-user-actions{grid-column:1/-1;justify-content:flex-start}}`;
+  style.textContent=`
+  #adminModal .admin-panel{width:min(1180px,94vw);max-height:92vh;padding:0 28px 30px;overflow:auto}#adminModal .modal-header{position:sticky;top:0;z-index:20;margin:0 -28px;padding:22px 28px 16px;background:linear-gradient(#101414f8,#0b0e0ef2);border-bottom:1px solid #302819;backdrop-filter:blur(10px)}#adminModal .admin-note{margin:18px 0 12px}.admin-dashboard-tabs{position:sticky;top:83px;z-index:19;display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin:0 0 22px;padding:8px;background:#080b0bee;border:1px solid #302819;backdrop-filter:blur(8px)}.admin-dashboard-tabs button{position:relative;min-height:54px;border:1px solid transparent;background:#111515;color:#8f8b82;font-weight:800;cursor:pointer}.admin-dashboard-tabs button:hover{color:#e5c373;border-color:#5d4725}.admin-dashboard-tabs button.active{color:#f0d18b;border-color:#a77a31;background:linear-gradient(#33240f,#171109);box-shadow:inset 0 0 18px #b9822b16}.admin-dashboard-tabs b{position:absolute;right:7px;top:6px;min-width:18px;padding:2px 5px;border-radius:20px;background:#9d3c2d;color:#fff;font-size:10px}
+  .owner-users-panel{padding:4px 0 10px}.owner-users-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:16px}.owner-users-head h3{margin:3px 0;color:#ead08f;font-family:Georgia,serif;font-size:24px}.owner-users-head p{margin:5px 0 0;color:#817b70;font-size:11px}.owner-user-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:12px}.owner-user-stats div{padding:15px;border:1px solid #342b1d;background:#0b0e0e;text-align:center}.owner-user-stats b{display:block;color:#e1b85e;font-size:24px}.owner-user-stats span{color:#817b70;font-size:10px;text-transform:uppercase;letter-spacing:.08em}.owner-role-legend{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:18px}.owner-role-legend div{padding:12px 13px;border:1px solid #30291e;background:linear-gradient(180deg,#0d1111,#090c0c)}.owner-role-legend b{display:block;margin-bottom:5px;color:#d5ac5b;font-size:10px;letter-spacing:.09em}.owner-role-legend span{color:#777269;font-size:10px;line-height:1.45}.owner-users-list{display:grid;gap:9px}.owner-user-row{display:grid;grid-template-columns:minmax(150px,1fr) 120px 120px minmax(360px,auto);align-items:center;gap:12px;padding:13px 15px;border:1px solid #30291e;background:linear-gradient(90deg,#101414,#0a0c0c)}.owner-user-name b{display:block;color:#eee;font-size:15px}.owner-user-name small{color:#68645d}.owner-user-role,.owner-user-status{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.07em}.owner-user-role{color:#d2aa5a}.owner-user-status.pending{color:#e6ad55}.owner-user-status.approved{color:#70b77b}.owner-user-status.blocked{color:#d06b61}.owner-user-actions{display:flex;justify-content:flex-end;gap:6px;flex-wrap:wrap}.owner-user-actions button{padding:8px 10px;border:1px solid #5c4928;background:#15120d;color:#d6b46d;font-size:10px;font-weight:800;cursor:pointer}.owner-user-actions button:hover{border-color:#c79743;color:#f1d38d}.owner-user-actions button.active-role{border-color:#d3a64c;background:linear-gradient(#3a2812,#21170b);color:#f0d28c}.owner-user-actions .danger{border-color:#66372f;color:#d98275}.owner-users-message{min-height:18px;margin-bottom:8px;color:#d6b46d;font-size:12px}
+  body.admin-modal-open .next-carousel-controls,body.admin-modal-open .next-event-carousel-controls,body.admin-modal-open [class*="next-carousel"],body.admin-modal-open #nextEventCarouselControls{display:none!important}.topbar .topbar-inner{gap:14px}.topbar .brand{flex:0 0 auto}.topbar .brand-logo{max-width:112px}.topbar .main-nav{gap:18px}.topbar .main-nav a{font-size:11px;white-space:nowrap}.topbar .header-actions{gap:10px;flex:0 0 auto}.topbar .header-actions .admin-trigger{padding-left:18px;padding-right:18px;white-space:nowrap}.topbar .header-clock{min-width:88px}
+  html.ob-limited-admin #quickAdd,html.ob-limited-admin #adminAdd,html.ob-limited-admin #adminDashboardTabs [data-admin-tab="bosses"],html.ob-limited-admin #adminDashboardTabs [data-admin-tab="siege"],html.ob-limited-admin #adminDashboardTabs [data-admin-tab="schedule"],html.ob-limited-admin #adminDashboardTabs [data-admin-tab="users"],html.ob-limited-admin #adminEventList [data-delete]{display:none!important}html.ob-limited-admin #adminDashboardTabs{grid-template-columns:1fr!important}.admin-limited-banner{margin:0 0 14px;padding:11px 13px;border:1px solid #6a5128;background:linear-gradient(90deg,#2a1d0d,#11100c);color:#d7b46b;font-size:11px;font-weight:800}
+  @media(max-width:1250px){.topbar .main-nav{gap:11px}.topbar .main-nav a{font-size:10px}.topbar .header-actions .admin-trigger{padding-left:12px;padding-right:12px;font-size:10px}.topbar .brand-copy{font-size:20px}}@media(max-width:760px){#adminModal .admin-panel{width:96vw;padding:0 14px 20px}#adminModal .modal-header{margin:0 -14px;padding:16px 14px 12px}.admin-dashboard-tabs{top:72px;grid-template-columns:repeat(5,minmax(66px,1fr));overflow-x:auto}.admin-dashboard-tabs button{font-size:17px}.admin-dashboard-tabs button span{display:block;font-size:9px;margin-top:3px}.owner-user-stats{grid-template-columns:1fr 1fr}.owner-role-legend{grid-template-columns:1fr}.owner-user-row{grid-template-columns:1fr 1fr}.owner-user-actions{grid-column:1/-1;justify-content:flex-start}}
+  `;
   document.head.appendChild(style);
 
   let currentTab='events';
   let currentProfile=null;
   let ownerAccess=false;
   let adminAccess=false;
+  let limitedAdmin=false;
   const sections={events:[listView,formView],bosses:[bosses],siege:[siege],schedule:[olympiad,pvp],users:[users]};
-  function showTab(name){if(name==='users'&&!ownerAccess)return;currentTab=name;Object.entries(sections).forEach(([key,els])=>els.forEach(el=>{if(el)el.hidden=key!==name;}));tabs.querySelectorAll('[data-admin-tab]').forEach(b=>b.classList.toggle('active',b.dataset.adminTab===name));if(name==='users')loadUsers();}
+
+  function showTab(name){
+    if(name==='users'&&!ownerAccess)return;
+    if(limitedAdmin&&name!=='events')return;
+    currentTab=name;
+    Object.entries(sections).forEach(([key,els])=>els.forEach(el=>{if(el)el.hidden=key!==name;}));
+    tabs.querySelectorAll('[data-admin-tab]').forEach(b=>b.classList.toggle('active',b.dataset.adminTab===name));
+    if(name==='users')loadUsers();
+  }
   tabs.addEventListener('click',e=>{const b=e.target.closest('[data-admin-tab]');if(b&&!b.hidden)showTab(b.dataset.adminTab);});
 
-  function applyAccessUi(){
-    if(adminTrigger) adminTrigger.hidden=!adminAccess;
-    if(quickAdd) quickAdd.hidden=!adminAccess;
-    const userTab=tabs.querySelector('[data-admin-tab="users"]');
-    userTab.hidden=!ownerAccess;
-    if(!adminAccess && document.querySelector('#adminModal')?.classList.contains('open')){
-      document.querySelector('#adminModal').classList.remove('open');
-      document.querySelector('#adminModal').setAttribute('aria-hidden','true');
+  function applyLimitedForm(){
+    const form=document.querySelector('#eventForm');
+    if(!form)return;
+    const hideIds=['eventName','eventType','eventBoss','eventLocation','eventDescription'];
+    const sectionIds=['quickTemplates','eventModeChooser','recurrenceSection','bossPreview'];
+    hideIds.forEach(id=>{const field=document.querySelector(`#${id}`);if(!field)return;field.disabled=limitedAdmin;const label=field.closest('label');if(label)label.hidden=limitedAdmin;});
+    sectionIds.forEach(id=>{const el=document.querySelector(`#${id}`);if(el)el.hidden=limitedAdmin;});
+    ['eventDate','eventTime','eventDuration'].forEach(id=>{const el=document.querySelector(`#${id}`);if(el)el.disabled=false;});
+    let banner=document.querySelector('#adminLimitedBanner');
+    if(limitedAdmin){
+      if(!banner){banner=document.createElement('div');banner.id='adminLimitedBanner';banner.className='admin-limited-banner';banner.textContent='TRYB ADMINISTRATORA · możesz zmieniać tylko datę, godzinę i czas trwania istniejących wydarzeń.';formView?.prepend(banner);}
+      const save=document.querySelector('#saveEvent');if(save)save.textContent='Zapisz termin';
+    }else{
+      banner?.remove();const save=document.querySelector('#saveEvent');if(save&&save.textContent==='Zapisz termin')save.textContent='Zapisz wydarzenie';
     }
   }
+
+  function applyAccessUi(){
+    if(adminTrigger)adminTrigger.hidden=!adminAccess;
+    if(quickAdd)quickAdd.hidden=!ownerAccess;
+    if(adminAdd)adminAdd.hidden=limitedAdmin;
+    const userTab=tabs.querySelector('[data-admin-tab="users"]');if(userTab)userTab.hidden=!ownerAccess;
+    document.documentElement.classList.toggle('ob-limited-admin',limitedAdmin);
+    if(limitedAdmin&&currentTab!=='events')showTab('events');
+    applyLimitedForm();
+    if(!adminAccess&&document.querySelector('#adminModal')?.classList.contains('open')){document.querySelector('#adminModal').classList.remove('open');document.querySelector('#adminModal').setAttribute('aria-hidden','true');}
+  }
+
   async function resolveProfile(){
     const {data:{session}}=await supabase.auth.getSession();
-    if(!session){currentProfile=null;ownerAccess=false;adminAccess=false;applyAccessUi();return null;}
+    if(!session){currentProfile=null;ownerAccess=false;adminAccess=false;limitedAdmin=false;applyAccessUi();return null;}
     const {data:profile}=await supabase.from('profiles').select('id,nickname,role,status').eq('id',session.user.id).maybeSingle();
     currentProfile=profile||null;
-    ownerAccess=currentProfile?.role==='owner'&&currentProfile?.status==='approved';
-    adminAccess=currentProfile?.status==='approved'&&(currentProfile?.role==='owner'||currentProfile?.role==='admin');
+    const approved=currentProfile?.status==='approved';
+    ownerAccess=approved&&currentProfile?.role==='owner';
+    limitedAdmin=approved&&currentProfile?.role==='admin';
+    adminAccess=ownerAccess||limitedAdmin;
     applyAccessUi();
-    if(ownerAccess) loadPendingBadge();
+    if(ownerAccess)loadPendingBadge();
     return currentProfile;
   }
-  if(adminTrigger) adminTrigger.addEventListener('click',e=>{if(!adminAccess){e.preventDefault();e.stopImmediatePropagation();}},true);
-  if(quickAdd) quickAdd.addEventListener('click',e=>{if(!adminAccess){e.preventDefault();e.stopImmediatePropagation();}},true);
 
-  async function loadPendingBadge(){if(!ownerAccess)return;const {count}=await supabase.from('profiles').select('id',{count:'exact',head:true}).eq('status','pending');const badge=document.querySelector('#pendingUsersBadge');badge.textContent=count||0;badge.hidden=!count;}
-  async function loadUsers(){await resolveProfile();const list=document.querySelector('#ownerUsersList'),msg=document.querySelector('#ownerUsersMessage');if(!ownerAccess){list.innerHTML='';msg.textContent='Ta sekcja jest dostępna tylko dla Ownera.';return;}msg.textContent='Ładowanie użytkowników…';const {data,error}=await supabase.from('profiles').select('id,nickname,role,status,created_at').order('created_at',{ascending:false});if(error){msg.textContent='Nie udało się pobrać użytkowników: '+error.message;return;}msg.textContent='';const rows=data||[];document.querySelector('#usersPending').textContent=rows.filter(x=>x.status==='pending').length;document.querySelector('#usersApproved').textContent=rows.filter(x=>x.status==='approved').length;document.querySelector('#usersAdmins').textContent=rows.filter(x=>x.role==='admin'&&x.status==='approved').length;document.querySelector('#usersBlocked').textContent=rows.filter(x=>x.status==='blocked').length;const pending=rows.filter(x=>x.status==='pending').length,badge=document.querySelector('#pendingUsersBadge');badge.textContent=pending;badge.hidden=!pending;list.innerHTML=rows.map(u=>{const self=u.id===currentProfile?.id;const owner=u.role==='owner';let actions='';if(!self&&!owner){if(u.status==='pending')actions+=`<button data-user-action="approve" data-user-id="${u.id}">✓ Akceptuj</button>`;if(u.status!=='blocked')actions+=`<button class="danger" data-user-action="block" data-user-id="${u.id}">⊘ Zablokuj</button>`;else actions+=`<button data-user-action="approve" data-user-id="${u.id}">↻ Odblokuj</button>`;if(u.status==='approved')actions+=u.role==='admin'?`<button data-user-action="member" data-user-id="${u.id}">Odbierz Admina</button>`:`<button data-user-action="admin" data-user-id="${u.id}">★ Nadaj Admina</button>`;}return `<article class="owner-user-row"><div class="owner-user-name"><b>${esc(u.nickname)}</b><small>${self?'Twoje konto':new Date(u.created_at).toLocaleDateString('pl-PL')}</small></div><span class="owner-user-role">${esc(u.role)}</span><span class="owner-user-status ${esc(u.status)}">${esc(u.status)}</span><div class="owner-user-actions">${actions||'<span>—</span>'}</div></article>`;}).join('')||'<p>Brak użytkowników.</p>';}
-  users.addEventListener('click',async e=>{const b=e.target.closest('[data-user-action]');if(!b)return;b.disabled=true;const action=b.dataset.userAction;let patch={};if(action==='approve')patch={status:'approved',role:'member'};if(action==='block')patch={status:'blocked'};if(action==='admin')patch={role:'admin'};if(action==='member')patch={role:'member'};const {error}=await supabase.from('profiles').update(patch).eq('id',b.dataset.userId);document.querySelector('#ownerUsersMessage').textContent=error?'Błąd: '+error.message:'Zmiana zapisana.';await loadUsers();});
-  document.querySelector('#refreshUsers').addEventListener('click',loadUsers);
+  if(adminTrigger)adminTrigger.addEventListener('click',e=>{if(!adminAccess){e.preventDefault();e.stopImmediatePropagation();}},true);
+  if(quickAdd)quickAdd.addEventListener('click',e=>{if(!ownerAccess){e.preventDefault();e.stopImmediatePropagation();}},true);
+  panel.addEventListener('click',e=>{
+    if(!limitedAdmin)return;
+    if(e.target.closest('#adminAdd,[data-delete]')){e.preventDefault();e.stopImmediatePropagation();const f=document.querySelector('#adminFeedback');if(f)f.textContent='Administrator może tylko edytować termin istniejącego wydarzenia.';return;}
+    if(e.target.closest('[data-edit]'))setTimeout(applyLimitedForm,0);
+  },true);
+
+  async function loadPendingBadge(){if(!ownerAccess)return;const {count}=await supabase.from('profiles').select('id',{count:'exact',head:true}).eq('status','pending');const badge=document.querySelector('#pendingUsersBadge');if(!badge)return;badge.textContent=count||0;badge.hidden=!count;}
+
+  function roleButtons(u){return [['member','Członek'],['leader','Lider'],['admin','Administrator']].map(([role,label])=>`<button class="${u.status==='approved'&&u.role===role?'active-role':''}" data-user-role="${role}" data-user-id="${u.id}">${u.status==='pending'?'✓ ':''}${label}</button>`).join('');}
+
+  async function loadUsers(){
+    await resolveProfile();const list=document.querySelector('#ownerUsersList'),msg=document.querySelector('#ownerUsersMessage');if(!list||!msg)return;
+    if(!ownerAccess){list.innerHTML='';msg.textContent='Ta sekcja jest dostępna tylko dla właściciela.';return;}
+    msg.textContent='Ładowanie użytkowników…';
+    const {data,error}=await supabase.from('profiles').select('id,nickname,role,status,created_at').order('created_at',{ascending:false});
+    if(error){msg.textContent='Nie udało się pobrać użytkowników: '+error.message;return;}
+    msg.textContent='';const rows=data||[];
+    document.querySelector('#usersPending').textContent=rows.filter(x=>x.status==='pending').length;
+    document.querySelector('#usersMembers').textContent=rows.filter(x=>x.role==='member'&&x.status==='approved').length;
+    document.querySelector('#usersLeaders').textContent=rows.filter(x=>x.role==='leader'&&x.status==='approved').length;
+    document.querySelector('#usersAdmins').textContent=rows.filter(x=>x.role==='admin'&&x.status==='approved').length;
+    document.querySelector('#usersBlocked').textContent=rows.filter(x=>x.status==='blocked').length;
+    const pending=rows.filter(x=>x.status==='pending').length,badge=document.querySelector('#pendingUsersBadge');if(badge){badge.textContent=pending;badge.hidden=!pending;}
+    list.innerHTML=rows.map(u=>{const self=u.id===currentProfile?.id;const owner=u.role==='owner';let actions='';if(!self&&!owner){actions+=roleButtons(u);actions+=u.status==='blocked'?`<button data-user-action="unblock" data-user-id="${u.id}">↻ Odblokuj</button>`:`<button class="danger" data-user-action="block" data-user-id="${u.id}">⊘ Zablokuj</button>`;}return `<article class="owner-user-row"><div class="owner-user-name"><b>${esc(u.nickname)}</b><small>${self?'Twoje konto':new Date(u.created_at).toLocaleDateString('pl-PL')}</small></div><span class="owner-user-role">${esc(roleLabel(u.role))}</span><span class="owner-user-status ${esc(u.status)}">${esc(u.status)}</span><div class="owner-user-actions">${actions||'<span>—</span>'}</div></article>`;}).join('')||'<p>Brak użytkowników.</p>';
+  }
+
+  users.addEventListener('click',async e=>{
+    const roleBtn=e.target.closest('[data-user-role]');const actionBtn=e.target.closest('[data-user-action]');if(!roleBtn&&!actionBtn)return;
+    const button=roleBtn||actionBtn;button.disabled=true;let patch={};
+    if(roleBtn)patch={status:'approved',role:roleBtn.dataset.userRole};
+    if(actionBtn?.dataset.userAction==='block')patch={status:'blocked'};
+    if(actionBtn?.dataset.userAction==='unblock')patch={status:'approved',role:'member'};
+    const {error}=await supabase.from('profiles').update(patch).eq('id',button.dataset.userId);
+    document.querySelector('#ownerUsersMessage').textContent=error?'Błąd: '+error.message:'Zmiana zapisana.';
+    await loadUsers();
+  });
+  document.querySelector('#refreshUsers')?.addEventListener('click',loadUsers);
 
   const modal=document.querySelector('#adminModal');
-  const observer=new MutationObserver(async()=>{const open=modal.classList.contains('open');document.body.classList.toggle('admin-modal-open',open);if(open){await resolveProfile();if(!adminAccess)return;if(currentTab==='users'&&!ownerAccess)showTab('events');else if(currentTab==='events'){listView.hidden=false;formView.hidden=true;}}});
+  const observer=new MutationObserver(async()=>{const open=modal.classList.contains('open');document.body.classList.toggle('admin-modal-open',open);if(open){await resolveProfile();if(!adminAccess)return;if(currentTab==='users'&&!ownerAccess)showTab('events');else if(currentTab==='events'){listView.hidden=false;formView.hidden=true;applyLimitedForm();}}});
   observer.observe(modal,{attributes:true,attributeFilter:['class']});
   supabase.auth.onAuthStateChange(()=>setTimeout(resolveProfile,0));
   resolveProfile();
