@@ -28,7 +28,7 @@ function renderVideoPoster(card,video,index){
   card.style.backgroundImage=video?.thumbnail?`url("${video.thumbnail}")`:'';
   card.innerHTML=video?.id
     ?posterMarkup(video.title,index)
-    :`<div><small>ORZEŁ BIAŁY · YOUTUBE</small><b>Nie udało się pobrać filmu</b><em>Kliknij, aby otworzyć kanał</em></div>`;
+    :`<div><small>ORZEŁ BIAŁY · YOUTUBE</small><b>Materiały z kanału chwilowo niedostępne</b><em>Kliknij, aby przejść do YouTube</em></div>`;
   if(!video?.id)card.classList.add('is-unavailable');
 }
 
@@ -45,9 +45,9 @@ function restorePoster(card){
 async function loadRandomChannelVideos(shell){
   const cards=[...shell.querySelectorAll('[data-ob-video]')];
   try{
-    const response=await fetch('/api/youtube-videos',{cache:'no-store'});
-    if(!response.ok)throw new Error(`HTTP ${response.status}`);
-    const payload=await response.json();
+    const response=await fetch(`/api/youtube-videos?t=${Date.now()}`,{cache:'no-store'});
+    const payload=await response.json().catch(()=>({}));
+    if(!response.ok)throw new Error(payload?.error||`HTTP ${response.status}`);
     const videos=shuffle(Array.isArray(payload.videos)?payload.videos:[]);
     if(!videos.length)throw new Error('Brak filmów');
     cards.forEach((card,index)=>renderVideoPoster(card,videos[index%videos.length],index));
@@ -79,7 +79,21 @@ export function installPremiumLanding(){
     <div class="ob-gate-grid">
       <div class="ob-gate-login-slot"></div>
       <aside class="ob-gate-media">
-        <div class="ob-gate-media-head">
+        <div class="ob-recruit-box ob-recruit-hero">
+          <span>REKRUTACJA · ORZEŁ BIAŁY</span>
+          <h3>Nie szukamy statystów. Szukamy ludzi, którzy chcą pisać z nami historię.</h3>
+          <p>Epic RB, siege i mass PvP to tylko pole bitwy. Prawdziwa siła zaczyna się wcześniej — w party, we wspólnych decyzjach i w tym, że wchodzimy razem i walczymy do końca. Nie interesuje nas idealny gear ani liczby w profilu. Liczy się charakter, aktywność i to, czy potrafisz grać dla ekipy. Orzeł Biały to nie kolejny tag nad głową. To ludzie, z którymi chce się wracać do gry.</p>
+          <div class="ob-recruit-actions">
+            <b>Stań z nami w jednym szeregu. Zostań częścią Orła Białego.</b>
+            <a href="https://l2reborn.org/" target="_blank" rel="noopener noreferrer">Poznaj serwer ↗</a>
+          </div>
+        </div>
+        <div class="ob-gate-info">
+          <div><small>SERWER</small><b>Eternal x10 Main</b></div>
+          <div><small>KLAN</small><b>Orzeł Biały</b></div>
+          <div><small>GRA</small><b>Lineage 2 Reborn</b></div>
+        </div>
+        <div class="ob-gate-media-head ob-gate-media-head-lower">
           <div><span>ORZEŁ BIAŁY MEDIA</span><h2>AKCJE KLANU</h2></div>
           <a href="${YOUTUBE_CHANNEL}" target="_blank" rel="noopener noreferrer">YouTube ↗</a>
         </div>
@@ -90,20 +104,6 @@ export function installPremiumLanding(){
           <button class="ob-gate-video ob-video-two" type="button" data-ob-video data-video-slot="1" aria-label="Odtwórz drugi losowy film Orła Białego">
             <div><small>ORZEŁ BIAŁY · YOUTUBE</small><b>Losuję drugi film…</b><em>Chwila…</em></div>
           </button>
-        </div>
-        <div class="ob-gate-info">
-          <div><small>SERWER</small><b>Eternal x10 Main</b></div>
-          <div><small>KLAN</small><b>Orzeł Biały</b></div>
-          <div><small>GRA</small><b>Lineage 2 Reborn</b></div>
-        </div>
-        <div class="ob-recruit-box">
-          <span>REKRUTACJA · ORZEŁ BIAŁY</span>
-          <h3>Nie szukamy statystów. Szukamy ludzi, którzy chcą pisać z nami historię.</h3>
-          <p>Epic RB, siege i mass PvP to tylko pole bitwy. Prawdziwa siła zaczyna się wcześniej — na Discordzie, w party, w decyzji, że wchodzimy razem i razem walczymy do końca. Nie interesuje nas idealny gear ani liczby w profilu. Liczy się charakter, aktywność i to, czy potrafisz grać dla ekipy. Orzeł Biały to nie kolejny tag nad głową. To ludzie, z którymi chce się wracać do gry.</p>
-          <div class="ob-recruit-actions">
-            <b>Stań z nami w jednym szeregu. Zostań częścią Orła Białego.</b>
-            <a href="https://l2reborn.org/" target="_blank" rel="noopener noreferrer">Poznaj serwer ↗</a>
-          </div>
         </div>
       </aside>
     </div>
