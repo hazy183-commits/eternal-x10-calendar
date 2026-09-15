@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import { installMemberAuth } from './memberAuth.js';
 import { installMemberEventSignups } from './memberEventSignups.js';
+import { installRecruitment } from './recruitment.js';
 
 const url = import.meta.env.VITE_SUPABASE_URL;
 const key = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
@@ -16,6 +17,7 @@ if (typeof document !== 'undefined') {
   const startMemberFeatures = () => {
     installMemberAuth(supabase);
     installMemberEventSignups(supabase);
+    installRecruitment(supabase);
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', startMemberFeatures, { once: true });
   else queueMicrotask(startMemberFeatures);
