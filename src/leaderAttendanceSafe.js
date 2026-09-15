@@ -2,6 +2,7 @@ import { supabase } from './supabaseClient.js';
 
 const esc=(value='')=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const labels={yes:'BĘDĘ',maybe:'MOŻE',no:'NIE BĘDĘ'};
+const roleLabels={owner:'WŁAŚCICIEL',leader:'LIDER',member:'CZŁONEK',admin:'ADMINISTRATOR'};
 let currentRole=null;
 
 function ensureUi(){
@@ -28,7 +29,7 @@ function ensureUi(){
   if(!document.querySelector('#leaderAttendanceSafeStyles')){
     const style=document.createElement('style');
     style.id='leaderAttendanceSafeStyles';
-    style.textContent=`.leader-attendance-grid{display:grid;gap:12px;margin-top:18px}.leader-attendance-card{padding:16px 18px;border:1px solid #3a3020;background:linear-gradient(135deg,#0c1010,#080b0b)}.leader-attendance-head{display:grid;grid-template-columns:minmax(180px,1fr) auto;gap:14px;align-items:center;padding-bottom:12px;border-bottom:1px solid #2b2419}.leader-attendance-head small{display:block;color:#b88c42;font-size:9px;font-weight:900;letter-spacing:.12em}.leader-attendance-head b{display:block;margin-top:4px;color:#eee6d6;font:700 17px Georgia,serif}.leader-attendance-counts{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.leader-attendance-counts span{min-width:70px;padding:7px 8px;border:1px solid #4c402c;background:#0b0e0e;text-align:center;font-size:9px;font-weight:900}.leader-attendance-counts .yes{border-color:#246f36;color:#6ee087}.leader-attendance-counts .maybe{border-color:#7f6420;color:#e2bc58}.leader-attendance-counts .no{border-color:#79342f;color:#e77b72}.leader-attendance-lists{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.leader-attendance-list{padding:10px;border:1px solid #29241c;background:#090c0c}.leader-attendance-list h4{margin:0 0 8px;font-size:9px;letter-spacing:.09em}.leader-attendance-list.yes h4{color:#67d37d}.leader-attendance-list.maybe h4{color:#d9b354}.leader-attendance-list.no h4{color:#df756d}.leader-attendance-list p{margin:0;color:#8a857d;font-size:10px;line-height:1.55}.leader-attendance-empty{padding:34px;border:1px dashed #4d4028;color:#8b7b5c;text-align:center;margin-top:18px}@media(max-width:760px){.leader-attendance-head{grid-template-columns:1fr}.leader-attendance-counts{justify-content:flex-start}.leader-attendance-lists{grid-template-columns:1fr}}`;
+    style.textContent=`.leader-attendance-grid{display:grid;gap:12px;margin-top:18px}.leader-attendance-card{padding:16px 18px;border:1px solid #3a3020;background:linear-gradient(135deg,#0c1010,#080b0b)}.leader-attendance-head{display:grid;grid-template-columns:minmax(180px,1fr) auto;gap:14px;align-items:center;padding-bottom:12px;border-bottom:1px solid #2b2419}.leader-attendance-head small{display:block;color:#b88c42;font-size:9px;font-weight:900;letter-spacing:.12em}.leader-attendance-head b{display:block;margin-top:4px;color:#eee6d6;font:700 17px Georgia,serif}.leader-attendance-counts{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.leader-attendance-counts span{min-width:70px;padding:7px 8px;border:1px solid #4c402c;background:#0b0e0e;text-align:center;font-size:9px;font-weight:900}.leader-attendance-counts .yes{border-color:#246f36;color:#6ee087}.leader-attendance-counts .maybe{border-color:#7f6420;color:#e2bc58}.leader-attendance-counts .no{border-color:#79342f;color:#e77b72}.leader-attendance-lists{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.leader-attendance-list{padding:10px;border:1px solid #29241c;background:#090c0c}.leader-attendance-list h4{margin:0 0 8px;font-size:9px;letter-spacing:.09em}.leader-attendance-list.yes h4{color:#67d37d}.leader-attendance-list.maybe h4{color:#d9b354}.leader-attendance-list.no h4{color:#df756d}.leader-attendance-list p{margin:0;color:#8a857d;font-size:10px;line-height:1.55}.leader-attendance-empty{padding:34px;border:1px dashed #4d4028;color:#8b7b5c;text-align:center;margin-top:18px}@media(max-width:900px){html.ob-attendance-access .member-zone-side{grid-template-columns:repeat(5,1fr)!important}}@media(max-width:760px){.leader-attendance-head{grid-template-columns:1fr}.leader-attendance-counts{justify-content:flex-start}.leader-attendance-lists{grid-template-columns:1fr}}`;
     document.head.appendChild(style);
   }
   return {zone,nav,panel};
@@ -48,6 +49,10 @@ async function syncRole(){
   const role=await readRole();
   const allowed=role==='leader'||role==='owner';
   ui.nav.hidden=!allowed;
+  document.documentElement.classList.toggle('ob-attendance-access',allowed);
+  const roleText=roleLabels[role]||String(role||'CZŁONEK').toUpperCase();
+  const badge=ui.zone.querySelector('#memberZoneRole');if(badge)badge.textContent=roleText;
+  const card=ui.zone.querySelector('#memberRankCard');if(card)card.textContent=roleText.charAt(0)+roleText.slice(1).toLowerCase();
   if(!allowed&&ui.panel.classList.contains('active')){
     ui.panel.classList.remove('active');
     ui.zone.querySelector('[data-zone-panel="home"]')?.classList.add('active');
@@ -84,7 +89,7 @@ function boot(){
   const timer=setInterval(()=>{tries++;if(ensureUi()||tries>40){clearInterval(timer);syncRole();}},250);
   document.addEventListener('click',event=>{
     if(event.target.closest('[data-zone-view="attendance"]'))setTimeout(loadAttendance,50);
-    if(event.target.closest('.member-auth-entry'))setTimeout(syncRole,150);
+    if(event.target.closest('.member-auth-entry'))setTimeout(syncRole,180);
   });
   supabase.auth.onAuthStateChange(()=>setTimeout(syncRole,0));
 }
