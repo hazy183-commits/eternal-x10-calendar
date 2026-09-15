@@ -2,7 +2,7 @@ const YOUTUBE_CHANNEL='https://www.youtube.com/@orzelbialyfirstofight';
 
 function safeText(value=''){
   return String(value).replace(/[&<>"']/g,(char)=>({
-    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'
   }[char]));
 }
 
@@ -85,7 +85,7 @@ export function installPremiumLanding(){
           <p>Epic RB, siege i mass PvP to tylko pole bitwy. Prawdziwa siła zaczyna się wcześniej — w party, we wspólnych decyzjach i w tym, że wchodzimy razem i walczymy do końca. Nie interesuje nas idealny gear ani liczby w profilu. Liczy się charakter, aktywność i to, czy potrafisz grać dla ekipy. Orzeł Biały to nie kolejny tag nad głową. To ludzie, z którymi chce się wracać do gry.</p>
           <div class="ob-recruit-actions">
             <b>Stań z nami w jednym szeregu. Zostań częścią Orła Białego.</b>
-            <a href="https://l2reborn.org/" target="_blank" rel="noopener noreferrer">Poznaj serwer ↗</a>
+            <button type="button" class="ob-recruit-write" data-ob-recruit-write>NAPISZ DO NAS ✦</button>
           </div>
         </div>
         <div class="ob-gate-info">
