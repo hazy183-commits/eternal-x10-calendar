@@ -25,14 +25,14 @@ export function installPremiumLanding(){
           <a href="https://www.youtube.com/@orzelbialyfirstofight" target="_blank" rel="noopener noreferrer">YouTube ↗</a>
         </div>
         <div class="ob-gate-videos">
-          <a class="ob-gate-video ob-video-one" href="https://www.youtube.com/@orzelbialyfirstofight" target="_blank" rel="noopener noreferrer">
+          <button class="ob-gate-video ob-video-one" type="button" data-ob-video data-video-index="0" aria-label="Odtwórz najnowszy film Orła Białego">
             <span class="ob-play">▶</span>
-            <div><small>MASS PVP · EPIC FIGHTS</small><b>Najlepsze akcje Orła Białego</b><em>Otwórz kanał YouTube</em></div>
-          </a>
-          <a class="ob-gate-video ob-video-two" href="https://www.youtube.com/@orzelbialyfirstofight" target="_blank" rel="noopener noreferrer">
+            <div><small>MASS PVP · EPIC FIGHTS</small><b>Najlepsze akcje Orła Białego</b><em>Kliknij PLAY — film zostanie tutaj</em></div>
+          </button>
+          <button class="ob-gate-video ob-video-two" type="button" data-ob-video data-video-index="1" aria-label="Odtwórz drugi film Orła Białego">
             <span class="ob-play">▶</span>
-            <div><small>SIEGE · CLAN ACTION</small><b>Eternal x10 — wspólna gra</b><em>Zobacz materiały klanu</em></div>
-          </a>
+            <div><small>SIEGE · CLAN ACTION</small><b>Eternal x10 — wspólna gra</b><em>Kliknij PLAY — bez otwierania nowej karty</em></div>
+          </button>
         </div>
         <div class="ob-gate-info">
           <div><small>SERWER</small><b>Eternal x10 Main</b></div>
@@ -40,12 +40,12 @@ export function installPremiumLanding(){
           <div><small>GRA</small><b>Lineage 2 Reborn</b></div>
         </div>
         <div class="ob-recruit-box">
-          <span>DOŁĄCZ DO NAS</span>
-          <h3>Szukasz aktywnego klanu na Eternal x10?</h3>
-          <p>Jeśli cenisz wspólną grę, dobrą atmosferę i ludzi, na których można liczyć — jesteś w dobrym miejscu. Nie musisz być top graczem. Liczy się aktywność, chęć grania razem i normalne podejście. Orzeł Biały to przede wszystkim ekipa, a pixele są tylko dodatkiem.</p>
+          <span>REKRUTACJA · ORZEŁ BIAŁY</span>
+          <h3>Nie szukamy statystów. Szukamy ludzi do walki.</h3>
+          <p>Epic RB, siege, mass PvP i zwykłe wieczory przy grze — wchodzimy razem i razem schodzimy z pola walki. Nieważne, czy wracasz do Lineage 2 po latach, zaczynasz od zera czy masz już pełny gear. Jeśli grasz z ludźmi, a nie tylko obok nich, znajdziesz u nas swoje miejsce. Tu liczy się ekipa, charakter i wspólna gra. Pixele są tylko trofeum.</p>
           <div class="ob-recruit-actions">
-            <b>Wpadnij, poznaj nas i zostań na dłużej.</b>
-            <a href="https://l2reborn.org/" target="_blank" rel="noopener noreferrer">Strona serwera ↗</a>
+            <b>Wejdź z nami do walki. Zostań częścią Orła Białego.</b>
+            <a href="https://l2reborn.org/" target="_blank" rel="noopener noreferrer">Poznaj serwer ↗</a>
           </div>
         </div>
       </aside>
@@ -56,6 +56,32 @@ export function installPremiumLanding(){
   shell.querySelector('.ob-gate-login-slot').appendChild(authBox);
   authBox.querySelector('img')?.classList.add('ob-auth-old-logo');
   authBox.querySelector('.member-auth-close')?.setAttribute('aria-hidden','true');
+
+  const posters=new Map();
+  shell.querySelectorAll('[data-ob-video]').forEach((card)=>{
+    posters.set(card,card.innerHTML);
+    card.addEventListener('click',(event)=>{
+      if(event.target.closest('.ob-player-close')||card.classList.contains('is-playing'))return;
+      shell.querySelectorAll('.ob-gate-video.is-playing').forEach((other)=>{
+        if(other===card)return;
+        other.classList.remove('is-playing');
+        other.innerHTML=posters.get(other);
+      });
+      const index=Number(card.dataset.videoIndex||0);
+      card.classList.add('is-playing');
+      card.innerHTML=`<iframe src="https://www.youtube.com/embed?listType=user_uploads&list=orzelbialyfirstofight&index=${index}&autoplay=1&rel=0" title="Orzeł Biały — YouTube" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><button class="ob-player-close" type="button" aria-label="Zamknij film">×</button>`;
+    });
+  });
+  shell.addEventListener('click',(event)=>{
+    const close=event.target.closest('.ob-player-close');
+    if(!close)return;
+    const card=close.closest('.ob-gate-video');
+    if(!card)return;
+    event.preventDefault();
+    event.stopPropagation();
+    card.classList.remove('is-playing');
+    card.innerHTML=posters.get(card);
+  });
   return true;
 }
 
