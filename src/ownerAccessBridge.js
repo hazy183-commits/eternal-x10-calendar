@@ -1,0 +1,81 @@
+export function installOwnerAccessBridge(supabase){
+  if(!supabase||window.__obOwnerAccessBridgeInstalled)return;
+  window.__obOwnerAccessBridgeInstalled=true;
+
+  const style=document.createElement('style');
+  style.textContent=`
+    .ob-owner-shortcuts{display:none;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+    .ob-owner-shortcuts.show{display:grid}
+    .ob-owner-shortcut{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:11px 12px;border:1px solid #765724;background:linear-gradient(180deg,#21170c,#0b0e0e);color:#e7bd68;font-size:10px;font-weight:900;letter-spacing:.05em;cursor:pointer}
+    .ob-owner-shortcut:hover{border-color:#b88738;color:#f4d28b}
+    @media(max-width:700px){.ob-owner-shortcuts{grid-template-columns:1fr}.ob-owner-shortcut{min-height:44px;font-size:9px}}
+  `;
+  document.head.appendChild(style);
+
+  const readProfile=async()=>{
+    const {data:{session}}=await supabase.auth.getSession();
+    if(!session)return null;
+    const {data}=await supabase.from('profiles').select('role,status').eq('id',session.user.id).maybeSingle();
+    return data||null;
+  };
+
+  const closeMemberZone=()=>{
+    const zone=document.querySelector('#memberZoneLayer');
+    if(zone?.classList.contains('open'))zone.classList.remove('open');
+  };
+
+  const openAdmin=()=>{
+    closeMemberZone();
+    setTimeout(()=>document.querySelector('#adminTrigger')?.click(),20);
+  };
+
+  const openEditor=()=>{
+    const zone=document.querySelector('#memberZoneLayer');
+    const edit=zone?.querySelector('[data-zone-view="content-editor"]');
+    if(edit){
+      edit.hidden=false;
+      edit.click();
+      zone?.querySelector('.member-zone-main')?.scrollTo({top:0,behavior:'instant'});
+    }
+  };
+
+  async function sync(){
+    const zone=document.querySelector('#memberZoneLayer');
+    if(!zone){setTimeout(sync,150);return}
+    const main=zone.querySelector('.member-zone-main');
+    const home=zone.querySelector('[data-zone-panel="home"]');
+    if(!main||!home){setTimeout(sync,150);return}
+
+    let shortcuts=home.querySelector('.ob-owner-shortcuts');
+    if(!shortcuts){
+      shortcuts=document.createElement('div');
+      shortcuts.className='ob-owner-shortcuts';
+      shortcuts.innerHTML='<button type="button" class="ob-owner-shortcut" data-ob-open-editor>✎ EDYTUJ STRONĘ I OGŁOSZENIA</button><button type="button" class="ob-owner-shortcut" data-ob-open-admin>⚙ PANEL ADMINISTRATORA</button>';
+      home.prepend(shortcuts);
+      shortcuts.querySelector('[data-ob-open-editor]').addEventListener('click',openEditor);
+      shortcuts.querySelector('[data-ob-open-admin]').addEventListener('click',openAdmin);
+    }
+
+    const p=await readProfile();
+    const role=String(p?.role||'').toLowerCase();
+    const approved=p?.status==='approved';
+    const isOwner=approved&&role==='owner';
+    const canAdmin=approved&&(role==='owner'||role==='admin');
+    shortcuts.classList.toggle('show',isOwner||canAdmin);
+    const editorBtn=shortcuts.querySelector('[data-ob-open-editor]');
+    if(editorBtn)editorBtn.hidden=!isOwner;
+    const adminBtn=shortcuts.querySelector('[data-ob-open-admin]');
+    if(adminBtn)adminBtn.hidden=!canAdmin;
+
+    const editNav=zone.querySelector('[data-zone-view="content-editor"]');
+    if(editNav&&isOwner)editNav.hidden=false;
+  }
+
+  document.addEventListener('click',(event)=>{
+    if(event.target.closest('#adminTrigger'))closeMemberZone();
+    if(event.target.closest('.member-auth-entry'))setTimeout(sync,120);
+  },true);
+
+  supabase.auth.onAuthStateChange(()=>setTimeout(sync,100));
+  setTimeout(sync,250);
+}
