@@ -12,7 +12,7 @@ export const supabase = url?.startsWith('https://') && key?.startsWith('sb_publi
   : null;
 
 if (typeof document !== 'undefined') {
-  const startMemberAuth = () => installMemberAuth();
+  const startMemberAuth = () => installMemberAuth(supabase);
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', startMemberAuth, { once: true });
   else queueMicrotask(startMemberAuth);
 }
