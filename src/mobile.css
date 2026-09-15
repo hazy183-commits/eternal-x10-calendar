@@ -37,3 +37,55 @@ html,body{width:100%;max-width:100%;overflow-x:hidden}.wrap,.schedule-layout{wid
 #memberZoneLayer .ob-recruit-card-actions{grid-template-columns:1fr!important}
 #memberZoneLayer .ob-recruit-card-actions button{font-size:9px!important;padding:10px!important}
 }
+
+/* Czytelna nawigacja Strefy Klanu na mobile */
+@media(max-width:900px){
+#memberZoneLayer .member-zone-side,#memberZoneLayer .member-zone-side.ob-recruit-ready{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:5px!important;
+  padding:7px!important;
+  overflow:visible!important;
+  white-space:normal!important;
+  align-items:stretch!important;
+}
+#memberZoneLayer .member-zone-side .zone-nav{
+  display:flex!important;
+  flex:none!important;
+  min-width:0!important;
+  max-width:none!important;
+  width:100%!important;
+  min-height:42px!important;
+  margin:0!important;
+  padding:8px 5px!important;
+  gap:5px!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  font-size:9px!important;
+  line-height:1.15!important;
+  white-space:normal!important;
+}
+#memberZoneLayer .member-zone-side .zone-nav span,
+#memberZoneLayer .member-zone-side .ob-recruit-nav span:not(.ob-recruit-badge){
+  display:inline!important;
+  visibility:visible!important;
+  opacity:1!important;
+  font-size:9px!important;
+}
+#memberZoneLayer .member-zone-side .ob-recruit-nav{position:relative!important}
+#memberZoneLayer .member-zone-side .ob-recruit-badge{
+  position:static!important;
+  display:none!important;
+  margin-left:2px!important;
+  min-width:16px!important;
+}
+#memberZoneLayer .member-zone-side .ob-recruit-badge.show{display:inline-block!important}
+#memberZoneLayer .member-zone-main>header{align-items:flex-start!important;gap:10px!important}
+#memberZoneLayer .member-zone-main>header h2{font-size:clamp(24px,7vw,31px)!important;line-height:1.05!important}
+#memberZoneLayer .member-zone-main>header>small{margin:0!important;padding:8px 10px!important;font-size:10px!important;flex:0 0 auto!important}
+}
+@media(max-width:430px){
+#memberZoneLayer .member-zone-side,#memberZoneLayer .member-zone-side.ob-recruit-ready{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+#memberZoneLayer .member-zone-side .zone-nav,#memberZoneLayer .member-zone-side .zone-nav span{font-size:9px!important}
+}
