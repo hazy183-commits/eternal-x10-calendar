@@ -38,6 +38,56 @@ if (typeof document !== 'undefined') {
     guidesLink.target = '_blank';
     guidesLink.rel = 'noopener noreferrer';
   }
+
+  const queenAntCard = [...document.querySelectorAll('.boss-gallery .boss-card')].find((card) => card.querySelector('span')?.childNodes?.[0]?.textContent.trim().toLowerCase() === 'queen ant');
+  if (queenAntCard) {
+    queenAntCard.tabIndex = 0;
+    queenAntCard.setAttribute('role', 'button');
+    queenAntCard.setAttribute('aria-label', 'Informacje o Queen Ant');
+    queenAntCard.classList.add('boss-card-clickable');
+
+    const openQueenAnt = () => {
+      let modal = document.getElementById('queenAntInfoModal');
+      if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'queenAntInfoModal';
+        modal.className = 'epic-info-modal';
+        modal.setAttribute('aria-hidden', 'true');
+        modal.innerHTML = `
+          <div class="epic-info-backdrop" data-epic-close></div>
+          <section class="epic-info-panel" role="dialog" aria-modal="true" aria-labelledby="queenAntInfoTitle">
+            <button class="epic-info-close" type="button" data-epic-close aria-label="Zamknij">×</button>
+            <span class="epic-info-kicker">EPIC RAID BOSS</span>
+            <h2 id="queenAntInfoTitle">QUEEN ANT</h2>
+            <p class="epic-info-subtitle">Królowa Ant Nest · Interlude</p>
+            <div class="epic-info-grid">
+              <div><span>LEVEL</span><b>40</b></div>
+              <div><span>LOKALIZACJA</span><b>Wasteland / Ant Nest</b></div>
+              <div><span>RESPAWN</span><b>24h + 4h random</b></div>
+              <div><span>EPIC JEWEL</span><b>Ring of Queen Ant</b></div>
+            </div>
+            <div class="epic-info-note"><b>Informacje serwera</b><p>Respawn na Eternal x10 jest liczony przez nasz kalendarz. Szczegółowe statystyki i drop możesz sprawdzić w bazie Interlude.</p></div>
+            <a class="epic-info-link" href="https://lineage2wiki.org/interlude/monster/29001/queen-ant/" target="_blank" rel="noopener noreferrer">STATYSTYKI I DROP →</a>
+          </section>`;
+        document.body.appendChild(modal);
+        modal.querySelectorAll('[data-epic-close]').forEach((button) => button.addEventListener('click', () => {
+          modal.classList.remove('open');
+          modal.setAttribute('aria-hidden', 'true');
+        }));
+      }
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      modal.querySelector('.epic-info-close')?.focus();
+    };
+
+    queenAntCard.addEventListener('click', openQueenAnt);
+    queenAntCard.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openQueenAnt();
+      }
+    });
+  }
 }
 
 if (typeof document !== 'undefined' && !document.getElementById('calendar-filter-polish')) {
@@ -61,6 +111,7 @@ if (typeof document !== 'undefined' && !document.getElementById('calendar-filter
     #filters .filter-btn[data-filter='Olympiad']::before{content:'❧';font-family:Georgia,serif;font-size:32px;color:#86bfd3;transform:rotate(-18deg)}
     #filters .filter-btn[data-filter='Event']::before{content:'⚑';font-size:29px;color:#87b978}
     #filters .filter-btn[data-filter='Olympiad']:hover::before,#filters .filter-btn[data-filter='Olympiad'].active::before{transform:rotate(-18deg) scale(1.08)}
+    .boss-card-clickable{cursor:pointer;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease!important}.boss-card-clickable:hover,.boss-card-clickable:focus{transform:translateY(-4px);border-color:#e0b35c!important;box-shadow:0 0 20px #d8a94b33!important;outline:none}.epic-info-modal{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:22px}.epic-info-modal.open{display:flex}.epic-info-backdrop{position:absolute;inset:0;background:#000c;backdrop-filter:blur(6px)}.epic-info-panel{position:relative;width:min(680px,100%);padding:32px;border:1px solid #b68b3f;background:radial-gradient(circle at 50% 0,#5c421b35,transparent 42%),linear-gradient(180deg,#121718,#06090a);box-shadow:0 24px 80px #000;color:#ddd}.epic-info-close{position:absolute;right:14px;top:10px;border:0;background:transparent;color:#c9a55d;font-size:32px;cursor:pointer}.epic-info-kicker{color:#d9ad58;font:700 11px Inter,sans-serif;letter-spacing:.18em}.epic-info-panel h2{margin:7px 0 0;color:#f3ead7;font:700 34px Cinzel,serif}.epic-info-subtitle{margin:5px 0 24px;color:#888}.epic-info-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.epic-info-grid div{padding:14px;border:1px solid #7b622f66;background:#0005}.epic-info-grid span{display:block;margin-bottom:5px;color:#8e887d;font-size:10px;letter-spacing:.12em}.epic-info-grid b{color:#e7d5ac;font-size:14px}.epic-info-note{margin-top:16px;padding:15px;border-left:2px solid #c79b4b;background:#b98b3510}.epic-info-note b{color:#dcb668}.epic-info-note p{margin:6px 0 0;color:#aaa;line-height:1.55}.epic-info-link{display:inline-block;margin-top:20px;padding:12px 17px;border:1px solid #bd9144;color:#f0cc7d;text-decoration:none;font-weight:700;font-size:12px;letter-spacing:.08em}.epic-info-link:hover{background:#b88b3420}@media(max-width:620px){.epic-info-panel{padding:26px 18px}.epic-info-grid{grid-template-columns:1fr}.epic-info-panel h2{font-size:27px}}
     @media(max-width:1050px){#filters.filters{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
     @media(max-width:620px){#filters.filters{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:5px!important}#filters .filter-btn{min-height:66px!important;font-size:9px!important}#filters .filter-btn::before{font-size:25px!important}}
   `;
