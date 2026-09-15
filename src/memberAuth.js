@@ -1,14 +1,273 @@
 import { installAdminDashboard } from './adminDashboard.js';
+import { installMemberEventSignups } from './memberEventSignups.js';
 
-const TECH_DOMAIN='members.orzelbialy.local';
-const emailForNick=nick=>`${nick.trim().toLowerCase().replace(/[^a-z0-9_-]/g,'')}@${TECH_DOMAIN}`;
+const TECH_DOMAIN = 'members.orzelbialy.local';
+const emailForNick = (nick) => `${nick.trim().toLowerCase().replace(/[^a-z0-9_-]/g, '')}@${TECH_DOMAIN}`;
+const isMemberEmail = (email='') => email.toLowerCase().endsWith(`@${TECH_DOMAIN}`);
 
-export function installMemberAuth(supabase){
- if(!supabase||document.querySelector('#memberAuthLayer'))return;
- installAdminDashboard(supabase);
- const layer=document.createElement('div');layer.id='memberAuthLayer';layer.innerHTML=`<div class="member-auth-box"><button class="member-auth-close">×</button><img src="/images/logo-orzel-bialy.png"><span class="member-kicker">ORZEŁ BIAŁY · ETERNAL X10</span><h2>STREFA KLANU</h2><p class="member-auth-lead">Logowanie i rejestracja członków klanu.</p><div class="member-tabs"><button data-member-tab="login" class="active">Zaloguj się</button><button data-member-tab="register">Zarejestruj się</button></div><form id="memberAuthForm" autocomplete="off"><label>Nick w grze<input id="memberNick" autocomplete="off" maxlength="24" required placeholder="np. KiRY"></label><label>Hasło<input id="memberPassword" type="password" autocomplete="new-password" minlength="6" required placeholder="Minimum 6 znaków"></label><button class="member-submit">ZALOGUJ SIĘ</button><p id="memberAuthFeedback"></p></form></div>`;document.body.appendChild(layer);
- const zone=document.createElement('div');zone.id='memberZoneLayer';zone.innerHTML=`<div class="member-zone-box"><button class="member-zone-close">×</button><aside class="member-zone-side"><img src="/images/logo-orzel-bialy.png"><span class="member-kicker">ORZEŁ BIAŁY</span><h3>STREFA KLANU</h3><button class="zone-nav active" data-zone-view="home">⌂ <span>Pulpit</span></button><button class="zone-nav" data-zone-view="events">▣ <span>Wydarzenia</span></button><button class="zone-nav" data-zone-view="signups">✓ <span>Moje zapisy</span></button><button class="zone-nav" data-zone-view="announcements">◆ <span>Ogłoszenia</span></button><div class="zone-side-spacer"></div><button class="zone-logout">↪ <span>WYLOGUJ SIĘ</span></button><div class="zone-side-foot"><small>ETERNAL X10</small><b>LINEAGE 2 REBORN</b></div></aside><main class="member-zone-main"><header><div><span class="member-kicker">PANEL CZŁONKA KLANU</span><h2>Witaj, <strong id="memberZoneNick">—</strong>!</h2><p>Dobrze, że jesteś z nami.</p><em>„Siła klanu tkwi w ludziach, nie w pixelach.”</em></div><small id="memberZoneRole">MEMBER</small></header><section class="zone-view active" data-zone-panel="home"><div class="member-zone-grid"><div><b>⚔ KLAN</b><span>Orzeł Biały</span></div><div><b>✦ SERWER</b><span>Eternal x10</span></div><div><b>♛ RANGA</b><span id="memberRankCard">Member</span></div><div><b>● STATUS</b><span class="status-active">Aktywny</span></div></div><div class="zone-columns"><section class="zone-card"><div class="zone-card-title"><div><small>▣ W KOLEJCE</small><h3>NAJBLIŻSZE WYDARZENIA</h3></div><button class="zone-link" data-zone-go="events">Zobacz wszystkie →</button></div><div id="memberUpcomingEvents" class="zone-event-list"><p class="zone-muted">Ładowanie wydarzeń…</p></div></section><section class="zone-card"><div class="zone-card-title"><div><small>📣 KLAN</small><h3>OGŁOSZENIA KLANOWE</h3></div><button class="zone-link" data-zone-go="announcements">Zobacz wszystkie →</button></div><div class="zone-announcement"><b>Witaj w Strefie Klanu</b><p>Najważniejsze informacje dla członków będą pojawiać się właśnie tutaj.</p></div><div class="zone-announcement"><b>Discord</b><p>Pamiętaj, aby być na Discordzie podczas wspólnych akcji i PvP.</p></div></section></div><div class="zone-bottom"><section class="zone-card"><div class="zone-card-title"><div><small>TWÓJ UDZIAŁ</small><h3>MOJE ZAPISY</h3></div></div><p class="zone-muted">System deklaracji Będę / Może / Nie będę przygotujemy jako kolejny krok.</p></section><section class="zone-stack"><a href="https://discord.com" target="_blank">◉ Discord klanu <b>↗</b></a><a href="https://www.youtube.com/@orzelbialyfirstofight" target="_blank">▶ YouTube klanu <b>↗</b></a><a href="https://l2reborn.org" target="_blank">◎ Strona serwera <b>↗</b></a></section></div><div class="zone-motto">„Więcej niż gra — to ludzie.” <b>ORZEŁ BIAŁY</b></div></section><section class="zone-view" data-zone-panel="events"><div class="zone-section-head"><small>KALENDARZ KLANU</small><h3>NAJBLIŻSZE WYDARZENIA</h3><p>Aktualne wydarzenia pobierane bezpośrednio z kalendarza.</p></div><div id="memberAllEvents" class="zone-event-list zone-event-list-full"></div></section><section class="zone-view" data-zone-panel="signups"><div class="zone-section-head"><small>TWÓJ UDZIAŁ</small><h3>MOJE ZAPISY</h3><p>Tu znajdą się Twoje deklaracje obecności.</p></div><div class="zone-empty">SYSTEM ZAPISÓW — KOLEJNY ETAP</div></section><section class="zone-view" data-zone-panel="announcements"><div class="zone-section-head"><small>INFORMACJE</small><h3>OGŁOSZENIA KLANOWE</h3></div><div class="zone-announcement big"><b>Strefa Klanu uruchomiona</b><p>To miejsce służy do przekazywania informacji i planowania wspólnych akcji.</p></div></section></main></div>`;document.body.appendChild(zone);
- const css=document.createElement('style');css.textContent=`#memberAuthLayer,#memberZoneLayer{position:fixed;inset:0;z-index:10000;display:none;place-items:center;padding:16px;background:radial-gradient(circle at 50% 8%,#2d210fd9,#030506f7 58%);backdrop-filter:blur(9px)}#memberAuthLayer.open,#memberZoneLayer.open{display:grid}.member-kicker{display:block;color:#d3a446;font:800 10px/1.4 Arial;letter-spacing:.19em}.member-auth-box{position:relative;width:min(430px,100%);padding:34px;border:1px solid #8d6a2f;background:#080c0c;color:#ddd;text-align:center;box-shadow:0 30px 90px #000}.member-auth-box img{width:100px}.member-auth-box h2{margin:8px 0;color:#efd089;font:700 28px Georgia}.member-auth-lead{color:#858178}.member-auth-close,.member-zone-close{position:absolute;right:16px;top:10px;border:0;background:none;color:#8d887d;font-size:28px;cursor:pointer;z-index:5}.member-tabs{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #382e1e;margin:20px 0}.member-tabs button{padding:12px;border:0;background:none;color:#777;font-weight:800}.member-tabs .active{color:#e4b95e;border-bottom:2px solid #e4b95e}.member-auth-box label{display:block;text-align:left;margin:12px 0;color:#a29b8d;font-size:11px;font-weight:800}.member-auth-box input{box-sizing:border-box;width:100%;margin-top:7px;padding:13px;border:1px solid #42392b;background:#090d0d;color:#eee}.member-submit{width:100%;padding:14px;margin-top:10px;border:1px solid #bd8d3c;background:linear-gradient(#3a2811,#20160b);color:#f0cf83;font-weight:900}#memberAuthFeedback{min-height:18px;color:#d6b46d}.member-zone-box{position:relative;display:grid;grid-template-columns:230px 1fr;width:min(1420px,calc(100vw - 32px));height:min(850px,calc(100vh - 32px));overflow:hidden;border:1px solid #765721;background:linear-gradient(145deg,#091010,#060909);box-shadow:0 35px 110px #000;color:#d8d4ca}.member-zone-box:before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 72% -10%,#8b5b1312,transparent 35%);pointer-events:none}.member-zone-side{position:relative;z-index:1;display:flex;flex-direction:column;padding:22px 18px;border-right:1px solid #392c18;background:linear-gradient(180deg,#0d1212,#070a0a)}.member-zone-side img{width:100px;height:82px;object-fit:contain;margin:0 auto 8px;filter:drop-shadow(0 0 14px #c08a2c33)}.member-zone-side>.member-kicker{text-align:center}.member-zone-side h3{text-align:center;margin:5px 0 22px;color:#f0cf7e;font:700 22px Georgia}.zone-nav{display:flex;gap:12px;align-items:center;margin:2px 0;padding:15px 13px;border:1px solid transparent;background:transparent;color:#8c887f;text-align:left;font-weight:800;cursor:pointer}.zone-nav:hover,.zone-nav.active{border-color:#665026;background:linear-gradient(90deg,#3a2812,#18140d);color:#efc56a}.zone-side-spacer{flex:1}.zone-logout{padding:14px;border:1px solid #9a722f;background:#17130d;color:#e2b85f;font-weight:900;cursor:pointer}.zone-side-foot{padding:18px 10px 4px;margin-top:14px;border-top:1px solid #302719;color:#777168}.zone-side-foot small,.zone-side-foot b{display:block;font-size:9px;letter-spacing:.14em}.member-zone-main{position:relative;z-index:1;overflow:auto;padding:28px 32px}.member-zone-main>header{display:flex;padding-bottom:20px;border-bottom:1px solid #352b1d}.member-zone-main>header h2{margin:4px 0 2px;color:#eee8dc;font:700 34px Georgia}.member-zone-main>header h2 strong{color:#efcb78}.member-zone-main>header p{margin:0;color:#8b877e}.member-zone-main>header em{display:block;margin-top:7px;color:#716d65;font-size:13px}.member-zone-main>header>small{margin-left:auto;margin-right:28px;height:max-content;padding:9px 12px;border:1px solid #745a29;color:#e0b75d;font-weight:900}.zone-view{display:none}.zone-view.active{display:block}.member-zone-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}.member-zone-grid div{padding:17px;border:1px solid #382f20;background:#0a0e0e}.member-zone-grid b{display:block;margin-bottom:8px;color:#d6a94f;font-size:10px}.member-zone-grid span{font-size:15px}.status-active{color:#70c982!important}.zone-columns{display:grid;grid-template-columns:1.65fr 1fr;gap:14px}.zone-card{padding:18px;border:1px solid #382f20;background:#0a0e0e}.zone-card-title{display:flex;align-items:center;justify-content:space-between;padding-bottom:10px;border-bottom:1px solid #292319}.zone-card-title small,.zone-section-head small{color:#c89b47;font-size:9px;font-weight:900;letter-spacing:.14em}.zone-card-title h3,.zone-section-head h3{margin:4px 0;color:#eee7da;font:700 18px Georgia}.zone-link{border:0;background:none;color:#c79a48;font-size:10px;cursor:pointer}.zone-event-row{display:grid;grid-template-columns:70px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid #282218}.zone-event-date{color:#e0b353;font-weight:900;font-size:11px}.zone-event-info b{display:block;color:#ddd;font-size:12px}.zone-event-info small{color:#7f7b73}.zone-event-type{padding:5px 7px;border:1px solid #755523;color:#d0a14c;font-size:9px;font-weight:900}.zone-announcement{padding:14px 0;border-bottom:1px solid #282218}.zone-announcement b{color:#d9aa50;font-size:12px}.zone-announcement p,.zone-muted{color:#807c74;font-size:11px;line-height:1.5}.zone-bottom{display:grid;grid-template-columns:1.65fr 1fr;gap:14px;margin-top:14px}.zone-stack{display:grid;gap:7px}.zone-stack a{padding:12px 14px;border:1px solid #3f3421;background:#0a0e0e;color:#c9a75e;text-decoration:none;font-size:11px}.zone-stack b{float:right}.zone-motto{text-align:right;margin-top:14px;color:#716c63;font:italic 12px Georgia}.zone-motto b{margin-left:15px;color:#c99b49;font:normal 800 10px Arial;letter-spacing:.12em}.zone-section-head{padding:24px 0 12px}.zone-section-head h3{font-size:25px}.zone-section-head p{color:#7e7a72}.zone-event-list-full .zone-event-row{grid-template-columns:95px 1fr auto;padding:16px}.zone-empty{padding:40px;margin-top:18px;border:1px dashed #584526;color:#9b8257;text-align:center}.member-auth-entry{margin-left:8px!important;border:1px solid #8d6a2f!important;color:#e2b75f!important}.member-auth-entry.logged-in{color:#efcb79!important}.member-auth-entry.logout{border-color:#66502d!important}.member-admin-login-entry{border-color:#6f572f!important}@media(max-width:900px){#memberZoneLayer{padding:5px}.member-zone-box{grid-template-columns:1fr;width:100%;height:calc(100vh - 10px)}.member-zone-side{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;padding:9px;border-right:0;border-bottom:1px solid #342918}.member-zone-side img,.member-zone-side>.member-kicker,.member-zone-side h3,.zone-side-spacer,.zone-logout,.zone-side-foot{display:none}.zone-nav{justify-content:center;padding:10px 4px;font-size:10px}.member-zone-main{padding:18px 12px}.member-zone-grid{grid-template-columns:1fr 1fr}.zone-columns,.zone-bottom{grid-template-columns:1fr}.member-zone-main>header h2{font-size:25px}}`;document.head.appendChild(css);
- let mode='login';const form=layer.querySelector('#memberAuthForm'),feedback=layer.querySelector('#memberAuthFeedback'),submit=layer.querySelector('.member-submit'),nick=layer.querySelector('#memberNick'),password=layer.querySelector('#memberPassword');const clear=()=>{nick.value='';password.value=''};const setMode=m=>{mode=m;layer.querySelectorAll('[data-member-tab]').forEach(b=>b.classList.toggle('active',b.dataset.memberTab===m));submit.textContent=m==='login'?'ZALOGUJ SIĘ':'UTWÓRZ KONTO';feedback.textContent='';clear()};const switchView=v=>{zone.querySelectorAll('.zone-nav').forEach(b=>b.classList.toggle('active',b.dataset.zoneView===v));zone.querySelectorAll('.zone-view').forEach(p=>p.classList.toggle('active',p.dataset.zonePanel===v))};const fmt=e=>{const d=new Date(`${e.event_date}T${String(e.event_time||'00:00').slice(0,5)}:00`);return `<div class="zone-event-row"><div class="zone-event-date">${d.toLocaleDateString('pl-PL',{day:'2-digit',month:'2-digit'})}<br>${String(e.event_time||'').slice(0,5)}</div><div class="zone-event-info"><b>${e.name||'Wydarzenie'}</b><small>${e.location||e.boss||'Eternal x10'}</small></div><span class="zone-event-type">${e.type||'EVENT'}</span></div>`};const loadEvents=async()=>{const today=new Date().toISOString().slice(0,10),{data}=await supabase.from('events').select('name,type,boss,event_date,event_time,location').gte('event_date',today).order('event_date').order('event_time').limit(12),empty='<p class="zone-muted">Brak nadchodzących wydarzeń.</p>';zone.querySelector('#memberAllEvents').innerHTML=data?.length?data.map(fmt).join(''):empty;zone.querySelector('#memberUpcomingEvents').innerHTML=data?.length?data.slice(0,5).map(fmt).join(''):empty};const openZone=async()=>{const {data:{session}}=await supabase.auth.getSession();if(!session){layer.classList.add('open');setMode('login');return}const {data:p}=await supabase.from('profiles').select('nickname,role,status').eq('id',session.user.id).maybeSingle();if(!p||p.status!=='approved'){await supabase.auth.signOut();return}zone.querySelector('#memberZoneNick').textContent=p.nickname||'Członek';zone.querySelector('#memberZoneRole').textContent=(p.role||'member').toUpperCase();zone.querySelector('#memberRankCard').textContent=(p.role||'member').replace(/^./,c=>c.toUpperCase());switchView('home');zone.classList.add('open');loadEvents()};layer.querySelector('.member-tabs').onclick=e=>{const b=e.target.closest('[data-member-tab]');if(b)setMode(b.dataset.memberTab)};layer.querySelector('.member-auth-close').onclick=()=>layer.classList.remove('open');zone.querySelector('.member-zone-close').onclick=()=>zone.classList.remove('open');zone.onclick=e=>{const n=e.target.closest('[data-zone-view]'),g=e.target.closest('[data-zone-go]');if(n)switchView(n.dataset.zoneView);if(g)switchView(g.dataset.zoneGo)};zone.querySelector('.zone-logout').onclick=async()=>{await supabase.auth.signOut();zone.classList.remove('open')};form.onsubmit=async e=>{e.preventDefault();const nickname=nick.value.trim(),secret=password.value;if(!/^[A-Za-z0-9_-]{2,24}$/.test(nickname)){feedback.textContent='Nick: 2–24 znaki, litery/cyfry oraz _ lub -.';return}submit.disabled=true;feedback.textContent='Proszę czekać…';try{if(mode==='register'){const {error}=await supabase.auth.signUp({email:emailForNick(nickname),password:secret,options:{data:{nickname}}});if(error)throw error;await supabase.auth.signOut();feedback.textContent='Konto utworzone. Czeka na akceptację Ownera.';clear()}else{const {data,error}=await supabase.auth.signInWithPassword({email:emailForNick(nickname),password:secret});if(error)throw error;const {data:p}=await supabase.from('profiles').select('nickname,status').eq('id',data.user.id).single();if(p.status!=='approved'){await supabase.auth.signOut();feedback.textContent=p.status==='blocked'?'To konto jest zablokowane.':'Konto czeka na akceptację Ownera.'}else{setTimeout(()=>{layer.classList.remove('open');openZone()},250)}}}catch(err){const m=String(err?.message||'');feedback.textContent=m.includes('Invalid login')?'Nieprawidłowy nick lub hasło.':m.includes('already registered')?'Ten nick jest już zajęty.':'Nie udało się wykonać operacji.'}finally{submit.disabled=false}};
- const actions=document.querySelector('.header-actions'),adminLogin=document.createElement('button'),entry=document.createElement('button'),logout=document.createElement('button');adminLogin.type=entry.type=logout.type='button';adminLogin.className='admin-trigger member-auth-entry member-admin-login-entry';adminLogin.textContent='✦ Panel administratora';entry.className='admin-trigger member-auth-entry';entry.textContent='✦ Strefa klanu';logout.className='admin-trigger member-auth-entry logout';logout.textContent='↪ Wyloguj';logout.hidden=true;adminLogin.onclick=()=>{const m=document.querySelector('#loginModal');document.querySelector('#loginForm')?.reset();if(m){m.classList.add('open');m.setAttribute('aria-hidden','false')}};entry.onclick=async()=>{const {data:{session}}=await supabase.auth.getSession();session?openZone():(layer.classList.add('open'),setMode('login'))};logout.onclick=async()=>{await supabase.auth.signOut();zone.classList.remove('open')};if(actions){actions.append(adminLogin,entry,logout)}const sync=async()=>{const {data:{session}}=await supabase.auth.getSession();if(!session){adminLogin.hidden=false;entry.textContent='✦ Strefa klanu';entry.classList.remove('logged-in');logout.hidden=true;return}adminLogin.hidden=true;const {data:p}=await supabase.from('profiles').select('nickname').eq('id',session.user.id).maybeSingle();entry.textContent=`♟ ${p?.nickname||'Strefa klanu'}`;entry.classList.add('logged-in');logout.hidden=false};supabase.auth.onAuthStateChange(()=>setTimeout(sync,0));sync();
+export function installMemberAuth(supabase) {
+  if (!supabase || document.querySelector('#memberAuthLayer')) return;
+
+  installAdminDashboard(supabase);
+  document.documentElement.classList.add('member-locked');
+
+  const layer = document.createElement('div');
+  layer.id = 'memberAuthLayer';
+  layer.innerHTML = `
+    <div class="member-auth-box">
+      <img src="/images/logo-orzel-bialy.png" alt="Orzeł Biały">
+      <span class="member-kicker">ORZEŁ BIAŁY · ETERNAL X10</span>
+      <h2>STREFA KLANU</h2>
+      <p class="member-auth-lead">Zaloguj się, aby wejść na stronę klanu.</p>
+      <div class="member-tabs">
+        <button type="button" data-member-tab="login" class="active">Zaloguj się</button>
+        <button type="button" data-member-tab="register">Zarejestruj się</button>
+      </div>
+      <form id="memberAuthForm" autocomplete="off">
+        <label>Nick w grze<input id="memberNick" autocomplete="off" maxlength="24" required placeholder="np. KiRY"></label>
+        <label>Hasło<input id="memberPassword" type="password" autocomplete="new-password" minlength="6" required placeholder="Minimum 6 znaków"></label>
+        <button class="member-submit" type="submit">ZALOGUJ SIĘ</button>
+        <button class="member-admin-submit" id="memberAdminLogin" type="button">♛ ZALOGUJ JAKO ADMINISTRATOR</button>
+        <p id="memberAuthFeedback"></p>
+      </form>
+    </div>`;
+  document.body.appendChild(layer);
+
+  const zone = document.createElement('div');
+  zone.id = 'memberZoneLayer';
+  zone.innerHTML = `
+    <div class="member-zone-box">
+      <button class="member-zone-close" type="button">×</button>
+      <aside class="member-zone-side">
+        <img src="/images/logo-orzel-bialy.png" alt="Orzeł Biały">
+        <span class="member-kicker">ORZEŁ BIAŁY</span><h3>STREFA KLANU</h3>
+        <button class="zone-nav active" data-zone-view="home">⌂ <span>Pulpit</span></button>
+        <button class="zone-nav" data-zone-view="events">▣ <span>Wydarzenia</span></button>
+        <button class="zone-nav" data-zone-view="signups">✓ <span>Moje zapisy</span></button>
+        <button class="zone-nav" data-zone-view="announcements">◆ <span>Ogłoszenia</span></button>
+        <div class="zone-side-spacer"></div>
+        <button class="zone-logout">↪ <span>WYLOGUJ SIĘ</span></button>
+        <div class="zone-side-foot"><small>ETERNAL X10</small><b>LINEAGE 2 REBORN</b></div>
+      </aside>
+      <main class="member-zone-main">
+        <header><div><span class="member-kicker">PANEL CZŁONKA KLANU</span><h2>Witaj, <strong id="memberZoneNick">—</strong>!</h2><p>Dobrze, że jesteś z nami.</p><em>„Siła klanu tkwi w ludziach, nie w pixelach.”</em></div><small id="memberZoneRole">MEMBER</small></header>
+        <section class="zone-view active" data-zone-panel="home">
+          <div class="member-zone-grid"><div><b>⚔ KLAN</b><span>Orzeł Biały</span></div><div><b>✦ SERWER</b><span>Eternal x10</span></div><div><b>♛ RANGA</b><span id="memberRankCard">Member</span></div><div><b>● STATUS</b><span class="status-active">Aktywny</span></div></div>
+          <div class="zone-columns"><section class="zone-card"><div class="zone-card-title"><div><small>▣ W KOLEJCE</small><h3>NAJBLIŻSZE WYDARZENIA</h3></div><button class="zone-link" data-zone-go="events">Zobacz wszystkie →</button></div><div id="memberUpcomingEvents" class="zone-event-list"><p class="zone-muted">Ładowanie wydarzeń…</p></div></section><section class="zone-card"><div class="zone-card-title"><div><small>📣 KLAN</small><h3>OGŁOSZENIA KLANOWE</h3></div><button class="zone-link" data-zone-go="announcements">Zobacz wszystkie →</button></div><div class="zone-announcement"><b>Witaj w Strefie Klanu</b><p>Najważniejsze informacje dla członków będą pojawiać się właśnie tutaj.</p></div><div class="zone-announcement"><b>Discord</b><p>Pamiętaj, aby być na Discordzie podczas wspólnych akcji i PvP.</p></div></section></div>
+          <div class="zone-bottom"><section class="zone-card"><div class="zone-card-title"><div><small>TWÓJ UDZIAŁ</small><h3>MOJE ZAPISY</h3></div></div><p class="zone-muted">Twoje deklaracje wydarzeń znajdziesz w zakładce „Moje zapisy”.</p></section><section class="zone-stack"><a href="https://discord.gg/HtTrJpp7K" target="_blank">◉ Discord klanu <b>↗</b></a><a href="https://www.youtube.com/@orzelbialyfirstofight" target="_blank">▶ YouTube klanu <b>↗</b></a><a href="https://l2reborn.org" target="_blank">◎ Strona serwera <b>↗</b></a></section></div>
+          <div class="zone-motto">„Więcej niż gra — to ludzie.” <b>ORZEŁ BIAŁY</b></div>
+        </section>
+        <section class="zone-view" data-zone-panel="events"><div class="zone-section-head"><small>KALENDARZ KLANU</small><h3>NAJBLIŻSZE WYDARZENIA</h3><p>Wybierz Będę / Może / Nie będę.</p></div><div id="memberAllEvents" class="zone-event-list zone-event-list-full"></div></section>
+        <section class="zone-view" data-zone-panel="signups"><div class="zone-section-head"><small>TWÓJ UDZIAŁ</small><h3>MOJE ZAPISY</h3><p>Twoje deklaracje obecności.</p></div><div class="zone-empty">Brak zapisów.</div></section>
+        <section class="zone-view" data-zone-panel="announcements"><div class="zone-section-head"><small>INFORMACJE</small><h3>OGŁOSZENIA KLANOWE</h3></div><div class="zone-announcement big"><b>Strefa Klanu</b><p>To miejsce służy do przekazywania informacji i planowania wspólnych akcji.</p></div></section>
+      </main>
+    </div>`;
+  document.body.appendChild(zone);
+
+  const css = document.createElement('style');
+  css.textContent = `
+    html.member-locked body{min-height:100vh;overflow:hidden;background:#030505!important}
+    html.member-locked body>*:not(#memberAuthLayer):not(#loginModal){display:none!important}
+    html.member-locked #memberAuthLayer{display:grid!important}
+    #memberAuthLayer,#memberZoneLayer{position:fixed;inset:0;z-index:10000;display:none;place-items:center;padding:16px;background:radial-gradient(circle at 50% 8%,#2d210f,#030506 58%);backdrop-filter:blur(9px)}
+    #memberAuthLayer.open,#memberZoneLayer.open{display:grid}
+    .member-auth-box{width:min(430px,100%);padding:34px;border:1px solid #8d6a2f;background:#080c0c;color:#ddd;text-align:center;box-shadow:0 30px 90px #000}
+    .member-auth-box img{width:108px}.member-kicker{display:block;color:#d3a446;font:800 10px/1.4 Arial;letter-spacing:.19em}.member-auth-box h2{margin:8px 0;color:#efd089;font:700 28px Georgia}.member-auth-lead{color:#858178}
+    .member-tabs{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #382e1e;margin:20px 0}.member-tabs button{padding:12px;border:0;background:none;color:#777;font-weight:800;cursor:pointer}.member-tabs .active{color:#e4b95e;border-bottom:2px solid #e4b95e}
+    .member-auth-box label{display:block;text-align:left;margin:12px 0;color:#a29b8d;font-size:11px;font-weight:800}.member-auth-box input{box-sizing:border-box;width:100%;margin-top:7px;padding:13px;border:1px solid #42392b;background:#090d0d;color:#eee}
+    .member-submit,.member-admin-submit{width:100%;padding:14px;margin-top:10px;font-weight:900;cursor:pointer}.member-submit{border:1px solid #bd8d3c;background:linear-gradient(#3a2811,#20160b);color:#f0cf83}.member-admin-submit{border:1px solid #514229;background:#0b0e0e;color:#a99b7c;font-size:10px;letter-spacing:.08em}.member-admin-submit:hover{border-color:#9b7738;color:#e6bf69}#memberAuthFeedback{min-height:18px;color:#d6b46d;font-size:12px;line-height:1.45}
+    .member-zone-box{position:relative;display:grid;grid-template-columns:230px 1fr;width:min(1420px,calc(100vw - 32px));height:min(850px,calc(100vh - 32px));overflow:hidden;border:1px solid #765721;background:linear-gradient(145deg,#091010,#060909);box-shadow:0 35px 110px #000;color:#d8d4ca}.member-zone-close{position:absolute;right:16px;top:10px;border:0;background:none;color:#8d887d;font-size:28px;cursor:pointer;z-index:5}
+    .member-zone-side{display:flex;flex-direction:column;padding:22px 18px;border-right:1px solid #392c18;background:linear-gradient(180deg,#0d1212,#070a0a)}.member-zone-side img{width:100px;height:82px;object-fit:contain;margin:0 auto 8px}.member-zone-side>.member-kicker{text-align:center}.member-zone-side h3{text-align:center;margin:5px 0 22px;color:#f0cf7e;font:700 22px Georgia}.zone-nav{display:flex;gap:12px;align-items:center;margin:2px 0;padding:15px 13px;border:1px solid transparent;background:transparent;color:#8c887f;text-align:left;font-weight:800;cursor:pointer}.zone-nav:hover,.zone-nav.active{border-color:#665026;background:linear-gradient(90deg,#3a2812,#18140d);color:#efc56a}.zone-side-spacer{flex:1}.zone-logout{padding:14px;border:1px solid #9a722f;background:#17130d;color:#e2b85f;font-weight:900;cursor:pointer}.zone-side-foot{padding:18px 10px 4px;margin-top:14px;border-top:1px solid #302719;color:#777168}.zone-side-foot small,.zone-side-foot b{display:block;font-size:9px;letter-spacing:.14em}
+    .member-zone-main{overflow:auto;padding:28px 32px}.member-zone-main>header{display:flex;padding-bottom:20px;border-bottom:1px solid #352b1d}.member-zone-main>header h2{margin:4px 0 2px;color:#eee8dc;font:700 34px Georgia}.member-zone-main>header h2 strong{color:#efcb78}.member-zone-main>header p{margin:0;color:#8b877e}.member-zone-main>header em{display:block;margin-top:7px;color:#716d65;font-size:13px}.member-zone-main>header>small{margin-left:auto;margin-right:28px;height:max-content;padding:9px 12px;border:1px solid #745a29;color:#e0b75d;font-weight:900}.zone-view{display:none}.zone-view.active{display:block}
+    .member-zone-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}.member-zone-grid div{padding:17px;border:1px solid #382f20;background:#0a0e0e}.member-zone-grid b{display:block;margin-bottom:8px;color:#d6a94f;font-size:10px}.status-active{color:#70c982!important}.zone-columns,.zone-bottom{display:grid;grid-template-columns:1.65fr 1fr;gap:14px}.zone-bottom{margin-top:14px}.zone-card{padding:18px;border:1px solid #382f20;background:#0a0e0e}.zone-card-title{display:flex;align-items:center;justify-content:space-between;padding-bottom:10px;border-bottom:1px solid #292319}.zone-card-title small,.zone-section-head small{color:#c89b47;font-size:9px;font-weight:900;letter-spacing:.14em}.zone-card-title h3,.zone-section-head h3{margin:4px 0;color:#eee7da;font:700 18px Georgia}.zone-link{border:0;background:none;color:#c79a48;font-size:10px;cursor:pointer}.zone-event-row{display:grid;grid-template-columns:70px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid #282218}.zone-event-date{color:#e0b353;font-weight:900;font-size:11px}.zone-event-info b{display:block;color:#ddd;font-size:12px}.zone-event-info small{color:#7f7b73}.zone-event-type{padding:5px 7px;border:1px solid #755523;color:#d0a14c;font-size:9px;font-weight:900}.zone-announcement{padding:14px 0;border-bottom:1px solid #282218}.zone-announcement b{color:#d9aa50;font-size:12px}.zone-announcement p,.zone-muted{color:#807c74;font-size:11px;line-height:1.5}.zone-stack{display:grid;gap:7px}.zone-stack a{padding:12px 14px;border:1px solid #3f3421;background:#0a0e0e;color:#c9a75e;text-decoration:none;font-size:11px}.zone-stack b{float:right}.zone-motto{text-align:right;margin-top:14px;color:#716c63;font:italic 12px Georgia}.zone-section-head{padding:24px 0 12px}.zone-section-head h3{font-size:25px}.zone-section-head p{color:#7e7a72}.zone-empty{padding:40px;margin-top:18px;border:1px dashed #584526;color:#9b8257;text-align:center}
+    @media(max-width:900px){#memberZoneLayer{padding:5px}.member-zone-box{grid-template-columns:1fr;width:100%;height:calc(100vh - 10px)}.member-zone-side{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;padding:9px;border-right:0;border-bottom:1px solid #342918}.member-zone-side img,.member-zone-side>.member-kicker,.member-zone-side h3,.zone-side-spacer,.zone-logout,.zone-side-foot{display:none}.zone-nav{justify-content:center;padding:10px 4px;font-size:10px}.member-zone-main{padding:18px 12px}.member-zone-grid{grid-template-columns:1fr 1fr}.zone-columns,.zone-bottom{grid-template-columns:1fr}.member-zone-main>header h2{font-size:25px}}
+  `;
+  document.head.appendChild(css);
+
+  const feedback = layer.querySelector('#memberAuthFeedback');
+  const nick = layer.querySelector('#memberNick');
+  const password = layer.querySelector('#memberPassword');
+  const submit = layer.querySelector('.member-submit');
+  let mode = 'login';
+  let currentProfile = null;
+
+  const setMode = (next) => {
+    mode = next;
+    layer.querySelectorAll('[data-member-tab]').forEach((b) => b.classList.toggle('active', b.dataset.memberTab === next));
+    submit.textContent = next === 'login' ? 'ZALOGUJ SIĘ' : 'UTWÓRZ KONTO';
+    feedback.textContent = '';
+    nick.value = '';
+    password.value = '';
+  };
+
+  const switchView = (view) => {
+    zone.querySelectorAll('.zone-nav').forEach((b) => b.classList.toggle('active', b.dataset.zoneView === view));
+    zone.querySelectorAll('.zone-view').forEach((p) => p.classList.toggle('active', p.dataset.zonePanel === view));
+  };
+
+  const lockPage = (message = '') => {
+    document.documentElement.classList.add('member-locked');
+    layer.classList.add('open');
+    zone.classList.remove('open');
+    if (message) feedback.textContent = message;
+  };
+
+  const unlockPage = () => {
+    document.documentElement.classList.remove('member-locked');
+    layer.classList.remove('open');
+  };
+
+  const getProfile = async (user) => {
+    if (!user) return null;
+    const { data } = await supabase.from('profiles').select('nickname,role,status').eq('id', user.id).maybeSingle();
+    return data || null;
+  };
+
+  const isAllowed = (session, profile) => {
+    if (!session) return false;
+    if (!isMemberEmail(session.user?.email || '')) return true;
+    return profile?.status === 'approved';
+  };
+
+  const updateAdminVisibility = (session, profile) => {
+    const legacyAdmin = session && !isMemberEmail(session.user?.email || '');
+    const role = String(profile?.role || '').toLowerCase();
+    const canAdmin = Boolean(session && (legacyAdmin || role === 'owner' || role === 'admin'));
+    document.querySelector('#adminTrigger')?.toggleAttribute('hidden', !canAdmin);
+    document.querySelector('#quickAdd')?.toggleAttribute('hidden', !canAdmin);
+  };
+
+  const syncAccess = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    currentProfile = session ? await getProfile(session.user) : null;
+    if (isAllowed(session, currentProfile)) {
+      unlockPage();
+      updateAdminVisibility(session, currentProfile);
+      return true;
+    }
+    updateAdminVisibility(null, null);
+    lockPage();
+    return false;
+  };
+
+  const openZone = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    const profile = session ? await getProfile(session.user) : null;
+    if (!isAllowed(session, profile)) {
+      lockPage('Zaloguj się, aby wejść do Strefy Klanu.');
+      return;
+    }
+    const nickname = profile?.nickname || (session.user?.email || '').split('@')[0] || 'Członek';
+    const role = profile?.role || (!isMemberEmail(session.user?.email || '') ? 'owner' : 'member');
+    zone.querySelector('#memberZoneNick').textContent = nickname;
+    zone.querySelector('#memberZoneRole').textContent = String(role).toUpperCase();
+    zone.querySelector('#memberRankCard').textContent = String(role).replace(/^./, (c) => c.toUpperCase());
+    switchView('home');
+    zone.classList.add('open');
+  };
+
+  layer.querySelector('.member-tabs').addEventListener('click', (e) => {
+    const button = e.target.closest('[data-member-tab]');
+    if (button) setMode(button.dataset.memberTab);
+  });
+
+  zone.querySelector('.member-zone-close').addEventListener('click', () => zone.classList.remove('open'));
+  zone.addEventListener('click', (e) => {
+    const nav = e.target.closest('[data-zone-view]');
+    const go = e.target.closest('[data-zone-go]');
+    if (nav) switchView(nav.dataset.zoneView);
+    if (go) switchView(go.dataset.zoneGo);
+  });
+
+  zone.querySelector('.zone-logout').addEventListener('click', async () => {
+    await supabase.auth.signOut();
+    lockPage();
+  });
+
+  layer.querySelector('#memberAdminLogin').addEventListener('click', () => {
+    const modal = document.querySelector('#loginModal');
+    if (!modal) return;
+    modal.style.zIndex = '10005';
+    document.querySelector('#loginForm')?.reset();
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+  });
+
+  layer.querySelector('#memberAuthForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const nickname = nick.value.trim();
+    const secret = password.value;
+    if (!/^[A-Za-z0-9_-]{2,24}$/.test(nickname)) {
+      feedback.textContent = 'Nick: 2–24 znaki, litery/cyfry oraz _ lub -.';
+      return;
+    }
+    submit.disabled = true;
+    feedback.textContent = 'Proszę czekać…';
+    try {
+      if (mode === 'register') {
+        const { error } = await supabase.auth.signUp({ email: emailForNick(nickname), password: secret, options: { data: { nickname } } });
+        if (error) throw error;
+        await supabase.auth.signOut();
+        feedback.textContent = 'Konto utworzone. Czeka na akceptację Ownera.';
+        nick.value = '';
+        password.value = '';
+        return;
+      }
+
+      const { data, error } = await supabase.auth.signInWithPassword({ email: emailForNick(nickname), password: secret });
+      if (error) throw error;
+      const profile = await getProfile(data.user);
+      if (!profile || profile.status !== 'approved') {
+        await supabase.auth.signOut();
+        feedback.textContent = profile?.status === 'blocked' ? 'To konto jest zablokowane.' : 'Konto czeka na akceptację Ownera.';
+        return;
+      }
+      currentProfile = profile;
+      unlockPage();
+      updateAdminVisibility(data.session, profile);
+      setTimeout(openZone, 150);
+    } catch (err) {
+      const msg = String(err?.message || '');
+      feedback.textContent = msg.includes('Invalid login') ? 'Nieprawidłowy nick lub hasło.' : msg.includes('already registered') ? 'Ten nick jest już zajęty.' : 'Nie udało się wykonać operacji.';
+    } finally {
+      submit.disabled = false;
+    }
+  });
+
+  const actions = document.querySelector('.header-actions');
+  const entry = document.createElement('button');
+  const logout = document.createElement('button');
+  entry.type = logout.type = 'button';
+  entry.className = 'admin-trigger member-auth-entry';
+  entry.textContent = '✦ Strefa klanu';
+  logout.className = 'admin-trigger member-auth-entry logout';
+  logout.textContent = '↪ Wyloguj';
+  entry.addEventListener('click', openZone);
+  logout.addEventListener('click', async () => { await supabase.auth.signOut(); lockPage(); });
+  if (actions) actions.append(entry, logout);
+
+  const syncHeader = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    const profile = session ? await getProfile(session.user) : null;
+    if (!isAllowed(session, profile)) {
+      entry.hidden = true;
+      logout.hidden = true;
+      return;
+    }
+    const nickname = profile?.nickname || (!isMemberEmail(session.user?.email || '') ? 'Administrator' : 'Strefa klanu');
+    entry.textContent = `♟ ${nickname}`;
+    entry.hidden = false;
+    logout.hidden = false;
+  };
+
+  supabase.auth.onAuthStateChange(() => {
+    setTimeout(async () => {
+      await syncAccess();
+      await syncHeader();
+    }, 0);
+  });
+
+  installMemberEventSignups(supabase);
+  layer.classList.add('open');
+  syncAccess().then(syncHeader);
 }
