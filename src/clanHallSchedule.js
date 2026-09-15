@@ -29,6 +29,15 @@ if (typeof document !== 'undefined') {
     if (title) title.textContent = 'Drop Kalkulator';
     if (subtitle) subtitle.textContent = 'Lineage 2 Interlude';
   }
+
+  const mainNavLinks = [...document.querySelectorAll('.main-nav a')];
+  const guidesLink = mainNavLinks.find((link) => link.textContent.trim().toLowerCase() === 'poradniki');
+  if (guidesLink) {
+    guidesLink.textContent = 'Drop Kalkulator';
+    guidesLink.href = 'https://lineage2wiki.org/interlude/';
+    guidesLink.target = '_blank';
+    guidesLink.rel = 'noopener noreferrer';
+  }
 }
 
 if (typeof document !== 'undefined' && !document.getElementById('calendar-filter-polish')) {
