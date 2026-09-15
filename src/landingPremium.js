@@ -1,7 +1,7 @@
 export function installPremiumLanding(){
   const layer=document.querySelector('#memberAuthLayer');
   const authBox=layer?.querySelector('.member-auth-box');
-  if(!layer||!authBox||layer.querySelector('.ob-gate-shell'))return;
+  if(!layer||!authBox||layer.querySelector('.ob-gate-shell'))return false;
 
   const shell=document.createElement('section');
   shell.className='ob-gate-shell';
@@ -51,4 +51,17 @@ export function installPremiumLanding(){
   shell.querySelector('.ob-gate-login-slot').appendChild(authBox);
   authBox.querySelector('img')?.classList.add('ob-auth-old-logo');
   authBox.querySelector('.member-auth-close')?.setAttribute('aria-hidden','true');
+  return true;
 }
+
+function bootPremiumLanding(){
+  if(installPremiumLanding())return;
+  const observer=new MutationObserver(()=>{
+    if(installPremiumLanding())observer.disconnect();
+  });
+  observer.observe(document.documentElement,{childList:true,subtree:true});
+  setTimeout(()=>observer.disconnect(),10000);
+}
+
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bootPremiumLanding,{once:true});
+else bootPremiumLanding();
