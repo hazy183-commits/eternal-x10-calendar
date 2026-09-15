@@ -1,7 +1,8 @@
 import './adminDashboardHome.css';
+import { supabase } from './supabaseClient.js';
 
-export function installAdminHomeScreen(supabase){
-  if(!supabase||window.__obAdminHomeInstalled)return;
+export function installAdminHomeScreen(supabaseClient){
+  if(!supabaseClient||window.__obAdminHomeInstalled)return;
   window.__obAdminHomeInstalled=true;
 
   const waitForDashboard=()=>{
@@ -64,9 +65,9 @@ export function installAdminHomeScreen(supabase){
     originalButtons.forEach((button)=>button.addEventListener('click',hideHome,true));
 
     async function readProfile(){
-      const {data:{session}}=await supabase.auth.getSession();
+      const {data:{session}}=await supabaseClient.auth.getSession();
       if(!session)return {session:null,profile:null};
-      const {data:profile}=await supabase.from('profiles').select('nickname,role,status').eq('id',session.user.id).maybeSingle();
+      const {data:profile}=await supabaseClient.from('profiles').select('nickname,role,status').eq('id',session.user.id).maybeSingle();
       return {session,profile:profile||null};
     }
 
@@ -81,10 +82,10 @@ export function installAdminHomeScreen(supabase){
       home.querySelectorAll('.owner-only').forEach((el)=>el.hidden=limited);
       home.querySelector('#adminHomeUser').textContent=profile?.nickname||session.user?.email?.split('@')[0]||'Administrator';
       home.querySelector('#adminHomeAccess').textContent=owner?'PEŁNY · OWNER':admin?'OGRANICZONY · ADMIN':'ADMINISTRATOR';
-      const {count:eventCount}=await supabase.from('events').select('id',{count:'exact',head:true});
+      const {count:eventCount}=await supabaseClient.from('events').select('id',{count:'exact',head:true});
       home.querySelector('#adminHomeEvents').textContent=eventCount??'—';
       if(owner){
-        const {count:pending}=await supabase.from('profiles').select('id',{count:'exact',head:true}).eq('status','pending');
+        const {count:pending}=await supabaseClient.from('profiles').select('id',{count:'exact',head:true}).eq('status','pending');
         home.querySelector('#adminHomePending').textContent=pending??0;
       }else home.querySelector('#adminHomePending').textContent='—';
       if(legacy){home.querySelectorAll('.owner-only').forEach((el)=>el.hidden=false);}
@@ -115,8 +116,10 @@ export function installAdminHomeScreen(supabase){
     });
     observer.observe(modal,{attributes:true,attributeFilter:['class']});
 
-    supabase.auth.onAuthStateChange(()=>setTimeout(()=>{if(modal.classList.contains('open'))refreshHome();},0));
+    supabaseClient.auth.onAuthStateChange(()=>setTimeout(()=>{if(modal.classList.contains('open'))refreshHome();},0));
   };
 
   waitForDashboard();
 }
+
+installAdminHomeScreen(supabase);
