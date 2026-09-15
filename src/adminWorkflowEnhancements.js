@@ -22,6 +22,7 @@ export function installAdminWorkflowEnhancements(client=supabase){
   }
 
   const limited=()=>profile?.status==='approved'&&profile?.role==='admin';
+  const setTermMode=(active)=>document.documentElement.classList.toggle('ob-term-mode',Boolean(active&&limited()));
 
   function ensureOwnerIntro(){
     const listView=document.querySelector('#adminListView');
@@ -96,9 +97,9 @@ export function installAdminWorkflowEnhancements(client=supabase){
     ensureOwnerIntro();
     ensureTermManager();
     document.documentElement.classList.toggle('ob-workflow-limited',limited());
+    if(!limited())setTermMode(false);
     const eventTab=document.querySelector('#adminDashboardTabs [data-admin-tab="events"]');
     if(eventTab&&limited())eventTab.setAttribute('aria-label','Zarządzanie terminami');
-    if(limited()&&document.querySelector('#adminModal')?.classList.contains('open'))await loadTerms();
   }
 
   const wait=()=>{
@@ -108,14 +109,25 @@ export function installAdminWorkflowEnhancements(client=supabase){
     let open=false;
     new MutationObserver(()=>{
       const now=modal.classList.contains('open');
-      if(now&&!open)setTimeout(async()=>{await sync();if(limited())loadTerms(true);},60);
+      if(now&&!open)setTimeout(async()=>{await sync();setTermMode(false);},60);
+      if(!now)setTermMode(false);
       open=now;
     }).observe(modal,{attributes:true,attributeFilter:['class']});
     document.addEventListener('click',(event)=>{
-      if(event.target.closest('[data-admin-tab="events"]')&&limited())setTimeout(()=>loadTerms(),40);
-      if(event.target.closest('[data-home-target="events"]')&&limited())setTimeout(()=>loadTerms(),100);
+      if(event.target.closest('[data-admin-tab="events"]')&&limited()){
+        setTermMode(true);
+        setTimeout(()=>loadTerms(),40);
+        return;
+      }
+      if(event.target.closest('[data-home-target="events"]')&&limited()){
+        setTermMode(true);
+        setTimeout(()=>loadTerms(),100);
+        return;
+      }
+      if(event.target.closest('[data-admin-tab="home"]'))setTermMode(false);
+      if(event.target.closest('[data-admin-tab="bosses"],[data-admin-tab="siege"],[data-admin-tab="schedule"],[data-admin-tab="users"]'))setTermMode(false);
     },true);
-    client.auth.onAuthStateChange(()=>setTimeout(()=>{loaded=false;sync();},0));
+    client.auth.onAuthStateChange(()=>setTimeout(()=>{loaded=false;setTermMode(false);sync();},0));
   };
   wait();
 }
