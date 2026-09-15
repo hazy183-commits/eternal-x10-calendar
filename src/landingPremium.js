@@ -2,7 +2,7 @@ const YOUTUBE_CHANNEL='https://www.youtube.com/@orzelbialyfirstofight';
 
 function safeText(value=''){
   return String(value).replace(/[&<>"']/g,(char)=>({
-    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
   }[char]));
 }
 
