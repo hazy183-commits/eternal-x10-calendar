@@ -122,4 +122,6 @@ export function installAdminHomeScreen(supabaseClient){
   waitForDashboard();
 }
 
-installAdminHomeScreen(supabase);
+// Wait until the module graph has initialized the shared Supabase client.
+// Member features also import artwork, which imports this screen.
+queueMicrotask(() => installAdminHomeScreen(supabase));
