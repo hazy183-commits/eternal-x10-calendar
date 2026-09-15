@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import { installMemberAuth } from './memberAuth.js';
+import { installMemberEventSignups } from './memberEventSignups.js';
 
 const url = import.meta.env.VITE_SUPABASE_URL;
 const key = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
@@ -12,7 +13,10 @@ export const supabase = url?.startsWith('https://') && key?.startsWith('sb_publi
   : null;
 
 if (typeof document !== 'undefined') {
-  const startMemberAuth = () => installMemberAuth(supabase);
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', startMemberAuth, { once: true });
-  else queueMicrotask(startMemberAuth);
+  const startMemberFeatures = () => {
+    installMemberAuth(supabase);
+    installMemberEventSignups(supabase);
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', startMemberFeatures, { once: true });
+  else queueMicrotask(startMemberFeatures);
 }
