@@ -6,67 +6,73 @@ export function installNextEventCarousel() {
   if (!card || document.querySelector('#nextEventCarouselControls')) return;
 
   let index = 0;
-  let first = null;
   let selected = null;
-  let countdownTimer = null;
   const controls = document.createElement('div');
   controls.id = 'nextEventCarouselControls';
   controls.className = 'next-event-carousel-controls';
-  controls.innerHTML = `<button type="button" class="next-event-arrow" data-prev aria-label="Poprzednie wydarzenie">‹</button><div class="next-event-dots"></div><span class="next-event-position" aria-live="polite">1/3</span><button type="button" class="next-event-arrow" data-next aria-label="Następne wydarzenie">›</button>`;
+  controls.innerHTML = `<button type="button" class="next-event-arrow" data-prev aria-label="Poprzednie wydarzenie">‹</button><div class="next-event-dots"></div><span class="next-event-position" aria-live="polite"></span><button type="button" class="next-event-arrow" data-next aria-label="Następne wydarzenie">›</button>`;
   card.appendChild(controls);
 
   const style = document.createElement('style');
   style.id = 'next-event-carousel-style';
-  style.textContent = `.next-event-card{position:relative}.next-event-carousel-controls{position:absolute;right:18px;bottom:14px;z-index:20;display:flex;align-items:center;gap:8px;padding:5px 7px;border:1px solid #8d6a2f;background:#070b0cf2;box-shadow:0 5px 18px #000a}.next-event-arrow{width:34px;height:34px;border:1px solid #8d6a2f;background:#111617;color:#e3b85f;font:700 25px/1 Georgia,serif;cursor:pointer}.next-event-arrow:hover,.next-event-arrow:focus{outline:none;border-color:#e3b85f;background:#2a2012}.next-event-dots{display:flex;gap:7px}.next-event-dot{width:9px;height:9px;padding:0;border:1px solid #a47d37;background:#191b18;transform:rotate(45deg);cursor:pointer}.next-event-dot.active{background:#e3b85f;box-shadow:0 0 8px #e3b85f88}.next-event-position{min-width:28px;color:#aaa294;font:700 9px Inter,Arial,sans-serif;text-align:center}.next-event-card.carousel-changing .next-event-content,.next-event-card.carousel-changing .event-art-large,.next-event-card.carousel-changing .countdown-block{opacity:.35}.next-event-content,.event-art-large,.countdown-block{transition:opacity .12s ease}@media(max-width:700px){.next-event-carousel-controls{right:9px;bottom:9px}.next-event-arrow{width:40px;height:40px}}`;
+  style.textContent = `.next-event-card{position:relative}.next-event-carousel-controls{position:absolute;right:18px;bottom:14px;z-index:20;display:flex;align-items:center;gap:8px;padding:5px 7px;border:1px solid #8d6a2f;background:#070b0cf2;box-shadow:0 5px 18px #000a}.next-event-arrow{width:34px;height:34px;border:1px solid #8d6a2f;background:#111617;color:#e3b85f;font:700 25px/1 Georgia,serif;cursor:pointer}.next-event-arrow:hover,.next-event-arrow:focus{outline:none;border-color:#e3b85f;background:#2a2012}.next-event-dots{display:flex;gap:7px}.next-event-dot{width:9px;height:9px;padding:0;border:1px solid #a47d37;background:#191b18;transform:rotate(45deg);cursor:pointer}.next-event-dot.active{background:#e3b85f;box-shadow:0 0 8px #e3b85f88}.next-event-position{min-width:28px;color:#aaa294;font:700 9px Inter,Arial,sans-serif;text-align:center}@media(max-width:700px){.next-event-carousel-controls{right:9px;bottom:9px}.next-event-arrow{width:40px;height:40px}}`;
   document.head.appendChild(style);
 
   const rows = () => [...document.querySelectorAll('#upcomingEvents .mini-event')].slice(0, 3);
   const pad = (v) => String(v).padStart(2, '0');
-  const capture = () => {
-    if (!first && document.querySelector('#nextName')?.textContent && !document.querySelector('#nextName')?.textContent.includes('BRAK')) {
-      first = { name:document.querySelector('#nextName').textContent,type:document.querySelector('#nextType').textContent,typeClass:document.querySelector('#nextType').className,meta:document.querySelector('#nextMeta').textContent,description:document.querySelector('#nextDescription').textContent,art:document.querySelector('#nextName').textContent };
-    }
-  };
-  const drawDots = (total) => {
+  const drawDots = () => {
+    const total = rows().length;
     controls.querySelector('.next-event-dots').innerHTML = Array.from({length:total},(_,i)=>`<button type="button" class="next-event-dot ${i===index?'active':''}" data-index="${i}" aria-label="Pokaż wydarzenie ${i+1}"></button>`).join('');
     controls.querySelector('.next-event-position').textContent = total ? `${index+1}/${total}` : '0/0';
   };
-  const parsePolishDate = (when) => {
-    const now = new Date();
-    const hm = String(when).match(/^(\d{1,2}):(\d{2})$/);
-    if (hm) { const d=new Date(now); d.setHours(Number(hm[1]),Number(hm[2]),0,0); if(d<=now)d.setDate(d.getDate()+1); return d; }
-    const months={sty:0,lut:1,mar:2,kwi:3,maj:4,cze:5,lip:6,sie:7,wrz:8,paź:9,paz:9,lis:10,gru:11};
-    const dm=String(when).toLowerCase().match(/(\d{1,2})\s+([a-ząćęłńóśźż]{3})/i);
-    if(dm){const m=months[dm[2]];if(m!==undefined){const d=new Date(now.getFullYear(),m,Number(dm[1]),0,0,0);if(d<now)d.setFullYear(d.getFullYear()+1);return d;}}
-    return null;
+  const targetFromRow = (row) => {
+    const time = row.querySelector('time')?.textContent?.trim() || '';
+    const hm = time.match(/^(\d{1,2}):(\d{2})$/);
+    if (!hm) return null;
+    const d = new Date(); d.setHours(Number(hm[1]), Number(hm[2]), 0, 0);
+    if (d <= new Date()) d.setDate(d.getDate() + 1);
+    return d;
   };
-  const parseRow = (row) => {
-    const name=row.querySelector('b')?.textContent?.trim()||'Wydarzenie',detail=row.querySelector('span')?.textContent?.trim()||'',when=row.querySelector('time')?.textContent?.trim()||'';
+  const readRow = (row) => {
+    const name=row.querySelector('b')?.textContent?.trim()||'Wydarzenie';
+    const detail=row.querySelector('span')?.textContent?.trim()||'';
+    const when=row.querySelector('time')?.textContent?.trim()||'';
     const parts=detail.split(' · '),type=parts.shift()||'Event';
-    return {name,type,location:parts.join(' · '),when,art:row.dataset.bossName||name,target:parsePolishDate(when)};
+    return {name,type,location:parts.join(' · '),when,art:row.dataset.bossName||name,target:targetFromRow(row)};
   };
-  const updateSelectedCountdown = () => {
-    if (index===0 || !selected?.target) return;
-    let seconds=Math.max(0,Math.floor((selected.target-Date.now())/1000));
-    const values=[Math.floor(seconds/86400),Math.floor((seconds%=86400)/3600),Math.floor((seconds%=3600)/60),seconds%60];
-    const countdown=document.querySelector('#countdown');
-    if(countdown) countdown.innerHTML=values.map((v,i)=>`<b>${pad(v)}</b>${i<3?'<i>:</i>':''}`).join('');
-    const label=document.querySelector('#countdownLabel'); if(label) label.textContent='Do rozpoczęcia';
+  const paintSelected = () => {
+    if (index === 0) { selected = null; return; }
+    const row = rows()[index]; if (!row) return;
+    selected = readRow(row);
+    const s=selected;
+    $('#nextName').textContent=s.name;
+    $('#nextType').textContent=s.type;
+    $('#nextType').className=`type-chip ${s.type.toLowerCase().replaceAll(' ','-')}`;
+    $('#nextMeta').textContent=`${s.when}${s.location?` · ${s.location}`:''}`;
+    $('#nextDescription').textContent='Jedno z 3 najbliższych wydarzeń w kalendarzu klanu.';
+    $('#nextStatus').textContent='NADCHODZI'; $('#nextStatus').className='live-status nadchodzi';
+    applyBossArtwork(document.querySelector('.event-art-large'),s.art);
   };
-  const paint = () => {
-    const list=rows(); if(!list.length)return; capture();
-    selected=index===0&&first?{...first}:parseRow(list[index]); const s=selected;
-    document.querySelector('#nextName').textContent=s.name; document.querySelector('#nextType').textContent=s.type; document.querySelector('#nextType').className=s.typeClass||`type-chip ${s.type.toLowerCase().replaceAll(' ','-')}`;
-    document.querySelector('#nextMeta').textContent=s.meta||`${s.when}${s.location?` · ${s.location}`:''}`; document.querySelector('#nextDescription').textContent=s.description||'Jedno z 3 najbliższych wydarzeń w kalendarzu klanu.';
-    if(index!==0){document.querySelector('#nextStatus').textContent='NADCHODZI';document.querySelector('#nextStatus').className='live-status nadchodzi';}
-    applyBossArtwork(document.querySelector('.event-art-large'),s.art||s.name); drawDots(list.length); updateSelectedCountdown();
+  const $ = (s) => document.querySelector(s);
+  const updateSelected = () => {
+    if (index===0 || !selected) return;
+    // main.js may repaint the first card each second; restore only text if needed, without observers.
+    if ($('#nextName').textContent !== selected.name) paintSelected();
+    if (!selected.target) return;
+    let sec=Math.max(0,Math.floor((selected.target-Date.now())/1000));
+    const vals=[Math.floor(sec/86400),Math.floor((sec%=86400)/3600),Math.floor((sec%=3600)/60),sec%60];
+    $('#countdown').innerHTML=vals.map((v,i)=>`<b>${pad(v)}</b>${i<3?'<i>:</i>':''}`).join('');
+    $('#countdownLabel').textContent='Do rozpoczęcia';
   };
-  const show=(i)=>{const list=rows();if(!list.length)return;index=(i+list.length)%list.length;card.classList.add('carousel-changing');window.setTimeout(()=>{paint();card.classList.remove('carousel-changing');},70);};
+  const show = (i) => {
+    const list=rows(); if(!list.length)return;
+    index=(i+list.length)%list.length;
+    if(index===0){selected=null; drawDots(); return;}
+    paintSelected(); drawDots(); updateSelected();
+  };
   controls.addEventListener('click',e=>{const dot=e.target.closest('[data-index]');if(dot)return show(Number(dot.dataset.index));if(e.target.closest('[data-prev]'))show(index-1);if(e.target.closest('[data-next]'))show(index+1);});
 
-  const nextName=document.querySelector('#nextName'); if(nextName)new MutationObserver(()=>{if(index===0||!selected)return;queueMicrotask(()=>{if(document.querySelector('#nextName')?.textContent!==selected.name)paint();});}).observe(nextName,{childList:true,characterData:true,subtree:true});
-  const countdown=document.querySelector('#countdown'); if(countdown)new MutationObserver(()=>{if(index>0&&selected?.target)queueMicrotask(updateSelectedCountdown);}).observe(countdown,{childList:true,subtree:true});
-  const upcoming=document.querySelector('#upcomingEvents'); if(upcoming)new MutationObserver(()=>{const list=rows();if(index>=list.length)index=0;drawDots(list.length);if(index>0)queueMicrotask(paint);}).observe(upcoming,{childList:true,subtree:true});
-  countdownTimer=window.setInterval(()=>{if(index>0)updateSelectedCountdown();},1000);
-  window.setTimeout(()=>{capture();drawDots(rows().length);},350);
+  // One lightweight timer only. No MutationObservers, so there is no feedback loop/freeze.
+  window.setInterval(updateSelected,1000);
+  window.setTimeout(drawDots,400);
 }
