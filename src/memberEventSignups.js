@@ -17,7 +17,30 @@ export function installMemberEventSignups(supabase){
  .zone-my-signup .zone-event-thumb{width:46px;height:38px}
  .zone-choice{padding:6px 9px;border:1px solid #755523;font-size:9px;font-weight:900}.zone-choice.yes{border-color:#277d3b;color:#70dc86;background:#0c2112}.zone-choice.maybe{border-color:#8d6b22;color:#e4bd56;background:#241c08}.zone-choice.no{border-color:#853631;color:#e47870;background:#25100e}
  .zone-signup-note{margin-top:8px;color:#716c63;font-size:9px}
- @media(max-width:700px){.zone-event-row.signup-row{grid-template-columns:58px 48px 1fr}.zone-signup-actions{grid-column:1/-1;justify-content:flex-start}.zone-event-thumb{width:46px;height:40px}.zone-my-signup{grid-template-columns:58px 42px 1fr}.zone-my-signup .zone-choice{grid-column:2/-1;width:max-content}}
+ @media(max-width:700px){
+   #memberZoneLayer .zone-card{padding:12px!important}
+   #memberZoneLayer .zone-card-title{align-items:flex-start!important;gap:10px!important;padding-bottom:9px!important}
+   #memberZoneLayer .zone-card-title h3{font-size:16px!important;line-height:1.05!important}
+   #memberZoneLayer .zone-card-title .zone-link{font-size:8px!important;white-space:nowrap!important;padding-top:2px!important}
+   #memberZoneLayer .zone-event-list{display:grid!important;gap:8px!important;margin-top:8px!important}
+   #memberZoneLayer .zone-event-row.signup-row{display:grid!important;grid-template-columns:52px 52px minmax(0,1fr)!important;gap:8px 10px!important;align-items:center!important;width:100%!important;box-sizing:border-box!important;min-height:0!important;margin:0!important;padding:11px!important;border:1px solid #332a1d!important;background:linear-gradient(135deg,#0b0f0f,#080b0b)!important}
+   #memberZoneLayer .zone-event-date{grid-column:1!important;grid-row:1!important;font-size:9px!important;line-height:1.3!important;text-align:center!important;color:#e0b353!important}
+   #memberZoneLayer .zone-event-thumb{grid-column:2!important;grid-row:1!important;width:50px!important;height:46px!important;margin:0!important;object-fit:cover!important}
+   #memberZoneLayer .zone-event-info{grid-column:3!important;grid-row:1!important;min-width:0!important}
+   #memberZoneLayer .zone-event-info b{font-size:12px!important;line-height:1.2!important;color:#eee!important;white-space:normal!important;overflow-wrap:anywhere!important}
+   #memberZoneLayer .zone-event-info small{display:block!important;margin-top:3px!important;font-size:8px!important;line-height:1.35!important;color:#8b867d!important;white-space:normal!important;overflow-wrap:anywhere!important}
+   #memberZoneLayer .zone-signup-actions{grid-column:1/-1!important;grid-row:2!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important;width:100%!important;margin-top:1px!important;justify-content:stretch!important}
+   #memberZoneLayer .zone-signup-btn{width:100%!important;min-width:0!important;padding:9px 3px!important;font-size:7.5px!important;line-height:1!important;min-height:34px!important}
+   #memberZoneLayer .zone-my-signup{grid-template-columns:48px 46px minmax(0,1fr)!important;gap:8px!important;padding:10px 0!important}
+   #memberZoneLayer .zone-my-signup .zone-choice{grid-column:2/-1!important;width:max-content!important}
+ }
+ @media(max-width:430px){
+   #memberZoneLayer .zone-event-row.signup-row{grid-template-columns:46px 48px minmax(0,1fr)!important;padding:10px!important;gap:7px 8px!important}
+   #memberZoneLayer .zone-event-thumb{width:46px!important;height:42px!important}
+   #memberZoneLayer .zone-event-info b{font-size:11px!important}
+   #memberZoneLayer .zone-event-info small{font-size:7.5px!important}
+   #memberZoneLayer .zone-signup-btn{font-size:7px!important;padding:8px 2px!important;min-height:32px!important}
+ }
  `;document.head.appendChild(css);
  const getUser=async()=>{const {data}=await supabase.auth.getUser();return data?.user||null},key=u=>`ob-event-signups-${u.id}`;
  const readLocal=u=>{try{return new Map(Object.entries(JSON.parse(localStorage.getItem(key(u))||'{}')))}catch{return new Map()}},writeLocal=(u,id,s)=>{const m=readLocal(u);m.set(String(id),s);localStorage.setItem(key(u),JSON.stringify(Object.fromEntries(m)));return m};
