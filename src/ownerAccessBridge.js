@@ -8,12 +8,15 @@ export function installOwnerAccessBridge(supabase){
     .ob-owner-shortcuts.show{display:grid}
     .ob-owner-shortcut{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:11px 12px;border:1px solid #765724;background:linear-gradient(180deg,#21170c,#0b0e0e);color:#e7bd68;font-size:10px;font-weight:900;letter-spacing:.05em;cursor:pointer}
     .ob-owner-shortcut:hover{border-color:#b88738;color:#f4d28b}
+    html:not(.ob-owner-account) #adminTrigger,html:not(.ob-owner-account) #quickAdd{display:none!important}
     #adminModal.ob-owner-admin-open{z-index:12050!important}
     #adminModal.ob-owner-admin-open .modal-backdrop{z-index:0}
     #adminModal.ob-owner-admin-open .admin-panel{z-index:1}
     @media(max-width:700px){.ob-owner-shortcuts{grid-template-columns:1fr}.ob-owner-shortcut{min-height:44px;font-size:9px}#adminModal.ob-owner-admin-open{padding:5px!important;align-items:stretch!important}#adminModal.ob-owner-admin-open .admin-panel{width:100%!important;max-height:calc(100vh - 10px)!important;margin:auto!important}}
   `;
   document.head.appendChild(style);
+
+  let lastOwnerState=false;
 
   const readProfile=async()=>{
     const {data:{session}}=await supabase.auth.getSession();
@@ -25,7 +28,7 @@ export function installOwnerAccessBridge(supabase){
   const openAdmin=async()=>{
     const profile=await readProfile();
     const role=String(profile?.role||'').toLowerCase();
-    const allowed=profile?.status==='approved'&&(role==='owner'||role==='admin');
+    const allowed=profile?.status==='approved'&&role==='owner';
     if(!allowed)return;
 
     const modal=document.querySelector('#adminModal');
@@ -50,6 +53,33 @@ export function installOwnerAccessBridge(supabase){
     });
   };
 
+  const installOwnerHeaderButton=(isOwner)=>{
+    let trigger=document.querySelector('#adminTrigger');
+    if(!trigger)return;
+    if(!trigger.dataset.ownerControlled){
+      const replacement=trigger.cloneNode(true);
+      replacement.dataset.ownerControlled='true';
+      replacement.hidden=!isOwner;
+      replacement.innerHTML='<span>✦</span> Panel administratora';
+      trigger.replaceWith(replacement);
+      replacement.addEventListener('click',(event)=>{
+        event.preventDefault();
+        event.stopPropagation();
+        openAdmin();
+      });
+      trigger=replacement;
+    }
+    trigger.hidden=!isOwner;
+  };
+
+  const normalizeClanHeader=()=>{
+    const entry=[...document.querySelectorAll('.member-auth-entry')].find((button)=>!button.classList.contains('logout'));
+    if(entry){
+      entry.textContent='♟ STREFA KLANU';
+      entry.setAttribute('aria-label','Otwórz Strefę Klanu');
+    }
+  };
+
   const openEditor=()=>{
     const zone=document.querySelector('#memberZoneLayer');
     const edit=zone?.querySelector('[data-zone-view="content-editor"]');
@@ -61,6 +91,18 @@ export function installOwnerAccessBridge(supabase){
   };
 
   async function sync(){
+    const p=await readProfile();
+    const role=String(p?.role||'').toLowerCase();
+    const approved=p?.status==='approved';
+    const isOwner=approved&&role==='owner';
+    lastOwnerState=isOwner;
+    document.documentElement.classList.toggle('ob-owner-account',isOwner);
+    installOwnerHeaderButton(isOwner);
+    normalizeClanHeader();
+
+    const quickAdd=document.querySelector('#quickAdd');
+    if(quickAdd)quickAdd.hidden=!isOwner;
+
     const zone=document.querySelector('#memberZoneLayer');
     if(!zone){setTimeout(sync,150);return}
     const main=zone.querySelector('.member-zone-main');
@@ -77,29 +119,35 @@ export function installOwnerAccessBridge(supabase){
       shortcuts.querySelector('[data-ob-open-admin]').addEventListener('click',openAdmin);
     }
 
-    const p=await readProfile();
-    const role=String(p?.role||'').toLowerCase();
-    const approved=p?.status==='approved';
-    const isOwner=approved&&role==='owner';
-    const canAdmin=approved&&(role==='owner'||role==='admin');
-    shortcuts.classList.toggle('show',isOwner||canAdmin);
+    shortcuts.classList.toggle('show',isOwner);
     const editorBtn=shortcuts.querySelector('[data-ob-open-editor]');
     if(editorBtn)editorBtn.hidden=!isOwner;
     const adminBtn=shortcuts.querySelector('[data-ob-open-admin]');
-    if(adminBtn)adminBtn.hidden=!canAdmin;
+    if(adminBtn)adminBtn.hidden=!isOwner;
 
     const editNav=zone.querySelector('[data-zone-view="content-editor"]');
-    if(editNav&&isOwner)editNav.hidden=false;
+    if(editNav)editNav.hidden=!isOwner;
   }
 
   document.addEventListener('click',(event)=>{
-    if(event.target.closest('.member-auth-entry'))setTimeout(sync,120);
+    if(event.target.closest('.member-auth-entry'))setTimeout(()=>{normalizeClanHeader();sync();},120);
     if(event.target.closest('#adminModal [data-close-modal]')||event.target.closest('#adminModal .close-btn')){
       const modal=document.querySelector('#adminModal');
-      setTimeout(()=>modal?.classList.remove('ob-owner-admin-open'),0);
+      setTimeout(()=>{
+        modal?.classList.remove('ob-owner-admin-open');
+        document.body.style.overflow='';
+      },0);
     }
   },true);
 
-  supabase.auth.onAuthStateChange(()=>setTimeout(sync,100));
+  const headerObserver=new MutationObserver(()=>{
+    normalizeClanHeader();
+    const trigger=document.querySelector('#adminTrigger');
+    if(trigger)trigger.hidden=!lastOwnerState;
+  });
+  const header=document.querySelector('.header-actions');
+  if(header)headerObserver.observe(header,{childList:true,subtree:true,characterData:true});
+
+  supabase.auth.onAuthStateChange(()=>setTimeout(sync,120));
   setTimeout(sync,250);
 }
