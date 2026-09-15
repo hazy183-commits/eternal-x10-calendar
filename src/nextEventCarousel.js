@@ -8,6 +8,7 @@ export function installNextEventCarousel() {
   let index = 0;
   let first = null;
   let selected = null;
+  let countdownTimer = null;
   const controls = document.createElement('div');
   controls.id = 'nextEventCarouselControls';
   controls.className = 'next-event-carousel-controls';
@@ -20,77 +21,52 @@ export function installNextEventCarousel() {
   document.head.appendChild(style);
 
   const rows = () => [...document.querySelectorAll('#upcomingEvents .mini-event')].slice(0, 3);
+  const pad = (v) => String(v).padStart(2, '0');
   const capture = () => {
     if (!first && document.querySelector('#nextName')?.textContent && !document.querySelector('#nextName')?.textContent.includes('BRAK')) {
-      first = {
-        name: document.querySelector('#nextName').textContent,
-        type: document.querySelector('#nextType').textContent,
-        typeClass: document.querySelector('#nextType').className,
-        meta: document.querySelector('#nextMeta').textContent,
-        description: document.querySelector('#nextDescription').textContent,
-        art: document.querySelector('#nextName').textContent,
-      };
+      first = { name:document.querySelector('#nextName').textContent,type:document.querySelector('#nextType').textContent,typeClass:document.querySelector('#nextType').className,meta:document.querySelector('#nextMeta').textContent,description:document.querySelector('#nextDescription').textContent,art:document.querySelector('#nextName').textContent };
     }
   };
   const drawDots = (total) => {
-    controls.querySelector('.next-event-dots').innerHTML = Array.from({ length: total }, (_, i) => `<button type="button" class="next-event-dot ${i === index ? 'active' : ''}" data-index="${i}" aria-label="Pokaż wydarzenie ${i + 1}"></button>`).join('');
-    controls.querySelector('.next-event-position').textContent = total ? `${index + 1}/${total}` : '0/0';
+    controls.querySelector('.next-event-dots').innerHTML = Array.from({length:total},(_,i)=>`<button type="button" class="next-event-dot ${i===index?'active':''}" data-index="${i}" aria-label="Pokaż wydarzenie ${i+1}"></button>`).join('');
+    controls.querySelector('.next-event-position').textContent = total ? `${index+1}/${total}` : '0/0';
+  };
+  const parsePolishDate = (when) => {
+    const now = new Date();
+    const hm = String(when).match(/^(\d{1,2}):(\d{2})$/);
+    if (hm) { const d=new Date(now); d.setHours(Number(hm[1]),Number(hm[2]),0,0); if(d<=now)d.setDate(d.getDate()+1); return d; }
+    const months={sty:0,lut:1,mar:2,kwi:3,maj:4,cze:5,lip:6,sie:7,wrz:8,paź:9,paz:9,lis:10,gru:11};
+    const dm=String(when).toLowerCase().match(/(\d{1,2})\s+([a-ząćęłńóśźż]{3})/i);
+    if(dm){const m=months[dm[2]];if(m!==undefined){const d=new Date(now.getFullYear(),m,Number(dm[1]),0,0,0);if(d<now)d.setFullYear(d.getFullYear()+1);return d;}}
+    return null;
   };
   const parseRow = (row) => {
-    const name = row.querySelector('b')?.textContent?.trim() || 'Wydarzenie';
-    const detail = row.querySelector('span')?.textContent?.trim() || '';
-    const when = row.querySelector('time')?.textContent?.trim() || '';
-    const parts = detail.split(' · ');
-    const type = parts.shift() || 'Event';
-    return { name, type, location: parts.join(' · '), when, art: row.dataset.bossName || name };
+    const name=row.querySelector('b')?.textContent?.trim()||'Wydarzenie',detail=row.querySelector('span')?.textContent?.trim()||'',when=row.querySelector('time')?.textContent?.trim()||'';
+    const parts=detail.split(' · '),type=parts.shift()||'Event';
+    return {name,type,location:parts.join(' · '),when,art:row.dataset.bossName||name,target:parsePolishDate(when)};
+  };
+  const updateSelectedCountdown = () => {
+    if (index===0 || !selected?.target) return;
+    let seconds=Math.max(0,Math.floor((selected.target-Date.now())/1000));
+    const values=[Math.floor(seconds/86400),Math.floor((seconds%=86400)/3600),Math.floor((seconds%=3600)/60),seconds%60];
+    const countdown=document.querySelector('#countdown');
+    if(countdown) countdown.innerHTML=values.map((v,i)=>`<b>${pad(v)}</b>${i<3?'<i>:</i>':''}`).join('');
+    const label=document.querySelector('#countdownLabel'); if(label) label.textContent='Do rozpoczęcia';
   };
   const paint = () => {
-    const list = rows();
-    if (!list.length) return;
-    capture();
-    if (index === 0 && first) selected = { ...first };
-    else selected = parseRow(list[index]);
-    const s = selected;
-    document.querySelector('#nextName').textContent = s.name;
-    document.querySelector('#nextType').textContent = s.type;
-    document.querySelector('#nextType').className = s.typeClass || `type-chip ${s.type.toLowerCase().replaceAll(' ', '-')}`;
-    document.querySelector('#nextMeta').textContent = s.meta || `${s.when}${s.location ? ` · ${s.location}` : ''}`;
-    document.querySelector('#nextDescription').textContent = s.description || 'Jedno z 3 najbliższych wydarzeń w kalendarzu klanu.';
-    document.querySelector('#nextStatus').textContent = index === 0 ? document.querySelector('#nextStatus').textContent : 'NADCHODZI';
-    if (index !== 0) document.querySelector('#nextStatus').className = 'live-status nadchodzi';
-    applyBossArtwork(document.querySelector('.event-art-large'), s.art || s.name);
-    drawDots(list.length);
+    const list=rows(); if(!list.length)return; capture();
+    selected=index===0&&first?{...first}:parseRow(list[index]); const s=selected;
+    document.querySelector('#nextName').textContent=s.name; document.querySelector('#nextType').textContent=s.type; document.querySelector('#nextType').className=s.typeClass||`type-chip ${s.type.toLowerCase().replaceAll(' ','-')}`;
+    document.querySelector('#nextMeta').textContent=s.meta||`${s.when}${s.location?` · ${s.location}`:''}`; document.querySelector('#nextDescription').textContent=s.description||'Jedno z 3 najbliższych wydarzeń w kalendarzu klanu.';
+    if(index!==0){document.querySelector('#nextStatus').textContent='NADCHODZI';document.querySelector('#nextStatus').className='live-status nadchodzi';}
+    applyBossArtwork(document.querySelector('.event-art-large'),s.art||s.name); drawDots(list.length); updateSelectedCountdown();
   };
-  const show = (i) => {
-    const list = rows();
-    if (!list.length) return;
-    index = (i + list.length) % list.length;
-    card.classList.add('carousel-changing');
-    window.setTimeout(() => { paint(); card.classList.remove('carousel-changing'); }, 70);
-  };
-  controls.addEventListener('click', (e) => {
-    const dot = e.target.closest('[data-index]');
-    if (dot) return show(Number(dot.dataset.index));
-    if (e.target.closest('[data-prev]')) show(index - 1);
-    if (e.target.closest('[data-next]')) show(index + 1);
-  });
+  const show=(i)=>{const list=rows();if(!list.length)return;index=(i+list.length)%list.length;card.classList.add('carousel-changing');window.setTimeout(()=>{paint();card.classList.remove('carousel-changing');},70);};
+  controls.addEventListener('click',e=>{const dot=e.target.closest('[data-index]');if(dot)return show(Number(dot.dataset.index));if(e.target.closest('[data-prev]'))show(index-1);if(e.target.closest('[data-next]'))show(index+1);});
 
-  // main.js refreshes the first event every second. Re-apply the selected slide immediately after each refresh.
-  const nextName = document.querySelector('#nextName');
-  if (nextName) new MutationObserver(() => {
-    if (index === 0 || !selected) return;
-    queueMicrotask(() => {
-      if (document.querySelector('#nextName')?.textContent !== selected.name) paint();
-    });
-  }).observe(nextName, { childList: true, characterData: true, subtree: true });
-
-  const upcoming = document.querySelector('#upcomingEvents');
-  if (upcoming) new MutationObserver(() => {
-    const list = rows();
-    if (index >= list.length) index = 0;
-    drawDots(list.length);
-    if (index > 0) queueMicrotask(paint);
-  }).observe(upcoming, { childList: true, subtree: true });
-
-  window.setTimeout(() => { capture(); drawDots(rows().length); }, 350);
+  const nextName=document.querySelector('#nextName'); if(nextName)new MutationObserver(()=>{if(index===0||!selected)return;queueMicrotask(()=>{if(document.querySelector('#nextName')?.textContent!==selected.name)paint();});}).observe(nextName,{childList:true,characterData:true,subtree:true});
+  const countdown=document.querySelector('#countdown'); if(countdown)new MutationObserver(()=>{if(index>0&&selected?.target)queueMicrotask(updateSelectedCountdown);}).observe(countdown,{childList:true,subtree:true});
+  const upcoming=document.querySelector('#upcomingEvents'); if(upcoming)new MutationObserver(()=>{const list=rows();if(index>=list.length)index=0;drawDots(list.length);if(index>0)queueMicrotask(paint);}).observe(upcoming,{childList:true,subtree:true});
+  countdownTimer=window.setInterval(()=>{if(index>0)updateSelectedCountdown();},1000);
+  window.setTimeout(()=>{capture();drawDots(rows().length);},350);
 }
