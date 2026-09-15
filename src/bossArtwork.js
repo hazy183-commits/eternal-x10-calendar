@@ -3,6 +3,8 @@ import './landingRecruitHighlight.css';
 import './landingPremium.js';
 import './bossDetailsPl.js';
 import './adminHomeScreen.js';
+import './adminWorkflowEnhancements.js';
+import './leaderAttendanceSummary.js';
 
 // Vite serves public/ directly and copies it unchanged into production builds.
 const artworkBase = `${import.meta.env.BASE_URL}images/bosses/`;
