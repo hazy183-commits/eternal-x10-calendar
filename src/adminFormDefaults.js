@@ -19,8 +19,11 @@ export function defaultDurationForType(type = '') {
   return ({
     RB: 30,
     'Epic RB': 60,
+    'Clan Hall': 60,
     Siege: 120,
     Olympiad: 60,
     Event: 60,
   })[type] ?? 60;
 }
+
+

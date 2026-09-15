@@ -2,7 +2,7 @@ import { supabase } from './supabaseClient.js';
 import { eventIdentity } from './adminScheduling.js';
 
 const EVENT_TYPES = new Map(
-  ['RB', 'Epic RB', 'Siege', 'Olympiad', 'Event'].map((type) => [type.toUpperCase(), type]),
+  ['RB', 'Epic RB', 'Clan Hall', 'Siege', 'Olympiad', 'Event'].map((type) => [type.toUpperCase(), type]),
 );
 
 function normalizeTime(value) {
@@ -123,3 +123,4 @@ export class SupabaseEventRepository {
   }
 
 }
+

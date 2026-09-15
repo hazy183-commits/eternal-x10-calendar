@@ -1,4 +1,4 @@
-export const ADMIN_FILTERS = Object.freeze(['Wszystkie', 'RB', 'Epic RB', 'Siege', 'Olympiad', 'Event']);
+export const ADMIN_FILTERS = Object.freeze(['Wszystkie', 'RB', 'Epic RB', 'Clan Hall', 'Siege', 'Olympiad', 'Event']);
 export const ADMIN_SORTS = Object.freeze([
   Object.freeze({ value: 'nearest', label: 'Najbliższe najpierw' }),
   Object.freeze({ value: 'farthest', label: 'Najdalsze najpierw' }),
@@ -21,3 +21,4 @@ export function filterAndSortAdminEvents(events, { type = 'Wszystkie', sort = 'n
     return String(left.id).localeCompare(String(right.id));
   });
 }
+

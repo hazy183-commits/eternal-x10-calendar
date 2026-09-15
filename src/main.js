@@ -15,7 +15,7 @@ import { renderPvpEventPanel, renderPvpSidebar, updatePvpRowCountdowns } from '.
 console.log('APP STARTED');
 
 const artworkName = (event) => event?.boss || event?.name || '';
-const TYPES = ['RB', 'Epic RB', 'Siege', 'Olympiad', 'Event'];
+const TYPES = ['RB', 'Epic RB', 'Clan Hall', 'Siege', 'Olympiad', 'Event'];
 const $ = (selector) => document.querySelector(selector);
 const pad = (value) => String(value).padStart(2, '0');
 const dateKey = (date) => `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
@@ -752,3 +752,4 @@ async function initializeApp() {
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initializeApp, { once: true });
 else initializeApp();
+
