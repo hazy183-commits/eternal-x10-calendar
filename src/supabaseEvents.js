@@ -2,6 +2,7 @@ import { supabase } from './supabaseClient.js';
 import { eventIdentity } from './adminScheduling.js';
 import { clanHallEvents } from './clanHallSchedule.js';
 import './clanHallGallery.js';
+import './communityLinks.js';
 
 const EVENT_TYPES = new Map(
   ['RB', 'Epic RB', 'Clan Hall', 'Siege', 'Olympiad', 'Event'].map((type) => [type.toUpperCase(), type]),
