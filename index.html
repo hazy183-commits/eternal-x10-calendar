@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="./src/style.css" />
     <style>html.access-checking body{visibility:hidden}</style>
-    <script>document.documentElement.classList.add('access-checking');</script>
+    <script>document.documentElement.classList.add('access-checking');setTimeout(()=>document.documentElement.classList.remove('access-checking'),3500);</script>
   </head>
   <body>
     <div class="page-glow"></div>
@@ -32,10 +32,25 @@
     <template id="eventTemplate"><article class="event-row"><div class="event-time"></div><div class="event-info"><div class="event-title-line"><h3></h3><span class="type-chip"></span></div><p class="event-details"></p><p class="event-description"></p></div></article></template>
     <script type="module" src="./src/main.js"></script>
     <script type="module">
-      import { supabase } from './src/supabaseClient.js';
-      import { installMemberAuth } from './src/memberAuth.js';
-      installMemberAuth(supabase);
-      document.documentElement.classList.remove('access-checking');
+      (async()=>{
+        try{
+          const [{supabase},{installMemberAuth}]=await Promise.all([
+            import('./src/supabaseClient.js'),
+            import('./src/memberAuth.js')
+          ]);
+          installMemberAuth(supabase);
+          try{
+            const {installRoleEnhancements}=await import('./src/roleEnhancements.js');
+            installRoleEnhancements(supabase);
+          }catch(roleError){
+            console.error('ROLE ENHANCEMENTS FAILED',roleError);
+          }
+        }catch(authError){
+          console.error('MEMBER AUTH BOOT FAILED',authError);
+        }finally{
+          document.documentElement.classList.remove('access-checking');
+        }
+      })();
     </script>
   </body>
 </html>
