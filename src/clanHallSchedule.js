@@ -1,12 +1,12 @@
 const DAY_MS = 24 * 60 * 60 * 1000;
 
 export const CLAN_HALLS = Object.freeze([
-  Object.freeze({ name: 'Fortress of Resistance', weekday: 5, time: '17:00' }),
-  Object.freeze({ name: 'Devastated Castle', weekday: 1, time: '17:00' }),
-  Object.freeze({ name: 'Bandit Stronghold', weekday: 3, time: '17:00' }),
-  Object.freeze({ name: 'Rainbow Spring Chateau', weekday: 1, time: '21:00' }),
-  Object.freeze({ name: 'Wild Beast Reserve', weekday: 4, time: '18:00' }),
-  Object.freeze({ name: 'Fortress of the Dead', weekday: 2, time: '21:00' }),
+  Object.freeze({ name: 'Fortress of Resistance', weekday: 5, time: '19:00' }),
+  Object.freeze({ name: 'Devastated Castle', weekday: 1, time: '19:00' }),
+  Object.freeze({ name: 'Bandit Stronghold', weekday: 3, time: '19:00' }),
+  Object.freeze({ name: 'Rainbow Spring Chateau', weekday: 1, time: '23:00' }),
+  Object.freeze({ name: 'Wild Beast Reserve', weekday: 4, time: '20:00' }),
+  Object.freeze({ name: 'Fortress of the Dead', weekday: 2, time: '23:00' }),
 ]);
 
 const pad = (value) => String(value).padStart(2, '0');
