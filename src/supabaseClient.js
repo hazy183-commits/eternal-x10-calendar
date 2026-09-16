@@ -5,6 +5,9 @@ import { installRecruitment } from './recruitment.js';
 import { installClanContentManager } from './clanContentManager.js';
 import { installMemberRoster } from './memberRoster.js';
 import { installOwnerAccessBridge } from './ownerAccessBridge.js';
+import { installAdminEventDayGroups } from './adminEventDayGroups.js';
+import { installProfilePersistenceFix } from './profilePersistenceFix.js';
+import './interludeClassSelects.js';
 
 const url = import.meta.env.VITE_SUPABASE_URL;
 const key = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
@@ -24,6 +27,8 @@ if (typeof document !== 'undefined') {
     installClanContentManager(supabase);
     installMemberRoster(supabase);
     installOwnerAccessBridge(supabase);
+    installAdminEventDayGroups(supabase);
+    installProfilePersistenceFix(supabase);
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', startMemberFeatures, { once: true });
   else queueMicrotask(startMemberFeatures);
