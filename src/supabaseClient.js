@@ -11,6 +11,7 @@ import { installNeededRaidBosses } from './neededRaidBosses.js';
 import { installNeededRaidBossWindow } from './neededRaidBossWindow.js';
 import { installRaidBossArtworkEnhancer } from './raidBossArtworkEnhancer.js';
 import { installNeededRaidBossDetails } from './neededRaidBossDetails.js';
+import { installEpicRespawnScreenshotImport } from './epicRespawnScreenshotImport.js';
 import './neededRaidBossRefreshBridge.js';
 import './interludeClassSelects.js';
 
@@ -38,6 +39,7 @@ if (typeof document !== 'undefined') {
     installNeededRaidBossWindow(supabase);
     installRaidBossArtworkEnhancer();
     installNeededRaidBossDetails(supabase);
+    installEpicRespawnScreenshotImport(supabase);
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', startMemberFeatures, { once: true });
   else queueMicrotask(startMemberFeatures);
