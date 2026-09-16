@@ -13,6 +13,7 @@ import { installRaidBossArtworkEnhancer } from './raidBossArtworkEnhancer.js';
 import { installNeededRaidBossDetails } from './neededRaidBossDetails.js';
 import { installEpicRespawnScreenshotImport } from './epicRespawnScreenshotImport.js';
 import { installTodayClanDashboard } from './todayClanDashboard.js';
+import { installMemberZoneReliability } from './memberZoneReliability.js';
 import './neededRaidBossRefreshBridge.js';
 import './interludeClassSelects.js';
 
@@ -29,6 +30,7 @@ export const supabase = url?.startsWith('https://') && key?.startsWith('sb_publi
 if (typeof document !== 'undefined') {
   const startMemberFeatures = () => {
     installMemberAuth(supabase);
+    installMemberZoneReliability(supabase);
     installMemberEventSignups(supabase);
     installRecruitment(supabase);
     installClanContentManager(supabase);
