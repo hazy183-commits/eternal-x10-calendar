@@ -71,6 +71,26 @@ function getUpcoming() {
 }
 
 function renderFilters() { $('#filters').innerHTML = ['Wszystkie', ...TYPES].map((item) => `<button class="filter-btn ${filter === item ? 'active' : ''}" data-filter="${item}">${item}</button>`).join(''); }
+function calendarEventsFor(day) {
+  return sorted(withPvpEvents(withOlympiadEvents(events, new Date(), dateKey(day)), new Date(), dateKey(day))
+    .filter((event) => !event.isPvpSchedule && event.date === dateKey(day)));
+}
+function renderCalendarWeek() {
+  const strip = $('#calendarWeek');
+  if (!strip) return;
+  const start = new Date(selectedDay);
+  start.setDate(start.getDate() - ((start.getDay() + 6) % 7));
+  strip.innerHTML = Array.from({ length: 7 }, (_, index) => {
+    const day = new Date(start);
+    day.setDate(start.getDate() + index);
+    const items = calendarEventsFor(day);
+    const marks = [...new Set(items.map((event) => event.type))].slice(0, 4)
+      .map((type) => `<i class="calendar-week-mark ${type.toLowerCase().replaceAll(' ', '-')}"></i>`).join('');
+    const isSelected = dateKey(day) === dateKey(selectedDay);
+    const isToday = dateKey(day) === dateKey(today);
+    return `<button class="calendar-week-day${isSelected ? ' active' : ''}" type="button" data-calendar-day="${dateKey(day)}" aria-pressed="${isSelected}"><span>${isToday ? 'Dzisiaj' : formatDate(day, { weekday: 'long' })}</span><b>${day.getDate()} ${formatDate(day, { month: 'short' }).replace('.', '')}</b><em>${items.length}</em><small>${marks}</small></button>`;
+  }).join('');
+}
 function rowCountdown(event) {
   if (event.isPvpSchedule) return pvpCountdownText(event);
   const currentStatus = eventStatus(event);
@@ -83,7 +103,7 @@ function rowCountdown(event) {
   return `${Math.floor(seconds / 3600)}h ${pad(Math.floor((seconds % 3600) / 60))}m`;
 }
 function eventRow(event) { const currentStatus = eventStatus(event); return `<article class="event-row"><time class="event-time">${event.time}</time><div class="event-thumb" data-boss-name="${safe(artworkName(event))}"><span>ART</span></div><div class="event-info"><h3>${safe(event.name)}</h3>${event.isOlympiadSchedule ? `<span class="olympiad-window">${event.timeRange}</span>` : event.isPvpSchedule ? `<span class="pvp-calendar-times">Rejestracja: ${event.registrationTimeRange}<br />Event: ${event.eventTimeRange}</span>` : ''}</div><span class="type-chip ${event.type.toLowerCase().replaceAll(' ', '-')}">${event.type}</span><p class="event-location">${event.location ? `⌖ ${safe(event.location)}` : 'Wydarzenie klanowe'}</p><div class="row-status"><b class="status-dot ${currentStatus.toLowerCase().replaceAll(' ', '-')} ${event.isBossRespawn || event.isSiegeSchedule ? 'respawn-status' : ''}">${currentStatus}</b><span${event.isPvpSchedule ? ` data-pvp-countdown-start="${event.startAt}"` : ''}>${rowCountdown(event)}</span></div></article>`; }
-function renderCalendar() { const list = sorted(withPvpEvents(withOlympiadEvents(events, new Date(), dateKey(selectedDay)), new Date(), dateKey(selectedDay)).filter((event) => !event.isPvpSchedule && event.date === dateKey(selectedDay) && (filter === 'Wszystkie' || event.type === filter))); $('#selectedDate').textContent = formatDate(selectedDay); const heading = '<div class="event-table-head"><span>Godzina</span><span>Wydarzenie</span><span>Typ · Lokalizacja</span><span>Status</span></div>'; $('#dailyEvents').innerHTML = heading + (list.length ? list.map(eventRow).join('') : `<div class="empty-state"><span>✦</span><p>Brak wydarzeń w tej kategorii.</p></div>`); refreshBossArtwork($('#dailyEvents')); }
+function renderCalendar() { const list = calendarEventsFor(selectedDay).filter((event) => filter === 'Wszystkie' || event.type === filter); $('#selectedDate').textContent = formatDate(selectedDay); renderCalendarWeek(); const heading = '<div class="event-table-head"><span>Godzina</span><span>Wydarzenie</span><span>Typ</span><span>Lokalizacja</span><span>Status</span></div>'; $('#dailyEvents').innerHTML = heading + (list.length ? list.map(eventRow).join('') : `<div class="empty-state"><span>✦</span><p>Brak wydarzeń w tej kategorii.</p></div>`); refreshBossArtwork($('#dailyEvents')); }
 function miniRow(event) { const sameDay = event.date === (event.isOlympiadSchedule ? olympiadLocalDate() : dateKey(today)); return `<div class="mini-event" data-boss-name="${safe(artworkName(event))}"><time>${sameDay ? event.time : formatDate(dateFromEvent(event), { day: '2-digit', month: 'short', ...(event.isOlympiadSchedule ? { timeZone: 'Europe/Warsaw' } : {}) })}</time><div><b>${safe(event.name)}</b><span>${event.type}${event.location ? ` · ${safe(event.location)}` : ''}</span>${event.isOlympiadSchedule ? `<span class="olympiad-window">${event.timeRange}</span>` : ''}</div></div>`; }
 function renderOverview() { const todays = sorted(events.filter((event) => !event.isPvpSchedule && event.date === (event.isOlympiadSchedule ? olympiadLocalDate() : dateKey(today)))); $('#todayCount').textContent = todays.length; $('#todayEvents').innerHTML = todays.length ? todays.map(miniRow).join('') : '<p class="empty-mini">Dziś nie zaplanowano wydarzeń.</p>'; const upcoming = getUpcoming().slice(0, 5); $('#upcomingEvents').innerHTML = upcoming.length ? upcoming.map(miniRow).join('') : '<p class="empty-mini">Brak nadchodzących wydarzeń.</p>'; refreshBossArtwork($('#statistics')); renderPvpSidebar($('#pvpSidebarEvents')); }
 function eventWindowLabel(event) { if (event?.isOlympiadSchedule) return `${formatOlympiadDate(event)} · ${event.timeRange} · Europe/Warsaw`; if (!event?.isBossRespawn && !event?.isSiegeSchedule) return `${formatDate(dateFromEvent(event), { weekday: 'long', day: 'numeric', month: 'long' })} · ${event.time}${event.location ? ` · ${event.location}` : ''}`; const start = dateFromEvent(event); const end = event.endAt ? new Date(event.endAt) : new Date(start.getTime() + event.duration * 60000); const endTime = new Intl.DateTimeFormat('pl-PL', { timeZone: TIME_ZONE, hour: '2-digit', minute: '2-digit' }).format(end); return `${formatLocalDateTime(start, { dateStyle: 'full', timeStyle: 'short' })}–${endTime}${event.location ? ` · ${event.location}` : ''}`; }
@@ -586,6 +606,12 @@ async function initializeApp() {
       if (formMode === 'new') automaticDuration = false;
     });
     $('#filters').addEventListener('click', (event) => { if (!event.target.dataset.filter) return; filter = event.target.dataset.filter; renderFilters(); renderCalendar(); });
+    $('#calendarWeek')?.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-calendar-day]');
+      if (!button) return;
+      selectedDay = new Date(`${button.dataset.calendarDay}T00:00:00`);
+      renderCalendar();
+    });
     $('#previousDay').addEventListener('click', () => { selectedDay.setDate(selectedDay.getDate() - 1); renderCalendar(); });
     $('#nextDay').addEventListener('click', () => { selectedDay.setDate(selectedDay.getDate() + 1); renderCalendar(); });
     $('#todayButton').addEventListener('click', () => { selectedDay = new Date(today); renderCalendar(); });
@@ -754,4 +780,3 @@ async function initializeApp() {
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initializeApp, { once: true });
 else initializeApp();
-
