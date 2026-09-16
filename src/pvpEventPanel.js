@@ -73,8 +73,9 @@ const sidebarSignatures = new WeakMap();
 
 export function renderPvpSidebar(root, now = new Date()) {
   if (!root) return;
-  // Keep the four configured event rows in the stable panel order.
-  const events = PVP_EVENTS.map(({ id }) => nextPvpEvent(id, now)).filter(Boolean);
+  // Show the active occurrence first, followed by the nearest upcoming ones.
+  const events = PVP_EVENTS.map(({ id }) => nextPvpEvent(id, now)).filter(Boolean)
+    .sort((a, b) => pvpTiming(a).registrationStart - pvpTiming(b).registrationStart);
   const signature = events.map(({ id }) => id).join('|');
   if (sidebarSignatures.get(root) !== signature) {
     root.innerHTML = events.map((event) => `<article class="pvp-sidebar-event" data-pvp-occurrence="${event.id}">
