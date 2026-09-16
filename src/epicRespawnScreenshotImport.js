@@ -114,12 +114,18 @@ function extractDate(text, fallback = warsawToday()) {
   return `${local[3] || fallbackYear}-${pad(local[2])}-${pad(local[1])}`;
 }
 
-function extractTimes(text) {
-  const cleaned = normalizeForTimes(text);
+export function extractTimes(text) {
+  // Remove complete dates before looking for times. Without this guard,
+  // a date such as 17.09.2026 can be misread as the time 17:09.
+  const withoutDates = String(text)
+    .replace(/\b20\d{2}[-/.]\d{1,2}[-/.]\d{1,2}\b/g, ' ')
+    .replace(/\b\d{1,2}[-/.]\d{1,2}[-/.]20\d{2}\b/g, ' ');
+  const cleaned = normalizeForTimes(withoutDates);
   const results = [];
   const patterns = [
-    /\b([0-2]?\d)\s*[:.]\s*([0-5]\d)\b/g,
+    /\b([0-2]?\d)\s*:\s*([0-5]\d)\b/g,
     /\b([0-2]?\d)\s+([0-5]\d)\b/g,
+    /\b([0-2]?\d)\s*\.\s*([0-5]\d)\b/g,
   ];
   for (const pattern of patterns) {
     for (const match of cleaned.matchAll(pattern)) {
