@@ -62,8 +62,28 @@ const RAID_BOSS_IDS = new Map([
   ["varka's hero shadith", 25309],
 ]);
 
+function wikiSlug(name = '') {
+  return String(name)
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[’']/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+export function raidBossNpcId(name) {
+  return RAID_BOSS_IDS.get(normalize(name)) || null;
+}
+
+export function raidBossWikiUrl(name) {
+  const id = raidBossNpcId(name);
+  if (!id) return 'https://lineage2wiki.org/interlude/monster/#type=boss';
+  return `https://lineage2wiki.org/interlude/monster/${id}/${wikiSlug(name)}-raid-boss/`;
+}
+
 export function raidBossImageCandidates(name) {
-  const id = RAID_BOSS_IDS.get(normalize(name));
+  const id = raidBossNpcId(name);
   const candidates = [];
   if (id) {
     // Real NPC artwork/screenshot endpoints from two Lineage 2 databases.
@@ -99,31 +119,47 @@ function loadRealImage(img, name, onExhausted) {
 }
 
 function enhanceRequestCard(card) {
-  if (!card || card.dataset.rbArtEnhanced === '1') return;
+  if (!card) return;
   const head = card.querySelector('.needed-rb-head');
   const copy = card.querySelector('.needed-rb-copy');
   if (!head || !copy) return;
 
   const name = copy.querySelector('b')?.textContent?.trim() || 'Raid Boss';
-  const img = document.createElement('img');
-  img.className = 'needed-rb-portrait';
-  img.alt = `Wygląd ${name}`;
-  img.loading = 'lazy';
-  img.decoding = 'async';
 
-  const levelBadge = card.querySelector('.needed-rb-level');
-  const insertAfterLevel = (element) => {
-    if (levelBadge) levelBadge.insertAdjacentElement('afterend', element);
-    else head.prepend(element);
-  };
-  insertAfterLevel(img);
+  if (card.dataset.rbArtEnhanced !== '1') {
+    const img = document.createElement('img');
+    img.className = 'needed-rb-portrait';
+    img.alt = `Wygląd ${name}`;
+    img.loading = 'lazy';
+    img.decoding = 'async';
 
-  loadRealImage(img, name, () => {
-    const fallback = makeFallback(name);
-    img.replaceWith(fallback);
-  });
+    const levelBadge = card.querySelector('.needed-rb-level');
+    const insertAfterLevel = (element) => {
+      if (levelBadge) levelBadge.insertAdjacentElement('afterend', element);
+      else head.prepend(element);
+    };
+    insertAfterLevel(img);
 
-  card.dataset.rbArtEnhanced = '1';
+    loadRealImage(img, name, () => {
+      const fallback = makeFallback(name);
+      img.replaceWith(fallback);
+    });
+
+    card.dataset.rbArtEnhanced = '1';
+  }
+
+  const actions = card.querySelector('.needed-rb-actions');
+  if (actions && !actions.querySelector('[data-rb-location]')) {
+    const location = document.createElement('a');
+    location.className = 'needed-rb-location';
+    location.dataset.rbLocation = '1';
+    location.href = raidBossWikiUrl(name);
+    location.target = '_blank';
+    location.rel = 'noopener noreferrer';
+    location.title = `Pokaż mapę spawnu: ${name}`;
+    location.textContent = '📍 GDZIE JEST?';
+    actions.appendChild(location);
+  }
 }
 
 function enhanceCalendarRow(row) {
@@ -162,11 +198,12 @@ export function installRaidBossArtworkEnhancer() {
   style.textContent = `
     .needed-rb-portrait{width:82px;height:82px;object-fit:cover;object-position:center;border:1px solid #8b672f;border-radius:8px;background:#090c0c;box-shadow:0 7px 24px #0008;flex:0 0 82px}
     .needed-rb-head{align-items:center!important}.needed-rb-level{flex:0 0 auto}.needed-rb-copy{padding-left:2px}
+    .needed-rb-location{display:inline-flex;align-items:center;justify-content:center;padding:8px 10px;border:1px solid #496044;background:#10190f;color:#b8d290;font-size:10px;font-weight:900;text-decoration:none;cursor:pointer}.needed-rb-location:hover{border-color:#6d8c62;background:#172217;color:#d3e8b3}
     .needed-rb-calendar-row .event-thumb.needed-rb-has-art,.needed-rb-calendar-row .needed-rb-thumb.needed-rb-has-art{padding:0!important;overflow:hidden;background:#090c0c!important}
     .needed-rb-calendar-image{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
     .needed-rb-real-fallback{display:grid;place-items:center;width:82px;height:82px;flex:0 0 82px;border:1px solid #66502b;border-radius:8px;background:linear-gradient(145deg,#17140e,#090b0b);color:#b7934c;font-weight:900;letter-spacing:.12em}
     .needed-rb-real-fallback.compact{width:100%;height:100%;min-height:48px;border:0;border-radius:0;font-size:11px}
-    @media(max-width:900px){.needed-rb-portrait,.needed-rb-real-fallback{width:62px;height:62px;flex-basis:62px}.needed-rb-head{gap:9px!important}}
+    @media(max-width:900px){.needed-rb-portrait,.needed-rb-real-fallback{width:62px;height:62px;flex-basis:62px}.needed-rb-head{gap:9px!important}.needed-rb-location{width:100%;box-sizing:border-box}}
   `;
   document.head.appendChild(style);
 
