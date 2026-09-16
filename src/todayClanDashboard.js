@@ -20,6 +20,8 @@ const typeClass = (event) => {
   if (t.includes('siege')) return 'siege';
   if (t.includes('epic')) return 'epic';
   if (t === 'rb') return 'rb';
+  if (t.includes('olympiad')) return 'olympiad';
+  if (t.includes('clan')) return 'clan-hall';
   return 'event';
 };
 const countdown = (event) => {
@@ -54,13 +56,17 @@ export function installTodayClanDashboard(supabase) {
     .today-event-card h4{margin:8px 0 0;color:#fff;font:700 18px Georgia;text-shadow:0 2px 7px #000}.today-event-meta{margin-top:auto}.today-event-time{display:block;color:#fff;font-size:14px;font-weight:900}.today-event-countdown{display:inline-block;margin:7px 0;padding:5px 7px;border-radius:3px;background:#102d18;color:#74e08c;font-size:9px;font-weight:900}.today-event-card.epic .today-event-countdown{background:#351513;color:#ff8f84}.today-event-card.siege .today-event-countdown{background:#30250e;color:#e9c663}.today-event-place{display:block;min-height:28px;color:#b9b2a6;font-size:9px;line-height:1.35}
     .today-card-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:8px}.today-choice{padding:7px 3px;border:1px solid #403625;background:#0b0e0e;color:#918a7f;font-size:7px;font-weight:900;cursor:pointer}.today-choice.yes.active,.today-choice.yes:hover{border-color:#26853d;background:#0d2915;color:#75e58d}.today-choice.maybe.active,.today-choice.maybe:hover{border-color:#8e6c21;background:#2c210a;color:#e8c35e}.today-choice.no.active,.today-choice.no:hover{border-color:#84352f;background:#2c100f;color:#ec7e75}
     .today-box{padding:15px;border:1px solid #3e3323;background:linear-gradient(145deg,#0b1010,#080b0b)}.today-box-title{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-bottom:10px;border-bottom:1px solid #2a241c}.today-box-title h4{margin:0;color:#e9dfd0;font:700 15px Georgia}.today-box-title button{border:0;background:none;color:#be974e;font-size:8px;cursor:pointer}
-    .today-timeline{display:grid;gap:0;margin-top:4px}.today-line{display:grid;grid-template-columns:54px 12px minmax(0,1fr) auto;gap:9px;align-items:center;min-height:58px;border-bottom:1px solid #252019}.today-line:last-child{border-bottom:0}.today-line time{color:#d8c6a3;font-size:11px;font-weight:900}.today-dot{width:8px;height:8px;border-radius:50%;background:#b88636;box-shadow:0 0 0 3px #241b0c}.today-line.epic .today-dot{background:#d9594f}.today-line.rb .today-dot{background:#4db7e0}.today-line.siege .today-dot{background:#d7a238}.today-line-copy{min-width:0}.today-line-copy b{display:block;color:#ded8ce;font-size:11px}.today-line-copy small{display:block;margin-top:2px;color:#7f7a71;font-size:8px}.today-line-side{text-align:right}.today-line-side span{display:block;color:#7bd890;font-size:9px;font-weight:900}.today-line-side em{display:block;margin-top:4px;color:#8a8378;font-size:8px;font-style:normal}
+    .today-schedule{display:grid;gap:14px;margin-top:12px}.today-schedule-group{position:relative}.today-schedule-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:3px;padding:8px 10px;border:1px solid #30291d;background:linear-gradient(90deg,#17150f,#0b0e0e)}.today-schedule-head b{color:#e7c16a;font-size:9px;letter-spacing:.12em}.today-schedule-head span{color:#766f64;font-size:8px;text-transform:capitalize}
+    .today-timeline{display:grid;gap:0}.today-line{display:grid;grid-template-columns:54px 14px 44px minmax(0,1fr) auto;gap:10px;align-items:center;min-height:66px;padding:6px 2px;border-bottom:1px solid #252019;transition:.16s ease}.today-line:last-child{border-bottom:0}.today-line:hover{background:linear-gradient(90deg,#15170f66,transparent)}.today-line time{color:#d8c6a3;font-size:11px;font-weight:900;text-align:right}.today-line-track{position:relative;align-self:stretch;display:grid;place-items:center}.today-line-track:before,.today-line-track:after{content:'';position:absolute;left:50%;width:1px;transform:translateX(-50%);background:#3f3524}.today-line-track:before{top:-7px;height:calc(50% + 7px)}.today-line-track:after{top:50%;bottom:-7px}.today-line:first-child .today-line-track:before{display:none}.today-line:last-child .today-line-track:after{display:none}.today-dot{position:relative;z-index:2;width:9px;height:9px;border-radius:50%;background:#b88636;box-shadow:0 0 0 3px #241b0c,0 0 12px #b8863633}.today-line.epic .today-dot{background:#d9594f;box-shadow:0 0 0 3px #2d1211,0 0 12px #d9594f44}.today-line.rb .today-dot{background:#4db7e0;box-shadow:0 0 0 3px #0d2731,0 0 12px #4db7e044}.today-line.siege .today-dot{background:#d7a238}.today-line.olympiad .today-dot{background:#bca24c}.today-line.clan-hall .today-dot{background:#ca8d2c}
+    .today-line-thumb{width:42px;height:42px;object-fit:cover;border:1px solid #4d402a;background:linear-gradient(135deg,#171811,#090b0b);box-shadow:0 4px 14px #0008}.today-line-thumb.placeholder{display:grid;place-items:center;color:#836c40;font-size:14px}
+    .today-line-copy{min-width:0}.today-line-title{display:flex;align-items:center;gap:7px;flex-wrap:wrap}.today-line-copy b{display:block;color:#e5dfd4;font-size:11px;line-height:1.25}.today-line-copy small{display:block;margin-top:3px;color:#7f7a71;font-size:8px}.today-line-kind{padding:2px 5px;border:1px solid #4d3f27;color:#a98a4e;font-size:6px;font-weight:900;letter-spacing:.04em;text-transform:uppercase}.today-line.epic .today-line-kind{border-color:#69302c;color:#df746b}.today-line.rb .today-line-kind{border-color:#275d72;color:#66b8dc}.today-line.siege .today-line-kind{border-color:#66501f;color:#d6ae4c}
+    .today-line-side{text-align:right;min-width:105px}.today-line-side>span{display:block;color:#7bd890;font-size:9px;font-weight:900}.today-line-side em{display:inline-block;margin-top:5px;padding:3px 6px;border:1px solid #39332a;color:#8a8378;background:#0a0d0d;font-size:7px;font-style:normal;font-weight:900}.today-line-side em.yes{border-color:#285f38;color:#72d388;background:#0b1c10}.today-line-side em.maybe{border-color:#6d5520;color:#d9b551;background:#211908}.today-line-side em.no{border-color:#6b302c;color:#dc756d;background:#21100e}
     .today-empty{padding:24px 8px;color:#777168;font-size:10px;text-align:center}.today-my-list{display:grid;gap:7px;margin-top:10px}.today-my-row{display:grid;grid-template-columns:42px 1fr auto;gap:9px;align-items:center;padding:9px;border:1px solid #2e2920;background:#080c0c}.today-my-thumb{width:40px;height:35px;object-fit:cover;border:1px solid #433822;background:#111}.today-my-copy b{display:block;color:#ded7cb;font-size:10px}.today-my-copy small{color:#817b71;font-size:8px}.today-my-status{padding:5px 7px;border:1px solid #277a3b;color:#6edc84;background:#0c2112;font-size:8px;font-weight:900}.today-my-status.maybe{border-color:#7f6220;color:#dbb954;background:#261d08}.today-my-status.no{border-color:#71322e;color:#dc746c;background:#240f0e}
     .today-announcement{margin-top:10px}.today-announcement b{display:block;color:#e2b458;font-size:11px}.today-announcement p{margin:6px 0;color:#8e887e;font-size:9px;line-height:1.5}.today-announcement small{color:#69655f;font-size:8px}.today-quick{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}.today-quick button,.today-quick a{display:grid;place-items:center;min-height:58px;padding:8px;border:1px solid #423622;background:#0b0f0f;color:#caa458;text-decoration:none;font-size:9px;font-weight:900;cursor:pointer}.today-quick .blue{border-color:#27536b;color:#72bde0}.today-quick .green{border-color:#285e38;color:#75cf88}.today-quick .violet{border-color:#56366d;color:#bd8ad8}
     .today-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.today-stat{padding:12px;border:1px solid #373023;background:#090d0d;text-align:center}.today-stat b{display:block;color:#ebc56f;font-size:20px}.today-stat span{color:#827c72;font-size:8px}
     @media(max-width:1100px){.today-clan-cards{grid-template-columns:1fr 1fr}.today-clan-layout{grid-template-columns:1fr}.today-clan-rail{grid-template-columns:1fr 1fr}.today-stats{grid-template-columns:repeat(4,1fr)}}
-    @media(max-width:700px){.today-clan{margin-top:10px}.today-clan-head{align-items:flex-start;flex-direction:column}.today-clan-title h3{font-size:18px}.today-clan-calendar{width:100%}.today-clan-cards{grid-template-columns:1fr 1fr;gap:7px}.today-event-card{min-height:215px}.today-event-inner{min-height:191px;padding:10px}.today-event-card h4{font-size:15px}.today-card-actions{grid-template-columns:1fr;gap:3px}.today-choice{padding:6px}.today-clan-rail{grid-template-columns:1fr}.today-line{grid-template-columns:44px 10px minmax(0,1fr);padding:6px 0}.today-line-side{grid-column:3;text-align:left;margin-top:-7px}.today-stats{grid-template-columns:1fr 1fr}.today-box{padding:12px}}
-    @media(max-width:430px){.today-clan-cards{grid-template-columns:1fr}.today-event-card{min-height:205px}.today-event-inner{min-height:181px}.today-card-actions{grid-template-columns:repeat(3,1fr)}}
+    @media(max-width:700px){.today-clan{margin-top:10px}.today-clan-head{align-items:flex-start;flex-direction:column}.today-clan-title h3{font-size:18px}.today-clan-calendar{width:100%}.today-clan-cards{grid-template-columns:1fr 1fr;gap:7px}.today-event-card{min-height:215px}.today-event-inner{min-height:191px;padding:10px}.today-event-card h4{font-size:15px}.today-card-actions{grid-template-columns:1fr;gap:3px}.today-choice{padding:6px}.today-clan-rail{grid-template-columns:1fr}.today-line{grid-template-columns:40px 12px 38px minmax(0,1fr);gap:7px;padding:7px 0}.today-line time{font-size:9px}.today-line-thumb{width:36px;height:36px}.today-line-side{grid-column:4;text-align:left;display:flex;align-items:center;gap:7px;min-width:0;margin-top:-3px}.today-line-side em{margin-top:0}.today-stats{grid-template-columns:1fr 1fr}.today-box{padding:12px}}
+    @media(max-width:430px){.today-clan-cards{grid-template-columns:1fr}.today-event-card{min-height:205px}.today-event-inner{min-height:181px}.today-card-actions{grid-template-columns:repeat(3,1fr)}.today-schedule-head{align-items:flex-start;flex-direction:column;gap:2px}}
   `;
   document.head.appendChild(style);
 
@@ -96,9 +102,29 @@ export function installTodayClanDashboard(supabase) {
     announcement = data || null;
   }
 
+  function allUpcoming() {
+    return getClanUpcomingEvents(new Date());
+  }
+
   function todayEvents() {
     const today = warsawDateKey();
-    return getClanUpcomingEvents(new Date()).filter((event) => String(event.event_date || event.date || '') === today);
+    return allUpcoming().filter((event) => String(event.event_date || event.date || '') === today);
+  }
+
+  function dateKeyForEvent(event) {
+    return String(event?.event_date || event?.date || warsawDateKey(eventStart(event)));
+  }
+
+  function dateLabelFromKey(key) {
+    const today = warsawDateKey();
+    const tomorrow = warsawDateKey(new Date(Date.now() + 86400000));
+    if (key === today) return ['DZISIAJ', warsawDateLabel()];
+    if (key === tomorrow) {
+      const label = new Intl.DateTimeFormat('pl-PL', { timeZone: 'Europe/Warsaw', weekday: 'long', day: 'numeric', month: 'long' }).format(new Date(`${key}T12:00:00`));
+      return ['JUTRO', label];
+    }
+    const label = new Intl.DateTimeFormat('pl-PL', { timeZone: 'Europe/Warsaw', weekday: 'long', day: 'numeric', month: 'long' }).format(new Date(`${key}T12:00:00`));
+    return ['PÓŹNIEJ', label];
   }
 
   function card(event) {
@@ -113,7 +139,28 @@ export function installTodayClanDashboard(supabase) {
   function timelineRow(event) {
     const choice = signups.get(String(event.id));
     const label = choice === 'yes' ? 'Będę' : choice === 'maybe' ? 'Może' : choice === 'no' ? 'Nie będę' : 'Brak deklaracji';
-    return `<div class="today-line ${typeClass(event)}"><time>${esc(timeLabel(event))}</time><span class="today-dot"></span><div class="today-line-copy"><b>${esc(event.name || 'Wydarzenie')}</b><small>${esc(event.location || event.boss || event.type || 'Eternal x10')}</small></div><div class="today-line-side"><span data-today-countdown="${esc(event.id)}">${esc(countdown(event))}</span><em>${esc(label)}</em></div></div>`;
+    const src = artwork(event);
+    return `<div class="today-line ${typeClass(event)}">
+      <time>${esc(timeLabel(event))}</time>
+      <span class="today-line-track"><i class="today-dot"></i></span>
+      ${src ? `<img class="today-line-thumb" src="${esc(src)}" alt="" loading="lazy">` : '<span class="today-line-thumb placeholder">✦</span>'}
+      <div class="today-line-copy"><div class="today-line-title"><b>${esc(event.name || 'Wydarzenie')}</b><span class="today-line-kind">${esc(event.type || 'EVENT')}</span></div><small>${esc(event.location || event.boss || 'Eternal x10')}</small></div>
+      <div class="today-line-side"><span data-today-countdown="${esc(event.id)}">${esc(countdown(event))}</span><em class="${choice || ''}">${esc(label)}</em></div>
+    </div>`;
+  }
+
+  function timelineGroups(events) {
+    const groups = new Map();
+    events.slice(0, 12).forEach((event) => {
+      const key = dateKeyForEvent(event);
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(event);
+    });
+    if (!groups.size) return '<div class="today-empty">Brak nadchodzących wydarzeń w kalendarzu.</div>';
+    return [...groups.entries()].map(([key, rows]) => {
+      const [relative, dateLabel] = dateLabelFromKey(key);
+      return `<section class="today-schedule-group"><div class="today-schedule-head"><b>${relative}</b><span>${esc(dateLabel)}</span></div><div class="today-timeline">${rows.map(timelineRow).join('')}</div></section>`;
+    }).join('');
   }
 
   function myRow(event) {
@@ -127,6 +174,7 @@ export function installTodayClanDashboard(supabase) {
     const home = getHome();
     if (!home || !profile) return;
     const events = todayEvents();
+    const upcoming = allUpcoming();
     const cards = events.slice(0, 4);
     const mine = events.filter((event) => signups.has(String(event.id)));
     const epic = events.filter((event) => String(event.type || '').toLowerCase().includes('epic')).length;
@@ -137,7 +185,7 @@ export function installTodayClanDashboard(supabase) {
       <div class="today-clan-head"><div class="today-clan-title"><span>▣</span><div><h3>DZISIAJ W KLANIE</h3><small>${esc(warsawDateLabel())}</small></div></div><button type="button" class="today-clan-calendar" data-today-go="events">ZOBACZ CAŁY KALENDARZ →</button></div>
       <div class="today-clan-layout"><div class="today-clan-main">
         <div class="today-clan-cards">${cards.length ? cards.map(card).join('') : '<div class="today-box today-empty" style="grid-column:1/-1">Dzisiaj nie ma jeszcze zaplanowanych wydarzeń.</div>'}</div>
-        <section class="today-box"><div class="today-box-title"><h4>NAJBLIŻSZE WYDARZENIA · DZISIAJ</h4><button type="button" data-today-go="events">Zobacz wszystkie →</button></div><div class="today-timeline">${events.length ? events.map(timelineRow).join('') : '<div class="today-empty">Spokojny dzień — brak wydarzeń w kalendarzu.</div>'}</div></section>
+        <section class="today-box"><div class="today-box-title"><h4>NAJBLIŻSZE WYDARZENIA</h4><button type="button" data-today-go="events">Zobacz wszystkie →</button></div><div class="today-schedule">${timelineGroups(upcoming)}</div></section>
         <div class="today-stats"><div class="today-stat"><b>${events.length}</b><span>Wydarzeń dziś</span></div><div class="today-stat"><b>${epic}</b><span>Epic Bossów</span></div><div class="today-stat"><b>${siege}</b><span>Siege</span></div><div class="today-stat"><b>${yes}</b><span>Twoich „Będę”</span></div></div>
       </div><aside class="today-clan-rail">
         <section class="today-box"><div class="today-box-title"><h4>⚔ MOJE DZISIAJ</h4><button type="button" data-today-go="signups">Moje zapisy →</button></div><div class="today-my-list">${mine.length ? mine.map(myRow).join('') : '<div class="today-empty">Nie masz jeszcze deklaracji na dzisiaj.</div>'}</div></section>
@@ -184,7 +232,7 @@ export function installTodayClanDashboard(supabase) {
   const updateCountdowns = () => {
     const home = getHome();
     if (!home?.classList.contains('active')) return;
-    const byId = new Map(todayEvents().map((event) => [String(event.id), event]));
+    const byId = new Map(allUpcoming().map((event) => [String(event.id), event]));
     home.querySelectorAll('[data-today-countdown]').forEach((node) => {
       const event = byId.get(String(node.dataset.todayCountdown));
       if (event) node.textContent = countdown(event);
