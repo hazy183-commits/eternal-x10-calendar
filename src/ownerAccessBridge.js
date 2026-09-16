@@ -81,7 +81,9 @@ export function installOwnerAccessBridge(supabase){
     trigger.hidden=!isOwner;
   };
 
-  const openEditor=()=>{
+  const openEditor=async()=>{
+    const profile=await readProfile();
+    if(profile?.status!=='approved'||String(profile.role||'').toLowerCase()!=='owner')return;
     const zone=document.querySelector('#memberZoneLayer');
     const edit=zone?.querySelector('[data-zone-view="content-editor"]');
     if(edit){
