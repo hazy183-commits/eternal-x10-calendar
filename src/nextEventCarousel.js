@@ -116,10 +116,9 @@ export function installNextEventCarousel() {
     const detail=row.querySelector('span')?.textContent?.trim()||'';
     const when=row.querySelector('time')?.textContent?.trim()||'';
     const parts=detail.split(' · '),type=parts.shift()||'Event';
-    const hm=when.match(/^(\d{1,2}):(\d{2})$/);
-    let target=null;
-    if(hm){target=new Date();target.setHours(Number(hm[1]),Number(hm[2]),0,0);if(target<=new Date())target.setDate(target.getDate()+1);}
-    return {name,type,location:parts.join(' · '),when,art:row.dataset.bossName||name,target};
+    const targetValue=row.dataset.countdownTarget;
+    const target=targetValue?new Date(targetValue):null;
+    return {name,type,location:parts.join(' · '),when,art:row.dataset.bossName||name,target,label:row.dataset.countdownLabel||'Do rozpoczęcia'};
   };
 
   const paintCountdown = () => {
@@ -130,7 +129,7 @@ export function installNextEventCarousel() {
     const hours=Math.floor(sec/3600); sec%=3600;
     const mins=Math.floor(sec/60); const secs=sec%60;
     $('#countdown').innerHTML=[days,hours,mins,secs].map((v,i)=>`<b>${pad(v)}</b>${i<3?'<i>:</i>':''}`).join('');
-    $('#countdownLabel').textContent='Do rozpoczęcia';
+    $('#countdownLabel').textContent=selected.label;
   };
 
   const paint = () => {
