@@ -1,3 +1,4 @@
+import { switchClanView } from './clanViewAccess.js';
 import { installAdminDashboard } from './adminDashboard.js';
 import { installMemberEventSignups } from './memberEventSignups.js';
 
@@ -66,6 +67,7 @@ export function installMemberAuth(supabase) {
 
   const css = document.createElement('style');
   css.textContent = `
+    #memberZoneLayer [hidden]{display:none!important}
     html.member-locked body{min-height:100vh;overflow:hidden;background:#030505!important}
     html.member-locked body>*:not(#memberAuthLayer):not(#loginModal){display:none!important}
     html.member-locked #memberAuthLayer{display:grid!important}
@@ -100,14 +102,18 @@ export function installMemberAuth(supabase) {
     password.value = '';
   };
 
-  const switchView = (view) => {
-    zone.querySelectorAll('.zone-nav').forEach((b) => b.classList.toggle('active', b.dataset.zoneView === view));
-    zone.querySelectorAll('.zone-view').forEach((p) => p.classList.toggle('active', p.dataset.zonePanel === view));
-    const main = zone.querySelector('.member-zone-main');
-    if (main) main.scrollTop = 0;
+  let viewRequest = 0;
+  const switchView = async (view) => {
+    const request = ++viewRequest;
+    const { data: { session } } = await supabase.auth.getSession();
+    const profile = session ? await getProfile(session.user) : null;
+    if (request !== viewRequest) return;
+    switchClanView(zone, profile, view);
   };
 
   const lockPage = (message = '') => {
+    ++viewRequest;
+    switchClanView(zone, null, 'home');
     document.documentElement.classList.add('member-locked');
     layer.classList.add('open');
     zone.classList.remove('open');
@@ -164,7 +170,7 @@ export function installMemberAuth(supabase) {
     zone.querySelector('#memberZoneNick').textContent = nickname;
     zone.querySelector('#memberZoneRole').textContent = String(role).toUpperCase();
     zone.querySelector('#memberRankCard').textContent = String(role).replace(/^./, (c) => c.toUpperCase());
-    switchView('home');
+    await switchView('home');
     zone.classList.add('open');
   };
 

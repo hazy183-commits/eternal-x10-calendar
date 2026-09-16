@@ -1,4 +1,4 @@
-const STAFF_ROLES = new Set(['owner', 'admin', 'leader']);
+import { canAccessClanView, switchClanView } from './clanViewAccess.js';
 const esc = (value = '') => String(value).replace(/[&<>"']/g, (char) => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
 }[char]));
@@ -98,6 +98,7 @@ export function installRecruitment(supabase) {
   const panel = document.createElement('section');
   panel.className = 'zone-view';
   panel.dataset.zonePanel = 'recruitment';
+  panel.hidden = true;
   panel.innerHTML = `
     <div class="zone-section-head"><small>DOWÓDZTWO KLANU</small><h3>REKRUTACJA</h3><p>Wiadomości od osób, które chcą dołączyć do klanu.</p></div>
     <div class="ob-recruit-toolbar"><span id="obRecruitSummary" class="zone-muted">Ładowanie…</span><button id="obRecruitRefresh" type="button">↻ ODŚWIEŻ</button></div>
@@ -170,7 +171,7 @@ export function installRecruitment(supabase) {
 
   async function isStaff() {
     const profile = await readProfile();
-    return Boolean(profile?.status === 'approved' && STAFF_ROLES.has(String(profile.role || '').toLowerCase()));
+    return canAccessClanView(profile, 'recruitment');
   }
 
   async function loadRecruitment() {
@@ -188,6 +189,7 @@ export function installRecruitment(supabase) {
       list.innerHTML = '<div class="ob-recruit-empty">Nie udało się pobrać zgłoszeń.</div>';
       return;
     }
+    if (!await isStaff()) return;
     const rows = data || [];
     const newCount = rows.filter((row) => row.status === 'new').length;
     const badge = nav.querySelector('.ob-recruit-badge');
@@ -215,12 +217,14 @@ export function installRecruitment(supabase) {
   async function syncStaffUi() {
     const allowed = await isStaff();
     nav.hidden = !allowed;
+    panel.hidden = !allowed;
     if (allowed) await loadRecruitment();
     else {
+      panel.querySelector('#obRecruitList').innerHTML = '';
+      panel.querySelector('#obRecruitSummary').textContent = '';
       nav.querySelector('.ob-recruit-badge')?.classList.remove('show');
       if (panel.classList.contains('active')) {
-        panel.classList.remove('active');
-        zone.querySelector('[data-zone-panel="home"]')?.classList.add('active');
+        switchClanView(zone, null, 'home');
       }
     }
   }
@@ -249,6 +253,6 @@ export function installRecruitment(supabase) {
     await loadRecruitment();
   });
 
-  supabase.auth.onAuthStateChange(() => setTimeout(syncStaffUi, 0));
+  supabase.auth.onAuthStateChange(() => {nav.hidden=true;panel.hidden=true;panel.querySelector('#obRecruitList').innerHTML='';if(panel.classList.contains('active'))switchClanView(zone,null,'home');setTimeout(syncStaffUi,0)});
   syncStaffUi();
 }
