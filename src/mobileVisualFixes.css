@@ -1,4 +1,4 @@
-/* Presentation overrides for Orzeł Biały. */
+/* Final mobile presentation fixes. Desktop intentionally untouched except the dedicated upcoming-events panel rule at the bottom. */
 @media (max-width: 900px) {
   html, body { overflow-x: clip !important; }
   body { padding-top: 56px !important; }
@@ -7,19 +7,91 @@
   .hero { margin-top: 0 !important; overflow: visible !important; }
   .focus-section { margin-top: 8px !important; max-width: 100% !important; }
 
-  /* Featured event: cinematic mobile card. */
-  .next-event-card { display: flex !important; flex-direction: column !important; width: 100% !important; overflow: hidden !important; background: #070a0b !important; }
-  .next-event-card .event-art-large { position: relative !important; inset: auto !important; width: 100% !important; height: 360px !important; min-height: 360px !important; background-size: cover !important; background-position: 50% 18% !important; background-repeat: no-repeat !important; opacity: 1 !important; }
-  .next-event-card .event-art-large::after { content: '' !important; position: absolute !important; inset: 0 !important; background: linear-gradient(to bottom, rgba(7,10,11,0) 45%, rgba(7,10,11,.32) 63%, rgba(7,10,11,.96) 100%) !important; }
-  .next-event-content { position: relative !important; z-index: 2 !important; margin-top: -120px !important; padding: 20px 18px 26px !important; text-align: center !important; background: linear-gradient(to bottom, transparent, #070a0b 32%) !important; }
-  .next-event-content #nextType { margin: 0 auto 10px !important; padding: 7px 13px !important; font-size: 10px !important; letter-spacing: .14em !important; }
-  .next-event-content #nextName { margin: 0 !important; font-size: clamp(46px, 12vw, 68px) !important; line-height: .95 !important; letter-spacing: .025em !important; text-shadow: 0 3px 22px #000 !important; }
-  .next-event-content #nextName::before, .next-event-content #nextName::after { content: '' !important; display: inline-block !important; width: 12vw !important; max-width: 64px !important; height: 1px !important; margin: 0 10px 12px !important; background: linear-gradient(90deg, transparent, #c59545) !important; vertical-align: middle !important; }
+  /* Nearest event — exact selectors from current markup. */
+  .next-event-card {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    overflow: hidden !important;
+    background: #070a0b !important;
+  }
+  .next-event-card .event-art-large {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    height: 360px !important;
+    min-height: 360px !important;
+    background-size: cover !important;
+    background-position: 50% 18% !important;
+    background-repeat: no-repeat !important;
+    opacity: 1 !important;
+  }
+  .next-event-card .event-art-large::after {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background: linear-gradient(to bottom, rgba(7,10,11,0) 45%, rgba(7,10,11,.32) 63%, rgba(7,10,11,.96) 100%) !important;
+  }
+  .next-event-content {
+    position: relative !important;
+    z-index: 2 !important;
+    margin-top: -120px !important;
+    padding: 20px 18px 26px !important;
+    text-align: center !important;
+    background: linear-gradient(to bottom, transparent, #070a0b 32%) !important;
+  }
+  .next-event-content #nextType {
+    margin: 0 auto 10px !important;
+    padding: 7px 13px !important;
+    font-size: 10px !important;
+    letter-spacing: .14em !important;
+  }
+  .next-event-content #nextName {
+    margin: 0 !important;
+    font-size: clamp(46px, 12vw, 68px) !important;
+    line-height: .95 !important;
+    letter-spacing: .025em !important;
+    text-shadow: 0 3px 22px #000 !important;
+  }
+  .next-event-content #nextName::before,
+  .next-event-content #nextName::after {
+    content: '' !important;
+    display: inline-block !important;
+    width: 12vw !important;
+    max-width: 64px !important;
+    height: 1px !important;
+    margin: 0 10px 12px !important;
+    background: linear-gradient(90deg, transparent, #c59545) !important;
+    vertical-align: middle !important;
+  }
   .next-event-content #nextName::after { background: linear-gradient(90deg, #c59545, transparent) !important; }
-  .next-event-content #nextMeta { margin: 16px auto 0 !important; max-width: 95% !important; font-size: 12px !important; line-height: 1.5 !important; }
-  .next-event-content #nextDescription { margin: 10px auto 0 !important; max-width: 92% !important; font-size: 11px !important; line-height: 1.5 !important; }
-  .countdown-block { width: 100% !important; padding: 22px 14px 76px !important; border-left: 0 !important; border-top: 1px solid rgba(203,158,72,.22) !important; }
-  .countdown { width: 100% !important; max-width: 390px !important; margin: 10px auto 0 !important; display: grid !important; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr !important; gap: 4px !important; align-items: center !important; }
+  .next-event-content #nextMeta {
+    margin: 16px auto 0 !important;
+    max-width: 95% !important;
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+  }
+  .next-event-content #nextDescription {
+    margin: 10px auto 0 !important;
+    max-width: 92% !important;
+    font-size: 11px !important;
+    line-height: 1.5 !important;
+  }
+  .countdown-block {
+    width: 100% !important;
+    padding: 22px 14px 76px !important;
+    border-left: 0 !important;
+    border-top: 1px solid rgba(203,158,72,.22) !important;
+  }
+  .countdown {
+    width: 100% !important;
+    max-width: 390px !important;
+    margin: 10px auto 0 !important;
+    display: grid !important;
+    grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr !important;
+    gap: 4px !important;
+    align-items: center !important;
+  }
   .countdown b { font-size: clamp(32px, 9vw, 48px) !important; min-width: 0 !important; }
   .countdown-block small { max-width: 390px !important; margin: 5px auto 0 !important; }
 
@@ -47,97 +119,38 @@
   .next-event-card .event-art-large { height: 330px !important; min-height: 330px !important; background-position: 50% 16% !important; }
   .next-event-content { margin-top: -112px !important; padding-inline: 12px !important; }
   .next-event-content #nextName { font-size: clamp(42px, 12vw, 56px) !important; }
-  .next-event-content #nextName::before, .next-event-content #nextName::after { width: 8vw !important; margin-inline: 7px !important; }
+  .next-event-content #nextName::before,
+  .next-event-content #nextName::after { width: 8vw !important; margin-inline: 7px !important; }
   .countdown b { font-size: clamp(30px, 9.2vw, 40px) !important; }
   .boss-gallery .boss-card { aspect-ratio: 16 / 9 !important; }
   #bossInfoModalPl { padding-top: 58px !important; }
   #bossInfoModalPl .boss-info-pl-card { max-height: calc(100dvh - 66px) !important; }
 }
 
-/* INFORMATION ARCHITECTURE CLEANUP
-   - featured event = one highlighted event
-   - calendar = complete schedule for the selected day
-   - sidebar = the next events after the featured one
-   This removes the duplicated "Dzisiejsze wydarzenia" panel. */
-.overview .overview-card:first-child { display: none !important; }
-.overview .overview-card:last-child { display: block !important; }
-.overview .overview-card:last-child .compact h2 { font-size: 0 !important; }
-.overview .overview-card:last-child .compact h2::after { content: 'Kolejne wydarzenia'; font-size: 18px; }
-
-/* The event shown in the large featured card is already getUpcoming()[0], so do not repeat it in the queue. */
-#upcomingEvents .mini-event:first-child { display: none !important; }
-#upcomingEvents { overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; scroll-snap-type: y proximity; scrollbar-width: thin; scrollbar-color: rgba(201,153,72,.85) rgba(255,255,255,.04); }
-#upcomingEvents .mini-event { scroll-snap-align: start; }
-#upcomingEvents::-webkit-scrollbar { width: 8px; }
-#upcomingEvents::-webkit-scrollbar-track { background: rgba(255,255,255,.035); border: 1px solid rgba(201,153,72,.12); }
-#upcomingEvents::-webkit-scrollbar-thumb { background: linear-gradient(#d0a45b,#806027); border-radius: 999px; border: 2px solid #0a0d0e; }
-
-/* Desktop rebuild: stronger hierarchy, fewer repeated blocks, cleaner section rhythm. */
+/* Desktop only: show three upcoming rows at a time and scroll through the rest. */
 @media (min-width: 901px) {
-  .hero { min-height: 315px !important; padding-top: 64px !important; padding-bottom: 56px !important; }
-  .focus-section { margin-bottom: 34px !important; }
-
-  .schedule-layout {
-    display: grid !important;
-    grid-template-columns: minmax(0, 1fr) 360px !important;
-    gap: 20px !important;
-    align-items: start !important;
-    margin-top: 8px !important;
-  }
-
-  .calendar-section {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    grid-template-areas: 'filters' 'calendar' !important;
-    gap: 0 !important;
-    width: 100% !important;
-    padding-top: 0 !important;
-  }
-
-  .calendar-section:before { grid-area: calendar !important; }
-  .calendar-section > .section-heading { grid-area: calendar !important; }
-  .calendar-section .calendar-toolbar { grid-area: calendar !important; }
-  .calendar-section .event-list { grid-area: calendar !important; }
-  .calendar-section .filters { grid-area: filters !important; }
-
-  .overview {
-    display: block !important;
-    grid-area: auto !important;
-    width: 100% !important;
-    align-self: start !important;
-  }
-
-  .overview .overview-card:last-child {
-    min-height: 0 !important;
-    padding: 18px 16px 16px !important;
-    background: linear-gradient(180deg, rgba(14,20,21,.98), rgba(7,11,12,.98)) !important;
-  }
-
-  .overview .overview-card:last-child .compact {
-    padding-bottom: 12px !important;
-    margin-bottom: 2px !important;
-    border-bottom: 1px solid rgba(203,158,72,.23) !important;
-  }
-
   #upcomingEvents {
-    max-height: 246px !important;
-    padding-right: 8px !important;
+    max-height: 174px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    padding-right: 8px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(201,153,72,.8) rgba(255,255,255,.04);
   }
-
   #upcomingEvents .mini-event {
-    min-height: 82px !important;
-    padding: 11px 2px !important;
+    min-height: 58px;
   }
-
-  .quick-add { margin-top: 28px !important; min-height: 96px !important; padding: 18px 24px !important; }
-  .boss-gallery { margin-top: 24px !important; }
-  .community { margin-top: 24px !important; }
+  #upcomingEvents::-webkit-scrollbar { width: 8px; }
+  #upcomingEvents::-webkit-scrollbar-track {
+    background: rgba(255,255,255,.035);
+    border: 1px solid rgba(201,153,72,.12);
+  }
+  #upcomingEvents::-webkit-scrollbar-thumb {
+    background: linear-gradient(#d0a45b,#806027);
+    border-radius: 999px;
+    border: 2px solid #0a0d0e;
+  }
 }
 
-/* Mobile/tablet: same de-duplication, but keep the existing layout. */
-@media (max-width: 900px) {
-  .overview { display: block !important; }
-  .overview .overview-card:last-child { margin-top: 14px !important; }
-  #upcomingEvents { max-height: 228px !important; padding-right: 6px !important; }
-  #upcomingEvents .mini-event { min-height: 76px !important; }
-}
+/* deploy trigger: desktop upcoming scroll */
