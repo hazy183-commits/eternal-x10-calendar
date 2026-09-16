@@ -138,7 +138,7 @@ export function extractTimes(text) {
   return results.slice(0, 2);
 }
 
-function parseOcrText(rawText = '', sourceScore = 0) {
+export function parseOcrText(rawText = '', sourceScore = 0) {
   const rawLines = String(rawText).split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
   const defaultDate = extractDate(rawText, warsawToday());
   const candidates = [];
@@ -187,14 +187,44 @@ function parseOcrText(rawText = '', sourceScore = 0) {
   return candidates;
 }
 
+function serverDateTimeToWarsaw(date, time) {
+  const match = `${date} ${time}`.match(/^(\d{4})-(\d{2})-(\d{2})\s+(\d{2}):(\d{2})$/);
+  if (!match) return null;
+  const instant = new Date(Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3]), Number(match[4]), Number(match[5])));
+  if (!Number.isFinite(instant.getTime())) return null;
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Europe/Warsaw', year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+  }).formatToParts(instant);
+  const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+  return { date: `${values.year}-${values.month}-${values.day}`, time: `${values.hour}:${values.minute}` };
+}
+
+export function serverWindowToWarsaw(row) {
+  const start = serverDateTimeToWarsaw(row.date, row.start);
+  const serverEndDate = row.end <= row.start ? addDays(row.date, 1) : row.date;
+  const end = serverDateTimeToWarsaw(serverEndDate, row.end);
+  if (!start || !end) return row;
+  return { ...row, date: start.date, start: start.time, end: end.time, endDate: end.date };
+}
+
 function mergeCandidates(groups = []) {
-  const best = new Map();
+  const votes = new Map();
   groups.flat().forEach((row) => {
     if (!row?.boss || !row.start || !row.end) return;
-    const current = best.get(row.boss);
-    if (!current || (row.score || 0) > (current.score || 0)) best.set(row.boss, row);
+    if (!votes.has(row.boss)) votes.set(row.boss, new Map());
+    const signature = `${row.date}|${row.start}|${row.end}`;
+    const current = votes.get(row.boss).get(signature) || { row, count: 0, score: 0 };
+    current.count += 1;
+    current.score = Math.max(current.score, row.score || 0);
+    if ((row.score || 0) >= (current.row.score || 0)) current.row = row;
+    votes.get(row.boss).set(signature, current);
   });
-  return EPIC_BOSSES.map(({ name }) => best.get(name)).filter(Boolean).map(({ score, ...row }) => row);
+  return EPIC_BOSSES.map(({ name }) => {
+    const options = [...(votes.get(name)?.values() || [])];
+    options.sort((a, b) => b.count - a.count || b.score - a.score);
+    return options[0]?.row;
+  }).filter(Boolean).map(({ score, ...row }) => serverWindowToWarsaw(row));
 }
 
 function loadTesseract(progress) {
@@ -253,6 +283,26 @@ function preprocessCanvas(image, mode = 'contrast') {
   return canvas;
 }
 
+function cropRespawnTable(image) {
+  const width = image.naturalWidth || image.width;
+  const height = image.naturalHeight || image.height;
+  const canvas = document.createElement('canvas');
+  // The Community/Epic window keeps the boss table in the middle band. Cropping
+  // removes tabs and "Server Time", which otherwise look like respawn values.
+  const x = Math.round(width * 0.025);
+  const y = Math.round(height * 0.17);
+  const cropWidth = Math.round(width * 0.95);
+  const cropHeight = Math.round(height * 0.40);
+  const scale = Math.max(1.8, Math.min(3.2, 2800 / Math.max(cropWidth, cropHeight)));
+  canvas.width = Math.round(cropWidth * scale);
+  canvas.height = Math.round(cropHeight * scale);
+  const ctx = canvas.getContext('2d');
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(image, x, y, cropWidth, cropHeight, 0, 0, canvas.width, canvas.height);
+  return canvas;
+}
+
 async function runPass(Tesseract, image, label, section, passIndex, passCount, psm = '6') {
   const base = 8 + (passIndex / passCount) * 68;
   const span = 68 / passCount;
@@ -289,7 +339,7 @@ function rowTemplate(row = {}) {
 }
 
 function endDateFor(row) {
-  return row.end <= row.start ? addDays(row.date, 1) : row.date;
+  return row.endDate || (row.end <= row.start ? addDays(row.date, 1) : row.date);
 }
 
 export function installEpicRespawnScreenshotImport(supabase) {
@@ -412,10 +462,12 @@ export function installEpicRespawnScreenshotImport(supabase) {
         loadTesseract((text, percent) => setProgress(section, text, percent)),
         loadImage(file),
       ]);
+      const table = cropRespawnTable(image);
       const variants = [
-        { label: 'Oryginał', image: file, psm: '6', bonus: 1 },
-        { label: 'Wysoki kontrast', image: preprocessCanvas(image, 'contrast'), psm: '6', bonus: 4 },
-        { label: 'Czarno-biały', image: preprocessCanvas(image, 'threshold'), psm: '11', bonus: 5 },
+        { label: 'Przycięta tabela', image: table, psm: '6', bonus: 8 },
+        { label: 'Tabela — wysoki kontrast', image: preprocessCanvas(table, 'contrast'), psm: '6', bonus: 10 },
+        { label: 'Tabela — czarno-biała', image: preprocessCanvas(table, 'threshold'), psm: '11', bonus: 11 },
+        { label: 'Pełny screen (kontrola)', image: file, psm: '6', bonus: 1 },
       ];
       const passes = [];
       const parsed = [];
@@ -429,7 +481,7 @@ export function installEpicRespawnScreenshotImport(supabase) {
       let rows = mergeCandidates(parsed);
       if (rows.length < 3) {
         setProgress(section, 'Dodatkowy przebieg OCR dla trudnego screena…', 76);
-        const inverted = await runPass(Tesseract, preprocessCanvas(image, 'invert'), 'Odwrócony kontrast', section, 2, 3, '11');
+        const inverted = await runPass(Tesseract, preprocessCanvas(table, 'invert'), 'Tabela — odwrócony kontrast', section, 3, 4, '11');
         passes.push(`Odwrócony kontrast (${Math.round(inverted.confidence)}%):\n${inverted.text}`);
         rows = mergeCandidates([...parsed, parseOcrText(inverted.text, 6 + Math.max(0, inverted.confidence / 20))]);
       }
@@ -454,10 +506,10 @@ export function installEpicRespawnScreenshotImport(supabase) {
     section.className = 'epic-ocr-import';
     section.dataset.epicOcrImport = '1';
     section.innerHTML = `
-      <div class="epic-ocr-head"><div><span class="eyebrow">SZYBKA AKTUALIZACJA</span><h3>SCREEN → OKNA EPIC RB</h3><p>Wrzuć screen z oknami respawnu. Obraz jest powiększany i analizowany kilkoma metodami OCR, a dane zapisują się dopiero po Twoim zatwierdzeniu.</p></div><span class="epic-ocr-badge">OWNER / ADMIN</span></div>
+      <div class="epic-ocr-head"><div><span class="eyebrow">SZYBKA AKTUALIZACJA</span><h3>SCREEN → OKNA EPIC RB</h3><p>Wrzuć screen z oknami respawnu. Godziny ze screena są traktowane jako czas serwera (UTC) i automatycznie przeliczane na czas polski.</p></div><span class="epic-ocr-badge">SERVER → PL</span></div>
       <div class="epic-ocr-drop">
         <div class="epic-ocr-preview" data-ocr-preview>Podgląd screena</div>
-        <div><div class="epic-ocr-controls"><label class="epic-ocr-button">WYBIERZ SCREEN<input class="epic-ocr-file" data-ocr-file type="file" accept="image/png,image/jpeg,image/webp,image/*"></label><button class="epic-ocr-button primary" type="button" data-ocr-run disabled>DOKŁADNIE ROZPOZNAJ SCREEN</button></div><div class="epic-ocr-status" data-ocr-status>Obsługiwane: Queen Ant, Core, Orfen, Zaken, Frintezza.</div><div class="epic-ocr-progress"><i data-ocr-progress></i></div><div class="epic-ocr-note">Nowy tryb robi kilka przebiegów OCR: oryginał, wysoki kontrast, czarno-biały i awaryjnie odwrócony kontrast. Nazwy bossów są dopasowywane również przy literówkach OCR.</div></div>
+        <div><div class="epic-ocr-controls"><label class="epic-ocr-button">WYBIERZ SCREEN<input class="epic-ocr-file" data-ocr-file type="file" accept="image/png,image/jpeg,image/webp,image/*"></label><button class="epic-ocr-button primary" type="button" data-ocr-run disabled>DOKŁADNIE ROZPOZNAJ SCREEN</button></div><div class="epic-ocr-status" data-ocr-status>Obsługiwane: Queen Ant, Core, Orfen, Zaken, Frintezza.</div><div class="epic-ocr-progress"><i data-ocr-progress></i></div><div class="epic-ocr-note">Importer wycina samą tabelę, wykonuje kilka przebiegów OCR i pokazuje już czas polski. Przykład: 04:34 serwera → 06:34 w Polsce (latem).</div></div>
       </div>
       <div class="epic-ocr-results" data-ocr-results></div>
       <div class="epic-ocr-result-actions"><button class="epic-ocr-button" type="button" data-ocr-add>+ DODAJ WIERSZ</button><button class="epic-ocr-button primary" type="button" data-ocr-save disabled>✓ ZATWIERDŹ I AKTUALIZUJ</button></div>
