@@ -14,14 +14,23 @@ function relativeLabel(dateKey){
   const diff=Math.round((date-now)/86400000);
   if(diff===0) return 'DZISIAJ';
   if(diff===1) return 'JUTRO';
-  if(diff===-1) return 'WCZORAJ';
   if(diff>1&&diff<7) return `ZA ${diff} DNI`;
   return '';
 }
 
-function extractDate(row){
+function extractMeta(row){
   const text=[...row.querySelectorAll('.admin-event-copy span')].map(el=>el.textContent||'').join(' ');
-  return text.match(/\b\d{4}-\d{2}-\d{2}\b/)?.[0]||'';
+  const date=text.match(/\b\d{4}-\d{2}-\d{2}\b/)?.[0]||'';
+  const time=text.match(/\b(?:[01]\d|2[0-3]):[0-5]\d\b/)?.[0]||'00:00';
+  return {date,time};
+}
+
+function isUpcoming(row){
+  const {date,time}=extractMeta(row);
+  if(!date) return true;
+  const start=new Date(`${date}T${time}:00`);
+  if(!Number.isFinite(start.getTime())) return true;
+  return start.getTime()>=Date.now();
 }
 
 function groupAdminEvents(){
@@ -30,20 +39,31 @@ function groupAdminEvents(){
   const directRows=[...list.children].filter(el=>el.classList?.contains('admin-event'));
   if(!directRows.length) return;
   list.dataset.dayGrouping='busy';
+
+  const upcomingRows=directRows.filter(isUpcoming);
   const groups=[];
   const byDate=new Map();
-  directRows.forEach(row=>{
-    const date=extractDate(row)||'Bez daty';
-    if(!byDate.has(date)){const entry={date,rows:[]};byDate.set(date,entry);groups.push(entry);} 
-    byDate.get(date).rows.push(row);
+  upcomingRows.forEach(row=>{
+    const {date}=extractMeta(row);
+    const key=date||'Bez daty';
+    if(!byDate.has(key)){const entry={date:key,rows:[]};byDate.set(key,entry);groups.push(entry);} 
+    byDate.get(key).rows.push(row);
   });
+
   const fragment=document.createDocumentFragment();
-  groups.forEach(({date,rows})=>{
-    const section=document.createElement('section'); section.className='admin-day-group'; section.dataset.adminDay=date;
-    const rel=relativeLabel(date);
-    section.innerHTML=`<div class="admin-day-heading"><div><span class="admin-day-relative">${rel||'DZIEŃ'}</span><h3>${prettyDate(date)}</h3></div><b>${rows.length} ${rows.length===1?'wydarzenie':'wydarzeń'}</b></div><div class="admin-day-events"></div>`;
-    const body=section.querySelector('.admin-day-events'); rows.forEach(row=>body.appendChild(row)); fragment.appendChild(section);
-  });
+  if(!groups.length){
+    const empty=document.createElement('p');
+    empty.className='empty-mini admin-upcoming-empty';
+    empty.textContent='Brak nadchodzących wydarzeń pasujących do filtrów.';
+    fragment.appendChild(empty);
+  }else{
+    groups.forEach(({date,rows})=>{
+      const section=document.createElement('section'); section.className='admin-day-group'; section.dataset.adminDay=date;
+      const rel=relativeLabel(date);
+      section.innerHTML=`<div class="admin-day-heading"><div><span class="admin-day-relative">${rel||'DZIEŃ'}</span><h3>${prettyDate(date)}</h3></div><b>${rows.length} ${rows.length===1?'wydarzenie':'wydarzeń'}</b></div><div class="admin-day-events"></div>`;
+      const body=section.querySelector('.admin-day-events'); rows.forEach(row=>body.appendChild(row)); fragment.appendChild(section);
+    });
+  }
   list.replaceChildren(fragment); delete list.dataset.dayGrouping;
 }
 
@@ -58,7 +78,7 @@ function boot(){
     .admin-day-heading>div{display:flex;align-items:center;gap:10px;min-width:0}.admin-day-heading h3{margin:0;color:#ead9b8;font:700 16px Georgia,serif;text-transform:capitalize}.admin-day-heading>b{color:#b68c43;font-size:10px;white-space:nowrap;text-transform:uppercase;letter-spacing:.06em}
     .admin-day-relative{padding:5px 7px;border:1px solid #8b642c;background:#33230f;color:#f0c66e;font-size:8px;font-weight:900;letter-spacing:.08em;white-space:nowrap}
     .admin-day-events{display:grid;gap:0}.admin-day-events .admin-event{border:0!important;border-bottom:1px solid #28231b!important;background:#0b0f0f!important;margin:0!important;padding:13px 14px!important}.admin-day-events .admin-event:last-child{border-bottom:0!important}.admin-day-events .admin-event:hover{background:#101514!important}
-    .admin-day-events .admin-event-copy{min-width:0}.admin-day-events .admin-event-copy b{font-size:14px!important;color:#eee3cf}.admin-day-events .admin-event-copy span{font-size:10px!important;line-height:1.45}.admin-day-events .event-thumb{width:54px!important;height:48px!important;flex:0 0 54px}
+    .admin-day-events .admin-event-copy{min-width:0}.admin-day-events .admin-event-copy b{font-size:14px!important;color:#eee3cf}.admin-day-events .admin-event-copy span{font-size:10px!important;line-height:1.45}.admin-day-events .event-thumb{width:54px!important;height:48px!important;flex:0 0 54px}.admin-upcoming-empty{padding:20px;border:1px solid #362d20;background:#0b0f0f;text-align:center}
     @media(max-width:700px){#adminEventList{gap:13px}.admin-day-heading{align-items:flex-start;padding:11px}.admin-day-heading>div{align-items:flex-start;flex-direction:column;gap:5px}.admin-day-heading h3{font-size:14px}.admin-day-events .admin-event{padding:11px!important}.admin-day-events .admin-event>div:last-child{display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%}.admin-day-events .admin-event>div:last-child button{width:100%;margin:0!important}}
   `;
   document.head.appendChild(style);
@@ -66,6 +86,14 @@ function boot(){
   const schedule=()=>{if(queued)return;queued=true;queueMicrotask(()=>{queued=false;groupAdminEvents();});};
   new MutationObserver(schedule).observe(list,{childList:true});
   groupAdminEvents();
+  setInterval(()=>{
+    const grouped=[...list.querySelectorAll('.admin-day-events .admin-event')];
+    if(grouped.some(row=>!isUpcoming(row))){
+      const rows=grouped.filter(isUpcoming);
+      list.replaceChildren(...rows);
+      groupAdminEvents();
+    }
+  },60000);
 }
 
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
