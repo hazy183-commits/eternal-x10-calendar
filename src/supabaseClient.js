@@ -11,6 +11,7 @@ import { installNeededRaidBosses } from './neededRaidBosses.js';
 import { installNeededRaidBossWindow } from './neededRaidBossWindow.js';
 import { installRaidBossArtworkEnhancer } from './raidBossArtworkEnhancer.js';
 import { installNeededRaidBossDetails } from './neededRaidBossDetails.js';
+import './neededRaidBossRefreshBridge.js';
 import './interludeClassSelects.js';
 
 const url = import.meta.env.VITE_SUPABASE_URL;
