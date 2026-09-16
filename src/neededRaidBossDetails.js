@@ -1,4 +1,4 @@
-import { raidBossImageCandidates } from './raidBossArtworkEnhancer.js';
+import { raidBossImageCandidates, raidBossWikiUrl } from './raidBossArtworkEnhancer.js';
 
 const esc = (v = '') => String(v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
@@ -62,8 +62,10 @@ export function installNeededRaidBossDetails(supabase) {
     .rb-detail-body{padding:18px}.rb-detail-hero{display:grid;grid-template-columns:270px 1fr;gap:18px}.rb-detail-image{height:270px;border:1px solid #6c5129;background:#090d0d;overflow:hidden}.rb-detail-image img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}.rb-detail-image-fallback{height:100%;display:grid;place-items:center;color:#b98c3d;font-size:34px;font-weight:900;letter-spacing:.18em;background:radial-gradient(circle at 50% 35%,#322410,#090b0b 68%)}
     .rb-detail-title h2{margin:0;color:#f0e6d3;font-size:24px;line-height:1.15}.rb-detail-title .rb-detail-level{display:inline-flex;margin:8px 0 12px;padding:6px 8px;border:1px solid #8a642d;background:#2b1d0d;color:#e9bd61;font-size:10px;font-weight:900}.rb-detail-state{display:inline-flex;margin-left:8px;padding:6px 8px;border:1px solid #5d4b2c;color:#cdb270;font-size:9px;font-weight:900}.rb-detail-state.active{border-color:#6c8b43;color:#b9d678;background:#14200e}.rb-detail-state.ended{border-color:#6d443a;color:#d99081;background:#20110f}
     .rb-detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:8px}.rb-detail-cell{padding:10px;border:1px solid #302a21;background:#0c1010}.rb-detail-cell span{display:block;color:#786f61;font-size:8px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}.rb-detail-cell b{display:block;margin-top:4px;color:#d9d0c2;font-size:11px}.rb-detail-note{margin:14px 0 0;padding:12px;border-left:3px solid #9b7031;background:#14120d;color:#bfb6a7;font-size:11px;line-height:1.55}
-    .rb-detail-section{margin-top:18px;padding-top:14px;border-top:1px solid #2c2720}.rb-detail-section h4{margin:0 0 9px;color:#d7b165;font-size:10px;letter-spacing:.08em}.rb-detail-helper-list{display:flex;flex-wrap:wrap;gap:7px}.rb-detail-helper{padding:7px 9px;border:1px solid #4c402d;background:#11120e;color:#bbb2a4;font-size:10px}.rb-detail-empty{color:#706b62;font-size:10px}.rb-detail-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}.rb-detail-action{padding:11px 14px;border:1px solid #6f562e;background:#17130c;color:#d8ad59;font-size:10px;font-weight:900;cursor:pointer}.rb-detail-action.active{background:#33240f;border-color:#aa7a34}.rb-detail-killed{margin-left:auto;border-color:#496137;background:#12200f;color:#acd678}.rb-detail-message{min-height:16px;margin-top:10px;color:#9f8f72;font-size:10px}
-    @media(max-width:700px){.rb-detail-layer{padding:8px}.rb-detail-body{padding:12px}.rb-detail-hero{grid-template-columns:1fr}.rb-detail-image{height:230px}.rb-detail-title h2{font-size:20px}.rb-detail-grid{grid-template-columns:1fr}.rb-detail-killed{margin-left:0;width:100%}}
+    .rb-detail-section{margin-top:18px;padding-top:14px;border-top:1px solid #2c2720}.rb-detail-section h4{margin:0 0 9px;color:#d7b165;font-size:10px;letter-spacing:.08em}.rb-detail-helper-list{display:flex;flex-wrap:wrap;gap:7px}.rb-detail-helper{padding:7px 9px;border:1px solid #4c402d;background:#11120e;color:#bbb2a4;font-size:10px}.rb-detail-empty{color:#706b62;font-size:10px}
+    .rb-detail-location{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px;border:1px solid #33452f;background:linear-gradient(135deg,#11190f,#0b100b)}.rb-detail-location-copy b{display:block;color:#d5dfc7;font-size:11px}.rb-detail-location-copy span{display:block;margin-top:4px;color:#7f8d76;font-size:9px}.rb-detail-map-link{display:inline-flex;align-items:center;justify-content:center;min-width:170px;padding:10px 12px;border:1px solid #5e7a53;background:#152012;color:#c8e1aa;text-decoration:none;font-size:10px;font-weight:900;white-space:nowrap}.rb-detail-map-link:hover{background:#1c2918;border-color:#7d9d6f;color:#e2f3cb}
+    .rb-detail-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}.rb-detail-action{padding:11px 14px;border:1px solid #6f562e;background:#17130c;color:#d8ad59;font-size:10px;font-weight:900;cursor:pointer}.rb-detail-action.active{background:#33240f;border-color:#aa7a34}.rb-detail-killed{margin-left:auto;border-color:#496137;background:#12200f;color:#acd678}.rb-detail-message{min-height:16px;margin-top:10px;color:#9f8f72;font-size:10px}
+    @media(max-width:700px){.rb-detail-layer{padding:8px}.rb-detail-body{padding:12px}.rb-detail-hero{grid-template-columns:1fr}.rb-detail-image{height:230px}.rb-detail-title h2{font-size:20px}.rb-detail-grid{grid-template-columns:1fr}.rb-detail-location{align-items:stretch;flex-direction:column}.rb-detail-map-link{width:100%;box-sizing:border-box}.rb-detail-killed{margin-left:0;width:100%}}
   `;
   document.head.appendChild(style);
 
@@ -112,6 +114,7 @@ export function installNeededRaidBossDetails(supabase) {
     const canClose = currentProfile?.status === 'approved' && (request.user_id === currentUser?.id || ['owner','admin','leader'].includes(role));
     const canHelp = currentProfile?.status === 'approved' && !!currentUser;
     const state = windowState(request.window_start);
+    const locationUrl = raidBossWikiUrl(request.boss_name);
 
     body().innerHTML = `
       <div class="rb-detail-hero">
@@ -126,6 +129,13 @@ export function installNeededRaidBossDetails(supabase) {
             <div class="rb-detail-cell"><span>Chętni</span><b>${helperList.length}</b></div>
           </div>
           ${request.note ? `<div class="rb-detail-note">${esc(request.note)}</div>` : ''}
+        </div>
+      </div>
+      <div class="rb-detail-section">
+        <h4>LOKALIZACJA</h4>
+        <div class="rb-detail-location">
+          <div class="rb-detail-location-copy"><b>Spawn tego Raid Bossa</b><span>Otwórz stronę Interlude z sekcją MAP i dokładną lokalizacją spawnu.</span></div>
+          <a class="rb-detail-map-link" href="${esc(locationUrl)}" target="_blank" rel="noopener noreferrer">📍 OTWÓRZ MAPĘ SPAWNU</a>
         </div>
       </div>
       <div class="rb-detail-section">
