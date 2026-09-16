@@ -149,6 +149,7 @@ export function installNextEventCarousel() {
   const show = (i) => {
     const list=rows(); if(!list.length)return;
     index=(i+list.length)%list.length;
+    card.dataset.carouselIndex=String(index);
     selected=index===0?null:readRow(list[index]);
     drawDots();
     if(selected) paint();
