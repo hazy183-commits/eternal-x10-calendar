@@ -19,29 +19,24 @@ function replaceInputWithSelect(id, placeholder) {
   const current = document.getElementById(id);
   if (!current || current.tagName === 'SELECT') return false;
 
+  const previousValue = current.value || '';
   const select = document.createElement('select');
   select.id = id;
   select.name = current.name || '';
   select.innerHTML = buildOptions(placeholder);
-  select.value = current.value || '';
   select.setAttribute('aria-label', current.getAttribute('aria-label') || placeholder);
   current.replaceWith(select);
+
+  if (previousValue) {
+    const exists = [...select.options].some(option => option.value === previousValue);
+    if (exists) select.value = previousValue;
+  }
   return true;
 }
 
 function applyClassSelects() {
-  const mainChanged = replaceInputWithSelect('zoneProfileClass', 'Wybierz klasę');
-  const subChanged = replaceInputWithSelect('zoneProfileSubclass', 'Brak / wybierz subclassę');
-
-  if (mainChanged || subChanged) {
-    const form = document.getElementById('zoneProfileForm');
-    if (form) {
-      const main = form.querySelector('#zoneProfileClass');
-      const sub = form.querySelector('#zoneProfileSubclass');
-      if (main && !main.value) main.selectedIndex = 0;
-      if (sub && !sub.value) sub.selectedIndex = 0;
-    }
-  }
+  replaceInputWithSelect('zoneProfileClass', 'Wybierz klasę');
+  replaceInputWithSelect('zoneProfileSubclass', 'Brak / wybierz subclassę');
 }
 
 export function installInterludeClassSelects() {
@@ -55,4 +50,14 @@ export function installInterludeClassSelects() {
   document.addEventListener('click', event => {
     if (event.target.closest('[data-zone-view="profile"]')) setTimeout(applyClassSelects, 0);
   });
+
+  window.addEventListener('pageshow', applyClassSelects);
+  setTimeout(applyClassSelects, 300);
+  setTimeout(applyClassSelects, 1000);
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', installInterludeClassSelects, { once: true });
+} else {
+  installInterludeClassSelects();
 }
