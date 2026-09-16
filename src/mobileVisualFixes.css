@@ -1,4 +1,4 @@
-/* Final mobile presentation fixes. Desktop intentionally untouched. */
+/* Final mobile presentation fixes. Desktop intentionally untouched except the dedicated upcoming-events panel rule at the bottom. */
 @media (max-width: 900px) {
   html, body { overflow-x: clip !important; }
   body { padding-top: 56px !important; }
@@ -127,4 +127,30 @@
   #bossInfoModalPl .boss-info-pl-card { max-height: calc(100dvh - 66px) !important; }
 }
 
-/* deploy trigger: mobile nearest-event v2 */
+/* Desktop only: show three upcoming rows at a time and scroll through the rest. */
+@media (min-width: 901px) {
+  #upcomingEvents {
+    max-height: 174px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    padding-right: 8px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(201,153,72,.8) rgba(255,255,255,.04);
+  }
+  #upcomingEvents .mini-event {
+    min-height: 58px;
+  }
+  #upcomingEvents::-webkit-scrollbar { width: 8px; }
+  #upcomingEvents::-webkit-scrollbar-track {
+    background: rgba(255,255,255,.035);
+    border: 1px solid rgba(201,153,72,.12);
+  }
+  #upcomingEvents::-webkit-scrollbar-thumb {
+    background: linear-gradient(#d0a45b,#806027);
+    border-radius: 999px;
+    border: 2px solid #0a0d0e;
+  }
+}
+
+/* deploy trigger: desktop upcoming scroll */
