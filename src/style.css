@@ -317,6 +317,26 @@ body:before { content:""; position:fixed; z-index:-1; inset:0; background:radial
   .hero{padding-left:0}
   .hero h1{font-size:clamp(48px,5.65vw,80px)}
 }
+
+/* AUTO PVP EVENTS as one chronological desktop table. */
+.pvp-table-head{display:none}
+@media(min-width:821px){
+  .pvp-wide .pvp-hero-panel{padding-bottom:15px}
+  .pvp-wide #pvpSidebarEvents{display:block}
+  .pvp-table-head,.pvp-wide .pvp-sidebar-event{display:grid;grid-template-columns:32px minmax(180px,1.2fr) minmax(145px,.75fr) minmax(145px,.75fr) minmax(135px,.7fr);align-items:center;gap:14px}
+  .pvp-table-head{min-height:31px;padding:0 8px;border-bottom:1px solid var(--soft);color:#8f948f;font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+  .pvp-table-head span:last-child{text-align:right}
+  .pvp-wide .pvp-sidebar-event{min-height:53px;padding:5px 8px}
+  .pvp-sidebar-order{color:#777f7b;font-size:10px;text-align:center}
+  .pvp-wide .pvp-sidebar-main{gap:10px}
+  .pvp-wide .pvp-sidebar-icon{flex-basis:24px}
+  .pvp-wide .pvp-sidebar-event h3{font-size:11px}
+  .pvp-sidebar-range{margin:0;color:var(--muted);font-size:8px;text-transform:uppercase}
+  .pvp-sidebar-range span{display:none}
+  .pvp-sidebar-range b{display:block;color:#ddd5c6;font-size:10px;font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .pvp-wide .pvp-sidebar-meta{min-width:0}
+  .pvp-wide .pvp-sidebar-date{display:block;margin:3px 0 0;color:#8d928e;font-size:8px}
+}
 .focus-section>.section-heading .live-status{display:none}
 
 

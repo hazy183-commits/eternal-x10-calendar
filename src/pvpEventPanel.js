@@ -78,8 +78,11 @@ export function renderPvpSidebar(root, now = new Date()) {
     .sort((a, b) => pvpTiming(a).registrationStart - pvpTiming(b).registrationStart);
   const signature = events.map(({ id }) => id).join('|');
   if (sidebarSignatures.get(root) !== signature) {
-    root.innerHTML = events.map((event) => `<article class="pvp-sidebar-event" data-pvp-occurrence="${event.id}">
-      <div class="pvp-sidebar-main"><span class="pvp-sidebar-icon" aria-hidden="true">${PVP_ICONS[event.pvpId] ?? '✦'}</span><div><h3>${event.name}</h3><p class="pvp-sidebar-date" data-pvp-date></p><p class="pvp-sidebar-ranges"><span>Rejestracja <b data-pvp-registration></b></span><span>Event <b data-pvp-event></b></span></p></div></div>
+    root.innerHTML = events.map((event, index) => `<article class="pvp-sidebar-event" data-pvp-occurrence="${event.id}">
+      <span class="pvp-sidebar-order">${index + 1}</span>
+      <div class="pvp-sidebar-main"><span class="pvp-sidebar-icon" aria-hidden="true">${PVP_ICONS[event.pvpId] ?? '✦'}</span><div><h3>${event.name}</h3><p class="pvp-sidebar-date" data-pvp-date></p></div></div>
+      <p class="pvp-sidebar-range"><span>Rejestracja</span><b data-pvp-registration></b></p>
+      <p class="pvp-sidebar-range"><span>Event</span><b data-pvp-event></b></p>
       <div class="pvp-sidebar-meta"><p class="pvp-sidebar-status" data-pvp-status></p><p class="pvp-sidebar-countdown" data-pvp-countdown></p></div>
     </article>`).join('');
     sidebarSignatures.set(root, signature);
