@@ -1,9 +1,15 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { extractTimes, parseOcrText, serverWindowToWarsaw } from '../src/epicRespawnScreenshotImport.js';
+import { extractTimes, parseOcrText, respawnCropRect, serverWindowToWarsaw } from '../src/epicRespawnScreenshotImport.js';
 
 test('dates are never reused as respawn times', () => {
   assert.deepEqual(extractTimes('Queen Ant 17.09.2026 04:34 - 05:04'), ['04:34', '05:04']);
+  assert.deepEqual(extractTimes('Frintezza 417.09,2026 12:50 - 13:20'), ['12:50', '13:20']);
+});
+
+test('an already cropped, wide Epic table is not cropped a second time', () => {
+  assert.deepEqual(respawnCropRect(647, 154), { x: 0, y: 0, width: 647, height: 154, tableLike: true });
+  assert.deepEqual(respawnCropRect(1536, 1128), { x: 38, y: 192, width: 1459, height: 451, tableLike: false });
 });
 
 test('known Epic table rows keep their own dates and windows', () => {

@@ -106,9 +106,12 @@ function validTime(hour, minute) {
 }
 
 function extractDate(text, fallback = warsawToday()) {
-  const iso = String(text).match(/\b(20\d{2})[-/.](\d{1,2})[-/.](\d{1,2})\b/);
+  const cleaned = String(text).replace(/(?<=\d),(?=\d)/g, '.');
+  const iso = cleaned.match(/(20\d{2})[-/.](\d{1,2})[-/.](\d{1,2})\b/);
   if (iso) return `${iso[1]}-${pad(iso[2])}-${pad(iso[3])}`;
-  const local = String(text).match(/\b(\d{1,2})[./-](\d{1,2})(?:[./-](20\d{2}))?\b/);
+  // OCR sometimes glues a stray level/status digit to the date (e.g. 417.09.2026).
+  // Taking the final two digits before the first separator still recovers 17.09.2026.
+  const local = cleaned.match(/(\d{1,2})[./-](\d{1,2})(?:[./-](20\d{2}))?\b/);
   if (!local) return fallback;
   const fallbackYear = fallback.slice(0, 4);
   return `${local[3] || fallbackYear}-${pad(local[2])}-${pad(local[1])}`;
@@ -117,9 +120,9 @@ function extractDate(text, fallback = warsawToday()) {
 export function extractTimes(text) {
   // Remove complete dates before looking for times. Without this guard,
   // a date such as 17.09.2026 can be misread as the time 17:09.
-  const withoutDates = String(text)
-    .replace(/\b20\d{2}[-/.]\d{1,2}[-/.]\d{1,2}\b/g, ' ')
-    .replace(/\b\d{1,2}[-/.]\d{1,2}[-/.]20\d{2}\b/g, ' ');
+  const withoutDates = String(text).replace(/(?<=\d),(?=\d)/g, '.')
+    .replace(/20\d{2}[-/.]\d{1,2}[-/.]\d{1,2}\b/g, ' ')
+    .replace(/\d{1,2}[-/.]\d{1,2}[-/.]20\d{2}\b/g, ' ');
   const cleaned = normalizeForTimes(withoutDates);
   const results = [];
   const patterns = [
@@ -283,16 +286,26 @@ function preprocessCanvas(image, mode = 'contrast') {
   return canvas;
 }
 
+export function respawnCropRect(width, height) {
+  const tableLike = width / Math.max(1, height) >= 2.7 || height <= 360;
+  if (tableLike) return { x: 0, y: 0, width, height, tableLike: true };
+  return {
+    x: Math.round(width * 0.025),
+    y: Math.round(height * 0.17),
+    width: Math.round(width * 0.95),
+    height: Math.round(height * 0.40),
+    tableLike: false,
+  };
+}
+
 function cropRespawnTable(image) {
   const width = image.naturalWidth || image.width;
   const height = image.naturalHeight || image.height;
   const canvas = document.createElement('canvas');
-  // The Community/Epic window keeps the boss table in the middle band. Cropping
-  // removes tabs and "Server Time", which otherwise look like respawn values.
-  const x = Math.round(width * 0.025);
-  const y = Math.round(height * 0.17);
-  const cropWidth = Math.round(width * 0.95);
-  const cropHeight = Math.round(height * 0.40);
+  // A wide, low image is already a cropped table and must be kept in full.
+  // Only full Community-window screenshots need the middle band extracted.
+  const rect = respawnCropRect(width, height);
+  const { x, y, width: cropWidth, height: cropHeight } = rect;
   const scale = Math.max(1.8, Math.min(3.2, 2800 / Math.max(cropWidth, cropHeight)));
   canvas.width = Math.round(cropWidth * scale);
   canvas.height = Math.round(cropHeight * scale);
