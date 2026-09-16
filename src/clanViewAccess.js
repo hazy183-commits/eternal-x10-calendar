@@ -1,3 +1,5 @@
+import './interludeClassSelects.js';
+
 export function canAccessClanView(profile, view) {
   if (view !== 'content-editor' && view !== 'recruitment') return true;
   if (profile?.status !== 'approved') return false;
