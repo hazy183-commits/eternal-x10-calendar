@@ -124,6 +124,7 @@ export function installNextEventCarousel() {
 
   const paintCountdown = () => {
     if(!selected?.target) return;
+    if(selected.target<=new Date()){show(0);return;}
     let sec=Math.max(0,Math.floor((selected.target-Date.now())/1000));
     const days=Math.floor(sec/86400); sec%=86400;
     const hours=Math.floor(sec/3600); sec%=3600;
@@ -155,7 +156,7 @@ export function installNextEventCarousel() {
 
   controls.addEventListener('click',e=>{const dot=e.target.closest('[data-index]');if(dot)return show(Number(dot.dataset.index));if(e.target.closest('[data-prev]'))show(index-1);if(e.target.closest('[data-next]'))show(index+1);});
 
-  const keepSelectedVisible = () => { if(index>0 && selected) paint(); requestAnimationFrame(keepSelectedVisible); };
-  requestAnimationFrame(keepSelectedVisible);
+  window.addEventListener('orzel:featured-event-updated',()=>show(0));
+  window.setInterval(()=>{if(index>0&&selected)paint();},1000);
   window.setTimeout(drawDots,400);
 }

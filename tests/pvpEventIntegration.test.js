@@ -133,11 +133,11 @@ test('admin cards preserve commands/rewards and advance only after the full 15-m
   assert.equal(field(card, 'time'), '20:00 · Europe/Warsaw');
 });
 
-test('compact sidebar shows all four configured cycles in stable order, highlights phases and rolls midnight correctly', () => {
+test('compact sidebar shows the four nearest cycles chronologically, highlights phases and rolls midnight correctly', () => {
   const root = cardsRoot();
   renderPvpSidebar(root, new Date('2026-09-14T21:59:00Z'));
   assert.equal((root.innerHTML.match(/<article /g) ?? []).length, 4);
-  const order = ['Multi Team Battle', 'Capture The Base', 'Epic Boss Challenge', 'Death Match'].map(name => root.innerHTML.indexOf(name));
+  const order = ['Death Match', 'Epic Boss Challenge', 'Multi Team Battle', 'Capture The Base'].map(name => root.innerHTML.indexOf(name));
   assert.ok(order.every(index => index >= 0));
   assert.ok(order[0] < order[1] && order[1] < order[2] && order[2] < order[3]);
   const card = root.querySelector('[data-pvp-occurrence="pvp-death-match-2026-09-14-22"]');
