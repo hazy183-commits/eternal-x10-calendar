@@ -62,7 +62,7 @@ const RAID_BOSS_IDS = new Map([
   ["varka's hero shadith", 25309],
 ]);
 
-function imageCandidates(name) {
+export function raidBossImageCandidates(name) {
   const id = RAID_BOSS_IDS.get(normalize(name));
   const candidates = [];
   if (id) {
@@ -84,7 +84,7 @@ function makeFallback(name, compact = false) {
 }
 
 function loadRealImage(img, name, onExhausted) {
-  const urls = imageCandidates(name);
+  const urls = raidBossImageCandidates(name);
   let index = 0;
   const next = () => {
     if (index >= urls.length) {
