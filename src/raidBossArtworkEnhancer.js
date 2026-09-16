@@ -1,49 +1,101 @@
 import { bossArtworkUrl } from './bossArtwork.js';
 
-const esc = (v='') => String(v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const normalize = (value = '') => String(value).trim().toLowerCase().replace(/\s+/g, ' ');
 
-function hash(value='') {
-  let h = 2166136261;
-  for (let i=0;i<value.length;i++) {
-    h ^= value.charCodeAt(i);
-    h = Math.imul(h, 16777619);
+// Interlude NPC IDs. The artwork URLs below point at real Lineage 2 NPC renders/screenshots,
+// never generated approximations. Each image has a second independent L2 database fallback.
+const RAID_BOSS_IDS = new Map([
+  ['ancient weird drake', 25234],
+  ['ghost of the well lidia', 25106],
+  ['giant marpanak', 25162],
+  ['guardian of the statue of giant karum', 25179],
+  ['lord ishka', 25407],
+  ['taik high prefect arak', 25256],
+  ['the 3rd underwater guardian', 25016],
+  ['fairy queen timiniel', 25423],
+  ['roaring lord kastor', 25226],
+  ['gorgolos', 25467],
+  ['enmity ghost ramdal', 25444],
+  ['fierce tiger king angel', 25125],
+  ['gargoyle lord tiphon', 25255],
+  ['hekaton prime', 25140],
+  ['rahha', 25051],
+  ["shilen's priest hisilrome", 25478],
+  ["demon's agent falston", 25322],
+  ['last titan utenus', 25470],
+  ["kernon's faithful servant kelone", 25263],
+  ['bloody priest rudelto', 25073],
+  ['spirit of andras, the betrayer', 25233],
+  ["anakim's nemesis zakaron", 25281],
+  ['beast lord behemoth', 25269],
+  ["fafurion's herald lokness", 25198],
+  ['flame of splendor barakiel', 25325],
+  ['korim', 25092],
+  ['meanas anor', 25453],
+  ['palibati queen themis', 25252],
+  ['roaring skylancer', 25163],
+  ["shilen's messenger cabrio", 25035],
+  ['immortal savior mardil', 25447],
+  ['doom blade tanatos', 25248],
+  ['vanor chief kandra', 25235],
+  ['water dragon seer sheshark', 25199],
+  ['death lord hallate', 25220],
+  ['antharas priest cloe', 25109],
+  ['krokian padisha sobekk', 25202],
+  ['bloody empress decarbia', 25266],
+  ['death lord ipos', 25276],
+  ['death lord shax', 25282],
+  ['kernon', 25054],
+  ['last lesser giant olkuth', 25244],
+  ['palatanos of horrific power', 25249],
+  ['storm winged naga', 25229],
+  ['flamestone giant', 25524],
+  ['ocean flame ashakiel', 25205],
+  ['daimon the white-eyed', 25290],
+  ['fire of wrath shuriel', 25143],
+  ['hestia, guardian deity of the hot springs', 25293],
+  ['last lesser giant glaki', 25245],
+  ['cherub galaxia', 25450],
+  ['longhorn golkonda', 25126],
+  ["ketra's hero hekaton", 25299],
+  ['queen shyeed', 25514],
+  ["varka's hero shadith", 25309],
+]);
+
+function imageCandidates(name) {
+  const id = RAID_BOSS_IDS.get(normalize(name));
+  const candidates = [];
+  if (id) {
+    // Real NPC artwork/screenshot endpoints from two Lineage 2 databases.
+    candidates.push(`https://wiki.la2era.com/npcs/${id}.jpg`);
+    candidates.push(`https://static.l2off.ge/NPCs/${id}.png`);
   }
-  return h >>> 0;
+  const local = bossArtworkUrl(name);
+  if (local) candidates.push(local);
+  return [...new Set(candidates)];
 }
 
-function initials(name='') {
-  const words = String(name).trim().split(/\s+/).filter(Boolean);
-  return words.slice(0,2).map(w => w[0]).join('').toUpperCase() || 'RB';
+function makeFallback(name, compact = false) {
+  const fallback = document.createElement('div');
+  fallback.className = compact ? 'needed-rb-real-fallback compact' : 'needed-rb-real-fallback';
+  fallback.title = `Brak dostępnego zdjęcia: ${name}`;
+  fallback.textContent = 'RB';
+  return fallback;
 }
 
-function generatedPortrait(name='', level='') {
-  const h = hash(`${name}|${level}`);
-  const hue1 = 24 + (h % 26);
-  const hue2 = 350 + (h % 10);
-  const eye = 36 + (h % 18);
-  const horns = 18 + (h % 16);
-  const label = esc(initials(name));
-  const lvl = esc(level || '?');
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
-    <defs>
-      <radialGradient id="g" cx="50%" cy="35%" r="75%"><stop offset="0" stop-color="hsl(${hue1} 45% 22%)"/><stop offset=".58" stop-color="hsl(${hue2} 28% 10%)"/><stop offset="1" stop-color="#050606"/></radialGradient>
-      <filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-    </defs>
-    <rect width="160" height="160" rx="12" fill="url(#g)"/>
-    <circle cx="80" cy="68" r="44" fill="#0a0d0d" stroke="#6f5325" stroke-width="2"/>
-    <path d="M53 58 L${53-horns} 28 L64 47 M107 58 L${107+horns} 28 L96 47" fill="none" stroke="#a47c36" stroke-width="6" stroke-linecap="round"/>
-    <path d="M47 83 Q80 116 113 83 Q107 123 80 132 Q53 123 47 83Z" fill="#111515" stroke="#5c4727" stroke-width="2"/>
-    <ellipse cx="63" cy="${eye}" rx="9" ry="4" fill="#efb94c" filter="url(#glow)"/>
-    <ellipse cx="97" cy="${eye}" rx="9" ry="4" fill="#efb94c" filter="url(#glow)"/>
-    <text x="80" y="104" text-anchor="middle" fill="#e8c976" font-family="Arial" font-weight="800" font-size="22">${label}</text>
-    <rect x="104" y="118" width="42" height="24" rx="6" fill="#2a1d0e" stroke="#8e672d"/>
-    <text x="125" y="135" text-anchor="middle" fill="#e4b960" font-family="Arial" font-weight="800" font-size="13">Lv ${lvl}</text>
-  </svg>`;
-  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
-}
-
-function imageFor(name, level) {
-  return bossArtworkUrl(name) || generatedPortrait(name, level);
+function loadRealImage(img, name, onExhausted) {
+  const urls = imageCandidates(name);
+  let index = 0;
+  const next = () => {
+    if (index >= urls.length) {
+      onExhausted?.();
+      return;
+    }
+    img.src = urls[index++];
+  };
+  img.addEventListener('error', next);
+  img.referrerPolicy = 'no-referrer';
+  next();
 }
 
 function enhanceRequestCard(card) {
@@ -51,30 +103,49 @@ function enhanceRequestCard(card) {
   const head = card.querySelector('.needed-rb-head');
   const copy = card.querySelector('.needed-rb-copy');
   if (!head || !copy) return;
+
   const name = copy.querySelector('b')?.textContent?.trim() || 'Raid Boss';
-  const levelText = card.querySelector('.needed-rb-level')?.textContent || '';
-  const level = (levelText.match(/\d+/) || [''])[0];
   const img = document.createElement('img');
   img.className = 'needed-rb-portrait';
-  img.alt = name;
+  img.alt = `Wygląd ${name}`;
   img.loading = 'lazy';
-  img.src = imageFor(name, level);
+  img.decoding = 'async';
+
   const levelBadge = card.querySelector('.needed-rb-level');
-  if (levelBadge) levelBadge.insertAdjacentElement('afterend', img);
-  else head.prepend(img);
+  const insertAfterLevel = (element) => {
+    if (levelBadge) levelBadge.insertAdjacentElement('afterend', element);
+    else head.prepend(element);
+  };
+  insertAfterLevel(img);
+
+  loadRealImage(img, name, () => {
+    const fallback = makeFallback(name);
+    img.replaceWith(fallback);
+  });
+
   card.dataset.rbArtEnhanced = '1';
 }
 
 function enhanceCalendarRow(row) {
   if (!row || row.dataset.rbArtEnhanced === '1') return;
   const name = row.querySelector('.event-info h3')?.textContent?.trim() || 'Raid Boss';
-  const meta = row.querySelector('.needed-rb-meta')?.textContent || '';
-  const level = (meta.match(/Lv\.\s*(\d+)/i) || [,''])[1];
   const thumb = row.querySelector('.needed-rb-thumb, .event-thumb');
   if (!thumb) return;
+
   thumb.innerHTML = '';
-  thumb.style.backgroundImage = `url(${JSON.stringify(imageFor(name, level))})`;
   thumb.classList.add('needed-rb-has-art');
+  const img = document.createElement('img');
+  img.className = 'needed-rb-calendar-image';
+  img.alt = `Wygląd ${name}`;
+  img.loading = 'lazy';
+  img.decoding = 'async';
+  thumb.appendChild(img);
+
+  loadRealImage(img, name, () => {
+    thumb.classList.remove('needed-rb-has-art');
+    thumb.replaceChildren(makeFallback(name, true));
+  });
+
   row.dataset.rbArtEnhanced = '1';
 }
 
@@ -89,11 +160,13 @@ export function installRaidBossArtworkEnhancer() {
 
   const style = document.createElement('style');
   style.textContent = `
-    .needed-rb-portrait{width:72px;height:72px;object-fit:cover;border:1px solid #8b672f;border-radius:8px;background:#090c0c;box-shadow:0 7px 24px #0008;flex:0 0 72px}
+    .needed-rb-portrait{width:82px;height:82px;object-fit:cover;object-position:center;border:1px solid #8b672f;border-radius:8px;background:#090c0c;box-shadow:0 7px 24px #0008;flex:0 0 82px}
     .needed-rb-head{align-items:center!important}.needed-rb-level{flex:0 0 auto}.needed-rb-copy{padding-left:2px}
-    .needed-rb-calendar-row .event-thumb.needed-rb-has-art,.needed-rb-calendar-row .needed-rb-thumb.needed-rb-has-art{background-size:cover!important;background-position:center!important;background-repeat:no-repeat!important;color:transparent!important;overflow:hidden}
-    .needed-rb-calendar-row .event-thumb.needed-rb-has-art span,.needed-rb-calendar-row .needed-rb-thumb.needed-rb-has-art span{display:none!important}
-    @media(max-width:900px){.needed-rb-portrait{width:58px;height:58px;flex-basis:58px}.needed-rb-head{gap:9px!important}}
+    .needed-rb-calendar-row .event-thumb.needed-rb-has-art,.needed-rb-calendar-row .needed-rb-thumb.needed-rb-has-art{padding:0!important;overflow:hidden;background:#090c0c!important}
+    .needed-rb-calendar-image{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+    .needed-rb-real-fallback{display:grid;place-items:center;width:82px;height:82px;flex:0 0 82px;border:1px solid #66502b;border-radius:8px;background:linear-gradient(145deg,#17140e,#090b0b);color:#b7934c;font-weight:900;letter-spacing:.12em}
+    .needed-rb-real-fallback.compact{width:100%;height:100%;min-height:48px;border:0;border-radius:0;font-size:11px}
+    @media(max-width:900px){.needed-rb-portrait,.needed-rb-real-fallback{width:62px;height:62px;flex-basis:62px}.needed-rb-head{gap:9px!important}}
   `;
   document.head.appendChild(style);
 
