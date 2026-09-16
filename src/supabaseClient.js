@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import './pageTitle.js';
 import { installMemberAuth } from './memberAuth.js';
 import { installMemberEventSignups } from './memberEventSignups.js';
 import { installRecruitment } from './recruitment.js';
