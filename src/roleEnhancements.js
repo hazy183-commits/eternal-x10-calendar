@@ -1,3 +1,4 @@
+import { getClanUpcomingEvents } from './clanEventFeed.js';
 const ROLE_LABELS={owner:'Właściciel',admin:'Administrator',leader:'Lider',member:'Członek',pending:'Oczekuje'};
 const esc=(value='')=>String(value).replace(/[&<>"']/g,(c)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
@@ -120,8 +121,8 @@ export function installRoleEnhancements(supabase){
     const now=new Date();
     const today=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
     const [{data:events,error:eventError},{data:signups,error:signupError}]=await Promise.all([
-      supabase.from('events').select('id,name,type,event_date,event_time,location').gte('event_date',today).order('event_date',{ascending:true}).order('event_time',{ascending:true}).limit(40),
-      supabase.from('event_signups').select('event_id,nickname,response,updated_at')
+      Promise.resolve({data:getClanUpcomingEvents(),error:null}),
+      supabase.from('event_signups').select('event_id,schedule_key,nickname,response,updated_at')
     ]);
     if(eventError||signupError){
       box.innerHTML=`<div class="ob-attendance-empty">Nie udało się pobrać statystyk${signupError?`: ${esc(signupError.message)}`:''}.</div>`;
@@ -129,7 +130,7 @@ export function installRoleEnhancements(supabase){
     }
     const grouped=new Map();
     (signups||[]).forEach((s)=>{
-      const key=String(s.event_id);
+      const key=String(s.event_id??s.schedule_key);
       if(!grouped.has(key))grouped.set(key,{yes:[],maybe:[],no:[]});
       if(grouped.get(key)[s.response])grouped.get(key)[s.response].push(s.nickname||'Gracz');
     });

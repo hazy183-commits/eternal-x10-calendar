@@ -1,3 +1,4 @@
+import { publishClanEventSources } from '../src/clanEventFeed.js';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import * as pvp from '../src/pvpEventSchedule.js';
@@ -23,7 +24,7 @@ export function app(t, iso) {
   };
   const context = vm.createContext({
     ...olympiad, ...bosses, ...sieges, ...pvp, renderOlympiadPanel, renderPvpEventPanel, renderPvpSidebar, updatePvpRowCountdowns,
-    Date, Intl, console: { log() {} },
+    publishClanEventSources, Date, Intl, console: { log() {} },
     SupabaseEventRepository: class {}, SupabaseBossRespawnRepository: class {}, SupabaseSiegeScheduleRepository: class {},
     applyBossArtwork() {}, refreshBossArtwork() {},
     document: { readyState: 'loading', addEventListener() {}, querySelector: element },

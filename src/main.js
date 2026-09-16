@@ -1,3 +1,4 @@
+import { publishClanEventSources } from './clanEventFeed.js';
 import { SupabaseEventRepository } from './supabaseEvents.js';
 import { supabase } from './supabaseClient.js';
 import { applyBossArtwork, bossArtworkUrl, refreshBossArtwork } from './bossArtwork.js';
@@ -104,6 +105,7 @@ function renderAdmin() {
 function renderAll() { renderFilters(); renderCalendar(); renderOverview(); renderNext(); renderAdmin(); updateCountdown(); }
 const normalizedBossName = (value) => String(value ?? '').trim().replace(/\s+/g, ' ').toLocaleLowerCase();
 function mergePublicEvents() {
+  publishClanEventSources(ordinaryEvents, bossRespawnRows, siegeScheduleRows);
   const managerEvents = publicRespawnEvents(bossRespawnRows, new Date());
   const siegeEvents = publicSiegeEvents(siegeScheduleRows, new Date());
   const managerKeys = new Set(managerEvents.map(publicEventKey));

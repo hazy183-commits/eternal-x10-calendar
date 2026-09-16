@@ -235,7 +235,7 @@ function manualEvent(row, now) {
   };
 }
 
-export function publicRespawnEvents(rows = [], now = new Date()) {
+export function publicRespawnEvents(rows = [], now = new Date(), { allStatic = false } = {}) {
   const byBoss = new Map(rows.map((row) => [row.boss, normalizeRespawnRow(row)]));
   const manualEvents = MANUAL_RESPAWN_BOSSES.map(({ name }) => manualEvent(byBoss.get(name), now)).filter(Boolean);
   const baiumOccurrence = nextStaticOccurrence('Baium', now);
@@ -247,7 +247,7 @@ export function publicRespawnEvents(rows = [], now = new Date()) {
     })
     .filter(Boolean)
     .sort((a, b) => new Date(a.startAt) - new Date(b.startAt));
-  return [...manualEvents, ...baiumEvents, ...alternatingCandidates.slice(0, 1)];
+  return [...manualEvents, ...baiumEvents, ...(allStatic ? alternatingCandidates : alternatingCandidates.slice(0, 1))];
 }
 
 export function publicEventKey(event) {
