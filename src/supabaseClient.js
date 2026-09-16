@@ -9,6 +9,7 @@ import { installAdminEventDayGroups } from './adminEventDayGroups.js';
 import { installProfilePersistenceFix } from './profilePersistenceFix.js';
 import { installNeededRaidBosses } from './neededRaidBosses.js';
 import { installNeededRaidBossWindow } from './neededRaidBossWindow.js';
+import { installRaidBossArtworkEnhancer } from './raidBossArtworkEnhancer.js';
 import './interludeClassSelects.js';
 
 const url = import.meta.env.VITE_SUPABASE_URL;
@@ -33,6 +34,7 @@ if (typeof document !== 'undefined') {
     installProfilePersistenceFix(supabase);
     installNeededRaidBosses(supabase);
     installNeededRaidBossWindow(supabase);
+    installRaidBossArtworkEnhancer();
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', startMemberFeatures, { once: true });
   else queueMicrotask(startMemberFeatures);
