@@ -1,4 +1,5 @@
 import { getClanUpcomingEvents, subscribeClanEvents } from './clanEventFeed.js';
+import { refreshBossArtwork } from './bossArtwork.js';
 
 const MONTHS=['stycznia','lutego','marca','kwietnia','maja','czerwca','lipca','sierpnia','września','października','listopada','grudnia'];
 const WEEKDAYS=['Niedziela','Poniedziałek','Wtorek','Środa','Czwartek','Piątek','Sobota'];
@@ -75,6 +76,7 @@ export function installAdminEventDayGroups(supabase){
         fragment.appendChild(section);
       }
       list.replaceChildren(fragment);
+      refreshBossArtwork(list);
       const count=document.querySelector('#adminCount');if(count)count.textContent=rows.length;
     }finally{busy=false}
   }
