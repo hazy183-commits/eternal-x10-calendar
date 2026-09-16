@@ -1,4 +1,5 @@
 import './adminDashboardHome.css';
+import './adminEventDayGroups.js';
 import { supabase } from './supabaseClient.js';
 
 export function installAdminHomeScreen(supabaseClient){
