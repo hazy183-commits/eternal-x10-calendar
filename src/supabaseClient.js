@@ -10,6 +10,7 @@ import { installProfilePersistenceFix } from './profilePersistenceFix.js';
 import { installNeededRaidBosses } from './neededRaidBosses.js';
 import { installNeededRaidBossWindow } from './neededRaidBossWindow.js';
 import { installRaidBossArtworkEnhancer } from './raidBossArtworkEnhancer.js';
+import { installNeededRaidBossDetails } from './neededRaidBossDetails.js';
 import './interludeClassSelects.js';
 
 const url = import.meta.env.VITE_SUPABASE_URL;
@@ -35,6 +36,7 @@ if (typeof document !== 'undefined') {
     installNeededRaidBosses(supabase);
     installNeededRaidBossWindow(supabase);
     installRaidBossArtworkEnhancer();
+    installNeededRaidBossDetails(supabase);
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', startMemberFeatures, { once: true });
   else queueMicrotask(startMemberFeatures);
