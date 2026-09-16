@@ -2,9 +2,11 @@ import './landingPremium.css';
 import './landingRecruitHighlight.css';
 import './landingPremium.js';
 import './bossDetailsPl.js';
+import './rebornEpicLevels.js';
 import './adminHomeScreen.js';
 import './adminWorkflowEnhancements.js';
 import './leaderAttendanceSummary.js';
+import './mobileVisualFixes.css';
 
 // Vite serves public/ directly and copies it unchanged into production builds.
 const artworkBase = `${import.meta.env.BASE_URL}images/bosses/`;
