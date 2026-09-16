@@ -4,38 +4,42 @@ const MONTHS=['stycznia','lutego','marca','kwietnia','maja','czerwca','lipca','s
 const WEEKDAYS=['Niedziela','Poniedziałek','Wtorek','Środa','Czwartek','Piątek','Sobota'];
 const esc=(v='')=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-function prettyDate(dateKey){const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(String(dateKey||''));if(!m)return dateKey||'Bez daty';const d=new Date(Number(m[1]),Number(m[2])-1,Number(m[3]));return `${WEEKDAYS[d.getDay()]}, ${Number(m[3])} ${MONTHS[Number(m[2])-1]} ${m[1]}`}
-function relativeLabel(dateKey){const now=new Date();now.setHours(0,0,0,0);const d=new Date(`${dateKey}T00:00:00`);if(!Number.isFinite(d.getTime()))return'';const diff=Math.round((d-now)/86400000);if(diff===0)return'DZISIAJ';if(diff===1)return'JUTRO';if(diff>1&&diff<7)return`ZA ${diff} DNI`;return''}
-function extractMeta(row){const text=[...row.querySelectorAll('.admin-event-copy span')].map(el=>el.textContent||'').join(' ');return{date:text.match(/\b\d{4}-\d{2}-\d{2}\b/)?.[0]||'',time:text.match(/\b(?:[01]\d|2[0-3]):[0-5]\d\b/)?.[0]||'00:00'}}
-function isUpcoming(row){const {date,time}=extractMeta(row);if(!date)return true;const start=new Date(`${date}T${time}:00`);return !Number.isFinite(start.getTime())||start.getTime()>=Date.now()}
-function rowId(row){return String(row.querySelector('[data-edit]')?.dataset.edit||'')}
-function currentFilterMatches(event){const active=document.querySelector('.admin-filter-btn.active')?.textContent?.trim()||'Wszystkie';const q=document.querySelector('#adminSearch')?.value?.trim().toLowerCase()||'';if(active!=='Wszystkie'&&event.type!==active)return false;if(q&&!`${event.name||''} ${event.boss||''}`.toLowerCase().includes(q))return false;return true}
-function eventRow(event){const time=String(event.event_time||'').slice(0,5);return `<div class="admin-event manual-admin-event"><div class="admin-event-copy"><div class="event-thumb" data-boss-name="${esc(event.boss||event.name)}"><span>ART</span></div><div><b>${esc(event.name)}</b><span>${esc(event.event_date)} · ${esc(time)} · ${esc(event.type)}</span><span>${esc(event.location||'Brak lokalizacji')}</span></div></div><div><button class="edit-btn" data-edit="${esc(event.id)}">Edytuj</button><button class="delete-btn" data-delete="${esc(event.id)}">Usuń</button></div></div>`}
+function prettyDate(key){const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(String(key||''));if(!m)return key||'Bez daty';const d=new Date(+m[1],+m[2]-1,+m[3]);return `${WEEKDAYS[d.getDay()]}, ${+m[3]} ${MONTHS[+m[2]-1]} ${m[1]}`}
+function relativeLabel(key){const now=new Date();now.setHours(0,0,0,0);const d=new Date(`${key}T00:00:00`);if(!Number.isFinite(d.getTime()))return'';const diff=Math.round((d-now)/86400000);if(diff===0)return'DZISIAJ';if(diff===1)return'JUTRO';if(diff>1&&diff<7)return`ZA ${diff} DNI`;return''}
+function eventStart(e){const t=String(e.event_time||'00:00').slice(0,5);return new Date(`${e.event_date}T${t}:00`)}
+function activeFilter(){return document.querySelector('.admin-filter-btn.active')?.textContent?.trim()||'Wszystkie'}
+function searchQuery(){return document.querySelector('#adminSearch')?.value?.trim().toLowerCase()||''}
+function matches(e){const f=activeFilter(),q=searchQuery();if(f!=='Wszystkie'&&e.type!==f)return false;if(q&&!`${e.name||''} ${e.boss||''}`.toLowerCase().includes(q))return false;return true}
+function row(e){const time=String(e.event_time||'').slice(0,5);return `<div class="admin-event"><div class="admin-event-copy"><div class="event-thumb" data-boss-name="${esc(e.boss||e.name)}"><span>ART</span></div><div><b>${esc(e.name)}</b><span>${esc(e.event_date)} · ${esc(time)} · ${esc(e.type)}</span><span>${esc(e.location||'Brak lokalizacji')}</span></div></div><div><button class="edit-btn" data-edit="${esc(e.id)}">Edytuj</button><button class="delete-btn" data-delete="${esc(e.id)}">Usuń</button></div></div>`}
 
-async function addMissingManualRows(list,directRows){
-  if(!supabase)return directRows;
-  try{
-    const today=new Date();const y=today.getFullYear(),m=String(today.getMonth()+1).padStart(2,'0'),d=String(today.getDate()).padStart(2,'0');
-    const {data,error}=await supabase.from('events').select('id,name,type,boss,event_date,event_time,location').gte('event_date',`${y}-${m}-${d}`).order('event_date').order('event_time');
-    if(error||!Array.isArray(data))return directRows;
-    const ids=new Set(directRows.map(rowId).filter(Boolean));
-    const holder=document.createElement('div');
-    for(const event of data){const time=String(event.event_time||'').slice(0,5);const start=new Date(`${event.event_date}T${time}:00`);if(Number.isFinite(start.getTime())&&start<Date.now())continue;if(!currentFilterMatches(event)||ids.has(String(event.id)))continue;holder.innerHTML=eventRow(event);const row=holder.firstElementChild;if(row){directRows.push(row);ids.add(String(event.id));}}
-  }catch{}
-  return directRows;
+async function readUpcoming(){
+  if(!supabase)return [];
+  const now=new Date();const date=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+  const {data,error}=await supabase.from('events').select('id,name,type,boss,event_date,event_time,location').gte('event_date',date).order('event_date').order('event_time');
+  if(error||!Array.isArray(data))return [];
+  return data.filter(e=>eventStart(e)>=Date.now()).filter(matches);
 }
 
-async function groupAdminEvents(){
-  const list=document.querySelector('#adminEventList');if(!list||list.dataset.dayGrouping==='busy')return;
-  let directRows=[...list.children].filter(el=>el.classList?.contains('admin-event'));if(!directRows.length)return;
-  list.dataset.dayGrouping='busy';
-  directRows=await addMissingManualRows(list,directRows);
-  const upcomingRows=directRows.filter(isUpcoming).sort((a,b)=>{const A=extractMeta(a),B=extractMeta(b);return new Date(`${A.date}T${A.time}:00`)-new Date(`${B.date}T${B.time}:00`)});
-  const groups=[];const byDate=new Map();for(const row of upcomingRows){const {date}=extractMeta(row);const key=date||'Bez daty';if(!byDate.has(key)){const entry={date:key,rows:[]};byDate.set(key,entry);groups.push(entry)}byDate.get(key).rows.push(row)}
-  const fragment=document.createDocumentFragment();
-  if(!groups.length){const empty=document.createElement('p');empty.className='empty-mini admin-upcoming-empty';empty.textContent='Brak nadchodzących wydarzeń pasujących do filtrów.';fragment.appendChild(empty)}else for(const {date,rows} of groups){const section=document.createElement('section');section.className='admin-day-group';section.dataset.adminDay=date;const rel=relativeLabel(date);section.innerHTML=`<div class="admin-day-heading"><div><span class="admin-day-relative">${rel||'DZIEŃ'}</span><h3>${prettyDate(date)}</h3></div><b>${rows.length} ${rows.length===1?'wydarzenie':'wydarzeń'}</b></div><div class="admin-day-events"></div>`;const body=section.querySelector('.admin-day-events');rows.forEach(row=>body.appendChild(row));fragment.appendChild(section)}
-  list.replaceChildren(fragment);const count=document.querySelector('#adminCount');if(count)count.textContent=upcomingRows.length;delete list.dataset.dayGrouping;
+async function render(){
+  const list=document.querySelector('#adminEventList');if(!list||list.dataset.dbRender==='busy')return;
+  list.dataset.dbRender='busy';
+  const events=await readUpcoming();
+  const groups=new Map();
+  for(const e of events){if(!groups.has(e.event_date))groups.set(e.event_date,[]);groups.get(e.event_date).push(e)}
+  const html=[...groups.entries()].map(([date,items])=>`<section class="admin-day-group" data-admin-day="${date}"><div class="admin-day-heading"><div><span class="admin-day-relative">${relativeLabel(date)||'DZIEŃ'}</span><h3>${prettyDate(date)}</h3></div><b>${items.length} ${items.length===1?'wydarzenie':'wydarzeń'}</b></div><div class="admin-day-events">${items.map(row).join('')}</div></section>`).join('');
+  list.innerHTML=html||'<p class="empty-mini admin-upcoming-empty">Brak nadchodzących wydarzeń dodanych w panelu.</p>';
+  const count=document.querySelector('#adminCount');if(count)count.textContent=events.length;
+  delete list.dataset.dbRender;
 }
 
-function boot(){const list=document.querySelector('#adminEventList');if(!list){setTimeout(boot,180);return}const style=document.createElement('style');style.textContent=`#adminEventList{display:grid;gap:18px}.admin-day-group{border:1px solid #362d20;background:#080b0b;overflow:hidden}.admin-day-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px 15px;background:linear-gradient(90deg,#231b0f,#111513);border-bottom:1px solid #4b3922}.admin-day-heading>div{display:flex;align-items:center;gap:10px;min-width:0}.admin-day-heading h3{margin:0;color:#ead9b8;font:700 16px Georgia,serif;text-transform:capitalize}.admin-day-heading>b{color:#b68c43;font-size:10px;white-space:nowrap;text-transform:uppercase;letter-spacing:.06em}.admin-day-relative{padding:5px 7px;border:1px solid #8b642c;background:#33230f;color:#f0c66e;font-size:8px;font-weight:900;letter-spacing:.08em;white-space:nowrap}.admin-day-events{display:grid}.admin-day-events .admin-event{border:0!important;border-bottom:1px solid #28231b!important;background:#0b0f0f!important;margin:0!important;padding:13px 14px!important}.admin-day-events .admin-event:last-child{border-bottom:0!important}.admin-day-events .admin-event:hover{background:#101514!important}.admin-day-events .admin-event-copy{min-width:0}.admin-day-events .admin-event-copy b{font-size:14px!important;color:#eee3cf}.admin-day-events .admin-event-copy span{font-size:10px!important;line-height:1.45}.admin-day-events .event-thumb{width:54px!important;height:48px!important;flex:0 0 54px}.manual-admin-event{box-shadow:inset 3px 0 #b88431}.admin-upcoming-empty{padding:20px;border:1px solid #362d20;background:#0b0f0f;text-align:center}@media(max-width:700px){#adminEventList{gap:13px}.admin-day-heading{align-items:flex-start;padding:11px}.admin-day-heading>div{align-items:flex-start;flex-direction:column;gap:5px}.admin-day-heading h3{font-size:14px}.admin-day-events .admin-event{padding:11px!important}.admin-day-events .admin-event>div:last-child{display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%}.admin-day-events .admin-event>div:last-child button{width:100%;margin:0!important}}`;document.head.appendChild(style);let queued=false;const schedule=()=>{if(queued)return;queued=true;queueMicrotask(async()=>{queued=false;await groupAdminEvents()})};new MutationObserver(schedule).observe(list,{childList:true});groupAdminEvents();setInterval(()=>{const grouped=[...list.querySelectorAll('.admin-day-events .admin-event')];if(grouped.some(row=>!isUpcoming(row))){const rows=grouped.filter(isUpcoming);list.replaceChildren(...rows);groupAdminEvents()}},60000)}
+function boot(){
+  const list=document.querySelector('#adminEventList');if(!list){setTimeout(boot,180);return}
+  const style=document.createElement('style');style.textContent=`#adminEventList{display:grid;gap:18px}.admin-day-group{border:1px solid #362d20;background:#080b0b;overflow:hidden}.admin-day-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px 15px;background:linear-gradient(90deg,#231b0f,#111513);border-bottom:1px solid #4b3922}.admin-day-heading>div{display:flex;align-items:center;gap:10px;min-width:0}.admin-day-heading h3{margin:0;color:#ead9b8;font:700 16px Georgia,serif;text-transform:capitalize}.admin-day-heading>b{color:#b68c43;font-size:10px;white-space:nowrap;text-transform:uppercase;letter-spacing:.06em}.admin-day-relative{padding:5px 7px;border:1px solid #8b642c;background:#33230f;color:#f0c66e;font-size:8px;font-weight:900;letter-spacing:.08em;white-space:nowrap}.admin-day-events{display:grid}.admin-day-events .admin-event{border:0!important;border-bottom:1px solid #28231b!important;background:#0b0f0f!important;margin:0!important;padding:13px 14px!important}.admin-day-events .admin-event:last-child{border-bottom:0!important}.admin-day-events .admin-event:hover{background:#101514!important}.admin-day-events .admin-event-copy b{font-size:14px!important;color:#eee3cf}.admin-day-events .admin-event-copy span{font-size:10px!important;line-height:1.45}.admin-day-events .event-thumb{width:54px!important;height:48px!important;flex:0 0 54px}.admin-upcoming-empty{padding:20px;border:1px solid #362d20;background:#0b0f0f;text-align:center}@media(max-width:700px){#adminEventList{gap:13px}.admin-day-heading{align-items:flex-start;padding:11px}.admin-day-heading>div{align-items:flex-start;flex-direction:column;gap:5px}.admin-day-heading h3{font-size:14px}.admin-day-events .admin-event{padding:11px!important}.admin-day-events .admin-event>div:last-child{display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%}.admin-day-events .admin-event>div:last-child button{width:100%;margin:0!important}}`;document.head.appendChild(style);
+  let timer;const queue=()=>{clearTimeout(timer);timer=setTimeout(render,40)};
+  new MutationObserver(()=>{if(!list.dataset.dbRender)queue()}).observe(list,{childList:true});
+  document.querySelector('#adminFilters')?.addEventListener('click',()=>setTimeout(render,60));
+  document.querySelector('#adminSearch')?.addEventListener('input',()=>setTimeout(render,60));
+  document.querySelector('#adminSort')?.addEventListener('change',()=>setTimeout(render,60));
+  render();
+}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
