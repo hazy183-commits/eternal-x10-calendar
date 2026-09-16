@@ -8,6 +8,7 @@ import { installOwnerAccessBridge } from './ownerAccessBridge.js';
 import { installAdminEventDayGroups } from './adminEventDayGroups.js';
 import { installProfilePersistenceFix } from './profilePersistenceFix.js';
 import { installNeededRaidBosses } from './neededRaidBosses.js';
+import { installNeededRaidBossWindow } from './neededRaidBossWindow.js';
 import './interludeClassSelects.js';
 
 const url = import.meta.env.VITE_SUPABASE_URL;
@@ -31,6 +32,7 @@ if (typeof document !== 'undefined') {
     installAdminEventDayGroups(supabase);
     installProfilePersistenceFix(supabase);
     installNeededRaidBosses(supabase);
+    installNeededRaidBossWindow(supabase);
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', startMemberFeatures, { once: true });
   else queueMicrotask(startMemberFeatures);
