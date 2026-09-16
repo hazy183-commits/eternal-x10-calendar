@@ -7,12 +7,15 @@
   .hero { margin-top: 0 !important; overflow: visible !important; }
   .focus-section { margin-top: 8px !important; max-width: 100% !important; }
 
-  /* Nearest event: keep every element inside the phone viewport. */
+  /* Nearest event: cinematic mobile card, without touching desktop. */
   .focus-section, .focus-section > *, .focus-section .panel, .focus-section .focus-card { box-sizing: border-box !important; max-width: 100% !important; }
   .focus-section .focus-card { overflow: hidden !important; }
-  .focus-section .focus-card.has-boss-art, .focus-section [data-boss-name].has-boss-art { background-size: cover !important; background-position: 50% 32% !important; }
+  .focus-section .focus-card.has-boss-art, .focus-section [data-boss-name].has-boss-art { background-size: cover !important; background-position: 50% 24% !important; }
   .focus-section .focus-card > *, .focus-section .focus-content, .focus-section .event-content { min-width: 0 !important; max-width: 100% !important; }
   .focus-section h2, .focus-section h3, .focus-section p { overflow-wrap: anywhere !important; }
+  .focus-section .event-content, .focus-section .focus-content { text-align: center !important; }
+  .focus-section .event-content h2, .focus-section .event-content h3, .focus-section .focus-content h2, .focus-section .focus-content h3 { font-size: clamp(40px,10vw,62px) !important; line-height: .98 !important; letter-spacing: .02em !important; text-shadow: 0 2px 18px rgba(0,0,0,.9) !important; }
+  .focus-section .event-content::before, .focus-section .focus-content::before { content: ''; display: block; width: 58%; height: 1px; margin: 0 auto 14px; background: linear-gradient(90deg,transparent,#b8893d,transparent); opacity: .8; }
   .focus-section .countdown { width: 100% !important; max-width: 100% !important; justify-content: center !important; gap: clamp(5px,2vw,16px) !important; }
   .focus-section .countdown > * { min-width: 0 !important; }
   .focus-section .countdown strong, .focus-section .countdown b { font-size: clamp(28px,8.5vw,46px) !important; }
@@ -40,6 +43,8 @@
   body { padding-top: 52px !important; }
   .topbar-inner { width: calc(100% - 14px) !important; }
   .focus-section { margin-inline: 8px !important; width: auto !important; }
+  .focus-section .focus-card.has-boss-art, .focus-section [data-boss-name].has-boss-art { background-position: 50% 20% !important; }
+  .focus-section .event-content h2, .focus-section .event-content h3, .focus-section .focus-content h2, .focus-section .focus-content h3 { font-size: clamp(38px,11vw,52px) !important; }
   .focus-section .countdown { gap: 4px !important; }
   .focus-section .countdown strong, .focus-section .countdown b { font-size: clamp(27px,8.8vw,39px) !important; }
   .boss-gallery .boss-card { aspect-ratio: 16 / 9 !important; }
