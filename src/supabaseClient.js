@@ -56,3 +56,5 @@ if (typeof document !== 'undefined') {
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', startMemberFeatures, { once: true });
   else queueMicrotask(startMemberFeatures);
 }
+
+// Keep this feature wired only on staging until the craft planner is approved for production.
