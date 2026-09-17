@@ -1,0 +1,1 @@
+Exact buff strip assets are sourced from clan Discord screenshots. These assets are used only on the staging Codex to preserve the exact visible order from source screenshots.
