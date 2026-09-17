@@ -317,26 +317,6 @@ body:before { content:""; position:fixed; z-index:-1; inset:0; background:radial
   .hero{padding-left:0}
   .hero h1{font-size:clamp(48px,5.65vw,80px)}
 }
-
-/* AUTO PVP EVENTS as one chronological desktop table. */
-.pvp-table-head{display:none}
-@media(min-width:821px){
-  .pvp-wide .pvp-hero-panel{padding-bottom:15px}
-  .pvp-wide #pvpSidebarEvents{display:block}
-  .pvp-table-head,.pvp-wide .pvp-sidebar-event{display:grid;grid-template-columns:32px minmax(180px,1.2fr) minmax(145px,.75fr) minmax(145px,.75fr) minmax(135px,.7fr);align-items:center;gap:14px}
-  .pvp-table-head{min-height:31px;padding:0 8px;border-bottom:1px solid var(--soft);color:#8f948f;font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
-  .pvp-table-head span:last-child{text-align:right}
-  .pvp-wide .pvp-sidebar-event{min-height:53px;padding:5px 8px}
-  .pvp-sidebar-order{color:#777f7b;font-size:10px;text-align:center}
-  .pvp-wide .pvp-sidebar-main{gap:10px}
-  .pvp-wide .pvp-sidebar-icon{flex-basis:24px}
-  .pvp-wide .pvp-sidebar-event h3{font-size:11px}
-  .pvp-sidebar-range{margin:0;color:var(--muted);font-size:8px;text-transform:uppercase}
-  .pvp-sidebar-range span{display:none}
-  .pvp-sidebar-range b{display:block;color:#ddd5c6;font-size:10px;font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap}
-  .pvp-wide .pvp-sidebar-meta{min-width:0}
-  .pvp-wide .pvp-sidebar-date{display:block;margin:3px 0 0;color:#8d928e;font-size:8px}
-}
 .focus-section>.section-heading .live-status{display:none}
 
 
@@ -345,95 +325,6 @@ body:before { content:""; position:fixed; z-index:-1; inset:0; background:radial
 
 .community-links a.community-external{cursor:pointer}
 
-/* 2026 desktop homepage redesign — one information source per event. */
-@media(min-width:821px){
-  .wrap{width:min(1480px,calc(100% - 44px))}
-  .topbar{background:#05090af7;border-bottom-color:#8d6b2e80;backdrop-filter:blur(14px)}
-  .topbar-inner{min-height:72px;gap:20px}
-  .brand-logo{height:62px}
-  .brand-copy{font-size:18px;color:#f0d393}
-  .main-nav{gap:0;height:72px}
-  .main-nav a{height:72px;padding:29px 18px 0;border-left:1px solid #ffffff0a;font-size:9px}
-  .main-nav a:last-child{border-right:1px solid #ffffff0a}
-  .main-nav a:first-child:after,.main-nav a:hover:after{bottom:8px;left:17px;right:17px}
-  .header-actions{gap:13px}
-  .admin-trigger{min-height:40px;padding-inline:18px}
-
-  .desktop-hero{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(570px,.94fr);min-height:330px;margin-top:16px;padding:0;border:1px solid var(--line);background:#071011;box-shadow:0 20px 50px #0008}
-  .desktop-hero .hero{position:relative;width:auto;min-height:330px;margin:0;padding:67px 52px 42px;overflow:hidden;border:0;border-right:1px solid var(--line);background:radial-gradient(circle at 80% 40%,#b9954b21,transparent 25%),linear-gradient(90deg,#071012 0%,#101a1c 66%,#071012 100%)}
-  .desktop-hero .hero:after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 42%,#e1c57a0b 43%,transparent 44%),radial-gradient(ellipse at 72% 100%,#a7b0aa14,transparent 42%);pointer-events:none}
-  .desktop-hero .hero h1{position:relative;z-index:1;font-size:clamp(54px,5vw,82px);line-height:.89}
-  .desktop-hero .hero h1 span{margin:18px 0 0 42px;font-size:.43em}
-  .desktop-hero .hero-subtitle{position:relative;z-index:1;margin-top:17px}
-  .desktop-hero .hero-tagline{position:relative;z-index:1;margin-top:22px}
-  .desktop-hero .focus-section{display:flex;flex-direction:column;width:auto;margin:0;padding:0;background:#070c0d}
-  .desktop-hero .focus-section>.section-heading{position:relative;display:flex;align-items:center;min-height:54px;margin:0;padding:0 20px;border-bottom:1px solid var(--line);background:linear-gradient(90deg,#17180f,#090e0f)}
-  .desktop-hero .focus-section>.section-heading>div{display:flex;align-items:center;gap:12px}
-  .desktop-hero .focus-section>.section-heading .eyebrow{padding:0;border:0;background:none;font-size:12px;letter-spacing:.17em}
-  .desktop-hero .focus-section>.section-heading h2{display:none}
-  .desktop-hero .next-event-card{flex:1;min-height:275px;border:0;box-shadow:none;grid-template-columns:minmax(0,1.05fr) minmax(250px,.95fr)}
-  .desktop-hero .event-art{inset:0 45% 0 0;opacity:.72;background-size:cover!important;background-position:center!important}
-  .desktop-hero .next-event-content{align-self:end;padding:105px 22px 27px}
-  .desktop-hero .next-event-content h3{font-size:32px}
-  .desktop-hero .countdown-block{padding-inline:24px}
-  .desktop-hero .countdown{font-size:37px}
-
-  .pvp-wide{display:grid;grid-template-columns:minmax(0,1fr) 320px;margin-top:14px;padding:0;border:1px solid var(--line);background:#080e0f;box-shadow:0 12px 35px #0005}
-  .pvp-wide .pvp-hero-panel{grid-area:auto;align-self:stretch;width:auto;min-height:0;padding:18px 24px;border:0;border-right:1px solid var(--line);box-shadow:none;background:linear-gradient(145deg,#0e1617,#070b0c)}
-  .pvp-wide .pvp-hero-heading{align-items:flex-end;margin-bottom:4px;padding-bottom:12px}
-  .pvp-wide .pvp-hero-heading h2{margin-top:5px;font-size:22px}
-  .pvp-wide .pvp-hero-heading>span{padding-bottom:2px}
-  .pvp-wide #pvpSidebarEvents{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:28px}
-  .pvp-wide .pvp-sidebar-event{min-height:61px}
-  .pvp-wide-art{grid-area:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:178px;background:linear-gradient(#071013a6,#030707e8),url('/images/bosses/baium.jpg') center 32%/cover;color:#eee5d2;text-shadow:0 3px 8px #000}
-  .pvp-wide-art span{font:600 30px Cinzel,serif;letter-spacing:.18em}
-  .pvp-wide-art small{margin-top:7px;color:#c4ab74;font-size:8px;letter-spacing:.28em}
-
-  .schedule-layout{display:block;padding-top:14px}
-  .calendar-section{display:flex;width:100%;border:1px solid var(--line);background:#070c0d;box-shadow:0 12px 38px #0005}
-  .calendar-section:before{display:none}
-  .calendar-section>.section-heading{order:0;min-height:66px;margin:0;padding:13px 22px;border:0;border-bottom:1px solid var(--line);background:linear-gradient(90deg,#121919,#080d0e)}
-  .calendar-section>.section-heading>div:first-child{display:block}
-  .calendar-section>.section-heading h2{margin-top:4px;font-size:27px}
-  .calendar-week{order:1;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border-bottom:1px solid var(--line);background:#080e0f}
-  .calendar-week-day{position:relative;min-height:76px;padding:13px 15px;border:0;border-right:1px solid var(--soft);background:transparent;color:var(--text);font:inherit;text-align:left;cursor:pointer;transition:.2s}
-  .calendar-week-day:last-child{border-right:0}
-  .calendar-week-day:hover{background:#d4a64d0d}
-  .calendar-week-day.active{background:linear-gradient(180deg,#966d2c55,#3125133d);box-shadow:inset 0 -3px var(--gold)}
-  .calendar-week-day>span{display:block;color:var(--muted);font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
-  .calendar-week-day>b{display:block;margin-top:7px;font:600 16px Cinzel,serif;text-transform:uppercase}
-  .calendar-week-day>em{position:absolute;top:14px;right:14px;display:grid;place-items:center;width:24px;height:24px;border:1px solid #a77d3777;color:var(--goldlight);font-size:9px;font-style:normal}
-  .calendar-week-day>small{display:flex;gap:3px;margin-top:8px}
-  .calendar-week-mark{display:block;width:19px;height:2px;background:var(--gold)}
-  .calendar-week-mark.epic-rb,.calendar-week-mark.siege{background:var(--red)}
-  .calendar-week-mark.olympiad{background:#72b9c9}
-  .calendar-toolbar{order:2;display:grid;grid-template-columns:240px 1fr;min-height:63px;margin:0;padding:10px 16px;border:0;border-bottom:1px solid var(--line);background:#090f10}
-  .filters{display:grid;grid-template-columns:repeat(7,1fr);border:0;gap:5px}
-  .filter-btn{min-height:39px;border:1px solid var(--soft)!important}
-  .event-list{order:3;min-height:188px;margin:0;border:0;background:#080d0e}
-  .event-table-head{grid-template-columns:100px minmax(210px,1.35fr) 140px minmax(180px,1fr) 150px;gap:18px;padding:12px 22px;background:#ffffff05}
-  .event-table-head span:nth-child(n){grid-column:auto;display:block}
-  .event-table-head span:last-child{text-align:right}
-  .event-row{grid-template-columns:82px 50px minmax(180px,1.35fr) 140px minmax(180px,1fr) 150px;gap:18px;min-height:78px;padding:9px 22px}
-  .event-time{padding-left:7px;font:600 15px Cinzel,serif}
-  .event-thumb{width:48px;height:50px}
-  .event-info h3{font-family:Cinzel,serif;font-size:13px}
-  .event-row>.type-chip{grid-column:4}
-  .event-row>.event-location{grid-column:5;display:block}
-  .event-row>.row-status{grid-column:6;text-align:right}
-  .overview{display:none!important}
-
-  .quick-add{min-height:104px;padding:22px 30px;background:linear-gradient(90deg,#0b1112e8,#12100bea),radial-gradient(circle at 65%,#d4a64d17,transparent 28%)}
-  .quick-add h2{font-size:21px}
-  .boss-gallery{padding:19px}
-  .boss-grid{gap:8px}
-  .boss-card{min-height:170px}
-  .boss-card span{font-size:12px}
-  .clan-hall-gallery-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
-  .clan-hall-gallery-image{height:230px!important}
-}
-
-@media(min-width:821px){
-  .pvp-wide #pvpSidebarEvents{display:block}
-  .pvp-wide .pvp-sidebar-event{display:grid;grid-template-columns:32px minmax(180px,1.2fr) minmax(145px,.75fr) minmax(145px,.75fr) minmax(135px,.7fr);align-items:center;gap:14px;min-height:53px;padding:5px 8px}
-}
+/* Preserve the active-event badge when using the restored homepage layout. */
+#nextStatus:is(.trwa,.respawn-window-active,.siege-active,.olympiad-active){border:1px solid #568044;background:linear-gradient(180deg,#102016,#09130c);color:#b9eda0;box-shadow:0 0 15px rgba(111,178,82,.28)}
+#nextStatus:is(.trwa,.respawn-window-active,.siege-active,.olympiad-active):before{content:'● ';color:#71da68}
