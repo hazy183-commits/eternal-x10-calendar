@@ -2,9 +2,10 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { buildSql, collectRecipeClosure } from '../api/interlude-armor-recipes.js';
 
-const recipe = (outputId, name, ingredients, outputQuantity = 1, grade = null) => ({
+const recipe = (outputId, name, ingredients, outputQuantity = 1, grade = null, recipeItemId = outputId + 1000) => ({
   outputId,
   outputQuantity,
+  recipeItemId,
   name,
   grade,
   ingredients,
@@ -33,4 +34,7 @@ test('collects all recursively craftable armor materials and emits their recipes
   assert.match(sql, /mat_steel/);
   assert.match(sql, /'Interlude material'/);
   assert.match(sql, /r\.output_item_key=v\.output_item_key and r\.is_primary=true/);
+  assert.match(sql, /recipe_1001/);
+  assert.match(sql, /Recipe: Draconic Leather Armor \(60%\)/);
+  assert.match(sql, /\('armor_s_draconic_leather_armor','recipe_1001',1\)/);
 });

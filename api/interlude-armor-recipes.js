@@ -58,6 +58,8 @@ const slug = value => String(value || '').toLowerCase().normalize('NFKD').replac
 const sqlText = value => `'${String(value ?? '').replaceAll("'", "''")}'`;
 const armorKey = recipe => `armor_${recipe.grade.toLowerCase()}_${slug(recipe.name)}`;
 const materialKey = name => `mat_${slug(name.replace(/-Grade/gi, ' Grade'))}`;
+const recipeItemKey = recipe => `recipe_${recipe.recipeItemId}`;
+const recipeItemName = recipe => `Recipe: ${recipe.name} (60%)`;
 
 export function collectRecipeClosure(finalRecipes, allRecipes) {
   const byOutput = new Map();
@@ -85,6 +87,7 @@ export function buildSql(recipes, craftRecipes = recipes) {
     const outKey = keyForOutput(r);
     const finalItem = finalIds.has(r.outputId);
     itemMap.set(outKey, { key: outKey, id:r.outputId, name:r.name, grade:finalItem ? r.grade : null, category:finalItem ? 'armor' : 'material', stackable:!finalItem });
+    if (finalItem) itemMap.set(recipeItemKey(r), { key:recipeItemKey(r), id:r.recipeItemId, name:recipeItemName(r), grade:r.grade, category:'recipe', stackable:true });
     for (const i of r.ingredients) {
       const key = materialKey(i.name);
       if (!itemMap.has(key)) itemMap.set(key, { key, id:i.id, name:i.name.replace(/-Grade/gi, ' Grade'), grade:null, category:'material', stackable:true });
@@ -94,7 +97,10 @@ export function buildSql(recipes, craftRecipes = recipes) {
   const outputList = outputs.map(sqlText).join(',');
   const itemValues = [...itemMap.values()].map(i => `(${sqlText(i.key)},${i.id},${sqlText(i.name)},${i.grade ? sqlText(i.grade) : 'NULL'},${sqlText(i.category)},${i.stackable ? 'true':'false'},true,now())`).join(',\n');
   const recipeValues = craftRecipes.map(r => `(${sqlText(keyForOutput(r))},${r.outputQuantity},${sqlText(finalIds.has(r.outputId) ? 'Interlude 60%' : 'Interlude material')},true,true,now())`).join(',\n');
-  const componentValues = craftRecipes.flatMap(r => r.ingredients.map(i => `(${sqlText(keyForOutput(r))},${sqlText(materialKey(i.name))},${i.quantity})`)).join(',\n');
+  const componentValues = craftRecipes.flatMap(r => [
+    ...(finalIds.has(r.outputId) ? [`(${sqlText(keyForOutput(r))},${sqlText(recipeItemKey(r))},1)`] : []),
+    ...r.ingredients.map(i => `(${sqlText(keyForOutput(r))},${sqlText(materialKey(i.name))},${i.quantity})`),
+  ]).join(',\n');
   return `begin;\n\ndelete from craft_recipe_components where recipe_id in (select id from craft_recipes where output_item_key in (${outputList}));\ndelete from craft_recipes where output_item_key in (${outputList});\n\ninsert into craft_items (item_key,game_item_id,name,grade,category,stackable,active,updated_at) values\n${itemValues}\non conflict (item_key) do update set game_item_id=excluded.game_item_id,name=excluded.name,grade=excluded.grade,category=excluded.category,stackable=excluded.stackable,active=true,updated_at=now();\n\ninsert into craft_recipes (output_item_key,output_quantity,label,is_primary,active,updated_at) values\n${recipeValues};\n\ninsert into craft_recipe_components (recipe_id,component_item_key,quantity)\nselect r.id,v.component_item_key,v.quantity from (values\n${componentValues}\n) as v(output_item_key,component_item_key,quantity) join craft_recipes r on r.output_item_key=v.output_item_key and r.is_primary=true and r.active=true;\n\ncommit;`;
 }
 
