@@ -15,6 +15,7 @@ import { installNeededRaidBossDetails } from './neededRaidBossDetails.js';
 import { installEpicRespawnScreenshotImport } from './epicRespawnScreenshotImport.js';
 import { installTodayClanDashboard } from './todayClanDashboard.js';
 import { installMemberZoneReliability } from './memberZoneReliability.js';
+import { installCraftPlannerUi } from './craftPlannerUi.js';
 import './neededRaidBossRefreshBridge.js';
 import './interludeClassSelects.js';
 
@@ -45,6 +46,7 @@ if (typeof document !== 'undefined') {
     installNeededRaidBossDetails(supabase);
     installEpicRespawnScreenshotImport(supabase);
     installTodayClanDashboard(supabase);
+    installCraftPlannerUi(supabase);
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', startMemberFeatures, { once: true });
   else queueMicrotask(startMemberFeatures);
