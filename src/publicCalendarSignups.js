@@ -1,13 +1,14 @@
 import { supabase } from './supabaseClient.js';
 import { getClanUpcomingEvents, signupIdentity } from './clanEventFeed.js';
 
+// Public signup roster UI v4 — isolated from member/admin modules.
 (function bootPublicCalendarSignups(){
   try {
     if (!supabase || window.__publicCalendarSignupsStarted) return;
     window.__publicCalendarSignupsStarted = true;
 
     const state = { rows: new Map() };
-    const esc = (value = '') => String(value).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[ch]));
+    const esc = (value = '') => String(value).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
     const keyFor = row => String(row?.event_id ?? row?.schedule_key ?? '');
     const norm = value => String(value || '').trim().replace(/\s+/g, ' ').toLowerCase();
 
