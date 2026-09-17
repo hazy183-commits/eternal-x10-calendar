@@ -80,6 +80,28 @@ function installMobileHeaderMenu() {
   document.addEventListener('keydown', (event) => { if (event.key === 'Escape') close(); });
 }
 
+function installActiveStatusLabel() {
+  const status = document.querySelector('#nextStatus');
+  if (!status || status.dataset.activeLabelInstalled) return;
+  status.dataset.activeLabelInstalled = '1';
+
+  let syncing = false;
+  const sync = () => {
+    if (syncing) return;
+    syncing = true;
+    const active = status.classList.contains('trwa') ||
+      status.classList.contains('respawn-window-active') ||
+      status.classList.contains('siege-active') ||
+      status.classList.contains('olympiad-active');
+    if (active && status.textContent !== 'TRWA') status.textContent = 'TRWA';
+    syncing = false;
+  };
+
+  new MutationObserver(sync).observe(status, { attributes: true, childList: true, characterData: true, subtree: true });
+  window.setInterval(sync, 1000);
+  sync();
+}
+
 function injectApprovedHeroStyles() {
   if (document.querySelector('#approvedHeroStyles')) return;
   const style = document.createElement('style');
@@ -99,24 +121,105 @@ function injectApprovedHeroStyles() {
         box-shadow:0 18px 48px #000a!important;
       }
 
-      /* LEFT: exact approved artwork instead of an approximation. */
       .desktop-hero>.hero{
         position:relative!important;
+        display:flex!important;
+        flex-direction:column!important;
+        align-items:center!important;
+        justify-content:center!important;
         width:100%!important;
         height:410px!important;
         min-height:410px!important;
         margin:0!important;
-        padding:0!important;
+        padding:34px 42px!important;
         overflow:hidden!important;
         border:0!important;
         border-right:1px solid #8d6a2f!important;
         background:#05090a url('/images/eternal-hero-approved.webp') center center/cover no-repeat!important;
-        box-shadow:inset 0 0 0 7px rgba(0,0,0,.16)!important;
+        text-align:center!important;
+        isolation:isolate!important;
       }
-      .desktop-hero>.hero>*{visibility:hidden!important;pointer-events:none!important}
-      .desktop-hero>.hero:before,.desktop-hero>.hero:after{content:none!important;display:none!important}
+      .desktop-hero>.hero:before{
+        content:''!important;
+        position:absolute!important;
+        inset:0!important;
+        z-index:0!important;
+        background:radial-gradient(ellipse at center,rgba(3,6,7,.18) 0%,rgba(3,6,7,.26) 48%,rgba(3,6,7,.36) 100%)!important;
+        pointer-events:none!important;
+      }
+      .desktop-hero>.hero:after{
+        content:''!important;
+        position:absolute!important;
+        inset:7px!important;
+        z-index:1!important;
+        border:1px solid rgba(190,143,58,.52)!important;
+        box-shadow:inset 0 0 0 1px #0008,inset 0 0 42px #0007!important;
+        pointer-events:none!important;
+      }
+      .desktop-hero>.hero .hero-emblem,.desktop-hero>.hero>.eyebrow,.desktop-hero>.hero .server-clock{display:none!important}
+      .desktop-hero>.hero h1,.desktop-hero>.hero .hero-subtitle,.desktop-hero>.hero .hero-tagline{visibility:visible!important;position:relative!important;z-index:3!important;pointer-events:none!important}
+      .desktop-hero>.hero h1{
+        margin:0!important;
+        color:#f6eedc!important;
+        font-size:clamp(64px,5.4vw,94px)!important;
+        font-weight:600!important;
+        line-height:.84!important;
+        letter-spacing:.035em!important;
+        text-shadow:0 3px 0 #21170c,0 5px 8px #000,0 0 20px #d19e4430!important;
+        -webkit-font-smoothing:antialiased!important;
+      }
+      .desktop-hero>.hero h1:before{
+        content:'LINEAGE II  REBORN'!important;
+        display:block!important;
+        margin-bottom:18px!important;
+        color:#efcc7b!important;
+        font:600 20px/1 Cinzel,Georgia,serif!important;
+        letter-spacing:.24em!important;
+        text-shadow:0 2px 5px #000!important;
+      }
+      .desktop-hero>.hero h1 span{
+        display:block!important;
+        margin:24px 0 0!important;
+        color:#efc66e!important;
+        font-size:.44em!important;
+        letter-spacing:.15em!important;
+        text-shadow:0 2px 5px #000!important;
+      }
+      .desktop-hero>.hero .hero-subtitle{
+        margin:21px 0 0!important;
+        color:#eee2ce!important;
+        font:500 10px Cinzel,Georgia,serif!important;
+        letter-spacing:.34em!important;
+        text-transform:uppercase!important;
+        text-shadow:0 2px 4px #000!important;
+      }
+      .desktop-hero>.hero .hero-tagline{
+        max-width:none!important;
+        margin:14px 0 0!important;
+        color:#e8e1d5!important;
+        font:500 10px/1.6 Cinzel,Georgia,serif!important;
+        letter-spacing:.2em!important;
+        text-transform:uppercase!important;
+        text-shadow:0 2px 4px #000!important;
+      }
+      .desktop-hero>.hero .hero-tagline:after{
+        content:'JOIN OUR WORLD'!important;
+        display:grid!important;
+        place-items:center!important;
+        width:330px!important;
+        max-width:78%!important;
+        height:48px!important;
+        margin:23px auto 0!important;
+        border:1px solid #9f762f!important;
+        outline:1px solid rgba(222,176,83,.22)!important;
+        outline-offset:-5px!important;
+        background:linear-gradient(180deg,#101516e8,#060909f4)!important;
+        color:#ead091!important;
+        font:600 15px Cinzel,Georgia,serif!important;
+        letter-spacing:.12em!important;
+        box-shadow:inset 0 0 26px #000b,0 6px 20px #0007!important;
+      }
 
-      /* RIGHT: live data, visually matched to the approved composition. */
       .desktop-hero>.focus-section{
         position:relative!important;
         display:flex!important;
@@ -169,8 +272,9 @@ function injectApprovedHeroStyles() {
         right:14px!important;
         top:13px!important;
         z-index:12!important;
-        padding:6px 9px!important;
-        font-size:8px!important;
+        padding:7px 11px!important;
+        font:700 9px Inter,Arial,sans-serif!important;
+        letter-spacing:.12em!important;
       }
       .desktop-hero>.focus-section>.section-heading .live-status:not(.trwa):not(.respawn-window-active):not(.siege-active):not(.olympiad-active){display:none!important}
       .desktop-hero>.focus-section>.section-heading .live-status.trwa,
@@ -178,15 +282,15 @@ function injectApprovedHeroStyles() {
       .desktop-hero>.focus-section>.section-heading .live-status.siege-active,
       .desktop-hero>.focus-section>.section-heading .live-status.olympiad-active{
         display:block!important;
-        border-color:#547840!important;
-        background:#0a160d!important;
-        color:#a9dc8f!important;
-        box-shadow:0 0 14px rgba(111,178,82,.2)!important;
+        border:1px solid #568044!important;
+        background:linear-gradient(180deg,#102016,#09130c)!important;
+        color:#b9eda0!important;
+        box-shadow:0 0 15px rgba(111,178,82,.28),inset 0 0 10px rgba(105,171,78,.08)!important;
       }
       .desktop-hero>.focus-section>.section-heading .live-status.trwa:before,
       .desktop-hero>.focus-section>.section-heading .live-status.respawn-window-active:before,
       .desktop-hero>.focus-section>.section-heading .live-status.siege-active:before,
-      .desktop-hero>.focus-section>.section-heading .live-status.olympiad-active:before{content:'● ';color:#67cf63}
+      .desktop-hero>.focus-section>.section-heading .live-status.olympiad-active:before{content:'● ';color:#71da68}
 
       .desktop-hero #nextEventCard{
         position:relative!important;
@@ -223,73 +327,16 @@ function injectApprovedHeroStyles() {
         background:linear-gradient(90deg,rgba(4,8,9,.03) 0%,rgba(4,8,9,.02) 50%,#05090a 100%),linear-gradient(0deg,#05090ae0 0%,transparent 48%)!important;
       }
       .desktop-hero #nextEventCard .event-aura{background:radial-gradient(ellipse at 64% 35%,rgba(217,167,74,.15),transparent 31%)!important}
-      .desktop-hero #nextEventCard .next-event-content{
-        position:relative!important;
-        z-index:7!important;
-        align-self:end!important;
-        padding:68px 25px 64px!important;
-        text-shadow:0 2px 5px #000!important;
-      }
-      .desktop-hero #nextEventCard .type-chip{
-        padding:4px 8px!important;
-        border-color:#b85444!important;
-        background:#4b1612de!important;
-        color:#f18a73!important;
-        font-size:8px!important;
-      }
-      .desktop-hero #nextEventCard #nextName{
-        margin:10px 0 8px!important;
-        color:#f3ead6!important;
-        font-size:34px!important;
-        line-height:1!important;
-      }
-      .desktop-hero #nextEventCard #nextMeta{
-        max-width:300px!important;
-        color:#e0d8ca!important;
-        font-size:10px!important;
-        line-height:1.35!important;
-      }
-      .desktop-hero #nextEventCard #nextDescription{
-        max-width:300px!important;
-        margin-top:13px!important;
-        color:#c9c0b0!important;
-        font-size:10px!important;
-        line-height:1.5!important;
-      }
-      .desktop-hero #nextEventCard .countdown-block{
-        position:relative!important;
-        z-index:7!important;
-        align-self:center!important;
-        margin:0!important;
-        padding:22px 22px 65px!important;
-        border-left:1px solid rgba(190,144,56,.25)!important;
-        text-align:center!important;
-      }
-      .desktop-hero #nextEventCard .countdown-block>span{
-        color:#e3c274!important;
-        font:600 9px Cinzel,Georgia,serif!important;
-        letter-spacing:.12em!important;
-      }
-      .desktop-hero #nextEventCard .countdown{
-        gap:6px!important;
-        margin-top:10px!important;
-        color:#f0c86d!important;
-        font-size:37px!important;
-        text-shadow:0 0 14px rgba(211,160,68,.34)!important;
-      }
-      .desktop-hero #nextEventCard .countdown-block small{
-        margin-top:5px!important;
-        color:#aaa294!important;
-        font-size:7px!important;
-      }
-      .desktop-hero #nextEventCarouselControls{
-        right:18px!important;
-        bottom:14px!important;
-        z-index:20!important;
-        padding:5px 7px!important;
-        border:1px solid #9a7432!important;
-        background:#05090af2!important;
-      }
+      .desktop-hero #nextEventCard .next-event-content{position:relative!important;z-index:7!important;align-self:end!important;padding:68px 25px 64px!important;text-shadow:0 2px 5px #000!important}
+      .desktop-hero #nextEventCard .type-chip{padding:4px 8px!important;border-color:#b85444!important;background:#4b1612de!important;color:#f18a73!important;font-size:8px!important}
+      .desktop-hero #nextEventCard #nextName{margin:10px 0 8px!important;color:#f3ead6!important;font-size:34px!important;line-height:1!important}
+      .desktop-hero #nextEventCard #nextMeta{max-width:300px!important;color:#e0d8ca!important;font-size:10px!important;line-height:1.35!important}
+      .desktop-hero #nextEventCard #nextDescription{max-width:300px!important;margin-top:13px!important;color:#c9c0b0!important;font-size:10px!important;line-height:1.5!important}
+      .desktop-hero #nextEventCard .countdown-block{position:relative!important;z-index:7!important;align-self:center!important;margin:0!important;padding:22px 22px 65px!important;border-left:1px solid rgba(190,144,56,.25)!important;text-align:center!important}
+      .desktop-hero #nextEventCard .countdown-block>span{color:#e3c274!important;font:600 9px Cinzel,Georgia,serif!important;letter-spacing:.12em!important}
+      .desktop-hero #nextEventCard .countdown{gap:6px!important;margin-top:10px!important;color:#f0c86d!important;font-size:37px!important;text-shadow:0 0 14px rgba(211,160,68,.34)!important}
+      .desktop-hero #nextEventCard .countdown-block small{margin-top:5px!important;color:#aaa294!important;font-size:7px!important}
+      .desktop-hero #nextEventCarouselControls{right:18px!important;bottom:14px!important;z-index:20!important;padding:5px 7px!important;border:1px solid #9a7432!important;background:#05090af2!important}
     }`;
   document.head.appendChild(style);
 }
@@ -297,6 +344,7 @@ function injectApprovedHeroStyles() {
 export function installNextEventCarousel() {
   if (typeof document === 'undefined') return;
   installMobileHeaderMenu();
+  installActiveStatusLabel();
   injectApprovedHeroStyles();
 
   const card = document.querySelector('#nextEventCard');
