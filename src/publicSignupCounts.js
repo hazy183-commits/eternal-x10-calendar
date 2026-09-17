@@ -1,6 +1,7 @@
+import { supabase } from './supabaseClient.js';
 import { getClanUpcomingEvents, signupIdentity } from './clanEventFeed.js';
 
-export function installPublicSignupCounts(supabase){
+export function ensurePublicSignupCounts(){
   if(!supabase || window.__publicSignupCountsInstalled) return;
   window.__publicSignupCountsInstalled = true;
 
@@ -78,16 +79,15 @@ export function installPublicSignupCounts(supabase){
     observer.observe(calendar,{childList:true,subtree:true});
   }
 
-  window.addEventListener('orzel:featured-event-updated',()=>setTimeout(render,0));
   document.addEventListener('visibilitychange',()=>{ if(!document.hidden) load(); });
-
   try{
     supabase.channel('public-calendar-signup-counts')
       .on('postgres_changes',{event:'*',schema:'public',table:'event_signups'},()=>load())
       .subscribe();
   }catch{}
-
   load();
   refreshTimer = setInterval(load,30000);
   window.addEventListener('beforeunload',()=>clearInterval(refreshTimer),{once:true});
 }
+
+export const installPublicSignupCounts = () => ensurePublicSignupCounts();
