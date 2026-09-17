@@ -16,6 +16,7 @@ import { installEpicRespawnScreenshotImport } from './epicRespawnScreenshotImpor
 import { installTodayClanDashboard } from './todayClanDashboard.js';
 import { installMemberZoneReliability } from './memberZoneReliability.js';
 import { installCraftPlannerUi } from './craftPlannerUi.js';
+import './craftWeaponSelectEnhancer.js';
 import './neededRaidBossRefreshBridge.js';
 import './interludeClassSelects.js';
 
