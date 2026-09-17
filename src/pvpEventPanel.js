@@ -45,7 +45,6 @@ export function updatePvpRowCountdowns(root, now = new Date()) {
 export function renderPvpEventPanel(root, now = new Date()) {
   if (!root) return;
   if (!root.querySelector('[data-pvp-card]')) {
-    // All interpolated values here come from the fixed local schedule.
     root.innerHTML = PVP_EVENTS.map((definition) => `<article class="pvp-event-card" data-pvp-card="${definition.id}">
       <h4>${definition.name}</h4>
       <dl>
@@ -73,7 +72,6 @@ const sidebarSignatures = new WeakMap();
 
 export function renderPvpSidebar(root, now = new Date()) {
   if (!root) return;
-  // Show the active occurrence first, followed by the nearest upcoming ones.
   const events = PVP_EVENTS.map(({ id }) => nextPvpEvent(id, now)).filter(Boolean)
     .sort((a, b) => pvpTiming(a).registrationStart - pvpTiming(b).registrationStart);
   const signature = events.map(({ id }) => id).join('|');
@@ -90,8 +88,4 @@ export function renderPvpSidebar(root, now = new Date()) {
     card.querySelector('[data-pvp-date]').textContent = compactDate(event, now);
     card.querySelector('[data-pvp-countdown]').textContent = compactCountdown(event, now);
   }
-}
-
-if (typeof window !== 'undefined') {
-  queueMicrotask(() => import('./publicCalendarSignups.js').catch(() => {}));
 }
