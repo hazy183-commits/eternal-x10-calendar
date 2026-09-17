@@ -5,6 +5,7 @@ import { installMemberRoster } from './memberRoster.js';
 import { installOwnerAccessBridge } from './ownerAccessBridge.js';
 import { installInterludeClassSelects } from './interludeClassSelects.js';
 import { installDiscordReminderSettings } from './discordReminderSettings.js';
+import { installPublicSignupCounts } from './publicSignupCounts.js';
 
 const boot=()=>{
   installMemberEventSignups(supabase);
@@ -13,6 +14,7 @@ const boot=()=>{
   installOwnerAccessBridge(supabase);
   installInterludeClassSelects();
   installDiscordReminderSettings(supabase);
+  installPublicSignupCounts(supabase);
 };
 if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot,{once:true});
 else boot();
