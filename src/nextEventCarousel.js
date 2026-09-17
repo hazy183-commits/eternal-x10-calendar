@@ -123,102 +123,19 @@ function injectApprovedHeroStyles() {
 
       .desktop-hero>.hero{
         position:relative!important;
-        display:flex!important;
-        flex-direction:column!important;
-        align-items:center!important;
-        justify-content:center!important;
         width:100%!important;
         height:410px!important;
         min-height:410px!important;
         margin:0!important;
-        padding:34px 42px!important;
+        padding:0!important;
         overflow:hidden!important;
         border:0!important;
         border-right:1px solid #8d6a2f!important;
         background:#05090a url('/images/eternal-hero-approved.webp') center center/cover no-repeat!important;
-        text-align:center!important;
-        isolation:isolate!important;
+        box-shadow:inset 0 0 0 7px rgba(0,0,0,.16)!important;
       }
-      .desktop-hero>.hero:before{
-        content:''!important;
-        position:absolute!important;
-        inset:0!important;
-        z-index:0!important;
-        background:radial-gradient(ellipse at center,rgba(3,6,7,.18) 0%,rgba(3,6,7,.26) 48%,rgba(3,6,7,.36) 100%)!important;
-        pointer-events:none!important;
-      }
-      .desktop-hero>.hero:after{
-        content:''!important;
-        position:absolute!important;
-        inset:7px!important;
-        z-index:1!important;
-        border:1px solid rgba(190,143,58,.52)!important;
-        box-shadow:inset 0 0 0 1px #0008,inset 0 0 42px #0007!important;
-        pointer-events:none!important;
-      }
-      .desktop-hero>.hero .hero-emblem,.desktop-hero>.hero>.eyebrow,.desktop-hero>.hero .server-clock{display:none!important}
-      .desktop-hero>.hero h1,.desktop-hero>.hero .hero-subtitle,.desktop-hero>.hero .hero-tagline{visibility:visible!important;position:relative!important;z-index:3!important;pointer-events:none!important}
-      .desktop-hero>.hero h1{
-        margin:0!important;
-        color:#f6eedc!important;
-        font-size:clamp(64px,5.4vw,94px)!important;
-        font-weight:600!important;
-        line-height:.84!important;
-        letter-spacing:.035em!important;
-        text-shadow:0 3px 0 #21170c,0 5px 8px #000,0 0 20px #d19e4430!important;
-        -webkit-font-smoothing:antialiased!important;
-      }
-      .desktop-hero>.hero h1:before{
-        content:'LINEAGE II  REBORN'!important;
-        display:block!important;
-        margin-bottom:18px!important;
-        color:#efcc7b!important;
-        font:600 20px/1 Cinzel,Georgia,serif!important;
-        letter-spacing:.24em!important;
-        text-shadow:0 2px 5px #000!important;
-      }
-      .desktop-hero>.hero h1 span{
-        display:block!important;
-        margin:24px 0 0!important;
-        color:#efc66e!important;
-        font-size:.44em!important;
-        letter-spacing:.15em!important;
-        text-shadow:0 2px 5px #000!important;
-      }
-      .desktop-hero>.hero .hero-subtitle{
-        margin:21px 0 0!important;
-        color:#eee2ce!important;
-        font:500 10px Cinzel,Georgia,serif!important;
-        letter-spacing:.34em!important;
-        text-transform:uppercase!important;
-        text-shadow:0 2px 4px #000!important;
-      }
-      .desktop-hero>.hero .hero-tagline{
-        max-width:none!important;
-        margin:14px 0 0!important;
-        color:#e8e1d5!important;
-        font:500 10px/1.6 Cinzel,Georgia,serif!important;
-        letter-spacing:.2em!important;
-        text-transform:uppercase!important;
-        text-shadow:0 2px 4px #000!important;
-      }
-      .desktop-hero>.hero .hero-tagline:after{
-        content:'JOIN OUR WORLD'!important;
-        display:grid!important;
-        place-items:center!important;
-        width:330px!important;
-        max-width:78%!important;
-        height:48px!important;
-        margin:23px auto 0!important;
-        border:1px solid #9f762f!important;
-        outline:1px solid rgba(222,176,83,.22)!important;
-        outline-offset:-5px!important;
-        background:linear-gradient(180deg,#101516e8,#060909f4)!important;
-        color:#ead091!important;
-        font:600 15px Cinzel,Georgia,serif!important;
-        letter-spacing:.12em!important;
-        box-shadow:inset 0 0 26px #000b,0 6px 20px #0007!important;
-      }
+      .desktop-hero>.hero>*{visibility:hidden!important;pointer-events:none!important}
+      .desktop-hero>.hero:before,.desktop-hero>.hero:after{content:none!important;display:none!important}
 
       .desktop-hero>.focus-section{
         position:relative!important;
