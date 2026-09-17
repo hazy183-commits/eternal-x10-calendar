@@ -91,3 +91,7 @@ export function renderPvpSidebar(root, now = new Date()) {
     card.querySelector('[data-pvp-countdown]').textContent = compactCountdown(event, now);
   }
 }
+
+if (typeof window !== 'undefined') {
+  queueMicrotask(() => import('./publicCalendarSignups.js').catch(() => {}));
+}
