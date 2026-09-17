@@ -22,7 +22,6 @@ function installMobileHeaderMenu() {
       <div class="mobile-menu-head"><span>ORZEŁ BIAŁY</span><button type="button" data-mobile-menu-close aria-label="Zamknij menu">×</button></div>
       <a href="#top" data-mobile-menu-link>⌂ <span>Strona główna</span></a>
       <a href="#calendar" data-mobile-menu-link>▣ <span>Kalendarz</span></a>
-      <a href="#statistics" data-mobile-menu-link>◫ <span>Statystyki</span></a>
       <a href="#guides" data-mobile-menu-link>♜ <span>Poradniki / Bossowie</span></a>
       <a href="#community" data-mobile-menu-link>◆ <span>Community</span></a>
       <button type="button" data-mobile-action="clan">♛ <span>Strefa klanu</span></button>

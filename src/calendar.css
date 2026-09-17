@@ -1,0 +1,51 @@
+/* One schedule, with the original homepage and featured event left intact. */
+.unified-calendar { display:block!important; }
+.unified-calendar #statistics[hidden] { display:none!important; }
+.unified-calendar .calendar-section { display:flex!important; flex-direction:column!important; width:100%; gap:0; padding:0!important; border:1px solid var(--line); background:var(--surface); }
+.unified-calendar .calendar-section:before { content:none; display:none; }
+.unified-calendar .calendar-heading { position:static!important; order:0!important; display:flex; align-items:center; justify-content:space-between; gap:16px; margin:0!important; padding:20px!important; border:0!important; border-bottom:1px solid var(--line)!important; }
+.unified-calendar .calendar-heading>div:first-child { display:block; }
+.unified-calendar .calendar-heading h2 { margin:6px 0 0; font-size:26px; }
+.unified-calendar .calendar-week { order:1; display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:8px; padding:16px 20px; border-bottom:1px solid var(--soft); }
+.calendar-day { min-width:0; min-height:88px; padding:12px 6px; border:1px solid #b08a3938; background:#0a1011; color:var(--text); text-align:center; cursor:pointer; }
+.calendar-day span { display:block; color:var(--muted); font-size:10px; text-transform:uppercase; letter-spacing:.1em; }
+.calendar-day b { display:block; margin:8px 0; font:600 18px Cinzel,Georgia,serif; }
+.calendar-day small { display:block; color:var(--muted); font-size:10px; }
+.calendar-day.today span { color:var(--goldlight); }
+.calendar-day:hover { border-color:var(--gold); background:#211b10; }
+.calendar-day.selected { border-color:var(--gold); background:linear-gradient(150deg,#58401c88,#15130e); box-shadow:inset 0 -2px var(--gold); }
+.calendar-day.selected b,.calendar-day.selected small { color:#f1d696; }
+.calendar-day:focus-visible { outline:2px solid #f1d696; outline-offset:3px; }
+.unified-calendar .calendar-toolbar { order:2!important; margin:0!important; padding:16px 20px; border:0; gap:20px; flex-wrap:wrap; }
+.unified-calendar .selected-date { min-width:160px; }
+.unified-calendar .filters { flex:1; }
+.unified-calendar .event-list { order:3!important; margin:0!important; border:0; border-top:1px solid var(--line); }
+.unified-calendar .event-row { grid-template-columns:70px 44px minmax(140px,1.35fr) 110px minmax(150px,1fr) 150px; gap:14px; min-height:76px; padding:12px 20px; }
+.unified-calendar .event-table-head { grid-template-columns:70px 44px minmax(140px,1.35fr) 110px minmax(150px,1fr) 150px; gap:14px; padding:12px 20px; }
+.unified-calendar .event-table-head span:nth-child(2) { grid-column:2 / span 2; }
+.unified-calendar .event-table-head span:nth-child(3) { grid-column:4; }
+.unified-calendar .event-table-head span:nth-child(4) { grid-column:5; }
+.unified-calendar .event-table-head span:nth-child(5) { grid-column:6; }
+.unified-calendar .event-row[data-calendar-nearest="true"] { box-shadow:inset 0 0 0 1px #bc944980; background:linear-gradient(90deg,#6c4c1e22,transparent); }
+.unified-calendar .event-row[data-calendar-state="active"] { background:linear-gradient(90deg,#1b422533,#0c1512); box-shadow:inset 3px 0 #71b66b; }
+.unified-calendar [data-calendar-state="active"] .status-dot { display:inline-block; justify-self:end; padding:5px 9px; border:1px solid #568044; background:#102016; color:#b9eda0; }
+.unified-calendar [data-calendar-state="active"] .status-dot:before { content:'● '; color:#71da68; }
+.unified-calendar [data-calendar-state="completed"] { opacity:.52; }
+@media(max-width:1000px) and (min-width:821px) {
+  .unified-calendar .event-row,.unified-calendar .event-table-head { grid-template-columns:55px 40px minmax(110px,1fr) 90px minmax(90px,1fr) 110px; gap:10px; }
+}
+@media(max-width:820px) {
+  .unified-calendar .calendar-heading { padding:16px 12px!important; flex-wrap:wrap; }
+  .unified-calendar .calendar-heading h2 { font-size:21px; }
+  .unified-calendar .calendar-week { gap:5px; padding:12px 10px; }
+  .calendar-day { min-height:78px; padding:10px 2px; }
+  .calendar-day b { font-size:14px; }
+  .calendar-day span,.calendar-day small { font-size:8px; letter-spacing:0; }
+  .unified-calendar .calendar-toolbar { align-items:stretch; padding:12px 10px; gap:12px; }
+  .unified-calendar .filters { width:100%; }
+}
+@media(max-width:520px) {
+  .unified-calendar .calendar-week { grid-template-columns:repeat(7,minmax(62px,1fr)); overflow-x:auto; scrollbar-width:thin; scrollbar-color:#806027 #0a0d0e; }
+  .calendar-day b { font-size:13px; }
+  .unified-calendar .calendar-heading h2 { font-size:19px; }
+}

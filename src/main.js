@@ -75,8 +75,8 @@ function renderFilters() { $('#filters').innerHTML = ['Wszystkie', ...TYPES].map
 function rowCountdown(event) {
   if (event.isPvpSchedule) return pvpCountdownText(event);
   const currentStatus = eventStatus(event);
-  if (currentStatus === 'RESPAWN WINDOW ACTIVE' || currentStatus === 'SIEGE ACTIVE' || currentStatus === 'OLYMPIAD ACTIVE') {
-    const seconds = Math.max(0, Math.floor((new Date(event.endAt).getTime() - Date.now()) / 1000));
+  if (['TRWA', 'RESPAWN WINDOW ACTIVE', 'SIEGE ACTIVE', 'OLYMPIAD ACTIVE'].includes(currentStatus)) {
+    const seconds = Math.max(0, Math.floor((countdownTargetFor(event).target.getTime() - Date.now()) / 1000));
     return `${Math.floor(seconds / 3600)}h ${pad(Math.floor((seconds % 3600) / 60))}m`;
   }
   if (currentStatus === 'OKNO ZAKOŃCZONE' || currentStatus === 'ZAKOŃCZONE') return 'Zakończone';
@@ -93,8 +93,49 @@ function countdownTargetFor(event) {
   }
   return { target: dateFromEvent(event), label: 'Do rozpoczęcia' };
 }
-function eventRow(event) { const currentStatus = eventStatus(event); return `<article class="event-row"><time class="event-time">${event.time}</time><div class="event-thumb" data-boss-name="${safe(artworkName(event))}"><span>ART</span></div><div class="event-info"><h3>${safe(event.name)}</h3>${event.isOlympiadSchedule ? `<span class="olympiad-window">${event.timeRange}</span>` : event.isPvpSchedule ? `<span class="pvp-calendar-times">Rejestracja: ${event.registrationTimeRange}<br />Event: ${event.eventTimeRange}</span>` : ''}</div><span class="type-chip ${event.type.toLowerCase().replaceAll(' ', '-')}">${event.type}</span><p class="event-location">${event.location ? `⌖ ${safe(event.location)}` : 'Wydarzenie klanowe'}</p><div class="row-status"><b class="status-dot ${currentStatus.toLowerCase().replaceAll(' ', '-')} ${event.isBossRespawn || event.isSiegeSchedule ? 'respawn-status' : ''}">${currentStatus}</b><span${event.isPvpSchedule ? ` data-pvp-countdown-start="${event.startAt}"` : ''}>${rowCountdown(event)}</span></div></article>`; }
-function renderCalendar() { const list = sorted(withPvpEvents(withOlympiadEvents(events, new Date(), dateKey(selectedDay)), new Date(), dateKey(selectedDay)).filter((event) => !event.isPvpSchedule && event.date === dateKey(selectedDay) && (filter === 'Wszystkie' || event.type === filter))); $('#selectedDate').textContent = formatDate(selectedDay); const heading = '<div class="event-table-head"><span>Godzina</span><span>Wydarzenie</span><span>Typ · Lokalizacja</span><span>Status</span></div>'; $('#dailyEvents').innerHTML = heading + (list.length ? list.map(eventRow).join('') : `<div class="empty-state"><span>✦</span><p>Brak wydarzeń w tej kategorii.</p></div>`); refreshBossArtwork($('#dailyEvents')); }
+function eventRow(event, nearest = false) { const currentStatus = eventStatus(event); const state = calendarEventState(event); const label = state === 'active' ? 'TRWA' : currentStatus; return `<article class="event-row" data-calendar-state="${state}" data-calendar-nearest="${nearest}"><time class="event-time">${event.time}</time><div class="event-thumb" data-boss-name="${safe(artworkName(event))}"><span>ART</span></div><div class="event-info"><h3>${safe(event.name)}</h3>${event.isOlympiadSchedule ? `<span class="olympiad-window">${event.timeRange}</span>` : event.isPvpSchedule ? `<span class="pvp-calendar-times">Rejestracja: ${event.registrationTimeRange}<br />Event: ${event.eventTimeRange}</span>` : ''}</div><span class="type-chip ${event.type.toLowerCase().replaceAll(' ', '-')}">${event.type}</span><p class="event-location">${event.location ? `⌖ ${safe(event.location)}` : 'Wydarzenie klanowe'}</p><div class="row-status"><b class="status-dot ${currentStatus.toLowerCase().replaceAll(' ', '-')} ${event.isBossRespawn || event.isSiegeSchedule ? 'respawn-status' : ''}">${label}</b><span${event.isPvpSchedule ? ` data-pvp-countdown-start="${event.startAt}"` : ''}>${rowCountdown(event)}</span></div></article>`; }
+function calendarEventState(event) {
+  const current = eventStatus(event);
+  if (['TRWA', 'RESPAWN WINDOW ACTIVE', 'SIEGE ACTIVE', 'OLYMPIAD ACTIVE'].includes(current)) return 'active';
+  if (['ZAKOŃCZONE', 'OKNO ZAKOŃCZONE', 'OLYMPIAD ENDED'].includes(current)) return 'completed';
+  return 'upcoming';
+}
+function calendarEventsFor(day) {
+  return sorted(withPvpEvents(withOlympiadEvents(events, new Date(), dateKey(day)), new Date(), dateKey(day))
+    .filter(event => !event.isPvpSchedule && event.date === dateKey(day)));
+}
+function renderCalendarWeek() {
+  const start = new Date(selectedDay);
+  start.setDate(start.getDate() - ((start.getDay() + 6) % 7));
+  $('#calendarWeek').innerHTML = Array.from({ length: 7 }, (_, index) => {
+    const day = new Date(start);
+    day.setDate(start.getDate() + index);
+    const key = dateKey(day);
+    const count = calendarEventsFor(day).length;
+    const isToday = key === dateKey(new Date());
+    const selected = key === dateKey(selectedDay);
+    const word = count === 1 ? 'wydarzenie' : count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 12 || count % 100 > 14) ? 'wydarzenia' : 'wydarzeń';
+    return `<button type="button" class="calendar-day${selected ? ' selected' : ''}${isToday ? ' today' : ''}" data-calendar-day="${key}" aria-pressed="${selected}" aria-label="${formatDate(day)}, ${count} ${word}"><span>${isToday ? 'Dzisiaj' : formatDate(day, { weekday: 'short' })}</span><b>${formatDate(day, { day: 'numeric', month: 'short' })}</b><small>${count} ${word}</small></button>`;
+  }).join('');
+}
+let calendarClockSignature = '';
+function calendarClockKey() {
+  return `${Math.floor(Date.now() / 60000)}|${events.map(event => eventStatus(event)).join('|')}`;
+}
+function refreshCalendarClock() {
+  if (calendarClockKey() !== calendarClockSignature) renderCalendar();
+}
+function renderCalendar() {
+  const list = calendarEventsFor(selectedDay).filter(event => filter === 'Wszystkie' || event.type === filter);
+  const next = list.find(event => calendarEventState(event) === 'upcoming' && dateFromEvent(event) > new Date());
+  $('#selectedDate').textContent = formatDate(selectedDay);
+  renderCalendarWeek();
+  const heading = '<div class="event-table-head"><span>Godzina</span><span>Wydarzenie</span><span>Typ</span><span>Lokalizacja</span><span>Status · odliczanie</span></div>';
+  $('#dailyEvents').innerHTML = heading + (list.length ? list.map(event => eventRow(event, event === next)).join('') : '<div class="empty-state"><span>✦</span><p>Brak wydarzeń w tej kategorii.</p></div>');
+  refreshBossArtwork($('#dailyEvents'));
+  calendarClockSignature = calendarClockKey();
+}
+
 function miniRow(event) { const sameDay = event.date === (event.isOlympiadSchedule ? olympiadLocalDate() : dateKey(today)); const countdown = countdownTargetFor(event); return `<div class="mini-event" data-boss-name="${safe(artworkName(event))}" data-countdown-target="${countdown.target.toISOString()}" data-countdown-label="${countdown.label}"><time>${sameDay ? event.time : formatDate(dateFromEvent(event), { day: '2-digit', month: 'short', ...(event.isOlympiadSchedule ? { timeZone: 'Europe/Warsaw' } : {}) })}</time><div><b>${safe(event.name)}</b><span>${event.type}${event.location ? ` · ${safe(event.location)}` : ''}</span>${event.isOlympiadSchedule ? `<span class="olympiad-window">${event.timeRange}</span>` : ''}</div></div>`; }
 function renderOverview() { const todays = sorted(events.filter((event) => !event.isPvpSchedule && event.date === (event.isOlympiadSchedule ? olympiadLocalDate() : dateKey(today)))); $('#todayCount').textContent = todays.length; $('#todayEvents').innerHTML = todays.length ? todays.map(miniRow).join('') : '<p class="empty-mini">Dziś nie zaplanowano wydarzeń.</p>'; const upcoming = getUpcoming().slice(0, 5); $('#upcomingEvents').innerHTML = upcoming.length ? upcoming.map(miniRow).join('') : '<p class="empty-mini">Brak nadchodzących wydarzeń.</p>'; refreshBossArtwork($('#statistics')); renderPvpSidebar($('#pvpSidebarEvents')); }
 function eventWindowLabel(event) { if (event?.isOlympiadSchedule) return `${formatOlympiadDate(event)} · ${event.timeRange} · Europe/Warsaw`; if (!event?.isBossRespawn && !event?.isSiegeSchedule) return `${formatDate(dateFromEvent(event), { weekday: 'long', day: 'numeric', month: 'long' })} · ${event.time}${event.location ? ` · ${event.location}` : ''}`; const start = dateFromEvent(event); const end = event.endAt ? new Date(event.endAt) : new Date(start.getTime() + event.duration * 60000); const endTime = new Intl.DateTimeFormat('pl-PL', { timeZone: TIME_ZONE, hour: '2-digit', minute: '2-digit' }).format(end); return `${formatLocalDateTime(start, { dateStyle: 'full', timeStyle: 'short' })}–${endTime}${event.location ? ` · ${event.location}` : ''}`; }
@@ -628,9 +669,15 @@ async function initializeApp() {
       if (formMode === 'new') automaticDuration = false;
     });
     $('#filters').addEventListener('click', (event) => { if (!event.target.dataset.filter) return; filter = event.target.dataset.filter; renderFilters(); renderCalendar(); });
+    $('#calendarWeek').addEventListener('click', (event) => {
+      const button = event.target.closest('[data-calendar-day]');
+      if (!button) return;
+      selectedDay = new Date(button.dataset.calendarDay + 'T12:00:00');
+      renderCalendar();
+    });
     $('#previousDay').addEventListener('click', () => { selectedDay.setDate(selectedDay.getDate() - 1); renderCalendar(); });
     $('#nextDay').addEventListener('click', () => { selectedDay.setDate(selectedDay.getDate() + 1); renderCalendar(); });
-    $('#todayButton').addEventListener('click', () => { selectedDay = new Date(today); renderCalendar(); });
+    $('#todayButton').addEventListener('click', () => { selectedDay = new Date(); renderCalendar(); });
     $('#adminTrigger').addEventListener('click', openAdmin);
     $('#adminAdd').addEventListener('click', openNewEvent);
     $('#quickAdd').addEventListener('click', openNewEvent);
@@ -787,7 +834,7 @@ async function initializeApp() {
     await load();
     updateClock();
     updateCountdown();
-    setInterval(() => { updateClock(); refreshDynamicEvents(); renderNext(); updateCountdown(); updateBossRespawnClock(); updateSiegeClock(); renderOlympiadPanel($('#olympiadSchedule')); renderPvpEventPanel($('#pvpEventCards')); renderPvpSidebar($('#pvpSidebarEvents')); updatePvpRowCountdowns($('#dailyEvents')); }, 1000);
+    setInterval(() => { updateClock(); refreshDynamicEvents(); refreshCalendarClock(); renderNext(); updateCountdown(); updateBossRespawnClock(); updateSiegeClock(); renderOlympiadPanel($('#olympiadSchedule')); renderPvpEventPanel($('#pvpEventCards')); renderPvpSidebar($('#pvpSidebarEvents')); updatePvpRowCountdowns($('#dailyEvents')); }, 1000);
     console.log('APP INITIALIZED', { eventCount: events.length });
   } catch (error) {
     console.error('APP INITIALIZATION FAILED', error);
