@@ -1,5 +1,61 @@
 const PMFUN = 'https://lineage.pmfun.com';
 
+const KNOWN_ITEM_IDS = new Map(Object.entries({
+  'stem': 1864,
+  'varnish': 1865,
+  'suede': 1866,
+  'thread': 1868,
+  'iron ore': 1869,
+  'coal': 1870,
+  'charcoal': 1871,
+  'animal bone': 1872,
+  'silver nugget': 1873,
+  'oriharukon ore': 1874,
+  'stone of purity': 1875,
+  'mithril ore': 1876,
+  'adamantite nugget': 1877,
+  'braided hemp': 1878,
+  'cokes': 1879,
+  'steel': 1880,
+  'coarse bone powder': 1881,
+  'high grade suede': 1885,
+  'varnish of purity': 1887,
+  'synthetic cokes': 1888,
+  'compound braid': 1889,
+  'mithril alloy': 1890,
+  "artisan's frame": 1891,
+  'mold glue': 4039,
+  'mold lubricant': 4040,
+  'mold hardener': 4041,
+  'enria': 4042,
+  'craftsman mold': 4047,
+  'durable metal plate': 5550,
+  'halberd edge': 5542,
+  "dasparion's staff edge": 5543,
+  'branch of the mother tree head': 5544,
+  "dark legion's edge blade": 5545,
+  'sword of miracles edge': 5546,
+  'tallum blade edge': 5548,
+  'elysian head': 5533,
+  'soul bow stave': 5534,
+  'bloody orchid head': 5536,
+  'tallum glaive edge': 5541,
+  'meteor shower head': 5532,
+  'angel slayer blade': 6691,
+  'dragon hunter axe blade': 6693,
+  'saint spear blade': 6694,
+  'demon splinter blade': 6695,
+  'heavens divider edge': 6696,
+  'arcana mace head': 6697,
+  'imperial staff head': 6690,
+  'draconic bow shaft': 7579,
+  'flaming dragon skull piece': 8342,
+  'spiritual eye piece': 8341,
+  "sirra's blade edge": 8712,
+  'naga storm piece': 8716,
+  "shyeed's bow shaft": 8718,
+}));
+
 const decode = value => String(value || '')
   .replace(/&nbsp;/gi, ' ')
   .replace(/&amp;/gi, '&')
@@ -16,7 +72,14 @@ const strip = html => decode(String(html || '')
   .replace(/\s+/g, ' ')
   .trim());
 
-const norm = value => strip(value).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+const norm = value => strip(value)
+  .toLowerCase()
+  .replace(/[’`]/g, "'")
+  .replace(/[^a-z0-9']+/g, ' ')
+  .replace(/\s+/g, ' ')
+  .trim();
+
+const slugify = value => norm(value).replace(/'/g, '').replace(/\s+/g, '-');
 
 async function fetchText(url, options = {}) {
   const response = await fetch(url, {
@@ -42,13 +105,22 @@ function findItemLink(html, wantedName) {
     const exact = label === wanted;
     const contains = label.includes(wanted) || wanted.includes(label);
     if (!exact && !contains) continue;
-    const score = exact ? 100 : Math.min(label.length, wanted.length);
+    const score = exact ? 1000 : Math.min(label.length, wanted.length);
     if (!best || score > best.score) best = { score, href: match[1], id: Number(match[2]) };
   }
   return best;
 }
 
 async function resolveItem(name) {
+  const knownId = KNOWN_ITEM_IDS.get(norm(name));
+  if (knownId) {
+    return {
+      id: knownId,
+      url: `${PMFUN}/item/${knownId}/${slugify(name)}.html`,
+      resolvedBy: 'known-id',
+    };
+  }
+
   const homepage = await fetchText(`${PMFUN}/`);
   const forms = [...homepage.text.matchAll(/<form\b([^>]*)>([\s\S]*?)<\/form>/gi)];
   const candidates = [];
@@ -77,15 +149,6 @@ async function resolveItem(name) {
     candidates.push({ base, params, method });
   }
 
-  // Fallback candidates cover older versions of the PMfun search form.
-  if (!candidates.length) {
-    for (const key of ['q', 's', 'search', 'query', 'name']) {
-      const base = new URL('/', PMFUN);
-      const params = new URLSearchParams({ [key]: name });
-      candidates.push({ base, params, method: 'GET' });
-    }
-  }
-
   for (const candidate of candidates) {
     try {
       let page;
@@ -100,7 +163,7 @@ async function resolveItem(name) {
         page = await fetchText(candidate.base);
       }
       const found = findItemLink(page.text, name);
-      if (found) return { id: found.id, url: new URL(found.href, PMFUN).href };
+      if (found) return { id: found.id, url: new URL(found.href, PMFUN).href, resolvedBy: 'pmfun-search' };
     } catch {}
   }
 
@@ -113,45 +176,50 @@ function extractTitle(html) {
   return strip(h1[1]).replace(/\s*-\s*Lineage 2.*$/i, '').trim();
 }
 
-function parseRows(html, itemUrl) {
+function extractSection(html, label, nextLabel) {
+  const source = String(html || '');
+  const startRe = new RegExp(`(?:>|^)\\s*${label}\\s*(?:<|$)`, 'i');
+  const start = startRe.exec(source);
+  if (!start) return '';
+  const from = start.index + start[0].length;
+  if (!nextLabel) return source.slice(from);
+  const rest = source.slice(from);
+  const nextRe = new RegExp(`(?:>|^)\\s*${nextLabel}\\s*(?:<|$)`, 'i');
+  const next = nextRe.exec(rest);
+  return next ? rest.slice(0, next.index) : rest;
+}
+
+function parseSectionRows(sectionHtml, method) {
   const rows = [];
-  let mode = null;
-  const trs = [...String(html || '').matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi)];
+  const trMatches = [...String(sectionHtml || '').matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi)];
 
-  for (const trMatch of trs) {
+  for (const trMatch of trMatches) {
     const tr = trMatch[1] || '';
-    const text = strip(tr);
-    if (!text) continue;
-    if (/^drop$/i.test(text)) { mode = 'drop'; continue; }
-    if (/^spoil$/i.test(text)) { mode = 'spoil'; continue; }
-    if (!mode) continue;
-
     const npcMatch = tr.match(/<a[^>]+href=["']([^"']*\/npc\/(\d+)[^"']*)["'][^>]*>([\s\S]*?)<\/a>/i);
     if (!npcMatch) continue;
+
     const npcName = strip(npcMatch[3]);
     if (!npcName) continue;
 
-    const cells = [...tr.matchAll(/<td\b[^>]*>([\s\S]*?)<\/td>/gi)].map(match => strip(match[1])).filter(Boolean);
-    const joined = cells.join(' | ');
-    const levelMatch = joined.match(new RegExp(`${npcName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*\\((\\d+)\\)`, 'i')) || text.match(/\((\d+)\)/);
-    const level = levelMatch ? Number(levelMatch[1]) : null;
-
+    const cells = [...tr.matchAll(/<td\b[^>]*>([\s\S]*?)<\/td>/gi)]
+      .map(match => strip(match[1]))
+      .filter(Boolean);
+    const text = strip(tr);
+    const levelMatch = npcName
+      ? text.match(new RegExp(`${npcName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*\\((\\d+)\\)`, 'i'))
+      : null;
+    const level = levelMatch ? Number(levelMatch[1]) : (text.match(/\((\d+)\)/)?.[1] ? Number(text.match(/\((\d+)\)/)[1]) : null);
     const type = cells.find(cell => /^(passive|aggressive)$/i.test(cell)) || '';
-    const chanceCell = [...cells].reverse().find(cell => /%|1\s*\/\s*\d+/i.test(cell)) || '';
+    const chanceCell = [...cells].reverse().find(cell => /(?:\d+(?:\.\d+)?%|1\s*\/\s*\d+)/i.test(cell)) || '';
     let quantity = '';
     if (chanceCell) {
       const chanceIndex = cells.lastIndexOf(chanceCell);
       if (chanceIndex > 0) quantity = cells[chanceIndex - 1] || '';
     }
-    if (!quantity) {
-      quantity = [...cells].reverse().find(cell => /^\d+(?:\s*-\s*\d+)?$/i.test(cell)) || '';
-    }
-
-    const mapLinkMatch = tr.match(/<a[^>]+href=["']([^"']+)["'][^>]*>\s*<img[^>]+(?:map|location)/i)
-      || tr.match(/<a[^>]+href=["']([^"']*(?:map|loc)[^"']*)["']/i);
+    if (!quantity) quantity = [...cells].reverse().find(cell => /^\d+(?:\s*-\s*\d+)?$/i.test(cell)) || '';
 
     rows.push({
-      method: mode,
+      method,
       npcId: Number(npcMatch[2]),
       npcName,
       level,
@@ -159,12 +227,11 @@ function parseRows(html, itemUrl) {
       quantity,
       chance: chanceCell,
       npcUrl: new URL(npcMatch[1], PMFUN).href,
-      mapUrl: mapLinkMatch ? new URL(mapLinkMatch[1], PMFUN).href : null,
+      mapUrl: null,
       likelyInterlude: level == null ? true : level <= 80,
     });
   }
 
-  // Keep distinct PMfun rows: same mob can legitimately appear more than once with different rates.
   const seen = new Set();
   return rows.filter(row => {
     const key = [row.method,row.npcId,row.npcName,row.level,row.type,row.quantity,row.chance].join('|');
@@ -172,6 +239,28 @@ function parseRows(html, itemUrl) {
     seen.add(key);
     return true;
   });
+}
+
+function parseRows(html) {
+  const dropSection = extractSection(html, 'Drop', 'Spoil');
+  const spoilSection = extractSection(html, 'Spoil', null);
+  const dropRows = parseSectionRows(dropSection, 'drop');
+  const spoilRows = parseSectionRows(spoilSection, 'spoil');
+
+  // Fallback for alternate PMfun markup where labels live inside table rows.
+  if (dropRows.length || spoilRows.length) return [...dropRows, ...spoilRows];
+
+  const rows = [];
+  let mode = null;
+  for (const trMatch of String(html || '').matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi)) {
+    const tr = trMatch[1] || '';
+    const text = strip(tr);
+    if (/^drop$/i.test(text)) { mode = 'drop'; continue; }
+    if (/^spoil$/i.test(text)) { mode = 'spoil'; continue; }
+    if (!mode) continue;
+    rows.push(...parseSectionRows(`<table><tr>${tr}</tr></table>`, mode));
+  }
+  return rows;
 }
 
 export default async function handler(request, response) {
@@ -182,10 +271,10 @@ export default async function handler(request, response) {
 
   try {
     const resolved = explicitId > 0
-      ? { id: explicitId, url: `${PMFUN}/item/${explicitId}` }
+      ? { id: explicitId, url: `${PMFUN}/item/${explicitId}`, resolvedBy: 'explicit-id' }
       : await resolveItem(name);
     const itemPage = await fetchText(resolved.url);
-    const rows = parseRows(itemPage.text, itemPage.url);
+    const rows = parseRows(itemPage.text);
     const title = extractTitle(itemPage.text) || name;
 
     response.setHeader('Cache-Control', 's-maxage=21600, stale-while-revalidate=86400');
@@ -193,6 +282,7 @@ export default async function handler(request, response) {
       source: 'PMfun',
       sourceUrl: itemPage.url,
       itemId: resolved.id,
+      resolvedBy: resolved.resolvedBy,
       title,
       rows,
       counts: {
@@ -200,7 +290,7 @@ export default async function handler(request, response) {
         spoil: rows.filter(row => row.method === 'spoil').length,
         likelyInterlude: rows.filter(row => row.likelyInterlude).length,
       },
-      note: 'PMfun łączy dane z wielu kronik. likelyInterlude oznacza wyłącznie podstawowy filtr poziomu NPC <= 80 i nie jest pełną gwarancją kroniki.',
+      note: 'Lista jest parsowana bezpośrednio ze strony itemu PMfun. Filtr Lv <= 80 jest tylko pomocniczy i nie zastępuje pełnej weryfikacji kroniki.',
     });
   } catch (error) {
     return response.status(502).json({ error: error?.message || String(error) });
