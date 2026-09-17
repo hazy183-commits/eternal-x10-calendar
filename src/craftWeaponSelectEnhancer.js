@@ -2,9 +2,9 @@ const byName = (a, b) => a.textContent.localeCompare(b.textContent, 'en', { sens
 
 const CRAFTED_MATERIAL_HINTS = [
   'alloy', 'cokes', 'plate', 'holder', 'mold', 'frame', 'braid', 'metallic thread',
-  'varnish of purity', 'steel', 'coarse bone powder', 'compound', 'leather', 'cord',
+  'metallic fiber', 'varnish of purity', 'steel', 'coarse bone powder', 'compound', 'leather', 'cord', 'anvil',
 ];
-const KEY_MAT_SUFFIXES = ['_shaft', '_blade', '_edge', '_stave', '_head', '_piece', '_fragment', '_part'];
+const KEY_MAT_SUFFIXES = ['_shaft', '_blade', '_edge', '_stave', '_head', '_piece', '_fragment', '_part', '_pattern', '_design', '_lining', '_fabric', '_texture'];
 
 function appendGroup(select, label, options) {
   if (!options.length) return;
@@ -14,27 +14,30 @@ function appendGroup(select, label, options) {
   select.appendChild(group);
 }
 
-function enhanceWeaponSelect(select) {
-  if (!select || select.dataset.weaponGroupsReady === '1') return;
+function enhanceTargetSelect(select) {
+  if (!select || select.dataset.craftGroupsReady === '1') return;
 
-  const weaponOptions = [...select.options]
-    .filter(option => option.value.startsWith('weapon_s_') || option.value.startsWith('weapon_a_'));
-  if (!weaponOptions.length) return;
+  const options = [...select.options].filter(option => /^(weapon|armor)_[sa]_/.test(option.value));
+  if (!options.length) return;
 
-  const sGrade = weaponOptions.filter(option => option.value.startsWith('weapon_s_'));
-  const aGrade = weaponOptions.filter(option => option.value.startsWith('weapon_a_'));
+  const weaponS = options.filter(option => option.value.startsWith('weapon_s_'));
+  const weaponA = options.filter(option => option.value.startsWith('weapon_a_'));
+  const armorS = options.filter(option => option.value.startsWith('armor_s_'));
+  const armorA = options.filter(option => option.value.startsWith('armor_a_'));
 
   select.replaceChildren();
   const placeholder = document.createElement('option');
   placeholder.value = '';
-  placeholder.textContent = 'Wybierz broń…';
+  placeholder.textContent = 'Wybierz broń lub armor…';
   placeholder.disabled = true;
   placeholder.selected = true;
   select.appendChild(placeholder);
 
-  appendGroup(select, 'S Grade — recepty 60%', sGrade);
-  appendGroup(select, 'A Grade — recepty 60%', aGrade);
-  select.dataset.weaponGroupsReady = '1';
+  appendGroup(select, '⚔ S Grade — Broń 60%', weaponS);
+  appendGroup(select, '⚔ A Grade — Broń 60%', weaponA);
+  appendGroup(select, '🛡 S Grade — Armory 60%', armorS);
+  appendGroup(select, '🛡 A Grade — Armory 60%', armorA);
+  select.dataset.craftGroupsReady = '1';
 }
 
 function classifyMaterial(option) {
@@ -64,7 +67,7 @@ function enhanceMaterialSelect(select) {
   select.appendChild(placeholder);
 
   appendGroup(select, '★ Materiały craftowane', groups.crafted);
-  appendGroup(select, '◆ Key mats / części broni', groups.key);
+  appendGroup(select, '◆ Key mats / części broni i armorów', groups.key);
   appendGroup(select, '✦ Crystale i Gemstones', groups.crystals);
   appendGroup(select, '• Surowce i pozostałe materiały', groups.basic);
   select.dataset.materialListReady = '1';
@@ -72,10 +75,10 @@ function enhanceMaterialSelect(select) {
 
 function syncProjectName(form) {
   const name = form.querySelector('input[name="name"]');
-  const weapon = form.querySelector('select[name="targetItemKey"]');
+  const target = form.querySelector('select[name="targetItemKey"]');
   const quantity = form.querySelector('input[name="targetQuantity"]');
-  if (!name || !weapon || !quantity) return;
-  const option = weapon.selectedOptions?.[0];
+  if (!name || !target || !quantity) return;
+  const option = target.selectedOptions?.[0];
   if (!option?.value) return;
   name.value = `${option.textContent.trim()} ×${Math.max(1, Number(quantity.value || 1))}`;
 }
@@ -119,18 +122,18 @@ function ensureStyles() {
   const style = document.createElement('style');
   style.id = 'craftSelectEnhancerStyles';
   style.textContent = `
-    #craftProjectForm.craft-form.project{grid-template-columns:minmax(220px,1.6fr) 95px minmax(150px,.8fr) auto!important}
+    #craftProjectForm.craft-form.project{grid-template-columns:minmax(260px,1.8fr) 95px minmax(150px,.8fr) auto!important}
+    #craftProjectForm select[name="targetItemKey"] optgroup,#craftStockForm select[name="itemKey"] optgroup{font-weight:900;color:#d7b35e;background:#090d0d}
+    #craftProjectForm select[name="targetItemKey"] option,#craftStockForm select[name="itemKey"] option{font-weight:600;color:#e4e0d7;background:#090d0d;padding:4px}
     #craftProjectForm select[name="priority"]{font-weight:800;color:#e4c16d}
     #craftStockForm select[name="itemKey"]{font-weight:700}
-    #craftStockForm select[name="itemKey"] optgroup{font-weight:900;color:#d7b35e;background:#090d0d}
-    #craftStockForm select[name="itemKey"] option{font-weight:600;color:#e4e0d7;background:#090d0d;padding:4px}
     @media(max-width:900px){#craftProjectForm.craft-form.project{grid-template-columns:1fr 100px!important}#craftProjectForm select[name="priority"]{grid-column:1/-1}#craftProjectForm button{grid-column:1/-1}}
   `;
   document.head.appendChild(style);
 }
 
 function enhanceCraftSelects(root = document) {
-  root.querySelectorAll?.('#craftProjectForm select[name="targetItemKey"]').forEach(enhanceWeaponSelect);
+  root.querySelectorAll?.('#craftProjectForm select[name="targetItemKey"]').forEach(enhanceTargetSelect);
   root.querySelectorAll?.('#craftStockForm select[name="itemKey"]').forEach(enhanceMaterialSelect);
   root.querySelectorAll?.('#craftProjectForm').forEach(enhanceProjectForm);
 }
