@@ -93,7 +93,8 @@ import { getClanUpcomingEvents, signupIdentity } from './clanEventFeed.js';
             button.className = 'public-signup-count';
             info.appendChild(button);
           }
-          button.innerHTML = `<span class="psc-icon">♙</span><span>${lists.yes.length} zapisanych</span>${lists.maybe.length ? `<span class="psc-maybe">· ${lists.maybe.length} może</span>` : ''}`;
+          const html = `<span class="psc-icon">♙</span><span>${lists.yes.length} zapisanych</span>${lists.maybe.length ? `<span class="psc-maybe">· ${lists.maybe.length} może</span>` : ''}`;
+          if (button.innerHTML !== html) button.innerHTML = html;
           button.onclick = () => openList(event);
         });
       } catch (error) {
@@ -120,13 +121,13 @@ import { getClanUpcomingEvents, signupIdentity } from './clanEventFeed.js';
     }
 
     const calendar = document.querySelector('#dailyEvents');
-    if (calendar) new MutationObserver(() => render()).observe(calendar, { childList:true, subtree:true });
+    if (calendar) new MutationObserver(() => render()).observe(calendar, { childList:true, subtree:false });
     document.querySelector('#calendarWeek')?.addEventListener('click', () => setTimeout(render, 0));
     document.querySelector('#filters')?.addEventListener('click', () => setTimeout(render, 0));
     document.addEventListener('visibilitychange', () => { if (!document.hidden) load(); });
 
     try {
-      supabase.channel('public-calendar-signups-v2')
+      supabase.channel('public-calendar-signups-v3')
         .on('postgres_changes', { event:'*', schema:'public', table:'event_signups' }, () => load())
         .subscribe();
     } catch {}
