@@ -31,7 +31,6 @@ export function publishClanEventSources(ordinary, bosses, sieges) {
   if(next === signature) return;
   signature = next;
   listeners.forEach(listener => listener());
-  import('./publicSignupCounts.js').then(module => module.ensurePublicSignupCounts?.()).catch(()=>{});
 }
 export function getClanUpcomingEvents(now = new Date()) {
   return sources ? clanUpcomingEvents(sources.ordinary,sources.bosses,sources.sieges,now) : [];
