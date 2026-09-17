@@ -46,6 +46,35 @@
 .hero-tagline { position:relative; width:310px; max-width:100%; margin:20px 0 0 17px; padding-top:12px; color:#bcb5aa; font-size:8px; line-height:1.7; letter-spacing:.24em; text-shadow:0 1px 2px #000; }
 .hero-tagline:before { content:""; position:absolute; top:0; left:58px; right:58px; height:1px; background:linear-gradient(90deg,transparent,#6c522b,transparent); }
 
+/* STAGING: stronger readability for hero title and Polish tagline. */
+.hero h1{
+  background:linear-gradient(180deg,#ffffff 0%,#f8f5ee 26%,#d6d0c4 45%,#fffdf8 68%,#b9b0a2 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  -webkit-text-stroke:1.15px rgba(8,6,4,.98);
+  text-shadow:0 2px 0 #000,0 5px 0 rgba(0,0,0,.45),0 8px 18px rgba(0,0,0,.95),0 0 18px rgba(255,244,217,.2);
+}
+.hero h1::before{
+  border-top-color:rgba(234,190,100,.62);border-bottom-color:rgba(234,190,100,.42);
+  background:linear-gradient(90deg,rgba(0,0,0,.97),rgba(10,10,9,.92) 78%,rgba(18,16,12,.68));
+  box-shadow:inset 0 0 34px rgba(0,0,0,.88),0 0 0 1px rgba(0,0,0,.72),0 8px 22px rgba(0,0,0,.48);
+}
+.hero h1 span{
+  background:linear-gradient(180deg,#ffe5a1 0%,#efc260 38%,#a66f21 57%,#f1c967 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  -webkit-text-stroke:.55px rgba(25,14,3,.95);
+  text-shadow:0 2px 0 #000,0 0 12px rgba(236,183,79,.22);
+}
+.hero-tagline{
+  width:360px;margin:21px 0 0 0;padding-top:13px;
+  color:#f1eadc;font-size:0;line-height:1.6;letter-spacing:.16em;text-align:center;
+  text-shadow:0 1px 2px #000,0 0 9px rgba(228,187,105,.16);
+}
+.hero-tagline::after{
+  content:"WIĘCEJ NIŻ GRA — TO NASZA SPOŁECZNOŚĆ";
+  display:block;font:600 10px/1.6 Cinzel,Georgia,serif;letter-spacing:.16em;color:#e8dcc6;
+}
+.hero-tagline:before{left:74px;right:74px;background:linear-gradient(90deg,transparent,#b88736,transparent);}
+
 @media(max-width:1000px) and (min-width:821px) {
   .unified-calendar .event-row,.unified-calendar .event-table-head { grid-template-columns:55px 40px minmax(110px,1fr) 90px minmax(90px,1fr) 110px; gap:10px; }
   .hero h1 { font-size:clamp(55px,6.2vw,78px); max-width:400px; }
@@ -64,7 +93,8 @@
   .hero h1 { margin-left:0; max-width:100%; font-size:clamp(48px,11vw,68px); letter-spacing:.015em; }
   .hero h1 span { margin-top:25px; font-size:.43em; letter-spacing:.13em; }
   .hero-subtitle { margin-top:14px; font-size:10px; letter-spacing:.29em; padding-left:.29em; }
-  .hero-tagline { width:280px; margin-left:0; font-size:8px; letter-spacing:.2em; }
+  .hero-tagline { width:320px; margin-left:0; }
+  .hero-tagline::after { font-size:9px; letter-spacing:.12em; }
 }
 @media(max-width:520px) {
   .unified-calendar .calendar-week { grid-template-columns:repeat(7,minmax(62px,1fr)); overflow-x:auto; scrollbar-width:thin; scrollbar-color:#806027 #0a0d0e; }
@@ -74,4 +104,6 @@
   .hero h1::before { left:-7px; right:-7px; }
   .hero h1 span { font-size:.46em; letter-spacing:.1em; }
   .hero-subtitle { font-size:9px; letter-spacing:.22em; }
+  .hero-tagline { width:290px; }
+  .hero-tagline::after { font-size:8px; letter-spacing:.09em; }
 }
