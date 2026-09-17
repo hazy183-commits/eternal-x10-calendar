@@ -32,30 +32,27 @@
 .unified-calendar [data-calendar-state="active"] .status-dot:before { content:'● '; color:#71da68; }
 .unified-calendar [data-calendar-state="completed"] { opacity:.52; }
 
-/* STAGING: stronger, cleaner Eternal title treatment. */
+/* STAGING: high-contrast Eternal title block. */
 .hero { position:relative; isolation:isolate; }
-.hero:after { content:""; position:absolute; z-index:-1; left:26px; top:38px; width:520px; height:255px; pointer-events:none; background:radial-gradient(ellipse at 43% 42%,rgba(222,187,118,.11),transparent 62%); filter:blur(2px); }
-.hero h1 { position:relative; width:max-content; max-width:100%; margin-left:-4px; font-size:clamp(58px,7.15vw,104px); font-weight:600; line-height:.8; letter-spacing:.045em; color:#f2eee7; background:linear-gradient(180deg,#fffdf6 7%,#efe9dd 42%,#aaa59d 55%,#f6f1e8 80%,#d4cec3 100%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; -webkit-text-stroke:1px rgba(255,255,255,.16); text-shadow:0 3px 0 #000,0 8px 18px rgba(0,0,0,.72),0 0 34px rgba(224,190,122,.12); filter:drop-shadow(0 2px 0 rgba(255,255,255,.07)); }
-.hero h1:after { content:""; position:absolute; left:13px; right:3px; top:calc(100% + 15px); height:1px; background:linear-gradient(90deg,transparent 0,#6f5429 10%,#e4bd6c 48%,#6f5429 88%,transparent 100%); box-shadow:0 0 9px rgba(214,164,77,.28); }
-.hero h1 span { position:relative; width:max-content; margin:31px auto 0; color:var(--goldlight); background:linear-gradient(180deg,#ffe6a6 0%,#d9a948 48%,#8f652a 56%,#f2c967 100%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; -webkit-text-stroke:.45px rgba(255,231,172,.28); font-size:.43em; font-weight:600; letter-spacing:.16em; line-height:1; text-shadow:0 2px 0 #000,0 0 18px rgba(212,166,77,.22); }
-.hero-subtitle { width:max-content; margin:17px auto 0; padding-left:.42em; color:#eee8dc; font-size:13px; letter-spacing:.43em; text-shadow:0 1px 2px #000; }
-.hero-tagline { position:relative; width:330px; max-width:100%; margin:21px 0 0 28px; padding-top:15px; color:#bdb6aa; font-size:9px; line-height:1.7; letter-spacing:.29em; }
-.hero-tagline:before { content:""; position:absolute; top:0; left:52px; right:52px; height:1px; background:linear-gradient(90deg,transparent,#7f6535,transparent); }
-
-/* STAGING: epic Lineage-inspired title pass. */
-.hero h1{font-family:Cinzel,Georgia,serif;font-weight:700;letter-spacing:.065em;text-transform:uppercase;transform:scaleX(1.025);transform-origin:left center;filter:drop-shadow(0 2px 0 #080808) drop-shadow(0 5px 10px rgba(0,0,0,.75));}
-.hero h1::before{content:"";position:absolute;left:-24px;right:-24px;top:48%;height:58%;transform:translateY(-50%);z-index:-1;background:radial-gradient(ellipse at center,rgba(232,194,118,.12),rgba(232,194,118,.03) 44%,transparent 72%);filter:blur(8px);}
-.hero h1::after{left:-7px;right:-6px;top:calc(100% + 14px);height:2px;background:linear-gradient(90deg,transparent 0,#6b4c20 8%,#d7a84c 28%,#fff0b3 50%,#d7a84c 72%,#6b4c20 92%,transparent 100%);box-shadow:0 0 5px rgba(235,190,99,.35),0 0 16px rgba(214,166,77,.18);}
-.hero h1 span{margin-top:33px;font-weight:700;letter-spacing:.2em;filter:drop-shadow(0 1px 0 rgba(255,255,255,.13));}
-.hero-subtitle{position:relative;margin-top:18px;color:#eee7d9;letter-spacing:.48em;font-size:12px;text-shadow:0 2px 3px #000,0 0 12px rgba(255,241,211,.08);}
-.hero-subtitle::before,.hero-subtitle::after{content:"";position:absolute;top:50%;width:38px;height:1px;background:linear-gradient(90deg,transparent,#8a6a35);}
-.hero-subtitle::before{right:calc(100% + 15px);}.hero-subtitle::after{left:calc(100% + 15px);transform:scaleX(-1);}
-.hero-tagline{margin-top:24px;color:#d6d0c4;letter-spacing:.27em;font-size:9px;text-shadow:0 1px 2px #000;}
+.hero:before { content:""; position:absolute; z-index:-2; left:32px; top:39px; width:520px; height:245px; border:1px solid rgba(200,151,65,.42); background:linear-gradient(180deg,rgba(5,7,8,.96),rgba(12,13,12,.9)); box-shadow:inset 0 0 0 4px rgba(0,0,0,.55),inset 0 0 55px rgba(208,156,66,.05),0 18px 46px rgba(0,0,0,.52); clip-path:polygon(4% 0,96% 0,100% 10%,100% 90%,96% 100%,4% 100%,0 90%,0 10%); }
+.hero:after { content:""; position:absolute; z-index:-1; left:53px; top:58px; width:478px; height:205px; pointer-events:none; border-top:1px solid rgba(242,196,100,.38); border-bottom:1px solid rgba(242,196,100,.22); background:radial-gradient(ellipse at 50% 36%,rgba(230,181,86,.08),transparent 58%); }
+.hero h1 { position:relative; width:max-content; max-width:100%; margin:0 0 0 55px; font-family:Cinzel,Georgia,serif; font-size:clamp(58px,6.7vw,96px); font-weight:700; line-height:.86; letter-spacing:.06em; text-transform:uppercase; color:#f6f1e7; -webkit-text-fill-color:#f6f1e7; -webkit-text-stroke:1px #0b0b0b; background:none; text-shadow:-2px -1px 0 #000,2px 2px 0 #000,0 5px 0 #1c1a17,0 8px 18px rgba(0,0,0,.9),0 0 4px rgba(255,255,255,.28); filter:none; transform:none; }
+.hero h1::before { content:"ETERNAL"; position:absolute; inset:0; z-index:-1; color:transparent; -webkit-text-stroke:4px rgba(184,134,56,.5); transform:translateY(1px); filter:blur(.2px); }
+.hero h1::after { content:""; position:absolute; left:4px; right:3px; top:calc(100% + 13px); height:3px; background:linear-gradient(90deg,#4b3313,#d3a34b 18%,#ffe5a0 50%,#d3a34b 82%,#4b3313); box-shadow:0 0 8px rgba(209,158,66,.4); }
+.hero h1 span { display:block; width:max-content; margin:29px auto 0; padding-left:.18em; font-size:.42em; font-weight:700; letter-spacing:.18em; line-height:1; color:#e7b957; -webkit-text-fill-color:#e7b957; -webkit-text-stroke:.5px #4e3511; background:none; text-shadow:0 2px 0 #130d04,0 0 11px rgba(224,170,72,.32); filter:none; }
+.hero-subtitle { position:relative; width:max-content; margin:18px auto 0; padding-left:.38em; color:#f4efe5; font-size:12px; letter-spacing:.38em; text-shadow:0 2px 3px #000; }
+.hero-subtitle::before,.hero-subtitle::after { content:""; position:absolute; top:50%; width:34px; height:1px; background:#8d6a2f; }
+.hero-subtitle::before { right:calc(100% + 13px); }
+.hero-subtitle::after { left:calc(100% + 13px); }
+.hero-tagline { position:relative; width:330px; max-width:100%; margin:22px 0 0 115px; padding-top:14px; color:#c7bfae; font-size:8.5px; line-height:1.65; letter-spacing:.26em; text-shadow:0 1px 2px #000; }
+.hero-tagline:before { content:""; position:absolute; top:0; left:54px; right:54px; height:1px; background:linear-gradient(90deg,transparent,#7e6030,transparent); }
 
 @media(max-width:1000px) and (min-width:821px) {
   .unified-calendar .event-row,.unified-calendar .event-table-head { grid-template-columns:55px 40px minmax(110px,1fr) 90px minmax(90px,1fr) 110px; gap:10px; }
-  .hero h1 { font-size:clamp(55px,7.4vw,82px); }
-  .hero h1 span { font-size:.44em; }
+  .hero:before { width:470px; }
+  .hero:after { width:428px; }
+  .hero h1 { margin-left:50px; font-size:clamp(55px,7vw,82px); }
+  .hero h1 span { font-size:.43em; }
 }
 @media(max-width:820px) {
   .unified-calendar .calendar-heading { padding:16px 12px!important; flex-wrap:wrap; }
@@ -66,17 +63,22 @@
   .calendar-day span,.calendar-day small { font-size:8px; letter-spacing:0; }
   .unified-calendar .calendar-toolbar { align-items:stretch; padding:12px 10px; gap:12px; }
   .unified-calendar .filters { width:100%; }
-  .hero:after { left:-20px; top:20px; width:420px; height:220px; }
-  .hero h1 { margin-left:0; font-size:clamp(49px,12vw,72px); }
-  .hero h1 span { margin-top:27px; font-size:.43em; letter-spacing:.13em; }
-  .hero-subtitle { margin-top:15px; font-size:11px; letter-spacing:.32em; padding-left:.32em; }
-  .hero-tagline { width:290px; margin-left:0; font-size:8px; letter-spacing:.21em; }
+  .hero:before { left:10px; top:30px; width:calc(100% - 20px); height:230px; }
+  .hero:after { left:28px; top:48px; width:calc(100% - 56px); height:194px; }
+  .hero h1 { margin-left:28px; font-size:clamp(49px,11.7vw,72px); letter-spacing:.035em; }
+  .hero h1 span { margin-top:27px; font-size:.43em; letter-spacing:.12em; }
+  .hero-subtitle { margin-top:15px; font-size:10.5px; letter-spacing:.28em; padding-left:.28em; }
+  .hero-tagline { width:280px; margin-left:42px; font-size:8px; letter-spacing:.18em; }
 }
 @media(max-width:520px) {
   .unified-calendar .calendar-week { grid-template-columns:repeat(7,minmax(62px,1fr)); overflow-x:auto; scrollbar-width:thin; scrollbar-color:#806027 #0a0d0e; }
   .calendar-day b { font-size:13px; }
   .unified-calendar .calendar-heading h2 { font-size:19px; }
-  .hero h1 { font-size:clamp(45px,13.5vw,64px); letter-spacing:.025em; }
-  .hero h1 span { font-size:.45em; letter-spacing:.1em; }
-  .hero-subtitle { font-size:10px; letter-spacing:.25em; }
+  .hero:before { height:215px; }
+  .hero:after { height:179px; }
+  .hero h1 { margin-left:22px; font-size:clamp(43px,12.4vw,58px); letter-spacing:.02em; }
+  .hero h1 span { font-size:.45em; letter-spacing:.08em; }
+  .hero-subtitle { font-size:9.5px; letter-spacing:.19em; }
+  .hero-subtitle::before,.hero-subtitle::after { width:20px; }
+  .hero-tagline { margin-left:25px; font-size:7.5px; }
 }
