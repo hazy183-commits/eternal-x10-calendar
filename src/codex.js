@@ -16,12 +16,21 @@ const hotSprings=[
 {name:'Malaria',for:'Mage · OL · Cardinal',levels:['Casting Speed +4%','Casting Speed +8%, MP Cost -4%','Casting Speed +12%, MP Cost -4%','Casting Speed +16%, MP Cost -4%','Casting Speed +8%, MP Cost -8%']}
 ];
 
+// Buffy: nie zgadujemy nazw ani kolejności ikon. Presety poniżej odpowiadają dokładnie
+// wariantom widocznym w materiałach źródłowych z Discorda. Numery pokazują pozycję slotu 1→24.
 const presetData={
-'Mage':{title:'Mage · ogólny PvP',text:'Preset bazowy dla SPS/Necro. Priorytetem jest cast speed, magic power i odporność na enemy pressure.',pills:['Acumen','Empower','Concentration','Mental Shield','Magic Barrier','Greater Shield','Bless the Body','Wind Walk / potion','Resist Shock']},
-'Dagger':{title:'Dagger · PvP',text:'Preset pod TH. Kolejność ustaw tak, aby przy overbuffie znikały najpierw najmniej istotne pozycje.',pills:['Haste','Focus','Death Whisper','Guidance','Might','Wind Walk / potion','Magic Barrier','Shield','Bless the Body']},
-'Archer':{title:'Archer · PvP/Event',text:'Physical crit setup z możliwością rezygnacji z WW i wsparcia się potionem.',pills:['Haste','Focus','Death Whisper','Might','Guidance','Berserker Spirit','Magic Barrier','Shield','Greater Might']},
-'Support':{title:'Support · defensywny',text:'Bishop/OL zmieniają preset zależnie od enemy composition i zadania w party.',pills:['Acumen','Concentration','Mental Shield','Magic Barrier','Shield','Bless the Body','Clarity','Resist Shock','Elemental / Holy Resist']},
-'Fighter':{title:'Fighter · mass PvP',text:'WL/Glad — balans między damage, resistami i przeżywalnością.',pills:['Haste','Might','Focus','Death Whisper','Berserker Spirit','Shield','Magic Barrier','Bless the Body','Resist Shock']}
+'Mage':{title:'Mage · preset bazowy',source:'Discord 20.01.2025',slots:24,note:'Kolejność 1→24 jest kluczowa przy overbuffie. Najmniej istotne buffy mają wypadać jako pierwsze.'},
+'Dagger':{title:'Dagger · preset bazowy',source:'Discord 20.01.2025',slots:24,note:'Układ dla daggerów z zachowaniem dokładnej kolejności slotów ze screena.'},
+'Archer':{title:'Archer · preset bazowy',source:'Discord 20.01.2025',slots:24,note:'Układ dla łuczników; kolejność zachowana jako osobny preset.'},
+'Titan':{title:'Titan · PvP / farm',source:'Discord 05.02.2025',slots:23,note:'Na screenie zaznaczono, że przy 23 slotach jako pierwsze spadają mniej istotne pozycje.'},
+'BP Fighters':{title:'Bishop vs Fighters',source:'Discord 05.02.2025',slots:24,note:'Preset pod daggery, archery, destro i inne klasy fizyczne.'},
+'BP Mage':{title:'Bishop vs Mage',source:'Discord 05.02.2025',slots:24,note:'Osobny defensywny preset Bishopa przeciw klasom magicznym.'},
+'Mage/Necro Siege':{title:'Mage / Necro · Siege / Epic',source:'Discord 30.03.2025',slots:24,note:'Na najbliższy siege: SPS zamiast Magnusa ma brać POW. Bless the Body i Wind Walk ustawione na początku pod overbuff.'},
+'Cardinal Siege':{title:'Cardinal · Siege / Epic',source:'Discord 30.03.2025',slots:24,note:'Bless the Body i Wind Walk mają być na pierwszych miejscach w razie overbuffa.'},
+'WL EXP':{title:'Warlord · EXP',source:'Discord 21.04.2025',slots:24,note:'Preset EXP dla Warlorda zgodnie ze screenem.'},
+'SPS Epic':{title:'SPS · Epic Boss vs Mage PT',source:'Discord 01.05.2025',slots:24,note:'Dedykowany preset SPS na Epic Boss przy walce przeciw PT magów.'},
+'Glad Daily':{title:'Duelist · Daily PvP',source:'Discord 29.08.2026',slots:24,note:'Daily PvP bez Berserker Spirit. Self buffy: Duelist Spirit / War Cry / Augmentation / Sonic Move / Sonic Barrier.'},
+'Glad Mass':{title:'Duelist · Mass PvP',source:'Discord 29.08.2026',slots:24,note:'Mass PvP z Berserker Spirit. Elemental Protection można zamieniać zależnie od enemy setupu.'}
 };
 
 const filter=document.querySelector('#classFilter');
@@ -43,7 +52,7 @@ window.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 
 const presetWrap=document.querySelector('#buffPresets');
 let presetActive='Mage';
-function renderPreset(){const p=presetData[presetActive];presetWrap.innerHTML=`<h3>Presety</h3><div class="preset-tabs">${Object.keys(presetData).map(k=>`<button class="${k===presetActive?'active':''}" data-preset="${k}">${k}</button>`).join('')}</div><div class="preset-card"><h4>${p.title}</h4><p>${p.text}</p><div class="buff-row">${p.pills.map(x=>`<span class="buff-pill">${x}</span>`).join('')}</div></div>`;}
+function renderPreset(){const p=presetData[presetActive];const slotHtml=Array.from({length:p.slots},(_,i)=>`<span class="buff-pill" title="Slot ${i+1} · kolejność wg screena źródłowego">${i+1}</span>`).join('');presetWrap.innerHTML=`<h3>Presety ze screenów</h3><div class="preset-tabs">${Object.keys(presetData).map(k=>`<button class="${k===presetActive?'active':''}" data-preset="${k}">${k}</button>`).join('')}</div><div class="preset-card"><h4>${p.title}</h4><p><b>${p.source}</b> · ${p.note}</p><div class="buff-row" aria-label="Kolejność slotów 1 do ${p.slots}">${slotHtml}</div><p style="margin-top:12px;color:#d7b56d"><b>Źródło nadrzędne:</b> screen z Discorda. Nazw buffów nie zgadujemy — kolejnym krokiem jest podpięcie dokładnych ikon 1:1.</p></div>`;}
 presetWrap.addEventListener('click',e=>{const b=e.target.closest('[data-preset]');if(!b)return;presetActive=b.dataset.preset;renderPreset();});
 
 document.querySelector('#hotSpringsGrid').innerHTML=hotSprings.map(m=>`<article class="mechanic-card panel"><span class="for">${m.for}</span><h3>Hot Springs ${m.name}</h3><div class="level-list">${m.levels.map((x,i)=>`<div><b>${i+1}</b><span>${x}</span></div>`).join('')}</div></article>`).join('');
