@@ -8,6 +8,7 @@ const escapeHtml = (value = '') => String(value)
   .replaceAll("'", '&#039;');
 
 const fmt = value => Number(value || 0).toLocaleString('pl-PL');
+const openTreeNodes = new Set();
 
 function buildRecipeBook(workspace) {
   const componentsByRecipe = new Map();
@@ -55,12 +56,13 @@ function nodeStatus(itemKey, quantity, recipeBook, maps) {
 }
 
 function renderRecipeNode(itemKey, quantity, context, depth = 0, trail = []) {
-  const { recipeBook, itemIndex, maps } = context;
+  const { recipeBook, itemIndex, maps, projectId } = context;
   const item = itemIndex.get(itemKey);
   const name = item?.name || itemKey;
   const recipe = recipeBook.get(itemKey);
   const expandable = recipe?.components?.length && !trail.includes(itemKey);
   const status = nodeStatus(itemKey, quantity, recipeBook, maps);
+  const nodeKey = `${projectId}:${[...trail, itemKey].join('>')}`;
 
   if (!expandable) {
     return `
@@ -77,7 +79,7 @@ function renderRecipeNode(itemKey, quantity, context, depth = 0, trail = []) {
   ).join('');
 
   return `
-    <details class="craft-tree-node ${status.cls}" style="--craft-depth:${depth}">
+    <details class="craft-tree-node ${status.cls}" data-craft-tree-key="${escapeHtml(nodeKey)}" style="--craft-depth:${depth}"${openTreeNodes.has(nodeKey) ? ' open' : ''}>
       <summary>
         <span class="craft-tree-name"><span class="craft-tree-arrow">›</span><b>${escapeHtml(name)}</b></span>
         <strong>${fmt(quantity)}</strong>
@@ -95,7 +97,7 @@ function renderMainRecipe(project, workspace) {
   if (!targetRecipe?.components?.length) return null;
 
   const crafts = Math.ceil(project.targetQuantity / Math.max(1, targetRecipe.outputQuantity));
-  const context = { recipeBook, itemIndex, maps };
+  const context = { recipeBook, itemIndex, maps, projectId: String(project.id) };
   const rows = targetRecipe.components.map(component =>
     renderRecipeNode(component.itemKey, component.quantity * crafts, context, 0, [project.targetItemKey])
   ).join('');
@@ -129,6 +131,7 @@ export function installCraftHierarchyEnhancer(supabase) {
 
   let running = false;
   let queued = false;
+  let observer = null;
 
   const projectStatusLabel = status => ({ active:'AKTYWNY', paused:'WSTRZYMANY', completed:'ZAKOŃCZONY', archived:'ARCHIWUM' })[status] || String(status || '').toUpperCase();
 
@@ -137,6 +140,7 @@ export function installCraftHierarchyEnhancer(supabase) {
     const root = document.querySelector('#craftWorkspaceRoot');
     if (!root) return;
     running = true;
+    observer?.disconnect();
     try {
       const workspace = await loadCraftWorkspace(supabase);
       const projects = new Map(workspace.plan.projects.map(project => [String(project.id), project]));
@@ -162,11 +166,25 @@ export function installCraftHierarchyEnhancer(supabase) {
       console.warn('Craft hierarchy enhancer:', error);
     } finally {
       running = false;
+      observer?.observe(document.body, { childList: true, subtree: true });
       if (queued) { queued = false; queueMicrotask(apply); }
     }
   };
 
-  const observer = new MutationObserver(() => queueMicrotask(apply));
+  observer = new MutationObserver(() => queueMicrotask(apply));
+
+  document.addEventListener('click', event => {
+    const summary = event.target.closest?.('.craft-tree-node > summary');
+    if (!summary) return;
+    const details = summary.parentElement;
+    const key = details?.dataset?.craftTreeKey;
+    if (!key) return;
+    setTimeout(() => {
+      if (details.open) openTreeNodes.add(key);
+      else openTreeNodes.delete(key);
+    }, 0);
+  }, true);
+
   const start = () => {
     observer.observe(document.body, { childList: true, subtree: true });
     apply();
