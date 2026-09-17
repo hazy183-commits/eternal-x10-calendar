@@ -58,6 +58,16 @@ function buildItemIndex(workspace) {
   return new Map((workspace.items || []).map(item => [item.item_key, item]));
 }
 
+export function sortComponentsByRequiredQuantity(components, crafts = 1, itemIndex = new Map()) {
+  return [...(components || [])].sort((left, right) => {
+    const quantityDifference = Number(left.quantity || 0) * crafts - Number(right.quantity || 0) * crafts;
+    if (quantityDifference) return quantityDifference;
+    const leftName = itemIndex.get(left.itemKey)?.name || left.itemKey || '';
+    const rightName = itemIndex.get(right.itemKey)?.name || right.itemKey || '';
+    return leftName.localeCompare(rightName, 'pl');
+  });
+}
+
 function projectMaps(project) {
   return {
     owned: new Map((project.ownedAllocated || []).map(row => [row.itemKey, Number(row.quantity || 0)])),
@@ -169,7 +179,7 @@ function renderRecipeNode(itemKey, quantity, context, depth = 0, trail = []) {
   }
 
   const crafts = Math.ceil(quantity / Math.max(1, recipe.outputQuantity));
-  const children = recipe.components.map(component =>
+  const children = sortComponentsByRequiredQuantity(recipe.components, crafts, itemIndex).map(component =>
     renderRecipeNode(component.itemKey, component.quantity * crafts, context, depth + 1, [...trail, itemKey])
   ).join('');
 
@@ -194,7 +204,7 @@ function renderMainRecipe(project, workspace) {
   const mainComponents = collapseFlatRecipe(targetRecipe.components, recipeBook);
   const crafts = Math.ceil(project.targetQuantity / Math.max(1, targetRecipe.outputQuantity));
   const context = { recipeBook, itemIndex, maps, projectId: String(project.id) };
-  const rows = mainComponents.map(component =>
+  const rows = sortComponentsByRequiredQuantity(mainComponents, crafts, itemIndex).map(component =>
     renderRecipeNode(component.itemKey, component.quantity * crafts, context, 0, [project.targetItemKey])
   ).join('');
 
