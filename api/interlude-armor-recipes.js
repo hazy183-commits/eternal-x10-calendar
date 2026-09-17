@@ -19,7 +19,7 @@ async function text(url) {
   return r.text();
 }
 
-function parseRecipes(xml) {
+export function parseRecipes(xml) {
   const out = [];
   const rx = /<item\s+id="(\d+)"\s+recipeId="(\d+)"\s+name="([^"]+)"\s+craftLevel="(\d+)"\s+type="dwarven"\s+successRate="60">([\s\S]*?)<\/item>/g;
   for (const m of xml.matchAll(rx)) {
@@ -59,22 +59,43 @@ const sqlText = value => `'${String(value ?? '').replaceAll("'", "''")}'`;
 const armorKey = recipe => `armor_${recipe.grade.toLowerCase()}_${slug(recipe.name)}`;
 const materialKey = name => `mat_${slug(name.replace(/-Grade/gi, ' Grade'))}`;
 
-function buildSql(recipes) {
+export function collectRecipeClosure(finalRecipes, allRecipes) {
+  const byOutput = new Map();
+  for (const recipe of allRecipes) {
+    if (!byOutput.has(recipe.outputId)) byOutput.set(recipe.outputId, recipe);
+  }
+  const selected = new Map(finalRecipes.map(recipe => [recipe.outputId, recipe]));
+  const visited = new Set();
+  const visit = outputId => {
+    const recipe = selected.get(outputId) || byOutput.get(outputId);
+    if (!recipe || visited.has(outputId)) return;
+    visited.add(outputId);
+    selected.set(outputId, recipe);
+    for (const ingredient of recipe.ingredients) visit(ingredient.id);
+  };
+  for (const recipe of finalRecipes) visit(recipe.outputId);
+  return [...selected.values()];
+}
+
+export function buildSql(recipes, craftRecipes = recipes) {
   const itemMap = new Map();
-  for (const r of recipes) {
-    const outKey = armorKey(r);
-    itemMap.set(outKey, { key: outKey, id:r.outputId, name:r.name, grade:r.grade, category:'armor', stackable:false });
+  const finalIds = new Set(recipes.map(recipe => recipe.outputId));
+  const keyForOutput = recipe => finalIds.has(recipe.outputId) ? armorKey(recipe) : materialKey(recipe.name);
+  for (const r of craftRecipes) {
+    const outKey = keyForOutput(r);
+    const finalItem = finalIds.has(r.outputId);
+    itemMap.set(outKey, { key: outKey, id:r.outputId, name:r.name, grade:finalItem ? r.grade : null, category:finalItem ? 'armor' : 'material', stackable:!finalItem });
     for (const i of r.ingredients) {
       const key = materialKey(i.name);
       if (!itemMap.has(key)) itemMap.set(key, { key, id:i.id, name:i.name.replace(/-Grade/gi, ' Grade'), grade:null, category:'material', stackable:true });
     }
   }
-  const outputs = recipes.map(armorKey);
+  const outputs = craftRecipes.map(keyForOutput);
   const outputList = outputs.map(sqlText).join(',');
   const itemValues = [...itemMap.values()].map(i => `(${sqlText(i.key)},${i.id},${sqlText(i.name)},${i.grade ? sqlText(i.grade) : 'NULL'},${sqlText(i.category)},${i.stackable ? 'true':'false'},true,now())`).join(',\n');
-  const recipeValues = recipes.map(r => `(${sqlText(armorKey(r))},1,'Interlude 60%',true,true,now())`).join(',\n');
-  const componentValues = recipes.flatMap(r => r.ingredients.map(i => `(${sqlText(armorKey(r))},${sqlText(materialKey(i.name))},${i.quantity})`)).join(',\n');
-  return `begin;\n\ndelete from craft_recipe_components where recipe_id in (select id from craft_recipes where output_item_key in (${outputList}));\ndelete from craft_recipes where output_item_key in (${outputList});\n\ninsert into craft_items (item_key,game_item_id,name,grade,category,stackable,active,updated_at) values\n${itemValues}\non conflict (item_key) do update set game_item_id=excluded.game_item_id,name=excluded.name,grade=excluded.grade,category=excluded.category,stackable=excluded.stackable,active=true,updated_at=now();\n\ninsert into craft_recipes (output_item_key,output_quantity,label,is_primary,active,updated_at) values\n${recipeValues};\n\ninsert into craft_recipe_components (recipe_id,component_item_key,quantity)\nselect r.id,v.component_item_key,v.quantity from (values\n${componentValues}\n) as v(output_item_key,component_item_key,quantity) join craft_recipes r on r.output_item_key=v.output_item_key and r.label='Interlude 60%' and r.is_primary=true and r.active=true;\n\ncommit;`;
+  const recipeValues = craftRecipes.map(r => `(${sqlText(keyForOutput(r))},${r.outputQuantity},${sqlText(finalIds.has(r.outputId) ? 'Interlude 60%' : 'Interlude material')},true,true,now())`).join(',\n');
+  const componentValues = craftRecipes.flatMap(r => r.ingredients.map(i => `(${sqlText(keyForOutput(r))},${sqlText(materialKey(i.name))},${i.quantity})`)).join(',\n');
+  return `begin;\n\ndelete from craft_recipe_components where recipe_id in (select id from craft_recipes where output_item_key in (${outputList}));\ndelete from craft_recipes where output_item_key in (${outputList});\n\ninsert into craft_items (item_key,game_item_id,name,grade,category,stackable,active,updated_at) values\n${itemValues}\non conflict (item_key) do update set game_item_id=excluded.game_item_id,name=excluded.name,grade=excluded.grade,category=excluded.category,stackable=excluded.stackable,active=true,updated_at=now();\n\ninsert into craft_recipes (output_item_key,output_quantity,label,is_primary,active,updated_at) values\n${recipeValues};\n\ninsert into craft_recipe_components (recipe_id,component_item_key,quantity)\nselect r.id,v.component_item_key,v.quantity from (values\n${componentValues}\n) as v(output_item_key,component_item_key,quantity) join craft_recipes r on r.output_item_key=v.output_item_key and r.is_primary=true and r.active=true;\n\ncommit;`;
 }
 
 export default async function handler(req,res) {
@@ -88,21 +109,24 @@ export default async function handler(req,res) {
     const outputNames = new Map();
     await Promise.all([...outputGroups.entries()].map(async ([file,ids])=>{ const itemXml=await text(`${RAW}/stats/items/${file}`); for (const [id,name] of parseItemNames(itemXml,ids)) outputNames.set(id,name); }));
     const recipes = rawRecipes.filter(r=>finalArmorRx.test(outputNames.get(r.outputId)||''));
+    const craftRecipes = collectRecipeClosure(recipes, rawRecipes);
     const ids = new Set();
-    for (const r of recipes) { ids.add(r.outputId); for (const i of r.ingredients) ids.add(i.id); }
+    for (const r of craftRecipes) { ids.add(r.outputId); for (const i of r.ingredients) ids.add(i.id); }
     const groups = new Map();
     for (const id of ids) { const f=rangeFile(id); if(!groups.has(f)) groups.set(f,[]); groups.get(f).push(id); }
     const names = new Map();
     await Promise.all([...groups.entries()].map(async ([file,fileIds])=>{ const itemXml=await text(`${RAW}/stats/items/${file}`); for (const [id,name] of parseItemNames(itemXml,fileIds)) names.set(id,name); }));
-    let result = recipes.map(r=>({ ...r, name:tidyName(names.get(r.outputId)||r.internalName), grade:gradeFor(names.get(r.outputId)||r.internalName), ingredients:r.ingredients.map(i=>({...i,name:names.get(i.id)||`Item ${i.id}`})) }));
+    const namedCraftRecipes = craftRecipes.map(r=>({ ...r, name:tidyName(names.get(r.outputId)||r.internalName), grade:gradeFor(names.get(r.outputId)||r.internalName), ingredients:r.ingredients.map(i=>({...i,name:names.get(i.id)||`Item ${i.id}`})) }));
+    let result = namedCraftRecipes.filter(r => recipes.some(finalRecipe => finalRecipe.outputId === r.outputId));
     const family = String(req.query?.family || '').trim().toLowerCase();
     if (family) result = result.filter(r => familyFor(r.name) === family);
     if (String(req.query?.format || '').toLowerCase() === 'sql') {
       if (!result.length) return res.status(404).send('-- no matching armor recipes');
       res.setHeader('content-type','text/plain; charset=utf-8');
-      return res.status(200).send(buildSql(result));
+      const selectedCraftRecipes = collectRecipeClosure(result, namedCraftRecipes);
+      return res.status(200).send(buildSql(result, selectedCraftRecipes));
     }
     res.setHeader('Cache-Control','s-maxage=86400, stale-while-revalidate=604800');
-    return res.status(200).json({count:result.length,recipes:result});
+    return res.status(200).json({count:result.length,recipes:result,craftableMaterials:namedCraftRecipes.filter(recipe => !recipes.some(finalRecipe => finalRecipe.outputId === recipe.outputId))});
   } catch(e) { return res.status(500).json({error:e?.message||String(e)}); }
 }

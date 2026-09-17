@@ -10,6 +10,8 @@ const escapeHtml = (value = '') => String(value)
 const fmt = value => Number(value || 0).toLocaleString('pl-PL');
 const openTreeNodes = new Set();
 const MAIN_MATERIAL_ORDER = [
+  'mat_maestro_anvil_lock',
+  'mat_crafted_leather',
   'mat_warsmith_holder',
   'mat_craftsman_mold',
   'mat_maestro_holder',
@@ -21,6 +23,15 @@ const MAIN_MATERIAL_ORDER = [
   'mat_mithril_alloy',
   'mat_coarse_bone_powder',
 ];
+
+function craftableMaterialOrder(recipeBook) {
+  const preferred = MAIN_MATERIAL_ORDER.filter(key => recipeBook.get(key)?.components?.length);
+  const remaining = [...recipeBook.entries()]
+    .filter(([key, recipe]) => key.startsWith('mat_') && recipe?.components?.length && !preferred.includes(key))
+    .map(([key]) => key)
+    .sort();
+  return [...preferred, ...remaining];
+}
 
 function buildRecipeBook(workspace) {
   const componentsByRecipe = new Map();
@@ -95,7 +106,7 @@ function collapseFlatRecipe(components, recipeBook) {
 
   const memo = new Map();
   const collapsed = [];
-  for (const materialKey of MAIN_MATERIAL_ORDER) {
+  for (const materialKey of craftableMaterialOrder(recipeBook)) {
     const recipe = recipeBook.get(materialKey);
     if (!recipe?.components?.length) continue;
     const leaves = flattenLeaves(materialKey, recipeBook, memo);

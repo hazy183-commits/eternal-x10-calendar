@@ -17,26 +17,33 @@ const throwIfError = (error) => {
   if (error) throw error;
 };
 
+export async function fetchAllRows(createQuery, pageSize = 500) {
+  const rows = [];
+  for (let from = 0; ; from += pageSize) {
+    const { data, error } = await createQuery().range(from, from + pageSize - 1);
+    throwIfError(error);
+    const page = data || [];
+    rows.push(...page);
+    if (page.length < pageSize) return rows;
+  }
+}
+
 export async function loadCraftWorkspace(supabase) {
   const user = await getUser(supabase);
-  const [itemsResult, recipesResult, componentsResult, inventoryResult, projectsResult] = await Promise.all([
-    supabase.from('craft_items').select('*').order('name'),
-    supabase.from('craft_recipes').select('*').eq('active', true),
-    supabase.from('craft_recipe_components').select('*'),
-    supabase.from('craft_inventory').select('*').eq('user_id', user.id),
-    supabase.from('craft_projects').select('*').eq('user_id', user.id).order('priority').order('created_at'),
+  const [items, recipes, components, inventory, projects] = await Promise.all([
+    fetchAllRows(() => supabase.from('craft_items').select('*').order('name').order('item_key')),
+    fetchAllRows(() => supabase.from('craft_recipes').select('*').eq('active', true).order('output_item_key').order('id')),
+    fetchAllRows(() => supabase.from('craft_recipe_components').select('*').order('recipe_id').order('component_item_key')),
+    fetchAllRows(() => supabase.from('craft_inventory').select('*').eq('user_id', user.id).order('item_key')),
+    fetchAllRows(() => supabase.from('craft_projects').select('*').eq('user_id', user.id).order('priority').order('created_at')),
   ]);
 
-  for (const result of [itemsResult, recipesResult, componentsResult, inventoryResult, projectsResult]) {
-    throwIfError(result.error);
-  }
-
   const data = {
-    items: itemsResult.data || [],
-    recipes: recipesResult.data || [],
-    components: componentsResult.data || [],
-    inventory: inventoryResult.data || [],
-    projects: projectsResult.data || [],
+    items,
+    recipes,
+    components,
+    inventory,
+    projects,
   };
 
   return {

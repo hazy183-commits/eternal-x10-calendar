@@ -17,7 +17,6 @@ import { installTodayClanDashboard } from './todayClanDashboard.js';
 import { installMemberZoneReliability } from './memberZoneReliability.js';
 import { installCraftPlannerUi } from './craftPlannerUi.js';
 import { installCraftHierarchyEnhancer } from './craftHierarchyEnhancer.js';
-import { installCraftAcquisitionPanel } from './craftAcquisitionPanel.js';
 import { installCraftInventoryDeleteEnhancer } from './craftInventoryDeleteEnhancer.js';
 import './craftWeaponSelectEnhancer.js';
 import './neededRaidBossRefreshBridge.js';
@@ -52,7 +51,6 @@ if (typeof document !== 'undefined') {
     installTodayClanDashboard(supabase);
     installCraftPlannerUi(supabase);
     installCraftHierarchyEnhancer(supabase);
-    installCraftAcquisitionPanel(supabase);
     installCraftInventoryDeleteEnhancer(supabase);
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', startMemberFeatures, { once: true });

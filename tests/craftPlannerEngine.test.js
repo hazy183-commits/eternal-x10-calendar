@@ -133,3 +133,49 @@ test('cyclic recipes are rejected instead of recursing forever', () => {
     projects: [project('cycle', 'a', 1)],
   }), error => error instanceof CraftPlannerError && error.details.cycle.join('>') === 'a>b>a');
 });
+
+test('expands Crafted Leather and Maestro Anvil Lock through every material recipe level', () => {
+  const plan = planCraftWorkspace({
+    items: [
+      item('armor_s', 'S-grade armor'),
+      item('armor_a', 'A-grade armor'),
+      item('mat_crafted_leather', 'Crafted Leather'),
+      item('mat_maestro_anvil_lock', 'Maestro Anvil Lock'),
+      item('mat_leather', 'Leather'),
+      item('mat_coal', 'Coal'),
+      item('mat_steel', 'Steel'),
+      item('mat_oriharukon', 'Oriharukon'),
+    ],
+    recipes: [
+      recipe('r-armor', 'armor_s'),
+      recipe('r-armor-a', 'armor_a'),
+      recipe('r-crafted-leather', 'mat_crafted_leather', 1),
+      recipe('r-anvil-lock', 'mat_maestro_anvil_lock', 1),
+      recipe('r-steel', 'mat_steel', 1),
+    ],
+    components: [
+      component('r-armor', 'mat_crafted_leather', 2),
+      component('r-armor', 'mat_maestro_anvil_lock', 3),
+      component('r-armor-a', 'mat_crafted_leather', 1),
+      component('r-armor-a', 'mat_maestro_anvil_lock', 2),
+      component('r-crafted-leather', 'mat_leather', 4),
+      component('r-crafted-leather', 'mat_coal', 1),
+      component('r-anvil-lock', 'mat_steel', 2),
+      component('r-anvil-lock', 'mat_oriharukon', 1),
+      component('r-steel', 'mat_coal', 3),
+    ],
+    inventory: [],
+    projects: [project('armor-s', 'armor_s', 2), project('armor-a', 'armor_a', 1, 110)],
+  });
+
+  assert.deepEqual(plan.activeProjects.find(row => row.id === 'armor-s').missing, [
+    { itemKey: 'mat_coal', name: 'Coal', quantity: 40 },
+    { itemKey: 'mat_leather', name: 'Leather', quantity: 16 },
+    { itemKey: 'mat_oriharukon', name: 'Oriharukon', quantity: 6 },
+  ]);
+  assert.deepEqual(plan.activeProjects.find(row => row.id === 'armor-a').missing, [
+    { itemKey: 'mat_coal', name: 'Coal', quantity: 13 },
+    { itemKey: 'mat_leather', name: 'Leather', quantity: 4 },
+    { itemKey: 'mat_oriharukon', name: 'Oriharukon', quantity: 2 },
+  ]);
+});
