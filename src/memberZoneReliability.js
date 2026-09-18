@@ -1,4 +1,5 @@
 import { switchClanView } from './clanViewAccess.js';
+import { memberZoneViewForClickTarget } from './memberZoneNavigation.js';
 
 const TECH_DOMAIN = 'members.orzelbialy.local';
 const isMemberEmail = (email = '') => String(email).toLowerCase().endsWith(`@${TECH_DOMAIN}`);
@@ -9,6 +10,8 @@ export function installMemberZoneReliability(supabase) {
   window.__obMemberZoneReliabilityInstalled = true;
 
   let opening = false;
+  let cachedSession = null;
+  let cachedProfile = null;
   const cacheKey = (userId) => `ob-member-profile-${userId}`;
 
   const readCache = (userId) => {
@@ -85,38 +88,57 @@ export function installMemberZoneReliability(supabase) {
     }
   }
 
-  async function openZone() {
+  async function openZone(initialView = 'home') {
     if (opening) return;
     opening = true;
     try {
       const zone = document.querySelector('#memberZoneLayer');
       if (!zone) return;
-      const { data: { session } } = await supabase.auth.getSession();
+      let session = cachedSession;
+      if (!session) {
+        const { data } = await supabase.auth.getSession();
+        session = data.session;
+      }
       if (!session) {
         showLogin('Zaloguj się, aby wejść do Strefy Klanu.');
         return;
       }
-      const profile = await resolveProfile(session);
+      const profile = cachedProfile || await resolveProfile(session);
       if (!allowed(session, profile)) {
         showLogin(profile?.status === 'blocked' ? 'To konto jest zablokowane.' : 'Konto nie ma dostępu do Strefy Klanu.');
         return;
       }
 
+      cachedSession = session;
+      cachedProfile = profile;
       document.documentElement.classList.remove('member-locked');
       document.querySelector('#memberAuthLayer')?.classList.remove('open');
       displayProfile(session, profile);
-      switchClanView(zone, profile, 'home');
       zone.classList.add('open');
+      switchClanView(zone, profile, initialView);
+      if (initialView === 'craft') {
+        window.dispatchEvent(new CustomEvent('orzel:craft-workspace-opened'));
+      }
+    } catch (error) {
+      console.error('[member-zone] Nie udało się otworzyć Strefy Klanu.', error);
+      const feedback = document.querySelector('#memberAuthFeedback');
+      if (feedback) feedback.textContent = 'Nie udało się otworzyć Strefy Klanu. Odśwież stronę i spróbuj ponownie.';
     } finally {
       opening = false;
     }
   }
 
-  async function healAccess() {
-    const { data: { session } } = await supabase.auth.getSession();
+  async function healAccess(sessionFromEvent) {
+    let session = sessionFromEvent === undefined ? cachedSession : sessionFromEvent;
+    if (!session) {
+      const { data } = await supabase.auth.getSession();
+      session = data.session;
+    }
     if (!session) return;
     const profile = await resolveProfile(session);
     if (!allowed(session, profile)) return;
+    cachedSession = session;
+    cachedProfile = profile;
     document.documentElement.classList.remove('member-locked');
     document.querySelector('#memberAuthLayer')?.classList.remove('open');
     displayProfile(session, profile);
@@ -125,15 +147,19 @@ export function installMemberZoneReliability(supabase) {
   // Capture the click before the older async handler. This removes the race where
   // a transient profile request could make the button appear to do nothing.
   document.addEventListener('click', (event) => {
-    const entry = event.target.closest?.('.member-auth-entry:not(.logout)');
-    if (!entry) return;
+    const view = memberZoneViewForClickTarget(event.target);
+    if (!view) return;
     event.preventDefault();
     event.stopPropagation();
     event.stopImmediatePropagation();
-    openZone();
+    openZone(view);
   }, true);
 
-  supabase.auth.onAuthStateChange(() => setTimeout(healAccess, 180));
+  supabase.auth.onAuthStateChange((_event, session) => {
+    if (cachedSession?.user?.id !== session?.user?.id) cachedProfile = null;
+    cachedSession = session || null;
+    setTimeout(() => healAccess(session), 180);
+  });
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') setTimeout(healAccess, 80);
   });
