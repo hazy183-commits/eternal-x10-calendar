@@ -159,10 +159,13 @@ function ensureStyles() {
     #bossInfoModalPl{position:fixed;inset:0;z-index:30000;display:none;place-items:center;padding:18px;background:#000d;backdrop-filter:blur(8px)}
     #bossInfoModalPl.open{display:grid}
     .boss-info-pl-card{position:relative;display:grid;grid-template-columns:minmax(340px,42%) 1fr;width:min(1220px,97vw);max-height:92vh;overflow:auto;border:1px solid #a77d34;background:linear-gradient(145deg,#111615,#080b0a);box-shadow:0 30px 100px #000;color:#eee7da;scrollbar-color:#aa813d #171815;scrollbar-width:thin}
-    .boss-info-pl-art{min-height:620px;position:sticky;top:0;align-self:start;background-color:#070908;overflow:hidden;isolation:isolate}
-    .boss-info-pl-art::before{content:'';position:absolute;inset:-28px;z-index:0;background-image:var(--boss-art);background-position:center;background-size:cover;background-repeat:no-repeat;filter:blur(18px) brightness(.38) saturate(.9);transform:scale(1.08);pointer-events:none}
-    .boss-info-pl-art-image{position:absolute;inset:0;z-index:1;background-image:var(--boss-art);background-position:center;background-size:contain;background-repeat:no-repeat;filter:drop-shadow(0 16px 30px #000b) brightness(1.16) contrast(1.04) saturate(1.08);pointer-events:none}
-    .boss-info-pl-art::after{content:'';position:absolute;inset:0;z-index:2;background:linear-gradient(90deg,transparent 84%,#0b0e0dcc 100%),linear-gradient(0deg,#080b0a99 0%,transparent 24%,transparent 78%,#080b0a55 100%);pointer-events:none}
+    .boss-info-pl-art{min-height:620px;position:sticky;top:0;align-self:start;background-color:#0b0d0c;background-image:var(--boss-art);background-position:center;background-size:cover;background-repeat:no-repeat;overflow:hidden;isolation:isolate;filter:brightness(1.22) contrast(1.04) saturate(1.08)}
+    .boss-info-pl-art::before{display:none;content:'';position:absolute;inset:-28px;z-index:0;background-image:var(--boss-art);background-position:center;background-size:cover;background-repeat:no-repeat;filter:blur(18px) brightness(.38) saturate(.9);transform:scale(1.08);pointer-events:none}
+    .boss-info-pl-art-image{display:none;position:absolute;inset:0;z-index:1;background-image:var(--boss-art);background-position:center;background-size:contain;background-repeat:no-repeat;filter:drop-shadow(0 16px 30px #000b) brightness(1.16) contrast(1.04) saturate(1.08);pointer-events:none}
+    .boss-info-pl-art::after{content:'';position:absolute;inset:0;z-index:2;background:linear-gradient(90deg,transparent 72%,#0b0e0dea 100%);pointer-events:none}
+    .boss-info-pl-art.full-art{background-image:none;filter:none}
+    .boss-info-pl-art.full-art::before,.boss-info-pl-art.full-art .boss-info-pl-art-image{display:block}
+    .boss-info-pl-art.full-art::after{background:linear-gradient(90deg,transparent 84%,#0b0e0dcc 100%),linear-gradient(0deg,#080b0a99 0%,transparent 24%,transparent 78%,#080b0a55 100%)}
     .boss-info-pl-content{padding:32px 36px 34px;min-width:0}
     .boss-info-pl-kicker{display:block;color:#e0b75f;font-size:11px;font-weight:900;letter-spacing:.17em;text-transform:uppercase}
     .boss-info-pl-content h3{margin:8px 0 5px;color:#fff4df;font:700 38px/1.05 Georgia,serif;text-transform:uppercase;text-shadow:0 1px 12px #d69b3230}
@@ -221,7 +224,7 @@ function openBossDetails(name, trigger) {
   const modal = ensureModal(); const art = bossArtworkUrl(name); modal._returnTarget = trigger || null;
   modal.querySelector('#bossInfoPlTitle').textContent = name; modal.querySelector('#bossInfoPlText').textContent = info.text;
   modal.querySelector('#bossInfoPlPlace').textContent = info.place; modal.querySelector('#bossInfoPlKind').textContent = info.kind; modal.querySelector('.boss-info-pl-kind').textContent = info.kind;
-  const artBox = modal.querySelector('.boss-info-pl-art'); const artImage = art ? `url(${JSON.stringify(art)})` : 'none'; artBox.style.setProperty('--boss-art', artImage);
+  const artBox = modal.querySelector('.boss-info-pl-art'); const artImage = art ? `url(${JSON.stringify(art)})` : 'none'; artBox.style.setProperty('--boss-art', artImage); artBox.style.backgroundPosition = info.artPos || '50% 50%'; artBox.classList.toggle('full-art', name === 'Valakas' || name === 'Antharas');
   modal.querySelector('#bossInfoPlStats').innerHTML = [statMarkup('Level',info.level),statMarkup('HP',info.hp),statMarkup('P. Atk',info.pAtk),statMarkup('M. Atk',info.mAtk),statMarkup('P. Def',info.pDef),statMarkup('M. Def',info.mDef)].join('');
   modal.querySelector('#bossInfoPlDrop').innerHTML = (info.drops || []).map(dropMarkup).join('') || '<div class="boss-info-pl-drop-row"><b>—</b><span></span><span></span></div>';
   modal.querySelector('#bossInfoPlMechanics').innerHTML = (info.mechanics || []).map(x => `<li>${esc(x)}</li>`).join('');
