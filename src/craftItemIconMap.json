@@ -1,0 +1,1557 @@
+{
+  "armor_a_sealed_armor_of_nightmare": {
+    "game_item_id": 5311,
+    "icon_file": "armor_t80_ul_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t80_ul_i02.png"
+  },
+  "armor_a_sealed_boots_of_nightmare": {
+    "game_item_id": 5314,
+    "icon_file": "armor_t80_b_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t80_b_i02.png"
+  },
+  "armor_a_sealed_dark_crystal_boots": {
+    "game_item_id": 5291,
+    "icon_file": "armor_t74_b_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t74_b_i02.png"
+  },
+  "armor_a_sealed_dark_crystal_breastplate": {
+    "game_item_id": 5287,
+    "icon_file": "armor_t74_u_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t74_u_i02.png"
+  },
+  "armor_a_sealed_dark_crystal_gaiters": {
+    "game_item_id": 5288,
+    "icon_file": "armor_t74_l_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t74_l_i02.png"
+  },
+  "armor_a_sealed_dark_crystal_gloves": {
+    "game_item_id": 5290,
+    "icon_file": "armor_t74_g_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t74_g_i02.png"
+  },
+  "armor_a_sealed_dark_crystal_helmet": {
+    "game_item_id": 5289,
+    "icon_file": "armor_helmet_i02.png",
+    "local_path": "/assets/interlude/icons/armor_helmet_i02.png"
+  },
+  "armor_a_sealed_dark_crystal_leather_armor": {
+    "game_item_id": 5297,
+    "icon_file": "armor_t75_u_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t75_u_i02.png"
+  },
+  "armor_a_sealed_dark_crystal_leggings": {
+    "game_item_id": 5298,
+    "icon_file": "armor_t75_l_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t75_l_i02.png"
+  },
+  "armor_a_sealed_dark_crystal_robe": {
+    "game_item_id": 5308,
+    "icon_file": "armor_t76_ul_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t76_ul_i02.png"
+  },
+  "armor_a_sealed_dark_crystal_shield": {
+    "game_item_id": 5292,
+    "icon_file": "shield_dark_crystal_shield_i02.png",
+    "local_path": "/assets/interlude/icons/shield_dark_crystal_shield_i02.png"
+  },
+  "armor_a_sealed_gauntlets_of_nightmare": {
+    "game_item_id": 5313,
+    "icon_file": "armor_t80_g_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t80_g_i02.png"
+  },
+  "armor_a_sealed_helm_of_nightmare": {
+    "game_item_id": 5312,
+    "icon_file": "armor_leather_helmet_i02.png",
+    "local_path": "/assets/interlude/icons/armor_leather_helmet_i02.png"
+  },
+  "armor_a_sealed_leather_armor_of_nightmare": {
+    "game_item_id": 5320,
+    "icon_file": "armor_t81_ul_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t81_ul_i02.png"
+  },
+  "armor_a_sealed_majestic_boots": {
+    "game_item_id": 5319,
+    "icon_file": "armor_t83_b_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t83_b_i02.png"
+  },
+  "armor_a_sealed_majestic_circlet": {
+    "game_item_id": 5317,
+    "icon_file": "armor_leather_helmet_i02.png",
+    "local_path": "/assets/interlude/icons/armor_leather_helmet_i02.png"
+  },
+  "armor_a_sealed_majestic_gauntlets": {
+    "game_item_id": 5318,
+    "icon_file": "armor_t83_g_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t83_g_i02.png"
+  },
+  "armor_a_sealed_majestic_leather_armor": {
+    "game_item_id": 5323,
+    "icon_file": "armor_t84_ul_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t84_ul_i02.png"
+  },
+  "armor_a_sealed_majestic_plate_armor": {
+    "game_item_id": 5316,
+    "icon_file": "armor_t83_ul_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t83_ul_i02.png"
+  },
+  "armor_a_sealed_majestic_robe": {
+    "game_item_id": 5329,
+    "icon_file": "armor_t85_ul_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t85_ul_i02.png"
+  },
+  "armor_a_sealed_robe_of_nightmare": {
+    "game_item_id": 5326,
+    "icon_file": "armor_t82_ul_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t82_ul_i02.png"
+  },
+  "armor_a_sealed_shield_of_nightmare": {
+    "game_item_id": 5315,
+    "icon_file": "shield_shield_of_nightmare_i02.png",
+    "local_path": "/assets/interlude/icons/shield_shield_of_nightmare_i02.png"
+  },
+  "armor_a_sealed_tallum_boots": {
+    "game_item_id": 5296,
+    "icon_file": "armor_t77_b_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t77_b_i02.png"
+  },
+  "armor_a_sealed_tallum_gloves": {
+    "game_item_id": 5295,
+    "icon_file": "armor_t77_g_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t77_g_i02.png"
+  },
+  "armor_a_sealed_tallum_helmet": {
+    "game_item_id": 5294,
+    "icon_file": "armor_helmet_i02.png",
+    "local_path": "/assets/interlude/icons/armor_helmet_i02.png"
+  },
+  "armor_a_sealed_tallum_leather_armor": {
+    "game_item_id": 5301,
+    "icon_file": "armor_t78_ul_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t78_ul_i02.png"
+  },
+  "armor_a_sealed_tallum_plate_armor": {
+    "game_item_id": 5293,
+    "icon_file": "armor_t77_ul_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t77_ul_i02.png"
+  },
+  "armor_a_sealed_tallum_stockings": {
+    "game_item_id": 5305,
+    "icon_file": "armor_t79_l_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t79_l_i02.png"
+  },
+  "armor_a_sealed_tallum_tunic": {
+    "game_item_id": 5304,
+    "icon_file": "armor_t79_u_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t79_u_i02.png"
+  },
+  "armor_s_sealed_draconic_leather_armor": {
+    "game_item_id": 6680,
+    "icon_file": "armor_t89_ul_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t89_ul_i02.png"
+  },
+  "armor_s_sealed_draconic_leather_boots": {
+    "game_item_id": 6682,
+    "icon_file": "armor_t89_b_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t89_b_i02.png"
+  },
+  "armor_s_sealed_draconic_leather_gloves": {
+    "game_item_id": 6681,
+    "icon_file": "armor_t89_g_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t89_g_i02.png"
+  },
+  "armor_s_sealed_draconic_leather_helmet": {
+    "game_item_id": 6683,
+    "icon_file": "armor_leather_helmet_i02.png",
+    "local_path": "/assets/interlude/icons/armor_leather_helmet_i02.png"
+  },
+  "armor_s_sealed_imperial_crusader_boots": {
+    "game_item_id": 6677,
+    "icon_file": "armor_t88_b_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t88_b_i02.png"
+  },
+  "armor_s_sealed_imperial_crusader_breastplate": {
+    "game_item_id": 6674,
+    "icon_file": "armor_t88_u_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t88_u_i02.png"
+  },
+  "armor_s_sealed_imperial_crusader_gaiters": {
+    "game_item_id": 6675,
+    "icon_file": "armor_t88_l_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t88_l_i02.png"
+  },
+  "armor_s_sealed_imperial_crusader_gauntlets": {
+    "game_item_id": 6676,
+    "icon_file": "armor_t88_g_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t88_g_i02.png"
+  },
+  "armor_s_sealed_imperial_crusader_helmet": {
+    "game_item_id": 6679,
+    "icon_file": "armor_helmet_i02.png",
+    "local_path": "/assets/interlude/icons/armor_helmet_i02.png"
+  },
+  "armor_s_sealed_imperial_crusader_shield": {
+    "game_item_id": 6678,
+    "icon_file": "shield_imperial_crusader_shield_i02.png",
+    "local_path": "/assets/interlude/icons/shield_imperial_crusader_shield_i02.png"
+  },
+  "armor_s_sealed_major_arcana_boots": {
+    "game_item_id": 6686,
+    "icon_file": "armor_t90_b_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t90_b_i02.png"
+  },
+  "armor_s_sealed_major_arcana_circlet": {
+    "game_item_id": 6687,
+    "icon_file": "armor_leather_helmet_i02.png",
+    "local_path": "/assets/interlude/icons/armor_leather_helmet_i02.png"
+  },
+  "armor_s_sealed_major_arcana_gloves": {
+    "game_item_id": 6685,
+    "icon_file": "armor_t90_g_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t90_g_i02.png"
+  },
+  "armor_s_sealed_major_arcana_robe": {
+    "game_item_id": 6684,
+    "icon_file": "armor_t90_ul_i02.png",
+    "local_path": "/assets/interlude/icons/armor_t90_ul_i02.png"
+  },
+  "mat_adamantite_nugget": {
+    "game_item_id": 1877,
+    "icon_file": "etc_adamantite_i00.png",
+    "local_path": "/assets/interlude/icons/etc_adamantite_i00.png"
+  },
+  "mat_angel_slayer_blade": {
+    "game_item_id": 6691,
+    "icon_file": "etc_sword_body_i00.png",
+    "local_path": "/assets/interlude/icons/etc_sword_body_i00.png"
+  },
+  "mat_animal_bone": {
+    "game_item_id": 1872,
+    "icon_file": "etc_piece_bone_white_i00.png",
+    "local_path": "/assets/interlude/icons/etc_piece_bone_white_i00.png"
+  },
+  "mat_animal_skin": {
+    "game_item_id": 1867,
+    "icon_file": "etc_leather_brown_i00.png",
+    "local_path": "/assets/interlude/icons/etc_leather_brown_i00.png"
+  },
+  "mat_arcana_mace_head": {
+    "game_item_id": 6697,
+    "icon_file": "etc_squares_gray_i00.png",
+    "local_path": "/assets/interlude/icons/etc_squares_gray_i00.png"
+  },
+  "mat_arcsmiths_anvil": {
+    "game_item_id": 5553,
+    "icon_file": "etc_blacksmiths_frame_i00.png",
+    "local_path": "/assets/interlude/icons/etc_blacksmiths_frame_i00.png"
+  },
+  "mat_artisans_frame": {
+    "game_item_id": 1891,
+    "icon_file": "etc_artisans_frame_i00.png",
+    "local_path": "/assets/interlude/icons/etc_artisans_frame_i00.png"
+  },
+  "mat_asofe": {
+    "game_item_id": 4043,
+    "icon_file": "etc_gem_blue_i00.png",
+    "local_path": "/assets/interlude/icons/etc_gem_blue_i00.png"
+  },
+  "mat_barakiels_axe_piece": {
+    "game_item_id": 8714,
+    "icon_file": "etc_bark_gold_i00.png",
+    "local_path": "/assets/interlude/icons/etc_bark_gold_i00.png"
+  },
+  "mat_basalt_battlehammer_head": {
+    "game_item_id": 6689,
+    "icon_file": "etc_squares_gray_i00.png",
+    "local_path": "/assets/interlude/icons/etc_squares_gray_i00.png"
+  },
+  "mat_behemoths_tuning_fork_piece": {
+    "game_item_id": 8715,
+    "icon_file": "etc_bark_gold_i00.png",
+    "local_path": "/assets/interlude/icons/etc_bark_gold_i00.png"
+  },
+  "mat_blacksmiths_frame": {
+    "game_item_id": 1892,
+    "icon_file": "etc_blacksmiths_frame_i00.png",
+    "local_path": "/assets/interlude/icons/etc_blacksmiths_frame_i00.png"
+  },
+  "mat_blood_tornado_edge": {
+    "game_item_id": 5539,
+    "icon_file": "etc_sword_body_i00.png",
+    "local_path": "/assets/interlude/icons/etc_sword_body_i00.png"
+  },
+  "mat_bloody_orchid_head": {
+    "game_item_id": 5536,
+    "icon_file": "etc_sword_body_i00.png",
+    "local_path": "/assets/interlude/icons/etc_sword_body_i00.png"
+  },
+  "mat_braided_hemp": {
+    "game_item_id": 1878,
+    "icon_file": "etc_braided_hemp_i00.png",
+    "local_path": "/assets/interlude/icons/etc_braided_hemp_i00.png"
+  },
+  "mat_branch_of_the_mother_tree_head": {
+    "game_item_id": 5544,
+    "icon_file": "etc_squares_silver_i00.png",
+    "local_path": "/assets/interlude/icons/etc_squares_silver_i00.png"
+  },
+  "mat_cabrios_hand_head": {
+    "game_item_id": 8721,
+    "icon_file": "etc_squares_gray_i00.png",
+    "local_path": "/assets/interlude/icons/etc_squares_gray_i00.png"
+  },
+  "mat_carnage_bow_stave": {
+    "game_item_id": 5535,
+    "icon_file": "etc_branch_gold_i00.png",
+    "local_path": "/assets/interlude/icons/etc_branch_gold_i00.png"
+  },
+  "mat_charcoal": {
+    "game_item_id": 1871,
+    "icon_file": "etc_charcoal_i00.png",
+    "local_path": "/assets/interlude/icons/etc_charcoal_i00.png"
+  },
+  "mat_coal": {
+    "game_item_id": 1870,
+    "icon_file": "etc_coal_i00.png",
+    "local_path": "/assets/interlude/icons/etc_coal_i00.png"
+  },
+  "mat_coarse_bone_powder": {
+    "game_item_id": 1881,
+    "icon_file": "etc_powder_white_i00.png",
+    "local_path": "/assets/interlude/icons/etc_powder_white_i00.png"
+  },
+  "mat_cokes": {
+    "game_item_id": 1879,
+    "icon_file": "etc_oil_pot_black_i00.png",
+    "local_path": "/assets/interlude/icons/etc_oil_pot_black_i00.png"
+  },
+  "mat_compound_braid": {
+    "game_item_id": 1889,
+    "icon_file": "etc_compound_braid_i00.png",
+    "local_path": "/assets/interlude/icons/etc_compound_braid_i00.png"
+  },
+  "mat_cord": {
+    "game_item_id": 1884,
+    "icon_file": "etc_skein_gray_i00.png",
+    "local_path": "/assets/interlude/icons/etc_skein_gray_i00.png"
+  },
+  "mat_crafted_leather": {
+    "game_item_id": 1894,
+    "icon_file": "etc_crafted_leather_i00.png",
+    "local_path": "/assets/interlude/icons/etc_crafted_leather_i00.png"
+  },
+  "mat_craftsman_mold": {
+    "game_item_id": 4047,
+    "icon_file": "etc_mold_i00.png",
+    "local_path": "/assets/interlude/icons/etc_mold_i00.png"
+  },
+  "mat_crystal_a_grade": {
+    "game_item_id": 1461,
+    "icon_file": "etc_crystal_silver_i00.png",
+    "local_path": "/assets/interlude/icons/etc_crystal_silver_i00.png"
+  },
+  "mat_crystal_b_grade": {
+    "game_item_id": 1460,
+    "icon_file": "etc_crystal_red_i00.png",
+    "local_path": "/assets/interlude/icons/etc_crystal_red_i00.png"
+  },
+  "mat_crystal_s_grade": {
+    "game_item_id": 1462,
+    "icon_file": "etc_crystal_gold_i00.png",
+    "local_path": "/assets/interlude/icons/etc_crystal_gold_i00.png"
+  },
+  "mat_daimon_crystal_fragment": {
+    "game_item_id": 8722,
+    "icon_file": "etc_bark_gold_i00.png",
+    "local_path": "/assets/interlude/icons/etc_bark_gold_i00.png"
+  },
+  "mat_dark_legions_edge_blade": {
+    "game_item_id": 5545,
+    "icon_file": "etc_sword_body_i00.png",
+    "local_path": "/assets/interlude/icons/etc_sword_body_i00.png"
+  },
+  "mat_dasparions_staff_edge": {
+    "game_item_id": 5543,
+    "icon_file": "etc_squares_silver_i00.png",
+    "local_path": "/assets/interlude/icons/etc_squares_silver_i00.png"
+  },
+  "mat_demon_splinter_blade": {
+    "game_item_id": 6695,
+    "icon_file": "etc_sword_body_i00.png",
+    "local_path": "/assets/interlude/icons/etc_sword_body_i00.png"
+  },
+  "mat_doom_crusher_head": {
+    "game_item_id": 8349,
+    "icon_file": "etc_squares_gray_i00.png",
+    "local_path": "/assets/interlude/icons/etc_squares_gray_i00.png"
+  },
+  "mat_draconic_bow_shaft": {
+    "game_item_id": 7579,
+    "icon_file": "etc_branch_gold_i00.png",
+    "local_path": "/assets/interlude/icons/etc_branch_gold_i00.png"
+  },
+  "mat_dragon_grinder_edge": {
+    "game_item_id": 5538,
+    "icon_file": "etc_sword_body_i00.png",
+    "local_path": "/assets/interlude/icons/etc_sword_body_i00.png"
+  },
+  "mat_dragon_hunter_axe_blade": {
+    "game_item_id": 6693,
+    "icon_file": "etc_sword_body_i00.png",
+    "local_path": "/assets/interlude/icons/etc_sword_body_i00.png"
+  },
+  "mat_dragon_slayer_edge": {
+    "game_item_id": 5529,
+    "icon_file": "etc_sword_body_i00.png",
+    "local_path": "/assets/interlude/icons/etc_sword_body_i00.png"
+  },
+  "mat_durable_metal_plate": {
+    "game_item_id": 5550,
+    "icon_file": "etc_squares_wood_i00.png",
+    "local_path": "/assets/interlude/icons/etc_squares_wood_i00.png"
+  },
+  "mat_elemental_sword_edge": {
+    "game_item_id": 5547,
+    "icon_file": "etc_sword_body_i00.png",
+    "local_path": "/assets/interlude/icons/etc_sword_body_i00.png"
+  },
+  "mat_elysian_head": {
+    "game_item_id": 5533,
+    "icon_file": "etc_squares_silver_i00.png",
+    "local_path": "/assets/interlude/icons/etc_squares_silver_i00.png"
+  },
+  "mat_enria": {
+    "game_item_id": 4042,
+    "icon_file": "etc_gem_red_i00.png",
+    "local_path": "/assets/interlude/icons/etc_gem_red_i00.png"
+  },
+  "mat_flaming_dragon_skull_piece": {
+    "game_item_id": 8342,
+    "icon_file": "etc_squares_gray_i00.png",
+    "local_path": "/assets/interlude/icons/etc_squares_gray_i00.png"
+  },
+  "mat_forgotten_blade_edge": {
+    "game_item_id": 6688,
+    "icon_file": "etc_sword_body_i00.png",
+    "local_path": "/assets/interlude/icons/etc_sword_body_i00.png"
+  },
+  "mat_gemstone_a": {
+    "game_item_id": 2133,
+    "icon_file": "etc_bead_red_i00.png",
+    "local_path": "/assets/interlude/icons/etc_bead_red_i00.png"
+  },
+  "mat_gemstone_b": {
+    "game_item_id": 2132,
+    "icon_file": "etc_bead_green_i00.png",
+    "local_path": "/assets/interlude/icons/etc_bead_green_i00.png"
+  },
+  "mat_gemstone_s": {
+    "game_item_id": 2134,
+    "icon_file": "etc_bead_silver_i00.png",
+    "local_path": "/assets/interlude/icons/etc_bead_silver_i00.png"
+  },
+  "mat_halberd_edge": {
+    "game_item_id": 5542,
+    "icon_file": "etc_sword_body_i00.png",
+    "local_path": "/assets/interlude/icons/etc_sword_body_i00.png"
+  },
+  "mat_hammer_piece_of_destroyer": {
+    "game_item_id": 8346,
+    "icon_file": "etc_squares_gray_i00.png",
+    "local_path": "/assets/interlude/icons/etc_squares_gray_i00.png"
+  },
+  "mat_heavens_divider_edge": {
+    "game_item_id": 6696,
+    "icon_file": "etc_sword_body_i00.png",
+    "local_path": "/assets/interlude/icons/etc_sword_body_i00.png"
+  },
+  "mat_high_grade_suede": {
+    "game_item_id": 1885,
+    "icon_file": "etc_pouch_yellow_i00.png",
+    "local_path": "/assets/interlude/icons/etc_pouch_yellow_i00.png"
+  },
+  "mat_imperial_staff_head": {
+    "game_item_id": 6690,
+    "icon_file": "etc_bark_blue_i00.png",
+    "local_path": "/assets/interlude/icons/etc_bark_blue_i00.png"
+  },
+  "mat_infernal_master_blade": {
+    "game_item_id": 8331,
+    "icon_file": "etc_sword_body_i00.png",
+    "local_path": "/assets/interlude/icons/etc_sword_body_i00.png"
+  },
+  "mat_iron_ore": {
+    "game_item_id": 1869,
+    "icon_file": "etc_lump_gray_i00.png",
+    "local_path": "/assets/interlude/icons/etc_lump_gray_i00.png"
+  },
+  "mat_leather": {
+    "game_item_id": 1882,
+    "icon_file": "etc_leather_i00.png",
+    "local_path": "/assets/interlude/icons/etc_leather_i00.png"
+  },
+  "mat_leolins_mold": {
+    "game_item_id": 5551,
+    "icon_file": "etc_blacksmiths_frame_i00.png",
+    "local_path": "/assets/interlude/icons/etc_blacksmiths_frame_i00.png"
+  },
+  "mat_maestro_anvil_lock": {
+    "game_item_id": 4046,
+    "icon_file": "etc_lump_dark_gray_i00.png",
+    "local_path": "/assets/interlude/icons/etc_lump_dark_gray_i00.png"
+  },
+  "mat_maestro_holder": {
+    "game_item_id": 4045,
+    "icon_file": "etc_lump_yellow_i00.png",
+    "local_path": "/assets/interlude/icons/etc_lump_yellow_i00.png"
+  },
+  "mat_maestro_mold": {
+    "game_item_id": 4048,
+    "icon_file": "etc_silver_mold_i00.png",
+    "local_path": "/assets/interlude/icons/etc_silver_mold_i00.png"
+  },
+  "mat_metallic_fiber": {
+    "game_item_id": 1895,
+    "icon_file": "etc_metallic_fiber_i00.png",
+    "local_path": "/assets/interlude/icons/etc_metallic_fiber_i00.png"
+  },
+  "mat_metallic_thread": {
+    "game_item_id": 5549,
+    "icon_file": "etc_skein_gray_i00.png",
+    "local_path": "/assets/interlude/icons/etc_skein_gray_i00.png"
+  },
+  "mat_meteor_shower_head": {
+    "game_item_id": 5532,
+    "icon_file": "etc_squares_silver_i00.png",
+    "local_path": "/assets/interlude/icons/etc_squares_silver_i00.png"
+  },
+  "mat_mithril_alloy": {
+    "game_item_id": 1890,
+    "icon_file": "etc_lump_white_i00.png",
+    "local_path": "/assets/interlude/icons/etc_lump_white_i00.png"
+  },
+  "mat_mithril_ore": {
+    "game_item_id": 1876,
+    "icon_file": "etc_mithril_ore_i00.png",
+    "local_path": "/assets/interlude/icons/etc_mithril_ore_i00.png"
+  },
+  "mat_mold_glue": {
+    "game_item_id": 4039,
+    "icon_file": "etc_reagent_red_i00.png",
+    "local_path": "/assets/interlude/icons/etc_reagent_red_i00.png"
+  },
+  "mat_mold_hardener": {
+    "game_item_id": 4041,
+    "icon_file": "etc_reagent_blue_i00.png",
+    "local_path": "/assets/interlude/icons/etc_reagent_blue_i00.png"
+  },
+  "mat_mold_lubricant": {
+    "game_item_id": 4040,
+    "icon_file": "etc_reagent_gold_i00.png",
+    "local_path": "/assets/interlude/icons/etc_reagent_gold_i00.png"
+  },
+  "mat_naga_storm_piece": {
+    "game_item_id": 8716,
+    "icon_file": "etc_bark_gold_i00.png",
+    "local_path": "/assets/interlude/icons/etc_bark_gold_i00.png"
+  },
+  "mat_oriharukon": {
+    "game_item_id": 1893,
+    "icon_file": "etc_oriharukon_i00.png",
+    "local_path": "/assets/interlude/icons/etc_oriharukon_i00.png"
+  },
+  "mat_oriharukon_ore": {
+    "game_item_id": 1874,
+    "icon_file": "etc_oriharukon_ore_i00.png",
+    "local_path": "/assets/interlude/icons/etc_oriharukon_ore_i00.png"
+  },
+  "mat_saint_spear_blade": {
+    "game_item_id": 6694,
+    "icon_file": "etc_sword_body_i00.png",
+    "local_path": "/assets/interlude/icons/etc_sword_body_i00.png"
+  },
+  "mat_sealed_armor_of_nightmare_pattern": {
+    "game_item_id": 5522,
+    "icon_file": "etc_letter_red_i00.png",
+    "local_path": "/assets/interlude/icons/etc_letter_red_i00.png"
+  },
+  "mat_sealed_boots_of_nightmare_lining": {
+    "game_item_id": 5502,
+    "icon_file": "etc_piece_of_cloth_black_i00.png",
+    "local_path": "/assets/interlude/icons/etc_piece_of_cloth_black_i00.png"
+  },
+  "mat_sealed_dark_crystal_boots_lining": {
+    "game_item_id": 5496,
+    "icon_file": "etc_piece_of_cloth_black_i00.png",
+    "local_path": "/assets/interlude/icons/etc_piece_of_cloth_black_i00.png"
+  },
+  "mat_sealed_dark_crystal_breastplate_pattern": {
+    "game_item_id": 5520,
+    "icon_file": "etc_letter_red_i00.png",
+    "local_path": "/assets/interlude/icons/etc_letter_red_i00.png"
+  },
+  "mat_sealed_dark_crystal_gaiters_pattern": {
+    "game_item_id": 5524,
+    "icon_file": "etc_letter_red_i00.png",
+    "local_path": "/assets/interlude/icons/etc_letter_red_i00.png"
+  },
+  "mat_sealed_dark_crystal_gloves_design": {
+    "game_item_id": 5508,
+    "icon_file": "etc_pouch_brown_i00.png",
+    "local_path": "/assets/interlude/icons/etc_pouch_brown_i00.png"
+  },
+  "mat_sealed_dark_crystal_helmet_design": {
+    "game_item_id": 5525,
+    "icon_file": "etc_pouch_brown_i00.png",
+    "local_path": "/assets/interlude/icons/etc_pouch_brown_i00.png"
+  },
+  "mat_sealed_dark_crystal_leather_armor_pattern": {
+    "game_item_id": 5478,
+    "icon_file": "etc_letter_red_i00.png",
+    "local_path": "/assets/interlude/icons/etc_letter_red_i00.png"
+  },
+  "mat_sealed_dark_crystal_leggings_design": {
+    "game_item_id": 5482,
+    "icon_file": "etc_pouch_brown_i00.png",
+    "local_path": "/assets/interlude/icons/etc_pouch_brown_i00.png"
+  },
+  "mat_sealed_dark_crystal_robe_fabric": {
+    "game_item_id": 5486,
+    "icon_file": "etc_leather_gray_i00.png",
+    "local_path": "/assets/interlude/icons/etc_leather_gray_i00.png"
+  },
+  "mat_sealed_dark_crystal_shield_fragment": {
+    "game_item_id": 5494,
+    "icon_file": "etc_jewel_box_i00.png",
+    "local_path": "/assets/interlude/icons/etc_jewel_box_i00.png"
+  },
+  "mat_sealed_draconic_leather_armor_part": {
+    "game_item_id": 6707,
+    "icon_file": "etc_leather_gray_i00.png",
+    "local_path": "/assets/interlude/icons/etc_leather_gray_i00.png"
+  },
+  "mat_sealed_draconic_leather_boots_design": {
+    "game_item_id": 6709,
+    "icon_file": "etc_pouch_brown_i00.png",
+    "local_path": "/assets/interlude/icons/etc_pouch_brown_i00.png"
+  },
+  "mat_sealed_draconic_leather_gloves_fabric": {
+    "game_item_id": 6708,
+    "icon_file": "etc_leather_gray_i00.png",
+    "local_path": "/assets/interlude/icons/etc_leather_gray_i00.png"
+  },
+  "mat_sealed_draconic_leather_helmet_pattern": {
+    "game_item_id": 6710,
+    "icon_file": "etc_pouch_brown_i00.png",
+    "local_path": "/assets/interlude/icons/etc_pouch_brown_i00.png"
+  },
+  "mat_sealed_gauntlets_of_nightmare_design": {
+    "game_item_id": 5514,
+    "icon_file": "etc_pouch_brown_i00.png",
+    "local_path": "/assets/interlude/icons/etc_pouch_brown_i00.png"
+  },
+  "mat_sealed_helm_of_nightmare_design": {
+    "game_item_id": 5527,
+    "icon_file": "etc_pouch_brown_i00.png",
+    "local_path": "/assets/interlude/icons/etc_pouch_brown_i00.png"
+  },
+  "mat_sealed_imperial_crusader_boots_design": {
+    "game_item_id": 6704,
+    "icon_file": "etc_pouch_brown_i00.png",
+    "local_path": "/assets/interlude/icons/etc_pouch_brown_i00.png"
+  },
+  "mat_sealed_imperial_crusader_breastplate_part": {
+    "game_item_id": 6701,
+    "icon_file": "etc_plate_silver_i00.png",
+    "local_path": "/assets/interlude/icons/etc_plate_silver_i00.png"
+  },
+  "mat_sealed_imperial_crusader_gaiters_pattern": {
+    "game_item_id": 6702,
+    "icon_file": "etc_pouch_brown_i00.png",
+    "local_path": "/assets/interlude/icons/etc_pouch_brown_i00.png"
+  },
+  "mat_sealed_imperial_crusader_gauntlets_design": {
+    "game_item_id": 6703,
+    "icon_file": "etc_pouch_brown_i00.png",
+    "local_path": "/assets/interlude/icons/etc_pouch_brown_i00.png"
+  },
+  "mat_sealed_imperial_crusader_helmet_pattern": {
+    "game_item_id": 6706,
+    "icon_file": "etc_pouch_brown_i00.png",
+    "local_path": "/assets/interlude/icons/etc_pouch_brown_i00.png"
+  },
+  "mat_sealed_imperial_crusader_shield_part": {
+    "game_item_id": 6705,
+    "icon_file": "etc_plate_silver_i00.png",
+    "local_path": "/assets/interlude/icons/etc_plate_silver_i00.png"
+  },
+  "mat_sealed_leather_armor_of_nightmare_fabric": {
+    "game_item_id": 5480,
+    "icon_file": "etc_leather_gray_i00.png",
+    "local_path": "/assets/interlude/icons/etc_leather_gray_i00.png"
+  },
+  "mat_sealed_majestic_boots_lining": {
+    "game_item_id": 5503,
+    "icon_file": "etc_piece_of_cloth_black_i00.png",
+    "local_path": "/assets/interlude/icons/etc_piece_of_cloth_black_i00.png"
+  },
+  "mat_sealed_majestic_circlet_design": {
+    "game_item_id": 5528,
+    "icon_file": "etc_pouch_brown_i00.png",
+    "local_path": "/assets/interlude/icons/etc_pouch_brown_i00.png"
+  },
+  "mat_sealed_majestic_gauntlets_design": {
+    "game_item_id": 5515,
+    "icon_file": "etc_pouch_brown_i00.png",
+    "local_path": "/assets/interlude/icons/etc_pouch_brown_i00.png"
+  },
+  "mat_sealed_majestic_leather_armor_fabric": {
+    "game_item_id": 5481,
+    "icon_file": "etc_leather_gray_i00.png",
+    "local_path": "/assets/interlude/icons/etc_leather_gray_i00.png"
+  },
+  "mat_sealed_majestic_plate_armor_pattern": {
+    "game_item_id": 5523,
+    "icon_file": "etc_letter_red_i00.png",
+    "local_path": "/assets/interlude/icons/etc_letter_red_i00.png"
+  },
+  "mat_sealed_majestic_robe_fabric": {
+    "game_item_id": 5488,
+    "icon_file": "etc_leather_gray_i00.png",
+    "local_path": "/assets/interlude/icons/etc_leather_gray_i00.png"
+  },
+  "mat_sealed_major_arcana_boots_design": {
+    "game_item_id": 6713,
+    "icon_file": "etc_pouch_brown_i00.png",
+    "local_path": "/assets/interlude/icons/etc_pouch_brown_i00.png"
+  },
+  "mat_sealed_major_arcana_circlet_pattern": {
+    "game_item_id": 6714,
+    "icon_file": "etc_pouch_brown_i00.png",
+    "local_path": "/assets/interlude/icons/etc_pouch_brown_i00.png"
+  },
+  "mat_sealed_major_arcana_gloves_fabric": {
+    "game_item_id": 6712,
+    "icon_file": "etc_leather_gray_i00.png",
+    "local_path": "/assets/interlude/icons/etc_leather_gray_i00.png"
+  },
+  "mat_sealed_major_arcana_robe_part": {
+    "game_item_id": 6711,
+    "icon_file": "etc_plate_silver_i00.png",
+    "local_path": "/assets/interlude/icons/etc_plate_silver_i00.png"
+  },
+  "mat_sealed_nightmare_robe_fabric": {
+    "game_item_id": 5487,
+    "icon_file": "etc_leather_gray_i00.png",
+    "local_path": "/assets/interlude/icons/etc_leather_gray_i00.png"
+  },
+  "mat_sealed_shield_of_nightmare_fragment": {
+    "game_item_id": 5495,
+    "icon_file": "etc_jewel_box_i00.png",
+    "local_path": "/assets/interlude/icons/etc_jewel_box_i00.png"
+  },
+  "mat_sealed_tallum_boots_lining": {
+    "game_item_id": 5497,
+    "icon_file": "etc_piece_of_cloth_black_i00.png",
+    "local_path": "/assets/interlude/icons/etc_piece_of_cloth_black_i00.png"
+  },
+  "mat_sealed_tallum_gloves_design": {
+    "game_item_id": 5509,
+    "icon_file": "etc_pouch_brown_i00.png",
+    "local_path": "/assets/interlude/icons/etc_pouch_brown_i00.png"
+  },
+  "mat_sealed_tallum_helm_design": {
+    "game_item_id": 5526,
+    "icon_file": "etc_pouch_brown_i00.png",
+    "local_path": "/assets/interlude/icons/etc_pouch_brown_i00.png"
+  },
+  "mat_sealed_tallum_leather_armor_pattern": {
+    "game_item_id": 5479,
+    "icon_file": "etc_letter_red_i00.png",
+    "local_path": "/assets/interlude/icons/etc_letter_red_i00.png"
+  },
+  "mat_sealed_tallum_plate_armor_pattern": {
+    "game_item_id": 5521,
+    "icon_file": "etc_letter_red_i00.png",
+    "local_path": "/assets/interlude/icons/etc_letter_red_i00.png"
+  },
+  "mat_sealed_tallum_stockings_fabric": {
+    "game_item_id": 5489,
+    "icon_file": "etc_leather_gray_i00.png",
+    "local_path": "/assets/interlude/icons/etc_leather_gray_i00.png"
+  },
+  "mat_sealed_tallum_tunic_texture": {
+    "game_item_id": 5485,
+    "icon_file": "etc_leather_yellow_i00.png",
+    "local_path": "/assets/interlude/icons/etc_leather_yellow_i00.png"
+  },
+  "mat_shyeeds_bow_shaft": {
+    "game_item_id": 8718,
+    "icon_file": "etc_branch_gold_i00.png",
+    "local_path": "/assets/interlude/icons/etc_branch_gold_i00.png"
+  },
+  "mat_silver_mold": {
+    "game_item_id": 1886,
+    "icon_file": "etc_silver_mold_i00.png",
+    "local_path": "/assets/interlude/icons/etc_silver_mold_i00.png"
+  },
+  "mat_silver_nugget": {
+    "game_item_id": 1873,
+    "icon_file": "etc_silver_i00.png",
+    "local_path": "/assets/interlude/icons/etc_silver_i00.png"
+  },
+  "mat_sirras_blade_edge": {
+    "game_item_id": 8712,
+    "icon_file": "etc_sword_body_i00.png",
+    "local_path": "/assets/interlude/icons/etc_sword_body_i00.png"
+  },
+  "mat_sobekks_hurricane_edge": {
+    "game_item_id": 8719,
+    "icon_file": "etc_sword_body_i00.png",
+    "local_path": "/assets/interlude/icons/etc_sword_body_i00.png"
+  },
+  "mat_soul_bow_stave": {
+    "game_item_id": 5534,
+    "icon_file": "etc_branch_gold_i00.png",
+    "local_path": "/assets/interlude/icons/etc_branch_gold_i00.png"
+  },
+  "mat_soul_separator_head": {
+    "game_item_id": 5537,
+    "icon_file": "etc_sword_body_i00.png",
+    "local_path": "/assets/interlude/icons/etc_sword_body_i00.png"
+  },
+  "mat_spiritual_eye_piece": {
+    "game_item_id": 8341,
+    "icon_file": "etc_squares_gray_i00.png",
+    "local_path": "/assets/interlude/icons/etc_squares_gray_i00.png"
+  },
+  "mat_steel": {
+    "game_item_id": 1880,
+    "icon_file": "etc_lump_black_i00.png",
+    "local_path": "/assets/interlude/icons/etc_lump_black_i00.png"
+  },
+  "mat_steel_mold": {
+    "game_item_id": 1883,
+    "icon_file": "etc_mold_i00.png",
+    "local_path": "/assets/interlude/icons/etc_mold_i00.png"
+  },
+  "mat_stem": {
+    "game_item_id": 1864,
+    "icon_file": "etc_branch_gold_i00.png",
+    "local_path": "/assets/interlude/icons/etc_branch_gold_i00.png"
+  },
+  "mat_stone_of_purity": {
+    "game_item_id": 1875,
+    "icon_file": "etc_crystal_ball_white_i00.png",
+    "local_path": "/assets/interlude/icons/etc_crystal_ball_white_i00.png"
+  },
+  "mat_suede": {
+    "game_item_id": 1866,
+    "icon_file": "etc_suede_i00.png",
+    "local_path": "/assets/interlude/icons/etc_suede_i00.png"
+  },
+  "mat_sword_of_ipos_blade": {
+    "game_item_id": 8713,
+    "icon_file": "etc_sword_body_i00.png",
+    "local_path": "/assets/interlude/icons/etc_sword_body_i00.png"
+  },
+  "mat_sword_of_miracles_edge": {
+    "game_item_id": 5546,
+    "icon_file": "etc_sword_body_i00.png",
+    "local_path": "/assets/interlude/icons/etc_sword_body_i00.png"
+  },
+  "mat_synthetic_cokes": {
+    "game_item_id": 1888,
+    "icon_file": "etc_synthetic_cokes_i00.png",
+    "local_path": "/assets/interlude/icons/etc_synthetic_cokes_i00.png"
+  },
+  "mat_tallum_blade_edge": {
+    "game_item_id": 5548,
+    "icon_file": "etc_sword_body_i00.png",
+    "local_path": "/assets/interlude/icons/etc_sword_body_i00.png"
+  },
+  "mat_tallum_glaive_edge": {
+    "game_item_id": 5541,
+    "icon_file": "etc_sword_body_i00.png",
+    "local_path": "/assets/interlude/icons/etc_sword_body_i00.png"
+  },
+  "mat_themis_tongue_piece": {
+    "game_item_id": 8720,
+    "icon_file": "etc_bark_gold_i00.png",
+    "local_path": "/assets/interlude/icons/etc_bark_gold_i00.png"
+  },
+  "mat_thread": {
+    "game_item_id": 1868,
+    "icon_file": "etc_skein_white_i00.png",
+    "local_path": "/assets/interlude/icons/etc_skein_white_i00.png"
+  },
+  "mat_tiphons_spear_edge": {
+    "game_item_id": 8717,
+    "icon_file": "etc_sword_body_i00.png",
+    "local_path": "/assets/interlude/icons/etc_sword_body_i00.png"
+  },
+  "mat_varnish": {
+    "game_item_id": 1865,
+    "icon_file": "etc_pouch_yellow_i00.png",
+    "local_path": "/assets/interlude/icons/etc_pouch_yellow_i00.png"
+  },
+  "mat_varnish_of_purity": {
+    "game_item_id": 1887,
+    "icon_file": "etc_potion_clear_i00.png",
+    "local_path": "/assets/interlude/icons/etc_potion_clear_i00.png"
+  },
+  "mat_warsmith_holder": {
+    "game_item_id": 5554,
+    "icon_file": "etc_blacksmiths_frame_i00.png",
+    "local_path": "/assets/interlude/icons/etc_blacksmiths_frame_i00.png"
+  },
+  "mat_warsmiths_mold": {
+    "game_item_id": 5552,
+    "icon_file": "etc_blacksmiths_frame_i00.png",
+    "local_path": "/assets/interlude/icons/etc_blacksmiths_frame_i00.png"
+  },
+  "recipe_5332": {
+    "game_item_id": 5332,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5334": {
+    "game_item_id": 5334,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5336": {
+    "game_item_id": 5336,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5338": {
+    "game_item_id": 5338,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5340": {
+    "game_item_id": 5340,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5346": {
+    "game_item_id": 5346,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5348": {
+    "game_item_id": 5348,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5350": {
+    "game_item_id": 5350,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5352": {
+    "game_item_id": 5352,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5354": {
+    "game_item_id": 5354,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5364": {
+    "game_item_id": 5364,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5366": {
+    "game_item_id": 5366,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5368": {
+    "game_item_id": 5368,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5370": {
+    "game_item_id": 5370,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5380": {
+    "game_item_id": 5380,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5382": {
+    "game_item_id": 5382,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5392": {
+    "game_item_id": 5392,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5394": {
+    "game_item_id": 5394,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5404": {
+    "game_item_id": 5404,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5406": {
+    "game_item_id": 5406,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5416": {
+    "game_item_id": 5416,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5418": {
+    "game_item_id": 5418,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5420": {
+    "game_item_id": 5420,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5422": {
+    "game_item_id": 5422,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5424": {
+    "game_item_id": 5424,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5426": {
+    "game_item_id": 5426,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5428": {
+    "game_item_id": 5428,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5430": {
+    "game_item_id": 5430,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5432": {
+    "game_item_id": 5432,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5434": {
+    "game_item_id": 5434,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5438": {
+    "game_item_id": 5438,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5440": {
+    "game_item_id": 5440,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5442": {
+    "game_item_id": 5442,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5444": {
+    "game_item_id": 5444,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5446": {
+    "game_item_id": 5446,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5448": {
+    "game_item_id": 5448,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5450": {
+    "game_item_id": 5450,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5452": {
+    "game_item_id": 5452,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5456": {
+    "game_item_id": 5456,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5458": {
+    "game_item_id": 5458,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5460": {
+    "game_item_id": 5460,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5462": {
+    "game_item_id": 5462,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5464": {
+    "game_item_id": 5464,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5466": {
+    "game_item_id": 5466,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5468": {
+    "game_item_id": 5468,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_5470": {
+    "game_item_id": 5470,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_6853": {
+    "game_item_id": 6853,
+    "icon_file": "etc_recipe_black_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_black_i00.png"
+  },
+  "recipe_6855": {
+    "game_item_id": 6855,
+    "icon_file": "etc_recipe_black_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_black_i00.png"
+  },
+  "recipe_6857": {
+    "game_item_id": 6857,
+    "icon_file": "etc_recipe_black_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_black_i00.png"
+  },
+  "recipe_6859": {
+    "game_item_id": 6859,
+    "icon_file": "etc_recipe_black_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_black_i00.png"
+  },
+  "recipe_6861": {
+    "game_item_id": 6861,
+    "icon_file": "etc_recipe_black_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_black_i00.png"
+  },
+  "recipe_6863": {
+    "game_item_id": 6863,
+    "icon_file": "etc_recipe_black_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_black_i00.png"
+  },
+  "recipe_6865": {
+    "game_item_id": 6865,
+    "icon_file": "etc_recipe_black_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_black_i00.png"
+  },
+  "recipe_6867": {
+    "game_item_id": 6867,
+    "icon_file": "etc_recipe_black_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_black_i00.png"
+  },
+  "recipe_6869": {
+    "game_item_id": 6869,
+    "icon_file": "etc_recipe_black_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_black_i00.png"
+  },
+  "recipe_6871": {
+    "game_item_id": 6871,
+    "icon_file": "etc_recipe_black_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_black_i00.png"
+  },
+  "recipe_6873": {
+    "game_item_id": 6873,
+    "icon_file": "etc_recipe_black_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_black_i00.png"
+  },
+  "recipe_6875": {
+    "game_item_id": 6875,
+    "icon_file": "etc_recipe_black_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_black_i00.png"
+  },
+  "recipe_6877": {
+    "game_item_id": 6877,
+    "icon_file": "etc_recipe_black_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_black_i00.png"
+  },
+  "recipe_6879": {
+    "game_item_id": 6879,
+    "icon_file": "etc_recipe_black_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_black_i00.png"
+  },
+  "recipe_6881": {
+    "game_item_id": 6881,
+    "icon_file": "etc_recipe_black_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_black_i00.png"
+  },
+  "recipe_6883": {
+    "game_item_id": 6883,
+    "icon_file": "etc_recipe_black_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_black_i00.png"
+  },
+  "recipe_6885": {
+    "game_item_id": 6885,
+    "icon_file": "etc_recipe_black_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_black_i00.png"
+  },
+  "recipe_6887": {
+    "game_item_id": 6887,
+    "icon_file": "etc_recipe_black_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_black_i00.png"
+  },
+  "recipe_6891": {
+    "game_item_id": 6891,
+    "icon_file": "etc_recipe_black_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_black_i00.png"
+  },
+  "recipe_6893": {
+    "game_item_id": 6893,
+    "icon_file": "etc_recipe_black_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_black_i00.png"
+  },
+  "recipe_6895": {
+    "game_item_id": 6895,
+    "icon_file": "etc_recipe_black_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_black_i00.png"
+  },
+  "recipe_6897": {
+    "game_item_id": 6897,
+    "icon_file": "etc_recipe_black_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_black_i00.png"
+  },
+  "recipe_6899": {
+    "game_item_id": 6899,
+    "icon_file": "etc_recipe_black_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_black_i00.png"
+  },
+  "recipe_7580": {
+    "game_item_id": 7580,
+    "icon_file": "etc_recipe_black_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_black_i00.png"
+  },
+  "recipe_8300": {
+    "game_item_id": 8300,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_8314": {
+    "game_item_id": 8314,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_8316": {
+    "game_item_id": 8316,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_8326": {
+    "game_item_id": 8326,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_8487": {
+    "game_item_id": 8487,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_8690": {
+    "game_item_id": 8690,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_8692": {
+    "game_item_id": 8692,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_8694": {
+    "game_item_id": 8694,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_8696": {
+    "game_item_id": 8696,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_8698": {
+    "game_item_id": 8698,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_8700": {
+    "game_item_id": 8700,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_8702": {
+    "game_item_id": 8702,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_8704": {
+    "game_item_id": 8704,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_8706": {
+    "game_item_id": 8706,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_8708": {
+    "game_item_id": 8708,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "recipe_8710": {
+    "game_item_id": 8710,
+    "icon_file": "etc_recipe_violet_i00.png",
+    "local_path": "/assets/interlude/icons/etc_recipe_violet_i00.png"
+  },
+  "weapon_a_barakiels_axe": {
+    "game_item_id": 8680,
+    "icon_file": "weapon_barakiel_axe_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_barakiel_axe_i00.png"
+  },
+  "weapon_a_behemoths_tuning_fork": {
+    "game_item_id": 8681,
+    "icon_file": "weapon_tuning_fork_of_behemoth_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_tuning_fork_of_behemoth_i00.png"
+  },
+  "weapon_a_blood_tornado": {
+    "game_item_id": 269,
+    "icon_file": "weapon_blood_tornado_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_blood_tornado_i00.png"
+  },
+  "weapon_a_bloody_orchid": {
+    "game_item_id": 235,
+    "icon_file": "weapon_bloody_orchid_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_bloody_orchid_i00.png"
+  },
+  "weapon_a_branch_of_the_mother_tree": {
+    "game_item_id": 213,
+    "icon_file": "weapon_worldtrees_branch_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_worldtrees_branch_i00.png"
+  },
+  "weapon_a_cabrios_hand": {
+    "game_item_id": 8687,
+    "icon_file": "weapon_hand_of_cabrio_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_hand_of_cabrio_i00.png"
+  },
+  "weapon_a_carnage_bow": {
+    "game_item_id": 288,
+    "icon_file": "weapon_carnium_bow_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_carnium_bow_i00.png"
+  },
+  "weapon_a_daimon_crystal": {
+    "game_item_id": 8688,
+    "icon_file": "weapon_crystal_of_deamon_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_crystal_of_deamon_i00.png"
+  },
+  "weapon_a_dark_legions_edge": {
+    "game_item_id": 2500,
+    "icon_file": "weapon_dark_legions_edge_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_dark_legions_edge_i00.png"
+  },
+  "weapon_a_dasparions_staff": {
+    "game_item_id": 212,
+    "icon_file": "weapon_dasparions_staff_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_dasparions_staff_i00.png"
+  },
+  "weapon_a_destroyer_hammer": {
+    "game_item_id": 7899,
+    "icon_file": "weapon_hammer_of_destroyer_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_hammer_of_destroyer_i00.png"
+  },
+  "weapon_a_doom_crusher": {
+    "game_item_id": 7902,
+    "icon_file": "weapon_doom_crusher_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_doom_crusher_i00.png"
+  },
+  "weapon_a_dragon_grinder": {
+    "game_item_id": 270,
+    "icon_file": "weapon_dragon_grinder_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_dragon_grinder_i00.png"
+  },
+  "weapon_a_dragon_slayer": {
+    "game_item_id": 81,
+    "icon_file": "weapon_dragon_slayer_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_dragon_slayer_i00.png"
+  },
+  "weapon_a_elemental_sword": {
+    "game_item_id": 150,
+    "icon_file": "weapon_elemental_sword_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_elemental_sword_i00.png"
+  },
+  "weapon_a_elysian": {
+    "game_item_id": 164,
+    "icon_file": "weapon_elysian_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_elysian_i00.png"
+  },
+  "weapon_a_flaming_dragon_skull": {
+    "game_item_id": 7895,
+    "icon_file": "weapon_dragon_flame_head_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_dragon_flame_head_i00.png"
+  },
+  "weapon_a_halberd": {
+    "game_item_id": 98,
+    "icon_file": "weapon_halbard_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_halbard_i00.png"
+  },
+  "weapon_a_infernal_master": {
+    "game_item_id": 7884,
+    "icon_file": "weapon_inferno_master_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_inferno_master_i00.png"
+  },
+  "weapon_a_meteor_shower": {
+    "game_item_id": 2504,
+    "icon_file": "weapon_meteor_shower_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_meteor_shower_i00.png"
+  },
+  "weapon_a_naga_storm": {
+    "game_item_id": 8682,
+    "icon_file": "weapon_naga_storm_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_naga_storm_i00.png"
+  },
+  "weapon_a_shyeeds_bow": {
+    "game_item_id": 8684,
+    "icon_file": "weapon_shyid_bow_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_shyid_bow_i00.png"
+  },
+  "weapon_a_sirras_blade": {
+    "game_item_id": 8678,
+    "icon_file": "weapon_sirr_blade_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_sirr_blade_i00.png"
+  },
+  "weapon_a_sobekks_hurricane": {
+    "game_item_id": 8685,
+    "icon_file": "weapon_sobekk_hurricane_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_sobekk_hurricane_i00.png"
+  },
+  "weapon_a_soul_bow": {
+    "game_item_id": 289,
+    "icon_file": "weapon_soul_bow_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_soul_bow_i00.png"
+  },
+  "weapon_a_soul_separator": {
+    "game_item_id": 236,
+    "icon_file": "weapon_soul_separator_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_soul_separator_i00.png"
+  },
+  "weapon_a_spiritual_eye": {
+    "game_item_id": 7894,
+    "icon_file": "weapon_eye_of_soul_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_eye_of_soul_i00.png"
+  },
+  "weapon_a_sword_of_ipos": {
+    "game_item_id": 8679,
+    "icon_file": "weapon_sword_of_ipos_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_sword_of_ipos_i00.png"
+  },
+  "weapon_a_sword_of_miracles": {
+    "game_item_id": 151,
+    "icon_file": "weapon_sword_of_miracle_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_sword_of_miracle_i00.png"
+  },
+  "weapon_a_tallum_blade": {
+    "game_item_id": 80,
+    "icon_file": "weapon_tallum_blade_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_tallum_blade_i00.png"
+  },
+  "weapon_a_tallum_glaive": {
+    "game_item_id": 305,
+    "icon_file": "weapon_tallum_glaive_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_tallum_glaive_i00.png"
+  },
+  "weapon_a_themis_tongue": {
+    "game_item_id": 8686,
+    "icon_file": "weapon_tongue_of_themis_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_tongue_of_themis_i00.png"
+  },
+  "weapon_a_tiphons_spear": {
+    "game_item_id": 8683,
+    "icon_file": "weapon_tiphon_spear_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_tiphon_spear_i00.png"
+  },
+  "weapon_s_angel_slayer": {
+    "game_item_id": 6367,
+    "icon_file": "weapon_angel_slayer_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_angel_slayer_i00.png"
+  },
+  "weapon_s_arcana_mace": {
+    "game_item_id": 6579,
+    "icon_file": "weapon_arcana_mace_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_arcana_mace_i00.png"
+  },
+  "weapon_s_basalt_battlehammer": {
+    "game_item_id": 6365,
+    "icon_file": "weapon_basalt_battlehammer_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_basalt_battlehammer_i00.png"
+  },
+  "weapon_s_demon_splinter": {
+    "game_item_id": 6371,
+    "icon_file": "weapon_demon_splinter_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_demon_splinter_i00.png"
+  },
+  "weapon_s_draconic_bow": {
+    "game_item_id": 7575,
+    "icon_file": "weapon_draconic_bow_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_draconic_bow_i00.png"
+  },
+  "weapon_s_dragon_hunter_axe": {
+    "game_item_id": 6369,
+    "icon_file": "weapon_dragon_hunter_axe_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_dragon_hunter_axe_i00.png"
+  },
+  "weapon_s_forgotten_blade": {
+    "game_item_id": 6364,
+    "icon_file": "weapon_forgotten_blade_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_forgotten_blade_i00.png"
+  },
+  "weapon_s_heavens_divider": {
+    "game_item_id": 6372,
+    "icon_file": "weapon_heavens_divider_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_heavens_divider_i00.png"
+  },
+  "weapon_s_imperial_staff": {
+    "game_item_id": 6366,
+    "icon_file": "weapon_imperial_staff_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_imperial_staff_i00.png"
+  },
+  "weapon_s_saint_spear": {
+    "game_item_id": 6370,
+    "icon_file": "weapon_saint_spear_i00.png",
+    "local_path": "/assets/interlude/icons/weapon_saint_spear_i00.png"
+  }
+}

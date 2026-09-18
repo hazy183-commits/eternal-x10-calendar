@@ -1,0 +1,2215 @@
+[
+  {
+    "item_key": "armor_a_sealed_armor_of_nightmare",
+    "game_item_id": 5311,
+    "name": "Sealed Armor of Nightmare",
+    "grade": "A",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_a_sealed_boots_of_nightmare",
+    "game_item_id": 5314,
+    "name": "Sealed Boots of Nightmare",
+    "grade": "A",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_a_sealed_dark_crystal_boots",
+    "game_item_id": 5291,
+    "name": "Sealed Dark Crystal Boots",
+    "grade": "A",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_a_sealed_dark_crystal_breastplate",
+    "game_item_id": 5287,
+    "name": "Sealed Dark Crystal Breastplate",
+    "grade": "A",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_a_sealed_dark_crystal_gaiters",
+    "game_item_id": 5288,
+    "name": "Sealed Dark Crystal Gaiters",
+    "grade": "A",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_a_sealed_dark_crystal_gloves",
+    "game_item_id": 5290,
+    "name": "Sealed Dark Crystal Gloves",
+    "grade": "A",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_a_sealed_dark_crystal_helmet",
+    "game_item_id": 5289,
+    "name": "Sealed Dark Crystal Helmet",
+    "grade": "A",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_a_sealed_dark_crystal_leather_armor",
+    "game_item_id": 5297,
+    "name": "Sealed Dark Crystal Leather Armor",
+    "grade": "A",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_a_sealed_dark_crystal_leggings",
+    "game_item_id": 5298,
+    "name": "Sealed Dark Crystal Leggings",
+    "grade": "A",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_a_sealed_dark_crystal_robe",
+    "game_item_id": 5308,
+    "name": "Sealed Dark Crystal Robe",
+    "grade": "A",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_a_sealed_dark_crystal_shield",
+    "game_item_id": 5292,
+    "name": "Sealed Dark Crystal Shield",
+    "grade": "A",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_a_sealed_gauntlets_of_nightmare",
+    "game_item_id": 5313,
+    "name": "Sealed Gauntlets of Nightmare",
+    "grade": "A",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_a_sealed_helm_of_nightmare",
+    "game_item_id": 5312,
+    "name": "Sealed Helm of Nightmare",
+    "grade": "A",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_a_sealed_leather_armor_of_nightmare",
+    "game_item_id": 5320,
+    "name": "Sealed Leather Armor of Nightmare",
+    "grade": "A",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_a_sealed_majestic_boots",
+    "game_item_id": 5319,
+    "name": "Sealed Majestic Boots",
+    "grade": "A",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_a_sealed_majestic_circlet",
+    "game_item_id": 5317,
+    "name": "Sealed Majestic Circlet",
+    "grade": "A",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_a_sealed_majestic_gauntlets",
+    "game_item_id": 5318,
+    "name": "Sealed Majestic Gauntlets",
+    "grade": "A",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_a_sealed_majestic_leather_armor",
+    "game_item_id": 5323,
+    "name": "Sealed Majestic Leather Armor",
+    "grade": "A",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_a_sealed_majestic_plate_armor",
+    "game_item_id": 5316,
+    "name": "Sealed Majestic Plate Armor",
+    "grade": "A",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_a_sealed_majestic_robe",
+    "game_item_id": 5329,
+    "name": "Sealed Majestic Robe",
+    "grade": "A",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_a_sealed_robe_of_nightmare",
+    "game_item_id": 5326,
+    "name": "Sealed Robe of Nightmare",
+    "grade": "A",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_a_sealed_shield_of_nightmare",
+    "game_item_id": 5315,
+    "name": "Sealed Shield of Nightmare",
+    "grade": "A",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_a_sealed_tallum_boots",
+    "game_item_id": 5296,
+    "name": "Sealed Tallum Boots",
+    "grade": "A",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_a_sealed_tallum_gloves",
+    "game_item_id": 5295,
+    "name": "Sealed Tallum Gloves",
+    "grade": "A",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_a_sealed_tallum_helmet",
+    "game_item_id": 5294,
+    "name": "Sealed Tallum Helmet",
+    "grade": "A",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_a_sealed_tallum_leather_armor",
+    "game_item_id": 5301,
+    "name": "Sealed Tallum Leather Armor",
+    "grade": "A",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_a_sealed_tallum_plate_armor",
+    "game_item_id": 5293,
+    "name": "Sealed Tallum Plate Armor",
+    "grade": "A",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_a_sealed_tallum_stockings",
+    "game_item_id": 5305,
+    "name": "Sealed Tallum Stockings",
+    "grade": "A",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_a_sealed_tallum_tunic",
+    "game_item_id": 5304,
+    "name": "Sealed Tallum Tunic",
+    "grade": "A",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_s_sealed_draconic_leather_armor",
+    "game_item_id": 6680,
+    "name": "Sealed Draconic Leather Armor",
+    "grade": "S",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_s_sealed_draconic_leather_boots",
+    "game_item_id": 6682,
+    "name": "Sealed Draconic Leather Boots",
+    "grade": "S",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_s_sealed_draconic_leather_gloves",
+    "game_item_id": 6681,
+    "name": "Sealed Draconic Leather Gloves",
+    "grade": "S",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_s_sealed_draconic_leather_helmet",
+    "game_item_id": 6683,
+    "name": "Sealed Draconic Leather Helmet",
+    "grade": "S",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_s_sealed_imperial_crusader_boots",
+    "game_item_id": 6677,
+    "name": "Sealed Imperial Crusader Boots",
+    "grade": "S",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_s_sealed_imperial_crusader_breastplate",
+    "game_item_id": 6674,
+    "name": "Sealed Imperial Crusader Breastplate",
+    "grade": "S",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_s_sealed_imperial_crusader_gaiters",
+    "game_item_id": 6675,
+    "name": "Sealed Imperial Crusader Gaiters",
+    "grade": "S",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_s_sealed_imperial_crusader_gauntlets",
+    "game_item_id": 6676,
+    "name": "Sealed Imperial Crusader Gauntlets",
+    "grade": "S",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_s_sealed_imperial_crusader_helmet",
+    "game_item_id": 6679,
+    "name": "Sealed Imperial Crusader Helmet",
+    "grade": "S",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_s_sealed_imperial_crusader_shield",
+    "game_item_id": 6678,
+    "name": "Sealed Imperial Crusader Shield",
+    "grade": "S",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_s_sealed_major_arcana_boots",
+    "game_item_id": 6686,
+    "name": "Sealed Major Arcana Boots",
+    "grade": "S",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_s_sealed_major_arcana_circlet",
+    "game_item_id": 6687,
+    "name": "Sealed Major Arcana Circlet",
+    "grade": "S",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_s_sealed_major_arcana_gloves",
+    "game_item_id": 6685,
+    "name": "Sealed Major Arcana Gloves",
+    "grade": "S",
+    "category": "armor"
+  },
+  {
+    "item_key": "armor_s_sealed_major_arcana_robe",
+    "game_item_id": 6684,
+    "name": "Sealed Major Arcana Robe",
+    "grade": "S",
+    "category": "armor"
+  },
+  {
+    "item_key": "test_blade",
+    "game_item_id": null,
+    "name": "[TEST] Blade",
+    "grade": "S",
+    "category": "component"
+  },
+  {
+    "item_key": "mat_adamantite_nugget",
+    "game_item_id": null,
+    "name": "Adamantite Nugget",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_angel_slayer_blade",
+    "game_item_id": null,
+    "name": "Angel Slayer Blade",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_animal_bone",
+    "game_item_id": null,
+    "name": "Animal Bone",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_animal_skin",
+    "game_item_id": 1868,
+    "name": "Animal Skin",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_arcana_mace_head",
+    "game_item_id": null,
+    "name": "Arcana Mace Head",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_arcsmiths_anvil",
+    "game_item_id": 5553,
+    "name": "Arcsmith's Anvil",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_artisans_frame",
+    "game_item_id": null,
+    "name": "Artisan's Frame",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_asofe",
+    "game_item_id": 4043,
+    "name": "Asofe",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_barakiels_axe_piece",
+    "game_item_id": null,
+    "name": "Barakiel's Axe Piece",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_basalt_battlehammer_head",
+    "game_item_id": null,
+    "name": "Basalt Battlehammer Head",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_behemoths_tuning_fork_piece",
+    "game_item_id": null,
+    "name": "Behemoth's Tuning Fork Piece",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_blacksmiths_frame",
+    "game_item_id": 1892,
+    "name": "Blacksmith's Frame",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_blood_tornado_edge",
+    "game_item_id": null,
+    "name": "Blood Tornado Edge",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_bloody_orchid_head",
+    "game_item_id": null,
+    "name": "Bloody Orchid Head",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_braided_hemp",
+    "game_item_id": null,
+    "name": "Braided Hemp",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_branch_of_the_mother_tree_head",
+    "game_item_id": null,
+    "name": "Branch of the Mother Tree Head",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_cabrios_hand_head",
+    "game_item_id": null,
+    "name": "Cabrio's Hand Head",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_carnage_bow_stave",
+    "game_item_id": null,
+    "name": "Carnage Bow Stave",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_charcoal",
+    "game_item_id": null,
+    "name": "Charcoal",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_coal",
+    "game_item_id": null,
+    "name": "Coal",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_coarse_bone_powder",
+    "game_item_id": null,
+    "name": "Coarse Bone Powder",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_cokes",
+    "game_item_id": null,
+    "name": "Cokes",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_compound_braid",
+    "game_item_id": 1889,
+    "name": "Compound Braid",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_cord",
+    "game_item_id": 1884,
+    "name": "Cord",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_crafted_leather",
+    "game_item_id": 1894,
+    "name": "Crafted Leather",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_craftsman_mold",
+    "game_item_id": null,
+    "name": "Craftsman Mold",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_crystal_a_grade",
+    "game_item_id": 1461,
+    "name": "Crystal: A Grade",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_crystal_b_grade",
+    "game_item_id": 1460,
+    "name": "Crystal: B Grade",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_crystal_s_grade",
+    "game_item_id": 1462,
+    "name": "Crystal: S Grade",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_daimon_crystal_fragment",
+    "game_item_id": null,
+    "name": "Daimon Crystal Fragment",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_dark_legions_edge_blade",
+    "game_item_id": null,
+    "name": "Dark Legion's Edge Blade",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_dasparions_staff_edge",
+    "game_item_id": null,
+    "name": "Dasparion's Staff Edge",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_demon_splinter_blade",
+    "game_item_id": null,
+    "name": "Demon Splinter Blade",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_doom_crusher_head",
+    "game_item_id": null,
+    "name": "Doom Crusher Head",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_draconic_bow_shaft",
+    "game_item_id": null,
+    "name": "Draconic Bow Shaft",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_dragon_grinder_edge",
+    "game_item_id": null,
+    "name": "Dragon Grinder Edge",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_dragon_hunter_axe_blade",
+    "game_item_id": null,
+    "name": "Dragon Hunter Axe Blade",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_dragon_slayer_edge",
+    "game_item_id": null,
+    "name": "Dragon Slayer Edge",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_durable_metal_plate",
+    "game_item_id": null,
+    "name": "Durable Metal Plate",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_elemental_sword_edge",
+    "game_item_id": null,
+    "name": "Elemental Sword Edge",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_elysian_head",
+    "game_item_id": null,
+    "name": "Elysian Head",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_enria",
+    "game_item_id": null,
+    "name": "Enria",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_flaming_dragon_skull_piece",
+    "game_item_id": null,
+    "name": "Flaming Dragon Skull Piece",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_forgotten_blade_edge",
+    "game_item_id": null,
+    "name": "Forgotten Blade Edge",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_gemstone_a",
+    "game_item_id": 2133,
+    "name": "Gemstone A",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_gemstone_b",
+    "game_item_id": 2132,
+    "name": "Gemstone B",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_gemstone_s",
+    "game_item_id": 2134,
+    "name": "Gemstone S",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_halberd_edge",
+    "game_item_id": null,
+    "name": "Halberd Edge",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_hammer_piece_of_destroyer",
+    "game_item_id": null,
+    "name": "Hammer Piece of Destroyer",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_heavens_divider_edge",
+    "game_item_id": null,
+    "name": "Heavens Divider Edge",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_high_grade_suede",
+    "game_item_id": 1885,
+    "name": "High Grade Suede",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_imperial_staff_head",
+    "game_item_id": null,
+    "name": "Imperial Staff Head",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_infernal_master_blade",
+    "game_item_id": null,
+    "name": "Infernal Master Blade",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_iron_ore",
+    "game_item_id": null,
+    "name": "Iron Ore",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_leather",
+    "game_item_id": 1867,
+    "name": "Leather",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_leolins_mold",
+    "game_item_id": 5551,
+    "name": "Leolin's Mold",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_maestro_anvil_lock",
+    "game_item_id": 4046,
+    "name": "Maestro Anvil Lock",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_maestro_holder",
+    "game_item_id": null,
+    "name": "Maestro Holder",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_maestro_mold",
+    "game_item_id": 4048,
+    "name": "Maestro Mold",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_metallic_fiber",
+    "game_item_id": 1895,
+    "name": "Metallic Fiber",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_metallic_thread",
+    "game_item_id": null,
+    "name": "Metallic Thread",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_meteor_shower_head",
+    "game_item_id": null,
+    "name": "Meteor Shower Head",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_mithril_alloy",
+    "game_item_id": 1890,
+    "name": "Mithril Alloy",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_mithril_ore",
+    "game_item_id": null,
+    "name": "Mithril Ore",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_mold_glue",
+    "game_item_id": null,
+    "name": "Mold Glue",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_mold_hardener",
+    "game_item_id": null,
+    "name": "Mold Hardener",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_mold_lubricant",
+    "game_item_id": null,
+    "name": "Mold Lubricant",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_naga_storm_piece",
+    "game_item_id": null,
+    "name": "Naga Storm Piece",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_oriharukon",
+    "game_item_id": null,
+    "name": "Oriharukon",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_oriharukon_ore",
+    "game_item_id": null,
+    "name": "Oriharukon Ore",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_saint_spear_blade",
+    "game_item_id": null,
+    "name": "Saint Spear Blade",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_armor_of_nightmare_pattern",
+    "game_item_id": 5522,
+    "name": "Sealed Armor of Nightmare Pattern",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_boots_of_nightmare_lining",
+    "game_item_id": 5502,
+    "name": "Sealed Boots of Nightmare Lining",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_dark_crystal_boots_lining",
+    "game_item_id": 5496,
+    "name": "Sealed Dark Crystal Boots Lining",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_dark_crystal_breastplate_pattern",
+    "game_item_id": 5520,
+    "name": "Sealed Dark Crystal Breastplate Pattern",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_dark_crystal_gaiters_pattern",
+    "game_item_id": 5524,
+    "name": "Sealed Dark Crystal Gaiters Pattern",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_dark_crystal_gloves_design",
+    "game_item_id": 5508,
+    "name": "Sealed Dark Crystal Gloves Design",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_dark_crystal_helmet_design",
+    "game_item_id": 5525,
+    "name": "Sealed Dark Crystal Helmet Design",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_dark_crystal_leather_armor_pattern",
+    "game_item_id": 5478,
+    "name": "Sealed Dark Crystal Leather Armor Pattern",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_dark_crystal_leggings_design",
+    "game_item_id": 5482,
+    "name": "Sealed Dark Crystal Leggings Design",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_dark_crystal_robe_fabric",
+    "game_item_id": 5486,
+    "name": "Sealed Dark Crystal Robe Fabric",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_dark_crystal_shield_fragment",
+    "game_item_id": 5494,
+    "name": "Sealed Dark Crystal Shield Fragment",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_draconic_leather_armor_part",
+    "game_item_id": 6707,
+    "name": "Sealed Draconic Leather Armor Part",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_draconic_leather_boots_design",
+    "game_item_id": 6709,
+    "name": "Sealed Draconic Leather Boots Design",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_draconic_leather_gloves_fabric",
+    "game_item_id": 6708,
+    "name": "Sealed Draconic Leather Gloves Fabric",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_draconic_leather_helmet_pattern",
+    "game_item_id": 6710,
+    "name": "Sealed Draconic Leather Helmet Pattern",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_gauntlets_of_nightmare_design",
+    "game_item_id": 5514,
+    "name": "Sealed Gauntlets of Nightmare Design",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_helm_of_nightmare_design",
+    "game_item_id": 5527,
+    "name": "Sealed Helm of Nightmare Design",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_imperial_crusader_boots_design",
+    "game_item_id": 6704,
+    "name": "Sealed Imperial Crusader Boots Design",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_imperial_crusader_breastplate_part",
+    "game_item_id": 6701,
+    "name": "Sealed Imperial Crusader Breastplate Part",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_imperial_crusader_gaiters_pattern",
+    "game_item_id": 6702,
+    "name": "Sealed Imperial Crusader Gaiters Pattern",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_imperial_crusader_gauntlets_design",
+    "game_item_id": 6703,
+    "name": "Sealed Imperial Crusader Gauntlets Design",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_imperial_crusader_helmet_pattern",
+    "game_item_id": 6706,
+    "name": "Sealed Imperial Crusader Helmet Pattern",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_imperial_crusader_shield_part",
+    "game_item_id": 6705,
+    "name": "Sealed Imperial Crusader Shield Part",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_leather_armor_of_nightmare_fabric",
+    "game_item_id": 5480,
+    "name": "Sealed Leather Armor of Nightmare Fabric",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_majestic_boots_lining",
+    "game_item_id": 5503,
+    "name": "Sealed Majestic Boots Lining",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_majestic_circlet_design",
+    "game_item_id": 5528,
+    "name": "Sealed Majestic Circlet Design",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_majestic_gauntlets_design",
+    "game_item_id": 5515,
+    "name": "Sealed Majestic Gauntlets Design",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_majestic_leather_armor_fabric",
+    "game_item_id": 5481,
+    "name": "Sealed Majestic Leather Armor Fabric",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_majestic_plate_armor_pattern",
+    "game_item_id": 5523,
+    "name": "Sealed Majestic Plate Armor Pattern",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_majestic_robe_fabric",
+    "game_item_id": 5488,
+    "name": "Sealed Majestic Robe Fabric",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_major_arcana_boots_design",
+    "game_item_id": 6713,
+    "name": "Sealed Major Arcana Boots Design",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_major_arcana_circlet_pattern",
+    "game_item_id": 6714,
+    "name": "Sealed Major Arcana Circlet Pattern",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_major_arcana_gloves_fabric",
+    "game_item_id": 6712,
+    "name": "Sealed Major Arcana Gloves Fabric",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_major_arcana_robe_part",
+    "game_item_id": 6711,
+    "name": "Sealed Major Arcana Robe Part",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_nightmare_robe_fabric",
+    "game_item_id": 5487,
+    "name": "Sealed Nightmare Robe Fabric",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_shield_of_nightmare_fragment",
+    "game_item_id": 5495,
+    "name": "Sealed Shield of Nightmare Fragment",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_tallum_boots_lining",
+    "game_item_id": 5497,
+    "name": "Sealed Tallum Boots Lining",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_tallum_gloves_design",
+    "game_item_id": 5509,
+    "name": "Sealed Tallum Gloves Design",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_tallum_helm_design",
+    "game_item_id": 5526,
+    "name": "Sealed Tallum Helm Design",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_tallum_leather_armor_pattern",
+    "game_item_id": 5479,
+    "name": "Sealed Tallum Leather Armor Pattern",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_tallum_plate_armor_pattern",
+    "game_item_id": 5521,
+    "name": "Sealed Tallum Plate Armor Pattern",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_tallum_stockings_fabric",
+    "game_item_id": 5489,
+    "name": "Sealed Tallum Stockings Fabric",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sealed_tallum_tunic_texture",
+    "game_item_id": 5485,
+    "name": "Sealed Tallum Tunic Texture",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_shyeeds_bow_shaft",
+    "game_item_id": null,
+    "name": "Shyeed's Bow Shaft",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_silver_mold",
+    "game_item_id": 1893,
+    "name": "Silver Mold",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_silver_nugget",
+    "game_item_id": null,
+    "name": "Silver Nugget",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sirras_blade_edge",
+    "game_item_id": null,
+    "name": "Sirra's Blade Edge",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sobekks_hurricane_edge",
+    "game_item_id": null,
+    "name": "Sobekk's Hurricane Edge",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_soul_bow_stave",
+    "game_item_id": null,
+    "name": "Soul Bow Stave",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_soul_separator_head",
+    "game_item_id": null,
+    "name": "Soul Separator Head",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_spiritual_eye_piece",
+    "game_item_id": null,
+    "name": "Spiritual Eye Piece",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_steel",
+    "game_item_id": null,
+    "name": "Steel",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_steel_mold",
+    "game_item_id": null,
+    "name": "Steel Mold",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_stem",
+    "game_item_id": null,
+    "name": "Stem",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_stone_of_purity",
+    "game_item_id": null,
+    "name": "Stone of Purity",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_suede",
+    "game_item_id": null,
+    "name": "Suede",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sword_of_ipos_blade",
+    "game_item_id": null,
+    "name": "Sword of Ipos Blade",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_sword_of_miracles_edge",
+    "game_item_id": null,
+    "name": "Sword of Miracles Edge",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_synthetic_cokes",
+    "game_item_id": 1888,
+    "name": "Synthetic Cokes",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_tallum_blade_edge",
+    "game_item_id": null,
+    "name": "Tallum Blade Edge",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_tallum_glaive_edge",
+    "game_item_id": null,
+    "name": "Tallum Glaive Edge",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_themis_tongue_piece",
+    "game_item_id": null,
+    "name": "Themis' Tongue Piece",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_thread",
+    "game_item_id": null,
+    "name": "Thread",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_tiphons_spear_edge",
+    "game_item_id": null,
+    "name": "Tiphon's Spear Edge",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_varnish",
+    "game_item_id": null,
+    "name": "Varnish",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_varnish_of_purity",
+    "game_item_id": 1887,
+    "name": "Varnish of Purity",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_warsmith_holder",
+    "game_item_id": null,
+    "name": "Warsmith's Holder",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "mat_warsmiths_mold",
+    "game_item_id": 5552,
+    "name": "Warsmith's Mold",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "test_alloy",
+    "game_item_id": null,
+    "name": "[TEST] Alloy",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "test_coke",
+    "game_item_id": null,
+    "name": "[TEST] Coke",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "test_ore",
+    "game_item_id": null,
+    "name": "[TEST] Ore",
+    "grade": null,
+    "category": "material"
+  },
+  {
+    "item_key": "recipe_5332",
+    "game_item_id": 5332,
+    "name": "Recipe: Sealed Dark Crystal Leather Armor (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5334",
+    "game_item_id": 5334,
+    "name": "Recipe: Sealed Tallum Leather Armor (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5336",
+    "game_item_id": 5336,
+    "name": "Recipe: Sealed Leather Armor of Nightmare (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5338",
+    "game_item_id": 5338,
+    "name": "Recipe: Sealed Majestic Leather Armor (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5340",
+    "game_item_id": 5340,
+    "name": "Recipe: Sealed Dark Crystal Leggings (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5346",
+    "game_item_id": 5346,
+    "name": "Recipe: Sealed Tallum Tunic (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5348",
+    "game_item_id": 5348,
+    "name": "Recipe: Sealed Dark Crystal Robe (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5350",
+    "game_item_id": 5350,
+    "name": "Recipe: Sealed Robe of Nightmare (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5352",
+    "game_item_id": 5352,
+    "name": "Recipe: Sealed Majestic Robe (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5354",
+    "game_item_id": 5354,
+    "name": "Recipe: Sealed Tallum Stockings (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5364",
+    "game_item_id": 5364,
+    "name": "Recipe: Sealed Dark Crystal Shield (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5366",
+    "game_item_id": 5366,
+    "name": "Recipe: Sealed Shield of Nightmare (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5368",
+    "game_item_id": 5368,
+    "name": "Recipe: Sealed Dark Crystal Boots (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5370",
+    "game_item_id": 5370,
+    "name": "Recipe: Sealed Tallum Boots (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5380",
+    "game_item_id": 5380,
+    "name": "Recipe: Sealed Boots of Nightmare (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5382",
+    "game_item_id": 5382,
+    "name": "Recipe: Sealed Majestic Boots (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5392",
+    "game_item_id": 5392,
+    "name": "Recipe: Sealed Dark Crystal Gloves (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5394",
+    "game_item_id": 5394,
+    "name": "Recipe: Sealed Tallum Gloves (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5404",
+    "game_item_id": 5404,
+    "name": "Recipe: Sealed Gauntlets of Nightmare (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5406",
+    "game_item_id": 5406,
+    "name": "Recipe: Sealed Majestic Gauntlets (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5416",
+    "game_item_id": 5416,
+    "name": "Recipe: Sealed Dark Crystal Breastplate (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5418",
+    "game_item_id": 5418,
+    "name": "Recipe: Sealed Tallum Plate Armor (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5420",
+    "game_item_id": 5420,
+    "name": "Recipe: Sealed Armor of Nightmare (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5422",
+    "game_item_id": 5422,
+    "name": "Recipe: Sealed Majestic Plate Armor (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5424",
+    "game_item_id": 5424,
+    "name": "Recipe: Sealed Dark Crystal Gaiters (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5426",
+    "game_item_id": 5426,
+    "name": "Recipe: Sealed Dark Crystal Helmet (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5428",
+    "game_item_id": 5428,
+    "name": "Recipe: Sealed Tallum Helmet (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5430",
+    "game_item_id": 5430,
+    "name": "Recipe: Sealed Helm of Nightmare (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5432",
+    "game_item_id": 5432,
+    "name": "Recipe: Sealed Majestic Circlet (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5434",
+    "game_item_id": 5434,
+    "name": "Recipe: Dragon Slayer (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5438",
+    "game_item_id": 5438,
+    "name": "Recipe: Meteor Shower (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5440",
+    "game_item_id": 5440,
+    "name": "Recipe: Elysian (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5442",
+    "game_item_id": 5442,
+    "name": "Recipe: Soul Bow (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5444",
+    "game_item_id": 5444,
+    "name": "Recipe: Carnage Bow (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5446",
+    "game_item_id": 5446,
+    "name": "Recipe: Bloody Orchid (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5448",
+    "game_item_id": 5448,
+    "name": "Recipe: Soul Separator (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5450",
+    "game_item_id": 5450,
+    "name": "Recipe: Dragon Grinder (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5452",
+    "game_item_id": 5452,
+    "name": "Recipe: Blood Tornado (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5456",
+    "game_item_id": 5456,
+    "name": "Recipe: Tallum Glaive (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5458",
+    "game_item_id": 5458,
+    "name": "Recipe: Halberd (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5460",
+    "game_item_id": 5460,
+    "name": "Recipe: Dasparion's Staff (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5462",
+    "game_item_id": 5462,
+    "name": "Recipe: Branch of the Mother Tree (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5464",
+    "game_item_id": 5464,
+    "name": "Recipe: Dark Legion's Edge (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5466",
+    "game_item_id": 5466,
+    "name": "Recipe: Sword of Miracles (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5468",
+    "game_item_id": 5468,
+    "name": "Recipe: Elemental Sword (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_5470",
+    "game_item_id": 5470,
+    "name": "Recipe: Tallum Blade (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_6853",
+    "game_item_id": 6853,
+    "name": "Recipe: Sealed Imperial Crusader Breastplate (60%)",
+    "grade": "S",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_6855",
+    "game_item_id": 6855,
+    "name": "Recipe: Sealed Imperial Crusader Gaiters (60%)",
+    "grade": "S",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_6857",
+    "game_item_id": 6857,
+    "name": "Recipe: Sealed Imperial Crusader Gauntlets (60%)",
+    "grade": "S",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_6859",
+    "game_item_id": 6859,
+    "name": "Recipe: Sealed Imperial Crusader Boots (60%)",
+    "grade": "S",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_6861",
+    "game_item_id": 6861,
+    "name": "Recipe: Sealed Imperial Crusader Shield (60%)",
+    "grade": "S",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_6863",
+    "game_item_id": 6863,
+    "name": "Recipe: Sealed Imperial Crusader Helmet (60%)",
+    "grade": "S",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_6865",
+    "game_item_id": 6865,
+    "name": "Recipe: Sealed Draconic Leather Armor (60%)",
+    "grade": "S",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_6867",
+    "game_item_id": 6867,
+    "name": "Recipe: Sealed Draconic Leather Gloves (60%)",
+    "grade": "S",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_6869",
+    "game_item_id": 6869,
+    "name": "Recipe: Sealed Draconic Leather Boots (60%)",
+    "grade": "S",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_6871",
+    "game_item_id": 6871,
+    "name": "Recipe: Sealed Draconic Leather Helmet (60%)",
+    "grade": "S",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_6873",
+    "game_item_id": 6873,
+    "name": "Recipe: Sealed Major Arcana Robe (60%)",
+    "grade": "S",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_6875",
+    "game_item_id": 6875,
+    "name": "Recipe: Sealed Major Arcana Gloves (60%)",
+    "grade": "S",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_6877",
+    "game_item_id": 6877,
+    "name": "Recipe: Sealed Major Arcana Boots (60%)",
+    "grade": "S",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_6879",
+    "game_item_id": 6879,
+    "name": "Recipe: Sealed Major Arcana Circlet (60%)",
+    "grade": "S",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_6881",
+    "game_item_id": 6881,
+    "name": "Recipe: Forgotten Blade (60%)",
+    "grade": "S",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_6883",
+    "game_item_id": 6883,
+    "name": "Recipe: Basalt Battlehammer (60%)",
+    "grade": "S",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_6885",
+    "game_item_id": 6885,
+    "name": "Recipe: Imperial Staff (60%)",
+    "grade": "S",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_6887",
+    "game_item_id": 6887,
+    "name": "Recipe: Angel Slayer (60%)",
+    "grade": "S",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_6891",
+    "game_item_id": 6891,
+    "name": "Recipe: Dragon Hunter Axe (60%)",
+    "grade": "S",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_6893",
+    "game_item_id": 6893,
+    "name": "Recipe: Saint Spear (60%)",
+    "grade": "S",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_6895",
+    "game_item_id": 6895,
+    "name": "Recipe: Demon Splinter (60%)",
+    "grade": "S",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_6897",
+    "game_item_id": 6897,
+    "name": "Recipe: Heaven's Divider (60%)",
+    "grade": "S",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_6899",
+    "game_item_id": 6899,
+    "name": "Recipe: Arcana Mace (60%)",
+    "grade": "S",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_7580",
+    "game_item_id": 7580,
+    "name": "Recipe: Draconic Bow (60%)",
+    "grade": "S",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_8300",
+    "game_item_id": 8300,
+    "name": "Recipe: Infernal Master (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_8314",
+    "game_item_id": 8314,
+    "name": "Recipe: Spiritual Eye (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_8316",
+    "game_item_id": 8316,
+    "name": "Recipe: Flaming Dragon Skull (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_8326",
+    "game_item_id": 8326,
+    "name": "Recipe: Doom Crusher (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_8487",
+    "game_item_id": 8487,
+    "name": "Recipe: Destroyer Hammer (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_8690",
+    "game_item_id": 8690,
+    "name": "Recipe: Sirra's Blade (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_8692",
+    "game_item_id": 8692,
+    "name": "Recipe: Sword of Ipos (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_8694",
+    "game_item_id": 8694,
+    "name": "Recipe: Barakiel's Axe (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_8696",
+    "game_item_id": 8696,
+    "name": "Recipe: Behemoth's Tuning Fork (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_8698",
+    "game_item_id": 8698,
+    "name": "Recipe: Naga Storm (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_8700",
+    "game_item_id": 8700,
+    "name": "Recipe: Tiphon's Spear (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_8702",
+    "game_item_id": 8702,
+    "name": "Recipe: Shyeed's Bow (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_8704",
+    "game_item_id": 8704,
+    "name": "Recipe: Sobekk's Hurricane (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_8706",
+    "game_item_id": 8706,
+    "name": "Recipe: Themis' Tongue (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_8708",
+    "game_item_id": 8708,
+    "name": "Recipe: Cabrio's Hand (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "recipe_8710",
+    "game_item_id": 8710,
+    "name": "Recipe: Daimon Crystal (60%)",
+    "grade": "A",
+    "category": "recipe"
+  },
+  {
+    "item_key": "test_weapon",
+    "game_item_id": null,
+    "name": "[TEST] Broń testowa",
+    "grade": "S",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_barakiels_axe",
+    "game_item_id": null,
+    "name": "Barakiel's Axe",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_behemoths_tuning_fork",
+    "game_item_id": null,
+    "name": "Behemoth's Tuning Fork",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_blood_tornado",
+    "game_item_id": null,
+    "name": "Blood Tornado",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_bloody_orchid",
+    "game_item_id": null,
+    "name": "Bloody Orchid",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_branch_of_the_mother_tree",
+    "game_item_id": null,
+    "name": "Branch of the Mother Tree",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_cabrios_hand",
+    "game_item_id": null,
+    "name": "Cabrio's Hand",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_carnage_bow",
+    "game_item_id": null,
+    "name": "Carnage Bow",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_daimon_crystal",
+    "game_item_id": null,
+    "name": "Daimon Crystal",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_dark_legions_edge",
+    "game_item_id": null,
+    "name": "Dark Legion's Edge",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_dasparions_staff",
+    "game_item_id": null,
+    "name": "Dasparion's Staff",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_destroyer_hammer",
+    "game_item_id": null,
+    "name": "Destroyer Hammer",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_doom_crusher",
+    "game_item_id": null,
+    "name": "Doom Crusher",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_dragon_grinder",
+    "game_item_id": null,
+    "name": "Dragon Grinder",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_dragon_slayer",
+    "game_item_id": null,
+    "name": "Dragon Slayer",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_elemental_sword",
+    "game_item_id": null,
+    "name": "Elemental Sword",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_elysian",
+    "game_item_id": null,
+    "name": "Elysian",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_flaming_dragon_skull",
+    "game_item_id": null,
+    "name": "Flaming Dragon Skull",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_halberd",
+    "game_item_id": null,
+    "name": "Halberd",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_infernal_master",
+    "game_item_id": null,
+    "name": "Infernal Master",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_meteor_shower",
+    "game_item_id": null,
+    "name": "Meteor Shower",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_naga_storm",
+    "game_item_id": null,
+    "name": "Naga Storm",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_shyeeds_bow",
+    "game_item_id": null,
+    "name": "Shyeed's Bow",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_sirras_blade",
+    "game_item_id": null,
+    "name": "Sirra's Blade",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_sobekks_hurricane",
+    "game_item_id": null,
+    "name": "Sobekk's Hurricane",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_soul_bow",
+    "game_item_id": null,
+    "name": "Soul Bow",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_soul_separator",
+    "game_item_id": null,
+    "name": "Soul Separator",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_spiritual_eye",
+    "game_item_id": null,
+    "name": "Spiritual Eye",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_sword_of_ipos",
+    "game_item_id": null,
+    "name": "Sword of Ipos",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_sword_of_miracles",
+    "game_item_id": null,
+    "name": "Sword of Miracles",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_tallum_blade",
+    "game_item_id": null,
+    "name": "Tallum Blade",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_tallum_glaive",
+    "game_item_id": null,
+    "name": "Tallum Glaive",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_themis_tongue",
+    "game_item_id": null,
+    "name": "Themis' Tongue",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_a_tiphons_spear",
+    "game_item_id": null,
+    "name": "Tiphon's Spear",
+    "grade": "A",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_s_angel_slayer",
+    "game_item_id": null,
+    "name": "Angel Slayer",
+    "grade": "S",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_s_arcana_mace",
+    "game_item_id": null,
+    "name": "Arcana Mace",
+    "grade": "S",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_s_basalt_battlehammer",
+    "game_item_id": null,
+    "name": "Basalt Battlehammer",
+    "grade": "S",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_s_demon_splinter",
+    "game_item_id": null,
+    "name": "Demon Splinter",
+    "grade": "S",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_s_draconic_bow",
+    "game_item_id": null,
+    "name": "Draconic Bow",
+    "grade": "S",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_s_dragon_hunter_axe",
+    "game_item_id": null,
+    "name": "Dragon Hunter Axe",
+    "grade": "S",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_s_forgotten_blade",
+    "game_item_id": null,
+    "name": "Forgotten Blade",
+    "grade": "S",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_s_heavens_divider",
+    "game_item_id": null,
+    "name": "Heaven's Divider",
+    "grade": "S",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_s_imperial_staff",
+    "game_item_id": null,
+    "name": "Imperial Staff",
+    "grade": "S",
+    "category": "weapon"
+  },
+  {
+    "item_key": "weapon_s_saint_spear",
+    "game_item_id": null,
+    "name": "Saint Spear",
+    "grade": "S",
+    "category": "weapon"
+  }
+]
+

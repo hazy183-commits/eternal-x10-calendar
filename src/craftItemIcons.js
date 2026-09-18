@@ -1,6 +1,21 @@
-const ICON_API='/api/interlude/items/';
-const cache=new Map();
-const clean=v=>String(v||'').trim();
-function candidates(file){const f=clean(file).replace(/^.*[\\/]/,'');if(!f)return[];return [`/assets/interlude/icons/${f}`,`https://resources.elmorelab.com/images/icons/${f}`,`https://resources.elmorelab.com/images/${f}`]}
-export async function getInterludeItemIcon(id,name=''){const key=`${id||''}:${name}`;if(cache.has(key))return cache.get(key);let iconFile='';if(id){try{const r=await fetch(`${ICON_API}${encodeURIComponent(id)}`);if(r.ok){const d=await r.json();iconFile=d?.iconFile||d?.icon||d?.icon_file||d?.data?.iconFile||''}}catch{}}const out={iconFile,candidates:candidates(iconFile)};cache.set(key,out);return out}
-export function installIconWithFallback(node,urls=[],fallback='⚒'){if(!node)return;let i=0;const next=()=>{if(i>=urls.length){node.textContent=fallback;return}const img=new Image();img.alt='';img.loading='lazy';img.onload=()=>{node.replaceChildren(img)};img.onerror=next;img.src=urls[i++]};next()}
+import iconMap from './craftItemIconMap.json' with { type: 'json' };
+
+const byGameItemId = new Map(
+  Object.values(iconMap).map(entry => [Number(entry.game_item_id), entry.local_path]),
+);
+
+export function craftItemIconPath(itemKey, gameItemId = null) {
+  return iconMap[itemKey]?.local_path || byGameItemId.get(Number(gameItemId || 0)) || '';
+}
+
+export function craftItemIconMarkup(item = {}, className = 'craft-item-icon') {
+  const src = craftItemIconPath(item.item_key, item.game_item_id);
+  if (!src) return `<span class="${className} is-placeholder" aria-hidden="true">⚒</span>`;
+  const alt = String(item.name || '').replaceAll('&', '&amp;').replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;');
+  return `<span class="${className}"><img src="${src}" alt="${alt}" width="32" height="32" loading="lazy" decoding="async"></span>`;
+}
+
+export function craftItemIconMap() {
+  return iconMap;
+}
