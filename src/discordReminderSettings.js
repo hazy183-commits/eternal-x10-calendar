@@ -15,7 +15,8 @@ function previewMarkup(preview) {
       <p><small>🕒 START</small><b>${esc(preview.start)}</b></p>
       <p><small>🏷️ TYP</small><b>${esc(preview.type || 'EVENT')}</b></p>
       <p class="wide"><small>📍 LOKALIZACJA</small><b>${esc(preview.location || '—')}</b></p>
-      <p class="wide"><small>👥 ZAPISY</small><b>Będzie: ${Number(preview.yes_count || 0)} · Może: ${Number(preview.maybe_count || 0)}</b></p>
+      <p><small>👥 BĘDĘ</small><b>${Number(preview.yes_count || 0)}</b><span>${esc(preview.yes_names || '—')}</span></p>
+      <p><small>🤔 MOŻE</small><b>${Number(preview.maybe_count || 0)}</b><span>${esc(preview.maybe_names || '—')}</span></p>
     </div>
   </article>`;
 }
