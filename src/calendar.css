@@ -72,3 +72,68 @@
   .unified-calendar .calendar-heading h2 { font-size:19px; }
   #dailyEvents .public-signup-count .psc-main b{font-size:15px!important}
 }
+
+/* Mobile calendar: collapse the desktop seven-column event grid into a compact card. */
+@media(max-width:820px) {
+  .unified-calendar .event-list {
+    width:100%!important;
+    min-width:0!important;
+    overflow:hidden!important;
+  }
+  .unified-calendar .event-row {
+    grid-template-columns:52px minmax(0,1fr) auto!important;
+    grid-auto-columns:auto!important;
+    gap:5px 8px!important;
+    width:100%!important;
+    min-width:0!important;
+    box-sizing:border-box!important;
+    padding:9px!important;
+  }
+  .unified-calendar .event-row>* {
+    min-width:0!important;
+  }
+  .unified-calendar .event-row .event-time {
+    grid-column:1!important;
+    grid-row:1 / span 2!important;
+    align-self:start!important;
+    text-align:center!important;
+    white-space:nowrap!important;
+  }
+  .unified-calendar .event-row .event-info {
+    grid-column:2!important;
+    grid-row:1!important;
+    min-width:0!important;
+    overflow:hidden!important;
+  }
+  .unified-calendar .event-row .event-info h3 {
+    min-width:0!important;
+    overflow-wrap:anywhere!important;
+    word-break:break-word!important;
+  }
+  .unified-calendar .event-row>.type-chip {
+    grid-column:2!important;
+    grid-row:2!important;
+    justify-self:start!important;
+    max-width:100%!important;
+    min-width:0!important;
+    overflow-wrap:anywhere!important;
+  }
+  .unified-calendar .event-row>.row-status {
+    grid-column:3!important;
+    grid-row:1 / span 2!important;
+    min-width:0!important;
+    max-width:100%!important;
+    text-align:right!important;
+    white-space:nowrap!important;
+  }
+  .unified-calendar .event-row>.public-signup-count {
+    grid-column:2!important;
+    grid-row:3!important;
+    max-width:100%!important;
+    min-width:0!important;
+  }
+  .unified-calendar .event-row .event-thumb,
+  .unified-calendar .event-row .event-location {
+    display:none!important;
+  }
+}
