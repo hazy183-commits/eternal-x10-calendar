@@ -127,7 +127,7 @@ function ensureStyles() {
     #craftProjectForm select[name="targetItemKey"] option,#craftStockForm select[name="itemKey"] option{font-weight:600;color:#e4e0d7;background:#090d0d;padding:4px}
     #craftProjectForm select[name="priority"]{font-weight:800;color:#e4c16d}
     #craftStockForm select[name="itemKey"]{font-weight:700}
-    @media(max-width:900px){#craftProjectForm.craft-form.project{grid-template-columns:1fr 100px!important}#craftProjectForm select[name="priority"]{grid-column:1/-1}#craftProjectForm button{grid-column:1/-1}}
+    @media(max-width:900px){#craftProjectForm.craft-form.project{grid-template-columns:1fr 100px!important}#craftProjectForm .craft-priority-control{grid-column:1/-1}#craftProjectForm button{grid-column:1/-1}}
   `;
   document.head.appendChild(style);
 }
