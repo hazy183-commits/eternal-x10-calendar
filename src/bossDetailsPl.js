@@ -159,8 +159,10 @@ function ensureStyles() {
     #bossInfoModalPl{position:fixed;inset:0;z-index:30000;display:none;place-items:center;padding:18px;background:#000d;backdrop-filter:blur(8px)}
     #bossInfoModalPl.open{display:grid}
     .boss-info-pl-card{position:relative;display:grid;grid-template-columns:minmax(340px,42%) 1fr;width:min(1220px,97vw);max-height:92vh;overflow:auto;border:1px solid #a77d34;background:linear-gradient(145deg,#111615,#080b0a);box-shadow:0 30px 100px #000;color:#eee7da;scrollbar-color:#aa813d #171815;scrollbar-width:thin}
-    .boss-info-pl-art{min-height:620px;background-position:center top;background-size:contain;background-repeat:no-repeat;position:sticky;top:0;align-self:start;background-color:#070908;filter:brightness(1.22) contrast(1.04) saturate(1.08)}
-    .boss-info-pl-art::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent 88%,#0b0e0d99 100%);pointer-events:none}
+    .boss-info-pl-art{min-height:620px;position:sticky;top:0;align-self:start;background-color:#070908;overflow:hidden;isolation:isolate}
+    .boss-info-pl-art::before{content:'';position:absolute;inset:-28px;z-index:0;background-image:var(--boss-art);background-position:center;background-size:cover;background-repeat:no-repeat;filter:blur(18px) brightness(.38) saturate(.9);transform:scale(1.08);pointer-events:none}
+    .boss-info-pl-art-image{position:absolute;inset:0;z-index:1;background-image:var(--boss-art);background-position:center;background-size:contain;background-repeat:no-repeat;filter:drop-shadow(0 16px 30px #000b) brightness(1.16) contrast(1.04) saturate(1.08);pointer-events:none}
+    .boss-info-pl-art::after{content:'';position:absolute;inset:0;z-index:2;background:linear-gradient(90deg,transparent 84%,#0b0e0dcc 100%),linear-gradient(0deg,#080b0a99 0%,transparent 24%,transparent 78%,#080b0a55 100%);pointer-events:none}
     .boss-info-pl-content{padding:32px 36px 34px;min-width:0}
     .boss-info-pl-kicker{display:block;color:#e0b75f;font-size:11px;font-weight:900;letter-spacing:.17em;text-transform:uppercase}
     .boss-info-pl-content h3{margin:8px 0 5px;color:#fff4df;font:700 38px/1.05 Georgia,serif;text-transform:uppercase;text-shadow:0 1px 12px #d69b3230}
@@ -174,7 +176,7 @@ function ensureStyles() {
     .boss-info-pl-drop-summary{display:flex;justify-content:space-between;gap:10px;margin:10px 0 0;color:#aaa196;font-size:11px}.boss-info-pl-drop-summary b{color:#d3b16e}.boss-info-pl-mechanics{margin:0;padding-left:19px;color:#d0c8bc;font-size:13px;line-height:1.65}.boss-info-pl-mechanics li+li{margin-top:6px}
     .boss-info-pl-reference{margin-top:20px;padding:11px 12px;border:1px solid #2f332d;background:#0a0d0c;color:#82877f;font-size:9px;line-height:1.55}.boss-info-pl-reference b{color:#aeb7a7}.boss-info-pl-source{color:#c7a45f;text-decoration:none}.boss-info-pl-source:hover{text-decoration:underline}
     .boss-info-pl-close{position:absolute;right:14px;top:10px;z-index:5;width:42px;height:42px;border:1px solid #b1843a;background:#10120ff2;color:#f1ca74;font-size:26px;cursor:pointer;box-shadow:0 4px 18px #0008}.boss-info-pl-close:hover,.boss-info-pl-close:focus-visible{background:#2a1d0c;color:#ffe09a;outline:2px solid #d2a34d;outline-offset:2px}
-    @media(max-width:760px){#bossInfoModalPl{padding:7px}.boss-info-pl-card{grid-template-columns:1fr;width:100%;max-height:95vh}.boss-info-pl-art{position:relative;min-height:300px;height:300px;filter:brightness(1.28) contrast(1.03) saturate(1.1)}.boss-info-pl-art::after{background:linear-gradient(0deg,#0b0e0dd9 0%,transparent 42%)}.boss-info-pl-content{padding:22px 16px}.boss-info-pl-content h3{font-size:31px}.boss-info-pl-text{font-size:14px}.boss-info-pl-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.boss-info-pl-server{grid-template-columns:1fr 1fr}.boss-info-pl-drop-head,.boss-info-pl-drop-row{grid-template-columns:minmax(0,1fr) 58px 72px;gap:7px;padding:10px 8px}.boss-info-pl-drop-row{font-size:11px}.boss-info-pl-drop-wrap{max-height:350px}}
+    @media(max-width:760px){#bossInfoModalPl{padding:7px}.boss-info-pl-card{grid-template-columns:1fr;width:100%;max-height:95vh}.boss-info-pl-art{position:relative;min-height:300px;height:300px}.boss-info-pl-art::after{background:linear-gradient(0deg,#0b0e0dd9 0%,transparent 42%)}.boss-info-pl-content{padding:22px 16px}.boss-info-pl-content h3{font-size:31px}.boss-info-pl-text{font-size:14px}.boss-info-pl-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.boss-info-pl-server{grid-template-columns:1fr 1fr}.boss-info-pl-drop-head,.boss-info-pl-drop-row{grid-template-columns:minmax(0,1fr) 58px 72px;gap:7px;padding:10px 8px}.boss-info-pl-drop-row{font-size:11px}.boss-info-pl-drop-wrap{max-height:350px}}
   `;
   document.head.appendChild(style);
 }
@@ -189,7 +191,7 @@ function ensureModal() {
   modal.innerHTML = `
     <article class="boss-info-pl-card" role="dialog" aria-modal="true" aria-labelledby="bossInfoPlTitle">
       <button class="boss-info-pl-close" type="button" aria-label="Zamknij">×</button>
-      <div class="boss-info-pl-art"></div>
+      <div class="boss-info-pl-art"><span class="boss-info-pl-art-image" aria-hidden="true"></span></div>
       <div class="boss-info-pl-content">
         <span class="boss-info-pl-kicker">Hall of Legends · Eternal x10 · Interlude</span>
         <h3 id="bossInfoPlTitle">Boss</h3><span class="boss-info-pl-kind">Epic Raid Boss</span>
@@ -219,7 +221,7 @@ function openBossDetails(name, trigger) {
   const modal = ensureModal(); const art = bossArtworkUrl(name); modal._returnTarget = trigger || null;
   modal.querySelector('#bossInfoPlTitle').textContent = name; modal.querySelector('#bossInfoPlText').textContent = info.text;
   modal.querySelector('#bossInfoPlPlace').textContent = info.place; modal.querySelector('#bossInfoPlKind').textContent = info.kind; modal.querySelector('.boss-info-pl-kind').textContent = info.kind;
-  const artBox = modal.querySelector('.boss-info-pl-art'); artBox.style.backgroundImage = art ? `url(${JSON.stringify(art)})` : 'none'; artBox.style.backgroundPosition = info.artPos || '50% 50%';
+  const artBox = modal.querySelector('.boss-info-pl-art'); const artImage = art ? `url(${JSON.stringify(art)})` : 'none'; artBox.style.setProperty('--boss-art', artImage);
   modal.querySelector('#bossInfoPlStats').innerHTML = [statMarkup('Level',info.level),statMarkup('HP',info.hp),statMarkup('P. Atk',info.pAtk),statMarkup('M. Atk',info.mAtk),statMarkup('P. Def',info.pDef),statMarkup('M. Def',info.mDef)].join('');
   modal.querySelector('#bossInfoPlDrop').innerHTML = (info.drops || []).map(dropMarkup).join('') || '<div class="boss-info-pl-drop-row"><b>—</b><span></span><span></span></div>';
   modal.querySelector('#bossInfoPlMechanics').innerHTML = (info.mechanics || []).map(x => `<li>${esc(x)}</li>`).join('');
