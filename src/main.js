@@ -139,10 +139,11 @@ function renderCalendar() {
   calendarClockSignature = calendarClockKey();
 }
 
-function miniRow(event) { const sameDay = event.date === (event.isOlympiadSchedule ? olympiadLocalDate() : dateKey(today)); const countdown = countdownTargetFor(event); return `<div class="mini-event" data-boss-name="${safe(artworkName(event))}" data-event-type="${safe(event.type)}" data-event-location="${safe(event.location || '')}" data-owner-clan="${safe(event.ownerClan || '')}" data-countdown-target="${countdown.target.toISOString()}" data-countdown-label="${countdown.label}"><time>${sameDay ? event.time : formatDate(dateFromEvent(event), { day: '2-digit', month: 'short', ...(event.isOlympiadSchedule ? { timeZone: 'Europe/Warsaw' } : {}) })}</time><div><b>${safe(event.name)}</b><span>${event.type}${event.location ? ` · ${safe(event.location)}` : ''}${event.ownerClan ? ` · Właściciel: ${safe(event.ownerClan)}` : ''}</span>${event.isOlympiadSchedule ? `<span class="olympiad-window">${event.timeRange}</span>` : ''}</div></div>`; }
+function miniRow(event) { const sameDay = event.date === (event.isOlympiadSchedule ? olympiadLocalDate() : dateKey(today)); const countdown = countdownTargetFor(event); return `<div class="mini-event" data-boss-name="${safe(artworkName(event))}" data-event-type="${safe(event.type)}" data-event-location="${safe(event.location || '')}" data-owner-clan="${safe(event.ownerClan || '')}" data-event-start-time="${safe(event.time || '')}" data-countdown-target="${countdown.target.toISOString()}" data-countdown-label="${countdown.label}"><time>${sameDay ? event.time : formatDate(dateFromEvent(event), { day: '2-digit', month: 'short', ...(event.isOlympiadSchedule ? { timeZone: 'Europe/Warsaw' } : {}) })}</time><div><b>${safe(event.name)}</b><span>${event.type}${event.location ? ` · ${safe(event.location)}` : ''}${event.ownerClan ? ` · Właściciel: ${safe(event.ownerClan)}` : ''}</span>${event.isOlympiadSchedule ? `<span class="olympiad-window">${event.timeRange}</span>` : ''}</div></div>`; }
 function renderOverview() { const todays = sorted(events.filter((event) => !event.isPvpSchedule && event.date === (event.isOlympiadSchedule ? olympiadLocalDate() : dateKey(today)))); $('#todayCount').textContent = todays.length; $('#todayEvents').innerHTML = todays.length ? todays.map(miniRow).join('') : '<p class="empty-mini">Dziś nie zaplanowano wydarzeń.</p>'; const upcoming = getUpcoming().slice(0, 5); $('#upcomingEvents').innerHTML = upcoming.length ? upcoming.map(miniRow).join('') : '<p class="empty-mini">Brak nadchodzących wydarzeń.</p>'; refreshBossArtwork($('#statistics')); renderPvpSidebar($('#pvpSidebarEvents')); }
 function eventWindowLabel(event) { if (event?.isOlympiadSchedule) return `${formatOlympiadDate(event)} · ${event.timeRange} · Europe/Warsaw`; if (!event?.isBossRespawn && !event?.isSiegeSchedule) return `${formatDate(dateFromEvent(event), { weekday: 'long', day: 'numeric', month: 'long' })} · ${event.time}${event.location ? ` · ${event.location}` : ''}`; const start = dateFromEvent(event); const end = event.endAt ? new Date(event.endAt) : new Date(start.getTime() + event.duration * 60000); const endTime = new Intl.DateTimeFormat('pl-PL', { timeZone: TIME_ZONE, hour: '2-digit', minute: '2-digit' }).format(end); return `${formatLocalDateTime(start, { dateStyle: 'full', timeStyle: 'short' })}–${endTime}${event.location ? ` · ${event.location}` : ''}`; }
 function renderFeaturedOwner(ownerClan) { const chip = $('#nextOwner'); if (!chip) return; const owner = String(ownerClan || '').trim(); chip.hidden = !owner; chip.textContent = owner ? `WŁAŚCICIEL: ${owner}` : ''; }
+function renderFeaturedStart(time) { const box = $('#nextStartTime'); if (!box) return; const value = String(time || '').slice(0, 5); box.hidden = !/^([01]\d|2[0-3]):[0-5]\d$/.test(value); const caption = box.querySelector('span'); const label = box.querySelector('b'); if (caption) caption.textContent = 'GODZINA ROZPOCZĘCIA'; if (label) label.textContent = box.hidden ? '--:--' : value; }
 function featuredDescription(event) { const description = String(event?.description || '').trim(); const owner = String(event?.ownerClan || '').trim(); if (!owner) return description; const ownerSuffix = `Właściciel: ${owner}.`; return description.endsWith(ownerSuffix) ? description.slice(0, -ownerSuffix.length).trim() : description; }
 function renderNext() {
   const event = getUpcoming()[0];
@@ -163,6 +164,7 @@ function renderNext() {
     $('#nextType').textContent = 'KALENDARZ KLANU';
     $('#nextType').className = 'type-chip';
     renderFeaturedOwner('');
+    renderFeaturedStart('');
     $('#nextMeta').textContent = 'Dodaj nowe wydarzenie w panelu administratora.';
     $('#nextDescription').textContent = 'Gdy wydarzenie zostanie zaplanowane, pojawi się tutaj z pełnym odliczaniem.';
     $('#nextStatus').textContent = 'OCZEKUJE';
@@ -173,6 +175,7 @@ function renderNext() {
   $('#nextType').textContent = event.type;
   $('#nextType').className = `type-chip ${event.type.toLowerCase().replaceAll(' ', '-')}`;
   renderFeaturedOwner(event.ownerClan);
+  renderFeaturedStart(event.time);
   $('#nextMeta').textContent = eventWindowLabel(event);
   $('#nextDescription').textContent = featuredDescription(event);
   $('#nextStatus').textContent = eventStatus(event);
