@@ -76,7 +76,7 @@ export function installClanContentManager(supabase){
       const links=main.querySelectorAll('.zone-stack a');if(links[0]&&settings.discord_url)links[0].href=settings.discord_url;if(links[1]&&settings.youtube_url)links[1].href=settings.youtube_url;if(links[2]&&settings.server_url)links[2].href=settings.server_url;
     };
 
-    const loadAnnouncements=async()=>{await getRole();const {data,error}=await supabase.from('clan_announcements').select('id,title,body,is_pinned,is_active,created_at,updated_at').order('is_pinned',{ascending:false}).order('created_at',{ascending:false});if(error){console.error(error);return}announcements=data||[];renderAnnouncements()};
+    const loadAnnouncements=async()=>{const p=await getRole();if(!p){announcements=[];renderAnnouncements();return}const {data,error}=await supabase.from('clan_announcements').select('id,title,body,is_pinned,is_active,created_at,updated_at').order('is_pinned',{ascending:false}).order('created_at',{ascending:false});if(error){console.error('ANNOUNCEMENTS LOAD FAILED',error);return}announcements=data||[];renderAnnouncements()};
     const renderAnnouncements=()=>{
       const visible=announcements.filter(a=>a.is_active);
       const full=annPanel?.querySelector('#obAnnouncementsView');
