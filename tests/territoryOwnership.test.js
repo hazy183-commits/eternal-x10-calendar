@@ -53,3 +53,16 @@ Rune LastKingdom Concrete 18:00 04.10.2026
     Rune: 'LastKingdom',
   });
 });
+
+test('ignores the table icon misread as Vv before the clan column', () => {
+  const rows = parseTerritoryOwners(`
+Oren Vv InFerNalL arr 18:00 11.10.2026
+Aden vv Rise PirataDM 18:00 27.09.2026
+Goddard ww Rising Riska 180011102026
+Schuttgart W OrzelBialy Unqual 18:0020.09.2026
+Gludio V ProGame Thurston 18:00 04.10.2026
+  `, 'castle');
+  assert.deepEqual(Object.fromEntries(rows.map((row) => [row.territory_name, row.owner_clan])), {
+    Oren: 'InFerNalL', Aden: 'Rise', Goddard: 'Rising', Schuttgart: 'OrzelBialy', Gludio: 'ProGame',
+  });
+});

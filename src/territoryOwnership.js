@@ -16,6 +16,7 @@ const OWNER_LABEL = /\b(?:owner|owned\s+by|clan|clan\s+name|ruler|lord|possessio
 const EMPTY_OWNER = /^(?:none|no\s+owner|unowned|neutral|npc|brak|-)$/i;
 const EXPLICIT_EMPTY_OWNER = /\b(?:none|no\s+owner|unowned|neutral|brak)\b/i;
 const SCHEDULE_MARKER = /(?:\b(?:[0-2]?\d)\s*[:.,]\s*[0-5]\d\b|\b(?:[01]\d|2[0-3])[0-5]\d(?:\d{6,8})?\b|\b\d{1,2}[./-]\d{1,2}(?:[./-]\d{2,4})?\b|\b20\d{2}\b)/i;
+const OCR_COLUMN_MARKER = /^(?:v|w|vv|ww|vw|wv)$/i;
 
 function normalized(value = '') {
   return String(value)
@@ -45,7 +46,10 @@ function cleanOwner(value = '') {
   // The server table has separate Clan and Leader columns. OCR flattens both
   // columns into one line before the siege time, while Interlude clan names
   // themselves cannot contain spaces. Keep only the Clan column in that case.
-  if (scheduleAt >= 0) cleaned = cleaned.split(/\s+/)[0];
+  if (scheduleAt >= 0) {
+    const tokens = cleaned.split(/\s+/).filter(Boolean);
+    cleaned = tokens.find((token) => !OCR_COLUMN_MARKER.test(token) && /[a-z0-9]/i.test(token)) || '';
+  }
   return cleaned.slice(0, 80);
 }
 
