@@ -94,16 +94,53 @@ function renderProjectCard(project, workspace) {
 
 function renderInventoryRows(workspace) {
   if (!workspace.plan.inventory.length) {
-    return '<p class="craft-muted">Magazyn jest pusty. Dodaj pierwszy materiał poniżej.</p>';
+    return '<div class="craft-inventory-empty"><span>□</span><b>Plecak jest pusty</b><small>Dodaj pierwszy materiał w sekcji „Uzupełnij magazyn”.</small></div>';
   }
   return workspace.plan.inventory.map(row => `
     <div class="craft-inventory-row" data-craft-stock-name="${escapeHtml(`${row.name} ${row.itemKey}`.toLocaleLowerCase('pl'))}">
-      <div class="craft-item-name">${craftItemIconMarkup({ ...findItem(workspace, row.itemKey), name: row.name })}<span><b>${escapeHtml(row.name)}</b><small>${escapeHtml(row.itemKey)}</small></span></div>
-      <span><em>Mam</em><strong>${fmt(row.quantity)}</strong></span>
-      <span><em>Zarezerwowane</em><strong>${fmt(row.reserved)}</strong></span>
-      <span><em>Dostępne</em><strong>${fmt(row.available)}</strong></span>
-      <button type="button" data-craft-edit-stock="${escapeHtml(row.itemKey)}" data-current="${row.quantity}">Zmień</button>
+      <button class="craft-inventory-slot" type="button" data-craft-edit-stock="${escapeHtml(row.itemKey)}" data-current="${row.quantity}" title="${escapeHtml(row.name)} — kliknij, aby zmienić ilość">
+        ${craftItemIconMarkup({ ...findItem(workspace, row.itemKey), name: row.name }, 'craft-item-icon craft-inventory-icon')}
+        <strong>${fmt(row.quantity)}</strong>
+      </button>
+      <div class="craft-inventory-caption"><b>${escapeHtml(row.name)}</b><small>Dostępne: ${fmt(row.available)}${row.reserved ? ` · Rezerwacja: ${fmt(row.reserved)}` : ''}</small></div>
     </div>`).join('');
+}
+
+function renderInventoryPreview(workspace) {
+  const rows = workspace.plan.inventory.slice(0, 6);
+  const icons = rows.map(row => craftItemIconMarkup(
+    { ...findItem(workspace, row.itemKey), name: row.name },
+    'craft-item-icon craft-inventory-preview-icon',
+  )).join('');
+  return `${icons}${Array.from({ length: Math.max(0, 6 - rows.length) }, () => '<span class="craft-inventory-preview-empty"></span>').join('')}`;
+}
+
+function renderInventoryWindow(workspace, isOpen) {
+  const used = workspace.plan.inventory.length;
+  return `
+    <button class="craft-inventory-launch" type="button" data-craft-open-inventory aria-haspopup="dialog">
+      <span class="craft-inventory-launch-emblem">▦</span>
+      <span class="craft-inventory-launch-copy"><small>PLECAK MATERIAŁÓW</small><b>Stan materiałów</b><em>${used} ${used === 1 ? 'pozycja' : 'pozycji'} w magazynie</em></span>
+      <span class="craft-inventory-preview" aria-hidden="true">${renderInventoryPreview(workspace)}</span>
+      <strong>Otwórz plecak ›</strong>
+    </button>
+    <div class="craft-inventory-modal" data-craft-inventory-modal${isOpen ? '' : ' hidden'}>
+      <button class="craft-inventory-backdrop" type="button" data-craft-close-inventory aria-label="Zamknij plecak"></button>
+      <section class="craft-inventory-window" role="dialog" aria-modal="true" aria-labelledby="craftInventoryTitle">
+        <header>
+          <span></span>
+          <h4 id="craftInventoryTitle">Inventory</h4>
+          <div><small>(${used}/250)</small><button type="button" data-craft-close-inventory aria-label="Zamknij">×</button></div>
+        </header>
+        <div class="craft-inventory-toolbar">
+          <button type="button" class="is-active">All</button>
+          <span>Materiały craftowe</span>
+          <input class="craft-search" id="craftInventorySearch" type="search" placeholder="Szukaj…" aria-label="Szukaj materiału w plecaku">
+        </div>
+        <div class="craft-inventory-list">${renderInventoryRows(workspace)}</div>
+        <footer><span>Kliknij ikonę, aby zmienić ilość.</span><span><i></i> dostępne <i></i> zarezerwowane</span></footer>
+      </section>
+    </div>`;
 }
 
 function renderWorkspaceOverview(workspace) {
@@ -188,6 +225,17 @@ function ensureUiShell() {
     document.head.appendChild(style);
   }
 
+  if (!document.querySelector('#craftInventoryWindowStyles')) {
+    const style = document.createElement('style');
+    style.id = 'craftInventoryWindowStyles';
+    style.textContent = `
+      .craft-inventory-launch{display:grid;grid-template-columns:48px minmax(190px,.7fr) 1fr auto;gap:16px;align-items:center;width:100%;padding:14px 18px;border:1px solid #62502f;background:linear-gradient(180deg,#17150f,#0a0d0c);color:#d9ceb6;text-align:left;cursor:pointer;box-shadow:inset 0 0 0 1px #0a0805}.craft-inventory-launch:hover,.craft-inventory-launch:focus-visible{border-color:#b38b43;background:linear-gradient(180deg,#211b10,#0c100f);outline:none}.craft-inventory-launch-emblem{display:grid;place-items:center;width:46px;height:46px;border:1px solid #74603a;background:#0b0d0c;color:#d4ac5e;font-size:25px;box-shadow:inset 0 0 12px #000}.craft-inventory-launch-copy{display:grid;gap:2px}.craft-inventory-launch-copy small{color:#a98648;font-size:9px;font-weight:900;letter-spacing:.11em}.craft-inventory-launch-copy b{color:#eadab8;font:700 18px Georgia}.craft-inventory-launch-copy em{color:#817b71;font-size:10px;font-style:normal}.craft-inventory-preview{display:flex;justify-content:center;gap:5px}.craft-inventory-preview-icon,.craft-inventory-preview-empty{width:34px;height:34px;flex:0 0 34px;border:1px solid #4a412f;background:#090b0a;box-shadow:inset 0 0 8px #000}.craft-inventory-preview-icon img{width:34px;height:34px}.craft-inventory-launch>strong{color:#dbb35f;font-size:11px;white-space:nowrap}.craft-inventory-modal{position:fixed;z-index:1200;inset:0;display:grid;place-items:center;padding:24px}.craft-inventory-modal[hidden]{display:none}.craft-inventory-backdrop{position:absolute;inset:0;border:0;background:rgba(0,0,0,.76);cursor:default}.craft-inventory-window{position:relative;width:min(790px,94vw);max-height:min(720px,88vh);display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;border:2px solid #71634e;outline:1px solid #17130d;background:linear-gradient(180deg,#201d18,#100f0d 70%);box-shadow:0 22px 80px #000,inset 0 0 35px rgba(0,0,0,.7)}.craft-inventory-window>header{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;min-height:34px;padding:0 8px;border-bottom:1px solid #554a39;background:linear-gradient(180deg,#302c25,#171511);box-shadow:inset 0 1px #514a3d}.craft-inventory-window>header h4{margin:0;color:#ddd5c8;font:400 14px Georgia;text-align:center}.craft-inventory-window>header>div{display:flex;justify-content:flex-end;align-items:center;gap:8px}.craft-inventory-window>header small{color:#bcb3a4}.craft-inventory-window>header button{width:25px;height:25px;padding:0;border:0;background:transparent;color:#bfb5a3;font-size:25px;line-height:1;cursor:pointer}.craft-inventory-toolbar{display:grid;grid-template-columns:70px 1fr 190px;align-items:center;gap:8px;margin:12px 14px 8px}.craft-inventory-toolbar>button{height:34px;border:1px solid #8d7349;background:linear-gradient(#3a2c1c,#17130d);color:#e2c68a}.craft-inventory-toolbar>span{color:#887d6c;font-size:10px;text-transform:uppercase;letter-spacing:.08em}.craft-inventory-toolbar .craft-search{width:100%;height:34px;padding:7px 10px}.craft-inventory-window .craft-inventory-list{grid-template-columns:repeat(7,minmax(76px,1fr));align-content:start;gap:7px;min-height:280px;margin:0 14px;padding:10px;overflow:auto;border:1px solid #51462f;background:rgba(5,6,5,.72);box-shadow:inset 0 0 20px #000}.craft-inventory-window .craft-inventory-row{position:relative;display:block;min-width:0;padding:0;border:0;background:transparent}.craft-inventory-window .craft-stock-actions{position:relative!important;display:block!important}.craft-inventory-slot{position:relative!important;display:grid!important;place-items:center;width:100%!important;aspect-ratio:1/1;padding:5px!important;border:1px solid #4f4636!important;background:linear-gradient(135deg,#24211b,#0c0d0c)!important;color:#fff!important;box-shadow:inset 0 0 10px #000;cursor:pointer}.craft-inventory-slot:hover{border-color:#b8995a!important;background:linear-gradient(135deg,#312a1d,#11130f)!important}.craft-inventory-icon,.craft-inventory-icon img{width:44px;height:44px}.craft-inventory-icon{flex-basis:44px;border-color:#66583d}.craft-inventory-slot>strong{position:absolute;right:4px;bottom:1px;padding:1px 2px;color:#fff;font-size:11px;text-shadow:1px 1px 2px #000,-1px -1px 2px #000}.craft-inventory-caption{display:grid;gap:2px;margin-top:4px;min-width:0}.craft-inventory-caption b{overflow:hidden;color:#c9c0ae;font-size:9px;line-height:1.2;text-overflow:ellipsis;white-space:nowrap}.craft-inventory-caption small{overflow:hidden;color:#756f65;font-size:8px;line-height:1.2;text-overflow:ellipsis;white-space:nowrap}.craft-inventory-window .craft-stock-remove{position:absolute;z-index:2;top:2px;right:2px;width:18px;height:18px;padding:0!important;border:1px solid #6d3430!important;background:#1b0d0ce6!important;font-size:0}.craft-inventory-window .craft-stock-remove:after{content:'×';font-size:14px;line-height:1}.craft-inventory-empty{grid-column:1/-1;display:grid;place-items:center;gap:6px;padding:50px;color:#777064}.craft-inventory-empty>span{font-size:40px;color:#554c3c}.craft-inventory-empty b{color:#bbb09c}.craft-inventory-empty small{font-size:10px}.craft-inventory-window>footer{display:flex;justify-content:space-between;gap:16px;padding:10px 14px;color:#827b70;font-size:9px}.craft-inventory-window>footer span:last-child{display:flex;gap:7px;align-items:center}.craft-inventory-window>footer i{width:7px;height:7px;border-radius:50%;background:#71b77c}.craft-inventory-window>footer i:last-of-type{background:#d7a85a}
+      @media(max-width:900px){.craft-inventory-launch{grid-template-columns:44px 1fr auto}.craft-inventory-preview{display:none}.craft-inventory-window .craft-inventory-list{grid-template-columns:repeat(5,minmax(66px,1fr))}.craft-inventory-window .craft-inventory-row>div{grid-column:auto}.craft-inventory-window .craft-stock-actions{grid-column:auto!important}.craft-inventory-toolbar{grid-template-columns:60px 1fr}.craft-inventory-toolbar>span{display:none}.craft-inventory-toolbar .craft-search{grid-column:auto}.craft-inventory-window>footer{display:block}.craft-inventory-window>footer span:last-child{margin-top:5px}}
+      @media(max-width:560px){.craft-inventory-launch{grid-template-columns:40px 1fr;padding:12px}.craft-inventory-launch>strong{grid-column:2}.craft-inventory-modal{padding:8px}.craft-inventory-window{width:100%;max-height:92vh}.craft-inventory-window .craft-inventory-list{grid-template-columns:repeat(4,minmax(58px,1fr));gap:5px;margin:0 8px;padding:7px}.craft-inventory-toolbar{margin:8px}.craft-inventory-icon,.craft-inventory-icon img{width:38px;height:38px}.craft-inventory-icon{flex-basis:38px}.craft-inventory-caption b{font-size:8px}}
+    `;
+    document.head.appendChild(style);
+  }
+
   return { layer, side, main, panel, root: panel.querySelector('#craftWorkspaceRoot') };
 }
 
@@ -199,6 +247,7 @@ export function installCraftPlannerUi(supabase) {
 
   let workspace = null;
   let loading = false;
+  let inventoryOpen = false;
 
   const setFeedback = message => {
     const node = ui.root.querySelector('.craft-feedback');
@@ -218,6 +267,7 @@ export function installCraftPlannerUi(supabase) {
         .join('');
       ui.root.innerHTML = `
         ${renderWorkspaceOverview(workspace)}
+        ${renderInventoryWindow(workspace, inventoryOpen)}
         <section class="craft-section">
           <div class="craft-section-title"><div><small>PROJEKTY</small><h4>Moje craft projekty</h4></div><small>${workspace.plan.projects.length} projektów</small></div>
           <div class="craft-projects">${projects || '<div class="craft-empty">Nie masz jeszcze projektu. Dodaj pierwszy cel w sekcji poniżej.</div>'}</div>
@@ -248,10 +298,7 @@ export function installCraftPlannerUi(supabase) {
           </div>
         </section>
         <p class="craft-feedback"></p>
-        <section class="craft-box">
-          <div class="craft-section-title craft-inventory-head"><div><small>MAGAZYN</small><h4>Mój stan materiałów</h4></div><div class="craft-inventory-tools"><small>Mam · Zarezerwowane · Dostępne</small><input class="craft-search" id="craftInventorySearch" type="search" placeholder="Szukaj materiału…" aria-label="Szukaj materiału w magazynie"></div></div>
-          <div class="craft-inventory-list">${renderInventoryRows(workspace)}</div>
-        </section>`;
+        `;
       for (const select of ui.root.querySelectorAll('.craft-form select')) {
         select.setAttribute('style', selectedIconStyle(workspace, select.value));
       }
@@ -293,6 +340,23 @@ export function installCraftPlannerUi(supabase) {
   });
 
   ui.root.addEventListener('click', async event => {
+    const openInventory = event.target.closest('[data-craft-open-inventory]');
+    if (openInventory) {
+      inventoryOpen = true;
+      const modal = ui.root.querySelector('[data-craft-inventory-modal]');
+      if (modal) modal.hidden = false;
+      window.setTimeout(() => ui.root.querySelector('#craftInventorySearch')?.focus(), 0);
+      return;
+    }
+
+    const closeInventory = event.target.closest('[data-craft-close-inventory]');
+    if (closeInventory) {
+      inventoryOpen = false;
+      const modal = ui.root.querySelector('[data-craft-inventory-modal]');
+      if (modal) modal.hidden = true;
+      return;
+    }
+
     const editStock = event.target.closest('[data-craft-edit-stock]');
     if (editStock) {
       const next = window.prompt('Podaj nowy stan materiału:', editStock.dataset.current || '0');
@@ -355,5 +419,12 @@ export function installCraftPlannerUi(supabase) {
     for (const row of ui.root.querySelectorAll('.craft-inventory-row')) {
       row.hidden = Boolean(query) && !String(row.dataset.craftStockName || '').includes(query);
     }
+  });
+
+  document.addEventListener('keydown', event => {
+    if (event.key !== 'Escape' || !inventoryOpen) return;
+    inventoryOpen = false;
+    const modal = ui.root.querySelector('[data-craft-inventory-modal]');
+    if (modal) modal.hidden = true;
   });
 }
