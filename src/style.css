@@ -352,7 +352,6 @@ body:before { content:""; position:fixed; z-index:-1; inset:0; background:radial
 @media(max-width:650px){.craft-home-summary{padding:50px 18px 20px}.craft-home-label{padding:0 14px}.craft-home-label small{font-size:7px}}
 
 /* Featured event window start time. */
-.next-start-time{display:flex;align-items:center;justify-content:center;gap:8px;margin:9px auto 4px;padding:0;border:0;background:none;box-shadow:none;color:#96886e;font-size:8px;font-weight:900;letter-spacing:.16em}
+.next-start-time{display:flex;align-items:center;gap:11px;width:max-content;max-width:100%;margin:13px 0 0;padding:7px 11px 7px 10px;border-left:2px solid #b98a3c;background:linear-gradient(90deg,#241a0eaa,transparent);color:#b9ad98;font-size:9px;font-weight:900;letter-spacing:.12em;white-space:nowrap}
 .next-start-time[hidden]{display:none}
-.next-start-time:before,.next-start-time:after{content:'✦';color:#745a2d;font-size:7px}
-.next-start-time b{color:#e8bd61;font:700 15px Cinzel,Georgia,serif;letter-spacing:.05em;font-variant-numeric:tabular-nums;text-shadow:0 0 10px #d4a64d2e}
+.next-start-time b{color:#f0c96f;font:700 18px Cinzel,Georgia,serif;letter-spacing:.04em;font-variant-numeric:tabular-nums;text-shadow:0 0 10px #d4a64d38}

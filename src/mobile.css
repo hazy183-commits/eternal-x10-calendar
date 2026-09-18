@@ -135,6 +135,6 @@ html,body{width:100%;max-width:100%;overflow-x:hidden}.wrap,.schedule-layout{wid
 }
 
 @media(max-width:900px){
-.next-start-time{margin:7px auto 6px!important;padding:0!important}
-.next-start-time b{font-size:14px!important}
+.next-start-time{justify-content:center!important;margin:12px auto 2px!important;padding:7px 10px!important;white-space:normal!important}
+.next-start-time b{flex:0 0 auto;font-size:16px!important}
 }
