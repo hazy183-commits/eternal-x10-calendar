@@ -272,7 +272,9 @@ export function installCraftHierarchyEnhancer(supabase) {
         if (meta) meta.textContent = projectStatusLabel(project.status);
       }
     } catch (error) {
-      console.warn('Craft hierarchy enhancer:', error);
+      const missingSession = error?.name === 'AuthSessionMissingError'
+        || /auth session missing/i.test(String(error?.message || ''));
+      if (!missingSession) console.warn('Craft hierarchy enhancer:', error);
     } finally {
       running = false;
       observer?.observe(document.body, { childList: true, subtree: true });
