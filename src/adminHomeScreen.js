@@ -50,6 +50,9 @@ export function installAdminHomeScreen(supabaseClient){
         <button class="admin-home-card owner-only" type="button" data-home-target="schedule">
           <span class="admin-home-icon">◷</span><small>STAŁY PLAN</small><h4>Harmonogram</h4><p>Olympiad, Auto PvP i stałe terminy serwerowe.</p><em>OTWÓRZ →</em>
         </button>
+        <button class="admin-home-card owner-only" type="button" data-home-target="content">
+          <span class="admin-home-icon">✎</span><small>EDYTOR STRONY</small><h4>Treści i ogłoszenia</h4><p>Zmieniaj nagłówki, opisy, linki oraz komunikaty bez edycji kodu.</p><em>EDYTUJ →</em>
+        </button>
         <button class="admin-home-card users owner-only" type="button" data-home-target="users">
           <span class="admin-home-icon">♟</span><small>STREFA KLANU</small><h4>Użytkownicy i role</h4><p>Akceptuj nowych członków oraz nadaj rangę Członek, Lider lub Administrator.</p><em>ZARZĄDZAJ →</em>
         </button>
@@ -64,6 +67,7 @@ export function installAdminHomeScreen(supabaseClient){
       document.querySelector('#adminListView'),document.querySelector('#adminFormView'),
       document.querySelector('#bossRespawnManager'),document.querySelector('#siegeManager'),
       document.querySelector('#olympiadSchedule'),document.querySelector('#pvpEventSchedule'),
+      document.querySelector('#adminSiteContentPanel'),
       document.querySelector('#ownerUsersPanel')
     ].filter(Boolean);
 

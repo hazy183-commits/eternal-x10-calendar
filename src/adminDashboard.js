@@ -18,7 +18,7 @@ export function installAdminDashboard(supabase) {
   tabs.className='admin-dashboard-tabs';
   tabs.setAttribute('role','tablist');
   tabs.setAttribute('aria-label','Sekcje panelu administratora');
-  tabs.innerHTML=`<button class="active" type="button" role="tab" aria-selected="true" data-admin-tab="events"><i>✦</i><span>Wydarzenia</span><small>Kalendarz klanu</small></button><button type="button" role="tab" aria-selected="false" data-admin-tab="bosses"><i>☠</i><span>Epic Bossy</span><small>Okna i respawny</small></button><button type="button" role="tab" aria-selected="false" data-admin-tab="siege"><i>⚔</i><span>Castle Siege</span><small>Terminy zamków</small></button><button type="button" role="tab" aria-selected="false" data-admin-tab="schedule"><i>◷</i><span>Harmonogram</span><small>Stałe wydarzenia</small></button><button type="button" role="tab" aria-selected="false" data-admin-tab="users"><i>♟</i><span>Użytkownicy</span><small>Dostęp i role</small><b id="pendingUsersBadge" hidden>0</b></button>`;
+  tabs.innerHTML=`<button class="active" type="button" role="tab" aria-selected="true" data-admin-tab="events"><i>✦</i><span>Wydarzenia</span><small>Kalendarz klanu</small></button><button type="button" role="tab" aria-selected="false" data-admin-tab="bosses"><i>☠</i><span>Epic Bossy</span><small>Okna i respawny</small></button><button type="button" role="tab" aria-selected="false" data-admin-tab="siege"><i>⚔</i><span>Castle Siege</span><small>Terminy zamków</small></button><button type="button" role="tab" aria-selected="false" data-admin-tab="schedule"><i>◷</i><span>Harmonogram</span><small>Stałe wydarzenia</small></button><button type="button" role="tab" aria-selected="false" data-admin-tab="content"><i>✎</i><span>Treści strony</span><small>Napisy, linki i ogłoszenia</small></button><button type="button" role="tab" aria-selected="false" data-admin-tab="users"><i>♟</i><span>Użytkownicy</span><small>Dostęp i role</small><b id="pendingUsersBadge" hidden>0</b></button>`;
 
   const users = document.createElement('section');
   users.id='ownerUsersPanel';
@@ -26,6 +26,12 @@ export function installAdminDashboard(supabase) {
   users.hidden=true;
   users.innerHTML=`<div class="owner-users-head"><div><span class="eyebrow">Dostęp do strefy klanu</span><h3>UŻYTKOWNICY</h3></div><button id="refreshUsers" class="secondary-btn" type="button">↻ Odśwież</button></div><div class="owner-user-stats"><div><b id="usersPending">0</b><span>Oczekuje</span></div><div><b id="usersApproved">0</b><span>Aktywnych</span></div><div><b id="usersAdmins">0</b><span>Adminów</span></div><div><b id="usersBlocked">0</b><span>Zablokowanych</span></div></div><div id="ownerUsersMessage" class="owner-users-message"></div><div id="ownerUsersList" class="owner-users-list"></div>`;
   pvp.after(users);
+
+  const siteContent=document.createElement('section');
+  siteContent.id='adminSiteContentPanel';
+  siteContent.className='admin-site-content-panel';
+  siteContent.hidden=true;
+  users.before(siteContent);
 
   const workspace=document.createElement('div');
   workspace.className='admin-workspace';
@@ -44,7 +50,7 @@ export function installAdminDashboard(supabase) {
   const feedback=document.querySelector('#adminFeedback');
   content.append(contentHead);
   if(feedback)content.append(feedback);
-  content.append(listView,formView,bosses,siege,olympiad,pvp,users);
+  content.append(listView,formView,bosses,siege,olympiad,pvp,siteContent,users);
   workspace.append(sidebar,content);
   note.after(workspace);
 
@@ -56,16 +62,17 @@ export function installAdminDashboard(supabase) {
   let currentProfile=null;
   let ownerAccess=false;
   let adminAccess=false;
-  const sections={events:[listView,formView],bosses:[bosses],siege:[siege],schedule:[olympiad,pvp],users:[users]};
+  const sections={events:[listView,formView],bosses:[bosses],siege:[siege],schedule:[olympiad,pvp],content:[siteContent],users:[users]};
   const sectionCopy={
     events:['KALENDARZ KLANU','Wydarzenia','Dodawaj, wyszukuj i edytuj wydarzenia klanowe.'],
     bosses:['EPIC RAID BOSS','Epic Bossy','Aktualizuj okna respawnu i stan najważniejszych bossów.'],
     siege:['CASTLE CONTROL','Castle Siege','Kontroluj terminy oblężeń wszystkich zamków.'],
     schedule:['STAŁY PLAN SERWERA','Harmonogram','Sprawdzaj Olimpiadę i automatyczne wydarzenia PvP.'],
+    content:['EDYTOR BEZ KODOWANIA','Treści strony','Zmieniaj napisy, linki i ogłoszenia widoczne dla klanu.'],
     users:['STREFA KLANU','Użytkownicy i role','Akceptuj konta oraz zarządzaj dostępem członków klanu.'],
   };
   function updateSectionHead(name){const copy=sectionCopy[name];if(!copy)return;contentHead.querySelector('[data-admin-section-kicker]').textContent=copy[0];contentHead.querySelector('[data-admin-section-title]').textContent=copy[1];contentHead.querySelector('[data-admin-section-description]').textContent=copy[2];}
-  function showTab(name){if(name==='users'&&!ownerAccess)return;currentTab=name;Object.entries(sections).forEach(([key,els])=>els.forEach(el=>{if(el)el.hidden=key!==name;}));tabs.querySelectorAll('[data-admin-tab]').forEach(b=>{const active=b.dataset.adminTab===name;b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active));});updateSectionHead(name);content.scrollTop=0;if(name==='users')loadUsers();}
+  function showTab(name){if((name==='users'||name==='content')&&!ownerAccess)return;currentTab=name;Object.entries(sections).forEach(([key,els])=>els.forEach(el=>{if(el)el.hidden=key!==name;}));tabs.querySelectorAll('[data-admin-tab]').forEach(b=>{const active=b.dataset.adminTab===name;b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active));});updateSectionHead(name);content.scrollTop=0;if(name==='users')loadUsers();if(name==='content')window.dispatchEvent(new CustomEvent('orzel:admin-content-open'));}
   tabs.addEventListener('click',e=>{const b=e.target.closest('[data-admin-tab]');if(b&&!b.hidden)showTab(b.dataset.adminTab);});
 
   function applyAccessUi(){
@@ -73,6 +80,8 @@ export function installAdminDashboard(supabase) {
     if(quickAdd) quickAdd.hidden=!adminAccess;
     const userTab=tabs.querySelector('[data-admin-tab="users"]');
     userTab.hidden=!ownerAccess;
+    const contentTab=tabs.querySelector('[data-admin-tab="content"]');
+    contentTab.hidden=!ownerAccess;
     if(!adminAccess && document.querySelector('#adminModal')?.classList.contains('open')){
       document.querySelector('#adminModal').classList.remove('open');
       document.querySelector('#adminModal').setAttribute('aria-hidden','true');

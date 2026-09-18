@@ -37,6 +37,8 @@ if (typeof document !== 'undefined') {
       { installCraftInventoryDeleteEnhancer },
       { installCraftHomeSummary },
       { installRoleEnhancements },
+      { installAdminSiteManager },
+      { installPublicSiteSettings },
     ] = await Promise.all([
       import('./memberZoneReliability.js'),
       import('./memberEventSignups.js'),
@@ -58,6 +60,8 @@ if (typeof document !== 'undefined') {
       import('./craftInventoryDeleteEnhancer.js'),
       import('./craftHomeSummary.js'),
       import('./roleEnhancements.js'),
+      import('./adminSiteManager.js'),
+      import('./siteSettings.js'),
       import('./craftWeaponSelectEnhancer.js'),
       import('./neededRaidBossRefreshBridge.js'),
       import('./interludeClassSelects.js'),
@@ -82,6 +86,8 @@ if (typeof document !== 'undefined') {
     installCraftInventoryDeleteEnhancer(supabase);
     installCraftHomeSummary(supabase);
     installRoleEnhancements(supabase);
+    installAdminSiteManager(supabase);
+    installPublicSiteSettings(supabase);
   };
   const boot = () => startMemberFeatures().catch(error => console.error('MEMBER FEATURES BOOT FAILED', error));
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });
