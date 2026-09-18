@@ -691,7 +691,7 @@ async function initializeApp() {
     $('#todayButton').addEventListener('click', () => { selectedDay = new Date(); renderCalendar(); });
     $('#adminTrigger').addEventListener('click', openAdmin);
     $('#adminAdd').addEventListener('click', openNewEvent);
-    $('#quickAdd').addEventListener('click', openNewEvent);
+    $('#quickAdd')?.addEventListener('click', openNewEvent);
     $('#adminLogout').addEventListener('click', async () => {
       if (!supabase) return;
       const { error } = await supabase.auth.signOut();

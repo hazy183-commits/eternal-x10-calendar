@@ -219,6 +219,7 @@ export function installCraftPlannerUi(supabase) {
       for (const select of ui.root.querySelectorAll('.craft-form select')) {
         select.setAttribute('style', selectedIconStyle(workspace, select.value));
       }
+      window.dispatchEvent(new CustomEvent('orzel:craft-workspace-updated', { detail: workspace }));
     } catch (error) {
       ui.root.innerHTML = `<div class="craft-empty"><b>Nie udało się wczytać planera.</b><p>${escapeHtml(error?.message || error)}</p></div>`;
     } finally {

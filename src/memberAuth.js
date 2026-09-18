@@ -174,6 +174,11 @@ export function installMemberAuth(supabase) {
     zone.classList.add('open');
   };
 
+  window.addEventListener('orzel:open-craft-workspace', async () => {
+    await openZone();
+    window.setTimeout(() => zone.querySelector('[data-zone-view="craft"]')?.click(), 40);
+  });
+
   layer.querySelector('.member-tabs').addEventListener('click', (e) => {
     const button = e.target.closest('[data-member-tab]');
     if (button) setMode(button.dataset.memberTab);
