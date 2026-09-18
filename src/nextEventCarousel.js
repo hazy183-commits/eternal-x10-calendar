@@ -159,7 +159,9 @@ export function installNextEventCarousel() {
     if (!box) return;
     const value = String(time || '').slice(0, 5);
     box.hidden = !/^([01]\d|2[0-3]):[0-5]\d$/.test(value);
+    const caption = box.querySelector('span');
     const label = box.querySelector('b');
+    if (caption) caption.textContent = 'POCZĄTEK OKNA';
     if (label) label.textContent = box.hidden ? '--:--' : value;
   };
 
