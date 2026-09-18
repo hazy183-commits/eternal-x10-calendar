@@ -1,4 +1,3 @@
-import { loadCraftWorkspace } from './craftWorkspace.js';
 import { craftItemIconMarkup } from './craftItemIcons.js';
 import { verifiedWeaponComponents } from './craftWeaponComponents.js';
 
@@ -241,48 +240,29 @@ export function installCraftHierarchyEnhancer(supabase) {
   document.documentElement.dataset.craftHierarchyInstalled = '1';
   ensureStyles();
 
-  let running = false;
-  let queued = false;
-  let observer = null;
-
   const projectStatusLabel = status => ({ active:'AKTYWNY', paused:'WSTRZYMANY', completed:'ZAKOŃCZONY', archived:'ARCHIWUM' })[status] || String(status || '').toUpperCase();
 
-  const apply = async () => {
-    if (running) { queued = true; return; }
+  const apply = workspace => {
+    if (!workspace?.plan?.projects) return;
     const root = document.querySelector('#craftWorkspaceRoot');
     if (!root) return;
-    running = true;
-    observer?.disconnect();
-    try {
-      const workspace = await loadCraftWorkspace(supabase);
-      const projects = new Map(workspace.plan.projects.map(project => [String(project.id), project]));
+    const projects = new Map(workspace.plan.projects.map(project => [String(project.id), project]));
 
-      for (const card of root.querySelectorAll('.craft-project-card[data-craft-project]')) {
-        const project = projects.get(String(card.dataset.craftProject));
-        if (!project) continue;
-        const list = card.querySelector('.craft-mat-list');
-        if (!list) continue;
-        const renderKey = `${project.targetItemKey}:${project.targetQuantity}:${project.status}:hierarchy-v4`;
-        if (list.dataset.hierarchyRenderKey === renderKey) continue;
-        const html = renderMainRecipe(project, workspace);
-        if (!html) continue;
-        list.innerHTML = html;
-        list.dataset.hierarchyRenderKey = renderKey;
-        const meta = card.querySelector('.craft-project-head>div>small');
-        if (meta) meta.textContent = projectStatusLabel(project.status);
-      }
-    } catch (error) {
-      const missingSession = error?.name === 'AuthSessionMissingError'
-        || /auth session missing/i.test(String(error?.message || ''));
-      if (!missingSession) console.warn('Craft hierarchy enhancer:', error);
-    } finally {
-      running = false;
-      observer?.observe(document.body, { childList: true, subtree: true });
-      if (queued) { queued = false; queueMicrotask(apply); }
+    for (const card of root.querySelectorAll('.craft-project-card[data-craft-project]')) {
+      const project = projects.get(String(card.dataset.craftProject));
+      if (!project) continue;
+      const list = card.querySelector('.craft-mat-list');
+      if (!list) continue;
+      const renderKey = `${project.targetItemKey}:${project.targetQuantity}:${project.status}:hierarchy-v4`;
+      if (list.dataset.hierarchyRenderKey === renderKey) continue;
+      const html = renderMainRecipe(project, workspace);
+      if (!html) continue;
+      list.innerHTML = html;
+      list.dataset.hierarchyRenderKey = renderKey;
+      const meta = card.querySelector('.craft-project-head>div>small');
+      if (meta) meta.textContent = projectStatusLabel(project.status);
     }
   };
-
-  observer = new MutationObserver(() => queueMicrotask(apply));
 
   document.addEventListener('click', event => {
     const summary = event.target.closest?.('.craft-tree-node > summary');
@@ -296,10 +276,5 @@ export function installCraftHierarchyEnhancer(supabase) {
     }, 0);
   }, true);
 
-  const start = () => {
-    observer.observe(document.body, { childList: true, subtree: true });
-    apply();
-  };
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once:true });
-  else queueMicrotask(start);
+  window.addEventListener('orzel:craft-workspace-updated', event => apply(event.detail));
 }

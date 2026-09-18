@@ -1,0 +1,4 @@
+html.ob-perm-manage-epic.ob-limited-admin #adminDashboardTabs [data-admin-tab="bosses"] { display:grid !important; }
+html.ob-perm-manage-siege.ob-limited-admin #adminDashboardTabs [data-admin-tab="siege"] { display:grid !important; }
+html.ob-perm-manage-content.ob-limited-admin #adminDashboardTabs [data-admin-tab="content"] { display:grid !important; }
+html.ob-perm-manage-users.ob-limited-admin #adminDashboardTabs [data-admin-tab="users"] { display:grid !important; }

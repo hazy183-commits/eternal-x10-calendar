@@ -2,14 +2,14 @@
 
 Wklej w folderze `public/images/bosses/` osiem prawdziwych plików JPEG:
 
-- queen-ant.jpg
-- core.jpg
-- orfen.jpg
-- baium.jpg
-- zaken.jpg
-- frintezza.jpg
-- antharas.jpg
-- valakas.jpg
+- queen-ant.webp
+- core.webp
+- orfen.webp
+- baium.webp
+- zaken.webp
+- frintezza.webp
+- antharas.webp
+- valakas.webp
 
 Nazwy plików muszą być zapisane małymi literami. Nie wystarczy zmienić
 rozszerzenia pliku PNG na JPG — wyeksportuj go do formatu JPEG.

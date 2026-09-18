@@ -16,7 +16,7 @@ export function installMemberAuth(supabase) {
   layer.id = 'memberAuthLayer';
   layer.innerHTML = `
     <div class="member-auth-box">
-      <img src="/images/logo-orzel-bialy.png" alt="Orzeł Biały">
+      <img src="/images/logo-orzel-bialy.webp" alt="Orzeł Biały">
       <span class="member-kicker">ORZEŁ BIAŁY · ETERNAL X10</span>
       <h2>STREFA KLANU</h2>
       <p class="member-auth-lead">Zaloguj się, aby wejść na stronę klanu.</p>
@@ -40,7 +40,7 @@ export function installMemberAuth(supabase) {
     <div class="member-zone-box">
       <button class="member-zone-close" type="button">×</button>
       <aside class="member-zone-side">
-        <img src="/images/logo-orzel-bialy.png" alt="Orzeł Biały">
+        <img src="/images/logo-orzel-bialy.webp" alt="Orzeł Biały">
         <span class="member-kicker">ORZEŁ BIAŁY</span><h3>STREFA KLANU</h3>
         <button class="zone-nav active" data-zone-view="home">⌂ <span>Pulpit</span></button>
         <button class="zone-nav" data-zone-view="events">▣ <span>Wydarzenia</span></button>
