@@ -9,6 +9,7 @@ import { BOSS_RESPAWN_BOSSES, TIME_ZONE, formatLocalDateTime, localInputValues, 
 import { SupabaseBossRespawnRepository } from './supabaseBossRespawns.js';
 import { SIEGE_CASTLES, castleFromEvent, publicSiegeEvents, siegeCardData, siegePublicKey } from './siegeSchedules.js';
 import { SupabaseSiegeScheduleRepository } from './supabaseSiegeSchedules.js';
+import { TerritoryOwnershipRepository, applyTerritoryOwners, ownerFor } from './territoryOwnership.js';
 import { withOlympiadEvents, olympiadStatus, olympiadCountdownTarget, olympiadLocalDate, formatOlympiadDate } from './olympiadSchedule.js';
 import { renderOlympiadPanel } from './olympiadPanel.js';
 import { withPvpEvents, pvpEventStatus, pvpCountdownText } from './pvpEventSchedule.js';
@@ -25,11 +26,13 @@ const today = new Date(); today.setHours(0, 0, 0, 0);
 const repository = new SupabaseEventRepository();
 const bossRespawnRepository = new SupabaseBossRespawnRepository();
 const siegeScheduleRepository = new SupabaseSiegeScheduleRepository();
+const territoryOwnershipRepository = new TerritoryOwnershipRepository(supabase);
 let events = [];
 let adminEvents = [];
 let ordinaryEvents = [];
 let bossRespawnRows = [];
 let siegeScheduleRows = [];
+let territoryOwnershipRows = [];
 let session = null;
 let pendingAdminAction = null;
 let formMode = 'new';
@@ -93,7 +96,7 @@ function countdownTargetFor(event) {
   }
   return { target: dateFromEvent(event), label: 'Do rozpoczęcia' };
 }
-function eventRow(event, nearest = false) { const currentStatus = eventStatus(event); const state = calendarEventState(event); const label = state === 'active' ? 'TRWA' : currentStatus; return `<article class="event-row" data-calendar-state="${state}" data-calendar-nearest="${nearest}"><time class="event-time">${event.time}</time><div class="event-thumb" data-boss-name="${safe(artworkName(event))}"><span>ART</span></div><div class="event-info"><h3>${safe(event.name)}</h3>${event.isOlympiadSchedule ? `<span class="olympiad-window">${event.timeRange}</span>` : event.isPvpSchedule ? `<span class="pvp-calendar-times">Rejestracja: ${event.registrationTimeRange}<br />Event: ${event.eventTimeRange}</span>` : ''}</div><span class="type-chip ${event.type.toLowerCase().replaceAll(' ', '-')}">${event.type}</span><p class="event-location">${event.location ? `⌖ ${safe(event.location)}` : 'Wydarzenie klanowe'}</p><div class="row-status"><b class="status-dot ${currentStatus.toLowerCase().replaceAll(' ', '-')} ${event.isBossRespawn || event.isSiegeSchedule ? 'respawn-status' : ''}">${label}</b><span${event.isPvpSchedule ? ` data-pvp-countdown-start="${event.startAt}"` : ''}>${rowCountdown(event)}</span></div></article>`; }
+function eventRow(event, nearest = false) { const currentStatus = eventStatus(event); const state = calendarEventState(event); const label = state === 'active' ? 'TRWA' : currentStatus; return `<article class="event-row" data-calendar-state="${state}" data-calendar-nearest="${nearest}"><time class="event-time">${event.time}</time><div class="event-thumb" data-boss-name="${safe(artworkName(event))}"><span>ART</span></div><div class="event-info"><h3>${safe(event.name)}</h3>${event.ownerClan ? `<span class="territory-owner-label">Właściciel: ${safe(event.ownerClan)}</span>` : ''}${event.isOlympiadSchedule ? `<span class="olympiad-window">${event.timeRange}</span>` : event.isPvpSchedule ? `<span class="pvp-calendar-times">Rejestracja: ${event.registrationTimeRange}<br />Event: ${event.eventTimeRange}</span>` : ''}</div><span class="type-chip ${event.type.toLowerCase().replaceAll(' ', '-')}">${event.type}</span><p class="event-location">${event.location ? `⌖ ${safe(event.location)}` : 'Wydarzenie klanowe'}</p><div class="row-status"><b class="status-dot ${currentStatus.toLowerCase().replaceAll(' ', '-')} ${event.isBossRespawn || event.isSiegeSchedule ? 'respawn-status' : ''}">${label}</b><span${event.isPvpSchedule ? ` data-pvp-countdown-start="${event.startAt}"` : ''}>${rowCountdown(event)}</span></div></article>`; }
 function calendarEventState(event) {
   const current = eventStatus(event);
   if (['TRWA', 'RESPAWN WINDOW ACTIVE', 'SIEGE ACTIVE', 'OLYMPIAD ACTIVE'].includes(current)) return 'active';
@@ -136,7 +139,7 @@ function renderCalendar() {
   calendarClockSignature = calendarClockKey();
 }
 
-function miniRow(event) { const sameDay = event.date === (event.isOlympiadSchedule ? olympiadLocalDate() : dateKey(today)); const countdown = countdownTargetFor(event); return `<div class="mini-event" data-boss-name="${safe(artworkName(event))}" data-countdown-target="${countdown.target.toISOString()}" data-countdown-label="${countdown.label}"><time>${sameDay ? event.time : formatDate(dateFromEvent(event), { day: '2-digit', month: 'short', ...(event.isOlympiadSchedule ? { timeZone: 'Europe/Warsaw' } : {}) })}</time><div><b>${safe(event.name)}</b><span>${event.type}${event.location ? ` · ${safe(event.location)}` : ''}</span>${event.isOlympiadSchedule ? `<span class="olympiad-window">${event.timeRange}</span>` : ''}</div></div>`; }
+function miniRow(event) { const sameDay = event.date === (event.isOlympiadSchedule ? olympiadLocalDate() : dateKey(today)); const countdown = countdownTargetFor(event); return `<div class="mini-event" data-boss-name="${safe(artworkName(event))}" data-countdown-target="${countdown.target.toISOString()}" data-countdown-label="${countdown.label}"><time>${sameDay ? event.time : formatDate(dateFromEvent(event), { day: '2-digit', month: 'short', ...(event.isOlympiadSchedule ? { timeZone: 'Europe/Warsaw' } : {}) })}</time><div><b>${safe(event.name)}</b><span>${event.type}${event.location ? ` · ${safe(event.location)}` : ''}${event.ownerClan ? ` · Właściciel: ${safe(event.ownerClan)}` : ''}</span>${event.isOlympiadSchedule ? `<span class="olympiad-window">${event.timeRange}</span>` : ''}</div></div>`; }
 function renderOverview() { const todays = sorted(events.filter((event) => !event.isPvpSchedule && event.date === (event.isOlympiadSchedule ? olympiadLocalDate() : dateKey(today)))); $('#todayCount').textContent = todays.length; $('#todayEvents').innerHTML = todays.length ? todays.map(miniRow).join('') : '<p class="empty-mini">Dziś nie zaplanowano wydarzeń.</p>'; const upcoming = getUpcoming().slice(0, 5); $('#upcomingEvents').innerHTML = upcoming.length ? upcoming.map(miniRow).join('') : '<p class="empty-mini">Brak nadchodzących wydarzeń.</p>'; refreshBossArtwork($('#statistics')); renderPvpSidebar($('#pvpSidebarEvents')); }
 function eventWindowLabel(event) { if (event?.isOlympiadSchedule) return `${formatOlympiadDate(event)} · ${event.timeRange} · Europe/Warsaw`; if (!event?.isBossRespawn && !event?.isSiegeSchedule) return `${formatDate(dateFromEvent(event), { weekday: 'long', day: 'numeric', month: 'long' })} · ${event.time}${event.location ? ` · ${event.location}` : ''}`; const start = dateFromEvent(event); const end = event.endAt ? new Date(event.endAt) : new Date(start.getTime() + event.duration * 60000); const endTime = new Intl.DateTimeFormat('pl-PL', { timeZone: TIME_ZONE, hour: '2-digit', minute: '2-digit' }).format(end); return `${formatLocalDateTime(start, { dateStyle: 'full', timeStyle: 'short' })}–${endTime}${event.location ? ` · ${event.location}` : ''}`; }
 function renderNext() {
@@ -188,13 +191,14 @@ function renderAdmin() {
 function renderAll() { renderFilters(); renderCalendar(); renderOverview(); renderNext(); renderAdmin(); updateCountdown(); }
 const normalizedBossName = (value) => String(value ?? '').trim().replace(/\s+/g, ' ').toLocaleLowerCase();
 function mergePublicEvents() {
-  publishClanEventSources(ordinaryEvents, bossRespawnRows, siegeScheduleRows);
+  const ownedOrdinaryEvents = applyTerritoryOwners(ordinaryEvents, territoryOwnershipRows);
+  publishClanEventSources(ownedOrdinaryEvents, bossRespawnRows, siegeScheduleRows, territoryOwnershipRows);
   const managerEvents = publicRespawnEvents(bossRespawnRows, new Date());
-  const siegeEvents = publicSiegeEvents(siegeScheduleRows, new Date());
+  const siegeEvents = applyTerritoryOwners(publicSiegeEvents(siegeScheduleRows, new Date()), territoryOwnershipRows);
   const managerKeys = new Set(managerEvents.map(publicEventKey));
   const managerBosses = new Set(BOSS_RESPAWN_BOSSES.map(normalizedBossName));
   const siegeKeys = new Set(siegeEvents.map(siegePublicKey));
-  events = withPvpEvents(withOlympiadEvents([...ordinaryEvents.filter((event) => {
+  events = withPvpEvents(withOlympiadEvents([...ownedOrdinaryEvents.filter((event) => {
     const names = [event.boss, event.name]
       .filter(Boolean)
       .map(normalizedBossName);
@@ -557,7 +561,8 @@ function renderSiegeManager() {
     const marker = card.occurrence?.start?.toISOString() || '';
     const nextDate = card.occurrence ? managerDate(card.occurrence.start) : '—';
     const nextWindow = card.occurrence ? `${formatLocalDateTime(card.occurrence.start, { dateStyle: 'short', timeStyle: 'short' })} – ${formatLocalDateTime(card.occurrence.end, { dateStyle: 'short', timeStyle: 'short' }).split(', ').pop()}` : '—';
-    return `<article class="siege-schedule-card" data-siege-card="${safe(castle)}" data-siege-date="${safe(marker)}"><div class="siege-card-head"><div class="event-thumb" data-boss-name="${safe(castle + ' Castle')}"><span>ART</span></div><h4>${safe(castle)} Castle</h4></div><dl><div><dt>Najbliższy termin</dt><dd>${safe(nextDate)}</dd></div><div><dt>Okno</dt><dd>${safe(nextWindow)}</dd></div></dl><div class="siege-schedule-status"><span>Status</span><b data-siege-status class="${respawnClass(card.status)}">${safe(card.status)}</b><span data-siege-countdown>${siegeCountdown(card)}</span></div><button class="primary-btn siege-set-button" type="button" data-siege-action="set" data-siege-castle="${safe(castle)}">Ustaw termin</button></article>`;
+    const ownerClan = ownerFor(territoryOwnershipRows, 'castle', castle);
+    return `<article class="siege-schedule-card" data-siege-card="${safe(castle)}" data-siege-date="${safe(marker)}"><div class="siege-card-head"><div class="event-thumb" data-boss-name="${safe(castle + ' Castle')}"><span>ART</span></div><h4>${safe(castle)} Castle</h4></div><dl><div><dt>Właściciel</dt><dd>${safe(ownerClan || 'Brak właściciela')}</dd></div><div><dt>Najbliższy termin</dt><dd>${safe(nextDate)}</dd></div><div><dt>Okno</dt><dd>${safe(nextWindow)}</dd></div></dl><div class="siege-schedule-status"><span>Status</span><b data-siege-status class="${respawnClass(card.status)}">${safe(card.status)}</b><span data-siege-countdown>${siegeCountdown(card)}</span></div><button class="primary-btn siege-set-button" type="button" data-siege-action="set" data-siege-castle="${safe(castle)}">Ustaw termin</button></article>`;
   }).join('');
   refreshBossArtwork(container);
 }
@@ -599,10 +604,12 @@ function confirmDelete(item) {
   return new Promise(resolve => dialog.addEventListener('close', () => resolve(dialog.returnValue === 'delete'), { once:true }));
 }
 async function load() {
-  ordinaryEvents = await repository.getAll();
+  [ordinaryEvents, bossRespawnRows, siegeScheduleRows, territoryOwnershipRows] = await Promise.all([
+    repository.getAll(), bossRespawnRepository.getAll(), siegeScheduleRepository.getAll(), territoryOwnershipRepository.getAll(),
+  ]);
   adminEvents = ordinaryEvents;
-  bossRespawnRows = await bossRespawnRepository.getAll();
-  siegeScheduleRows = await siegeScheduleRepository.getAll();
+  window.__obTerritoryOwnershipRows = territoryOwnershipRows;
+  window.dispatchEvent(new CustomEvent('orzel:territory-owners-updated', { detail: territoryOwnershipRows }));
   mergePublicEvents();
   renderAll();
   renderBossRespawnManager();

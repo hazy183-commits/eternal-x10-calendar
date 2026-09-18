@@ -13,6 +13,7 @@ import { installNeededRaidBossWindow } from './neededRaidBossWindow.js';
 import { installRaidBossArtworkEnhancer } from './raidBossArtworkEnhancer.js';
 import { installNeededRaidBossDetails } from './neededRaidBossDetails.js';
 import { installEpicRespawnScreenshotImport } from './epicRespawnScreenshotImport.js';
+import { installTerritoryOwnershipScreenshotImport } from './territoryOwnershipScreenshotImport.js';
 import { installTodayClanDashboard } from './todayClanDashboard.js';
 import { installMemberZoneReliability } from './memberZoneReliability.js';
 import { installCraftPlannerUi } from './craftPlannerUi.js';
@@ -48,6 +49,7 @@ if (typeof document !== 'undefined') {
     installRaidBossArtworkEnhancer();
     installNeededRaidBossDetails(supabase);
     installEpicRespawnScreenshotImport(supabase);
+    installTerritoryOwnershipScreenshotImport(supabase);
     installTodayClanDashboard(supabase);
     installCraftPlannerUi(supabase);
     installCraftHierarchyEnhancer(supabase);
