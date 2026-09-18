@@ -1,4 +1,5 @@
 import './adminDashboardHome.css';
+import './adminWorkspace.css';
 import './adminEventDayGroups.js';
 import { supabase } from './supabaseClient.js';
 
@@ -15,8 +16,10 @@ export function installAdminHomeScreen(supabaseClient){
 
     const homeTab=document.createElement('button');
     homeTab.type='button';
+    homeTab.setAttribute('role','tab');
+    homeTab.setAttribute('aria-selected','false');
     homeTab.dataset.adminTab='home';
-    homeTab.innerHTML='⌂ <span>Start</span>';
+    homeTab.innerHTML='<i>⌂</i><span>Start</span><small>Podsumowanie</small>';
     tabs.prepend(homeTab);
 
     const home=document.createElement('section');
@@ -52,7 +55,9 @@ export function installAdminHomeScreen(supabaseClient){
         </button>
       </div>`;
 
-    tabs.after(home);
+    const content=document.querySelector('#adminModal .admin-workspace-content');
+    const contentHead=content?.querySelector('.admin-workspace-content-head');
+    if(contentHead)contentHead.after(home);else tabs.after(home);
 
     const originalButtons=[...tabs.querySelectorAll('[data-admin-tab]:not([data-admin-tab="home"])')];
     const managedSections=[
@@ -62,7 +67,7 @@ export function installAdminHomeScreen(supabaseClient){
       document.querySelector('#ownerUsersPanel')
     ].filter(Boolean);
 
-    const hideHome=()=>{home.hidden=true;homeTab.classList.remove('active');};
+    const hideHome=()=>{home.hidden=true;homeTab.classList.remove('active');homeTab.setAttribute('aria-selected','false');};
     originalButtons.forEach((button)=>button.addEventListener('click',hideHome,true));
 
     async function readProfile(){
@@ -96,7 +101,10 @@ export function installAdminHomeScreen(supabaseClient){
       managedSections.forEach((el)=>{el.hidden=true;});
       tabs.querySelectorAll('[data-admin-tab]').forEach((b)=>b.classList.remove('active'));
       homeTab.classList.add('active');
+      tabs.querySelectorAll('[data-admin-tab]').forEach((b)=>b.setAttribute('aria-selected',String(b===homeTab)));
       home.hidden=false;
+      if(contentHead){contentHead.querySelector('[data-admin-section-kicker]').textContent='CENTRUM DOWODZENIA';contentHead.querySelector('[data-admin-section-title]').textContent='Panel główny';contentHead.querySelector('[data-admin-section-description]').textContent='Najważniejsze informacje i szybki dostęp do zarządzania.';}
+      content?.scrollTo?.({top:0,behavior:'instant'});
       await refreshHome();
     };
 
