@@ -18,7 +18,8 @@ export function summarizeCraftProject(project) {
   const have = relevant.reduce((sum, row) => sum + Number(row.ownedAllocated || 0) + Number(row.generatedSurplusUsed || 0), 0);
   const missing = relevant.reduce((sum, row) => sum + Number(row.missing || 0), 0);
   const total = have + missing;
-  const percent = project?.complete ? 100 : total > 0 ? Math.max(0, Math.min(100, Math.floor((have / total) * 100))) : 0;
+  const rawPercent = total > 0 ? (have / total) * 100 : 0;
+  const percent = project?.complete ? 100 : Math.max(0, Math.min(100, Math.round(rawPercent * 10) / 10));
   return { have, missing, total, percent };
 }
 
@@ -93,6 +94,8 @@ export function installCraftHomeSummary(supabase) {
   window.addEventListener('orzel:craft-workspace-updated', event => {
     if (event.detail) renderWorkspace(root, event.detail);
   });
+  window.addEventListener('orzel:craft-data-changed', () => window.setTimeout(refresh, 80));
+  window.addEventListener('focus', refresh);
   supabase.auth.onAuthStateChange(() => window.setTimeout(refresh, 0));
   refresh();
 }

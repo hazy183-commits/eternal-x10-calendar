@@ -17,3 +17,14 @@ test('summarizes owned and missing terminal craft materials as a percentage', ()
 test('completed craft project always reports one hundred percent', () => {
   assert.equal(summarizeCraftProject({ complete: true, requirements: [] }).percent, 100);
 });
+
+test('keeps one decimal place so partial progress never appears stuck at zero', () => {
+  const summary = summarizeCraftProject({
+    complete: false,
+    requirements: [
+      { quantity: 5200, ownedAllocated: 5200, generatedSurplusUsed: 0, missing: 0 },
+      { quantity: 50480, ownedAllocated: 0, generatedSurplusUsed: 0, missing: 50480 },
+    ],
+  });
+  assert.equal(summary.percent, 9.3);
+});
