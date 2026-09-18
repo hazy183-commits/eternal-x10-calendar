@@ -63,10 +63,6 @@ function renderWorkspace(root, workspace) {
     <div class="craft-home-progress">
       <div class="craft-home-progress-head"><span>Postęp materiałów</span><b>${summary.percent}%</b></div>
       <div class="craft-home-progress-track" role="progressbar" aria-label="Postęp projektu craftu" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${summary.percent}"><i style="--craft-progress:${summary.percent}%"></i></div>
-      <div class="craft-home-stats">
-        <div class="craft-home-stat have"><span>Mam</span><b>${fmt(summary.have)}</b></div>
-        <div class="craft-home-stat missing"><span>Brakuje</span><b>${fmt(summary.missing)}</b></div>
-      </div>
     </div>
     <button class="primary-btn craft-home-open" type="button">Zobacz projekt →</button>`;
 }
