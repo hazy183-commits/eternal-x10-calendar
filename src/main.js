@@ -133,7 +133,7 @@ function renderCalendar() {
   const next = list.find(event => calendarEventState(event) === 'upcoming' && dateFromEvent(event) > new Date());
   $('#selectedDate').textContent = formatDate(selectedDay);
   renderCalendarWeek();
-  const heading = '<div class="event-table-head"><span>Godzina</span><span>Wydarzenie</span><span>Typ</span><span>Lokalizacja</span><span>Status · odliczanie</span></div>';
+  const heading = '<div class="event-table-head"><span>Godzina</span><span>Wydarzenie</span><span>Typ</span><span>Lokalizacja</span><span>Zapisani</span><span>Status · odliczanie</span></div>';
   $('#dailyEvents').innerHTML = heading + (list.length ? list.map(event => eventRow(event, event === next)).join('') : '<div class="empty-state"><span>✦</span><p>Brak wydarzeń w tej kategorii.</p></div>');
   refreshBossArtwork($('#dailyEvents'));
   calendarClockSignature = calendarClockKey();
