@@ -154,11 +154,11 @@ function nodeStatus(itemKey, quantity, recipeBook, maps) {
   const virtual = Math.min(Math.max(0, quantity - owned), maps.surplus.get(itemKey) || 0);
   const covered = owned + virtual;
   const recipe = recipeBook.get(itemKey);
-  const missing = maps.missing.get(itemKey) || 0;
+  const missing = Math.max(0, quantity - covered);
 
-  if (covered >= quantity) return { cls: 'is-ready', text: `Masz ${fmt(covered)} / ${fmt(quantity)}` };
-  if (recipe?.components?.length) return { cls: 'is-craftable', text: `Masz ${fmt(covered)} / ${fmt(quantity)} · do zrobienia ${fmt(quantity - covered)}` };
-  return { cls: missing ? 'is-missing' : 'is-craftable', text: `Masz ${fmt(covered)} / ${fmt(quantity)}${missing ? ` · brakuje ${fmt(missing)}` : ''}` };
+  if (covered >= quantity) return { cls: 'is-ready', text: `Mam ${fmt(covered)} · Gotowe` };
+  if (recipe?.components?.length) return { cls: 'is-craftable', text: `Mam ${fmt(covered)} · Brakuje ${fmt(missing)}` };
+  return { cls: missing ? 'is-missing' : 'is-craftable', text: `Mam ${fmt(covered)} · Brakuje ${fmt(missing)}` };
 }
 
 function renderRecipeNode(itemKey, quantity, context, depth = 0, trail = []) {
@@ -215,6 +215,7 @@ function renderMainRecipe(project, workspace) {
         <div><small>GŁÓWNA RECEPTA</small><b>Materiały do wykonania</b></div>
         <span>Kliknij materiał ze strzałką, aby zobaczyć jego składniki.</span>
       </div>
+      <div class="craft-tree-columns" aria-hidden="true"><span>Materiał</span><span>Potrzeba</span><span>Mam / brakuje</span></div>
       <div class="craft-tree">${rows}</div>
     </div>`;
 }
@@ -224,8 +225,8 @@ function ensureStyles() {
   const style = document.createElement('style');
   style.id = 'craftHierarchyEnhancerStyles';
   style.textContent = `
-    .craft-main-materials{margin-top:12px;border-top:1px solid #33291b;padding-top:12px}.craft-main-materials-head{display:flex;justify-content:space-between;gap:16px;align-items:end;margin-bottom:8px}.craft-main-materials-head div{display:grid;gap:2px}.craft-main-materials-head small{color:#9b824f;font-size:9px;letter-spacing:.08em}.craft-main-materials-head b{color:#e4d7b8;font-size:13px}.craft-main-materials-head span{color:#6f6a62;font-size:10px}.craft-tree{display:grid}.craft-tree-node,.craft-tree-leaf{border-top:1px solid #272118}.craft-tree-node summary,.craft-tree-leaf{display:grid;grid-template-columns:minmax(220px,1fr) 90px minmax(190px,.9fr);gap:10px;align-items:center;padding:8px 6px 8px calc(6px + (var(--craft-depth) * 18px));list-style:none}.craft-tree-node summary::-webkit-details-marker{display:none}.craft-tree-node summary{cursor:pointer}.craft-tree-name{display:flex;gap:8px;align-items:center;color:#d9d2c4}.craft-tree-name .craft-item-icon{width:32px;height:32px;flex:0 0 32px;display:grid;place-items:center;border:1px solid #514225;background:#11100c;color:#7f6c43;overflow:hidden}.craft-tree-name .craft-item-icon img{width:32px;height:32px;object-fit:contain}.craft-tree-arrow{display:inline-grid;place-items:center;width:18px;height:18px;border:1px solid #5c4827;color:#d8ad55;transition:transform .15s ease}.craft-tree-node[open]>summary .craft-tree-arrow{transform:rotate(90deg)}.craft-tree-dot{display:inline-grid;place-items:center;width:18px;color:#66583e}.craft-tree-node strong,.craft-tree-leaf>strong{color:#e0c98c;text-align:right}.craft-tree-node small,.craft-tree-leaf>small{color:#81796e;text-align:right}.craft-tree-node.is-ready>summary small,.craft-tree-leaf.is-ready>small{color:#69bb7d}.craft-tree-node.is-craftable>summary small{color:#c8a85c}.craft-tree-leaf.is-missing>small{color:#df8f61}.craft-tree-children{background:rgba(255,255,255,.012)}
-    @media(max-width:900px){.craft-main-materials-head{display:block}.craft-main-materials-head span{display:block;margin-top:5px}.craft-tree-node summary,.craft-tree-leaf{grid-template-columns:1fr auto;padding-left:calc(4px + (var(--craft-depth) * 13px))}.craft-tree-node small,.craft-tree-leaf>small{grid-column:1/-1;text-align:left;margin-left:26px}}
+    .craft-main-materials{margin-top:12px;border-top:1px solid #33291b;padding-top:12px}.craft-main-materials-head{display:flex;justify-content:space-between;gap:16px;align-items:end;margin-bottom:8px}.craft-main-materials-head div{display:grid;gap:2px}.craft-main-materials-head small{color:#9b824f;font-size:9px;letter-spacing:.08em}.craft-main-materials-head b{color:#e4d7b8;font-size:13px}.craft-main-materials-head span{color:#6f6a62;font-size:10px}.craft-tree-columns{display:grid;grid-template-columns:minmax(220px,1fr) 90px minmax(190px,.9fr);gap:10px;padding:7px 6px;border:1px solid #302819;background:#0d100e;color:#756e64;font-size:8px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}.craft-tree-columns span:nth-child(n+2){text-align:right}.craft-tree{display:grid}.craft-tree-node,.craft-tree-leaf{border-top:1px solid #272118}.craft-tree-node summary,.craft-tree-leaf{display:grid;grid-template-columns:minmax(220px,1fr) 90px minmax(190px,.9fr);gap:10px;align-items:center;padding:8px 6px 8px calc(6px + (var(--craft-depth) * 18px));list-style:none}.craft-tree-node summary::-webkit-details-marker{display:none}.craft-tree-node summary{cursor:pointer}.craft-tree-name{display:flex;gap:8px;align-items:center;color:#d9d2c4}.craft-tree-name .craft-item-icon{width:32px;height:32px;flex:0 0 32px;display:grid;place-items:center;border:1px solid #514225;background:#11100c;color:#7f6c43;overflow:hidden}.craft-tree-name .craft-item-icon img{width:32px;height:32px;object-fit:contain}.craft-tree-arrow{display:inline-grid;place-items:center;width:18px;height:18px;border:1px solid #5c4827;color:#d8ad55;transition:transform .15s ease}.craft-tree-node[open]>summary .craft-tree-arrow{transform:rotate(90deg)}.craft-tree-dot{display:inline-grid;place-items:center;width:18px;color:#66583e}.craft-tree-node strong,.craft-tree-leaf>strong{color:#e0c98c;text-align:right}.craft-tree-node small,.craft-tree-leaf>small{color:#81796e;text-align:right}.craft-tree-node.is-ready>summary small,.craft-tree-leaf.is-ready>small{color:#69bb7d}.craft-tree-node.is-craftable>summary small{color:#c8a85c}.craft-tree-leaf.is-missing>small{color:#df8f61}.craft-tree-children{background:rgba(255,255,255,.012)}
+    @media(max-width:900px){.craft-main-materials-head{display:block}.craft-main-materials-head span{display:block;margin-top:5px}.craft-tree-columns{display:none}.craft-tree-node summary,.craft-tree-leaf{grid-template-columns:1fr auto;padding-left:calc(4px + (var(--craft-depth) * 13px))}.craft-tree-node small,.craft-tree-leaf>small{grid-column:1/-1;text-align:left;margin-left:26px}}
   `;
   document.head.appendChild(style);
 }
@@ -256,7 +257,7 @@ export function installCraftHierarchyEnhancer(supabase) {
         if (!project) continue;
         const list = card.querySelector('.craft-mat-list');
         if (!list) continue;
-        const renderKey = `${project.targetItemKey}:${project.targetQuantity}:${project.status}:hierarchy-v3`;
+        const renderKey = `${project.targetItemKey}:${project.targetQuantity}:${project.status}:hierarchy-v4`;
         if (list.dataset.hierarchyRenderKey === renderKey) continue;
         const html = renderMainRecipe(project, workspace);
         if (!html) continue;
