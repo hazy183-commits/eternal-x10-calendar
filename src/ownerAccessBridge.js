@@ -1,3 +1,5 @@
+import { hasAdminPermission, loadAdminPermissionContext } from './adminPermissions.js';
+
 export function normalizeClanHeader(root=document){
   const entry=[...root.querySelectorAll('.member-auth-entry')].find((button)=>!button.classList.contains('logout'));
   if(!entry)return;
@@ -17,7 +19,7 @@ export function installOwnerAccessBridge(supabase){
     .ob-owner-shortcuts.show{display:grid}
     .ob-owner-shortcut{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:11px 12px;border:1px solid #765724;background:linear-gradient(180deg,#21170c,#0b0e0e);color:#e7bd68;font-size:10px;font-weight:900;letter-spacing:.05em;cursor:pointer}
     .ob-owner-shortcut:hover{border-color:#b88738;color:#f4d28b}
-    html:not(.ob-owner-account) #adminTrigger,html:not(.ob-owner-account) #quickAdd{display:none!important}
+    html:not(.ob-admin-account) #adminTrigger,html:not(.ob-perm-manage-events) #quickAdd{display:none!important}
     #adminModal.ob-owner-admin-open{z-index:12050!important}
     #adminModal.ob-owner-admin-open .modal-backdrop{z-index:0}
     #adminModal.ob-owner-admin-open .admin-panel{z-index:1}
@@ -25,7 +27,7 @@ export function installOwnerAccessBridge(supabase){
   `;
   document.head.appendChild(style);
 
-  let lastOwnerState=false;
+  let lastAdminState=false;
 
   const readProfile=async()=>{
     const {data:{session}}=await supabase.auth.getSession();
@@ -35,10 +37,8 @@ export function installOwnerAccessBridge(supabase){
   };
 
   const openAdmin=async()=>{
-    const profile=await readProfile();
-    const role=String(profile?.role||'').toLowerCase();
-    const allowed=profile?.status==='approved'&&role==='owner';
-    if(!allowed)return;
+    const context=await loadAdminPermissionContext(supabase);
+    if(!context.canOpenAdmin)return;
 
     const modal=document.querySelector('#adminModal');
     if(!modal)return;
@@ -62,13 +62,13 @@ export function installOwnerAccessBridge(supabase){
     });
   };
 
-  const installOwnerHeaderButton=(isOwner)=>{
+  const installOwnerHeaderButton=(allowed)=>{
     let trigger=document.querySelector('#adminTrigger');
     if(!trigger)return;
     if(!trigger.dataset.ownerControlled){
       const replacement=trigger.cloneNode(true);
       replacement.dataset.ownerControlled='true';
-      replacement.hidden=!isOwner;
+      replacement.hidden=!allowed;
       replacement.innerHTML='<span>✦</span> Panel administratora';
       trigger.replaceWith(replacement);
       replacement.addEventListener('click',(event)=>{
@@ -78,12 +78,12 @@ export function installOwnerAccessBridge(supabase){
       });
       trigger=replacement;
     }
-    trigger.hidden=!isOwner;
+    trigger.hidden=!allowed;
   };
 
   const openEditor=async()=>{
-    const profile=await readProfile();
-    if(profile?.status!=='approved'||String(profile.role||'').toLowerCase()!=='owner')return;
+    const context=await loadAdminPermissionContext(supabase);
+    if(!hasAdminPermission(context,'manage_content'))return;
     const zone=document.querySelector('#memberZoneLayer');
     const edit=zone?.querySelector('[data-zone-view="content-editor"]');
     if(edit){
@@ -94,17 +94,16 @@ export function installOwnerAccessBridge(supabase){
   };
 
   async function sync(){
-    const p=await readProfile();
-    const role=String(p?.role||'').toLowerCase();
-    const approved=p?.status==='approved';
-    const isOwner=approved&&role==='owner';
-    lastOwnerState=isOwner;
+    const context=await loadAdminPermissionContext(supabase);
+    const isOwner=context.isOwner;
+    lastAdminState=context.canOpenAdmin;
     document.documentElement.classList.toggle('ob-owner-account',isOwner);
-    installOwnerHeaderButton(isOwner);
+    document.documentElement.classList.toggle('ob-admin-account',context.canOpenAdmin);
+    installOwnerHeaderButton(context.canOpenAdmin);
     normalizeClanHeader();
 
     const quickAdd=document.querySelector('#quickAdd');
-    if(quickAdd)quickAdd.hidden=!isOwner;
+    if(quickAdd)quickAdd.hidden=!hasAdminPermission(context,'manage_events');
 
     const zone=document.querySelector('#memberZoneLayer');
     if(!zone){setTimeout(sync,150);return}
@@ -122,14 +121,14 @@ export function installOwnerAccessBridge(supabase){
       shortcuts.querySelector('[data-ob-open-admin]').addEventListener('click',openAdmin);
     }
 
-    shortcuts.classList.toggle('show',isOwner);
+    shortcuts.classList.toggle('show',context.canOpenAdmin||hasAdminPermission(context,'manage_content'));
     const editorBtn=shortcuts.querySelector('[data-ob-open-editor]');
-    if(editorBtn)editorBtn.hidden=!isOwner;
+    if(editorBtn)editorBtn.hidden=!hasAdminPermission(context,'manage_content');
     const adminBtn=shortcuts.querySelector('[data-ob-open-admin]');
-    if(adminBtn)adminBtn.hidden=!isOwner;
+    if(adminBtn)adminBtn.hidden=!context.canOpenAdmin;
 
     const editNav=zone.querySelector('[data-zone-view="content-editor"]');
-    if(editNav)editNav.hidden=!isOwner;
+    if(editNav)editNav.hidden=!hasAdminPermission(context,'manage_content');
   }
 
   document.addEventListener('click',(event)=>{
@@ -146,7 +145,7 @@ export function installOwnerAccessBridge(supabase){
   const headerObserver=new MutationObserver(()=>{
     normalizeClanHeader();
     const trigger=document.querySelector('#adminTrigger');
-    if(trigger)trigger.hidden=!lastOwnerState;
+    if(trigger)trigger.hidden=!lastAdminState;
   });
   const header=document.querySelector('.header-actions');
   if(header)headerObserver.observe(header,{childList:true,subtree:true,characterData:true});

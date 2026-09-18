@@ -39,6 +39,7 @@ if (typeof document !== 'undefined') {
       { installRoleEnhancements },
       { installAdminSiteManager },
       { installPublicSiteSettings },
+      { installPermissionManager },
     ] = await Promise.all([
       import('./memberZoneReliability.js'),
       import('./memberEventSignups.js'),
@@ -62,6 +63,7 @@ if (typeof document !== 'undefined') {
       import('./roleEnhancements.js'),
       import('./adminSiteManager.js'),
       import('./siteSettings.js'),
+      import('./permissionManager.js'),
       import('./craftWeaponSelectEnhancer.js'),
       import('./neededRaidBossRefreshBridge.js'),
       import('./interludeClassSelects.js'),
@@ -88,6 +90,7 @@ if (typeof document !== 'undefined') {
     installRoleEnhancements(supabase);
     installAdminSiteManager(supabase);
     installPublicSiteSettings(supabase);
+    installPermissionManager(supabase);
   };
   const boot = () => startMemberFeatures().catch(error => console.error('MEMBER FEATURES BOOT FAILED', error));
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });

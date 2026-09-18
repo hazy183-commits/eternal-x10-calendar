@@ -1,3 +1,5 @@
+import { hasAdminPermission, loadAdminPermissionContext } from './adminPermissions.js';
+
 const esc = (value='') => String(value).replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 
 export function installAdminDashboard(supabase) {
@@ -62,6 +64,7 @@ export function installAdminDashboard(supabase) {
   let currentProfile=null;
   let ownerAccess=false;
   let adminAccess=false;
+  let permissionContext={permissions:new Set(['manage_events']),isOwner:false,canOpenAdmin:false};
   const sections={events:[listView,formView],bosses:[bosses],siege:[siege],schedule:[olympiad,pvp],content:[siteContent],users:[users]};
   const sectionCopy={
     events:['KALENDARZ KLANU','Wydarzenia','Dodawaj, wyszukuj i edytuj wydarzenia klanowe.'],
@@ -72,16 +75,16 @@ export function installAdminDashboard(supabase) {
     users:['STREFA KLANU','Użytkownicy i role','Akceptuj konta oraz zarządzaj dostępem członków klanu.'],
   };
   function updateSectionHead(name){const copy=sectionCopy[name];if(!copy)return;contentHead.querySelector('[data-admin-section-kicker]').textContent=copy[0];contentHead.querySelector('[data-admin-section-title]').textContent=copy[1];contentHead.querySelector('[data-admin-section-description]').textContent=copy[2];}
-  function showTab(name){if((name==='users'||name==='content')&&!ownerAccess)return;currentTab=name;Object.entries(sections).forEach(([key,els])=>els.forEach(el=>{if(el)el.hidden=key!==name;}));tabs.querySelectorAll('[data-admin-tab]').forEach(b=>{const active=b.dataset.adminTab===name;b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active));});updateSectionHead(name);content.scrollTop=0;if(name==='users')loadUsers();if(name==='content')window.dispatchEvent(new CustomEvent('orzel:admin-content-open'));}
+  const tabPermission={events:'manage_events',bosses:'manage_epic',siege:'manage_siege',content:'manage_content',users:'manage_users'};
+  const tabAllowed=(name)=>tabPermission[name]?hasAdminPermission(permissionContext,tabPermission[name]):name==='schedule'&&(hasAdminPermission(permissionContext,'manage_events')||hasAdminPermission(permissionContext,'manage_siege'));
+  function showTab(name){if(!tabAllowed(name))return;currentTab=name;Object.entries(sections).forEach(([key,els])=>els.forEach(el=>{if(el)el.hidden=key!==name;}));tabs.querySelectorAll('[data-admin-tab]').forEach(b=>{const active=b.dataset.adminTab===name;b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active));});updateSectionHead(name);content.scrollTop=0;if(name==='users')loadUsers();if(name==='content')window.dispatchEvent(new CustomEvent('orzel:admin-content-open'));}
   tabs.addEventListener('click',e=>{const b=e.target.closest('[data-admin-tab]');if(b&&!b.hidden)showTab(b.dataset.adminTab);});
 
   function applyAccessUi(){
     if(adminTrigger) adminTrigger.hidden=!adminAccess;
     if(quickAdd) quickAdd.hidden=!adminAccess;
-    const userTab=tabs.querySelector('[data-admin-tab="users"]');
-    userTab.hidden=!ownerAccess;
-    const contentTab=tabs.querySelector('[data-admin-tab="content"]');
-    contentTab.hidden=!ownerAccess;
+    tabs.querySelectorAll('[data-admin-tab]').forEach(button=>{button.hidden=!tabAllowed(button.dataset.adminTab)});
+    for(const item of ['manage_events','manage_epic','manage_territories','manage_siege','manage_content','manage_users','manage_discord'])document.documentElement.classList.toggle(`ob-perm-${item.replaceAll('_','-')}`,hasAdminPermission(permissionContext,item));
     if(!adminAccess && document.querySelector('#adminModal')?.classList.contains('open')){
       document.querySelector('#adminModal').classList.remove('open');
       document.querySelector('#adminModal').setAttribute('aria-hidden','true');
@@ -90,24 +93,28 @@ export function installAdminDashboard(supabase) {
   async function resolveProfile(){
     const {data:{session}}=await supabase.auth.getSession();
     if(!session){currentProfile=null;ownerAccess=false;adminAccess=false;applyAccessUi();return null;}
-    const {data:profile}=await supabase.from('profiles').select('id,nickname,role,status').eq('id',session.user.id).maybeSingle();
-    currentProfile=profile||null;
-    ownerAccess=currentProfile?.role==='owner'&&currentProfile?.status==='approved';
-    adminAccess=currentProfile?.status==='approved'&&(currentProfile?.role==='owner'||currentProfile?.role==='admin');
+    permissionContext=await loadAdminPermissionContext(supabase);
+    currentProfile=permissionContext.profile;
+    ownerAccess=permissionContext.isOwner;
+    adminAccess=permissionContext.canOpenAdmin;
     applyAccessUi();
-    if(ownerAccess) loadPendingBadge();
+    if(adminAccess&&!tabAllowed(currentTab)){
+      const first=['events','bosses','siege','schedule','content','users'].find(tabAllowed);
+      if(first)showTab(first);
+    }
+    if(hasAdminPermission(permissionContext,'manage_users')) loadPendingBadge();
     return currentProfile;
   }
   if(adminTrigger) adminTrigger.addEventListener('click',e=>{if(!adminAccess){e.preventDefault();e.stopImmediatePropagation();}},true);
   if(quickAdd) quickAdd.addEventListener('click',e=>{if(!adminAccess){e.preventDefault();e.stopImmediatePropagation();}},true);
 
-  async function loadPendingBadge(){if(!ownerAccess)return;const {count}=await supabase.from('profiles').select('id',{count:'exact',head:true}).eq('status','pending');const badge=document.querySelector('#pendingUsersBadge');badge.textContent=count||0;badge.hidden=!count;}
-  async function loadUsers(){await resolveProfile();const list=document.querySelector('#ownerUsersList'),msg=document.querySelector('#ownerUsersMessage');if(!ownerAccess){list.innerHTML='';msg.textContent='Ta sekcja jest dostępna tylko dla Ownera.';return;}msg.textContent='Ładowanie użytkowników…';const {data,error}=await supabase.from('profiles').select('id,nickname,role,status,created_at').order('created_at',{ascending:false});if(error){msg.textContent='Nie udało się pobrać użytkowników: '+error.message;return;}msg.textContent='';const rows=data||[];document.querySelector('#usersPending').textContent=rows.filter(x=>x.status==='pending').length;document.querySelector('#usersApproved').textContent=rows.filter(x=>x.status==='approved').length;document.querySelector('#usersAdmins').textContent=rows.filter(x=>x.role==='admin'&&x.status==='approved').length;document.querySelector('#usersBlocked').textContent=rows.filter(x=>x.status==='blocked').length;const pending=rows.filter(x=>x.status==='pending').length,badge=document.querySelector('#pendingUsersBadge');badge.textContent=pending;badge.hidden=!pending;list.innerHTML=rows.map(u=>{const self=u.id===currentProfile?.id;const owner=u.role==='owner';let actions='';if(!self&&!owner){if(u.status==='pending')actions+=`<button data-user-action="approve" data-user-id="${u.id}">✓ Akceptuj</button>`;if(u.status!=='blocked')actions+=`<button class="danger" data-user-action="block" data-user-id="${u.id}">⊘ Zablokuj</button>`;else actions+=`<button data-user-action="approve" data-user-id="${u.id}">↻ Odblokuj</button>`;if(u.status==='approved')actions+=u.role==='admin'?`<button data-user-action="member" data-user-id="${u.id}">Odbierz Admina</button>`:`<button data-user-action="admin" data-user-id="${u.id}">★ Nadaj Admina</button>`;}return `<article class="owner-user-row"><div class="owner-user-name"><b>${esc(u.nickname)}</b><small>${self?'Twoje konto':new Date(u.created_at).toLocaleDateString('pl-PL')}</small></div><span class="owner-user-role">${esc(u.role)}</span><span class="owner-user-status ${esc(u.status)}">${esc(u.status)}</span><div class="owner-user-actions">${actions||'<span>—</span>'}</div></article>`;}).join('')||'<p>Brak użytkowników.</p>';}
+  async function loadPendingBadge(){if(!hasAdminPermission(permissionContext,'manage_users'))return;const {count}=await supabase.from('profiles').select('id',{count:'exact',head:true}).eq('status','pending');const badge=document.querySelector('#pendingUsersBadge');badge.textContent=count||0;badge.hidden=!count;}
+  async function loadUsers(){await resolveProfile();const list=document.querySelector('#ownerUsersList'),msg=document.querySelector('#ownerUsersMessage');if(!hasAdminPermission(permissionContext,'manage_users')){list.innerHTML='';msg.textContent='Nie masz uprawnienia do zarządzania użytkownikami.';return;}msg.textContent='Ładowanie użytkowników…';const {data,error}=await supabase.from('profiles').select('id,nickname,role,status,created_at').order('created_at',{ascending:false});if(error){msg.textContent='Nie udało się pobrać użytkowników: '+error.message;return;}msg.textContent='';const rows=data||[];document.querySelector('#usersPending').textContent=rows.filter(x=>x.status==='pending').length;document.querySelector('#usersApproved').textContent=rows.filter(x=>x.status==='approved').length;document.querySelector('#usersAdmins').textContent=rows.filter(x=>x.role==='admin'&&x.status==='approved').length;document.querySelector('#usersBlocked').textContent=rows.filter(x=>x.status==='blocked').length;const pending=rows.filter(x=>x.status==='pending').length,badge=document.querySelector('#pendingUsersBadge');badge.textContent=pending;badge.hidden=!pending;list.innerHTML=rows.map(u=>{const self=u.id===currentProfile?.id;const owner=u.role==='owner';let actions='';if(!self&&!owner){if(u.status==='pending')actions+=`<button data-user-action="approve" data-user-id="${u.id}">✓ Akceptuj</button>`;if(u.status!=='blocked')actions+=`<button class="danger" data-user-action="block" data-user-id="${u.id}">⊘ Zablokuj</button>`;else actions+=`<button data-user-action="approve" data-user-id="${u.id}">↻ Odblokuj</button>`;if(u.status==='approved')actions+=u.role==='admin'?`<button data-user-action="member" data-user-id="${u.id}">Odbierz Admina</button>`:`<button data-user-action="admin" data-user-id="${u.id}">★ Nadaj Admina</button>`;}return `<article class="owner-user-row"><div class="owner-user-name"><b>${esc(u.nickname)}</b><small>${self?'Twoje konto':new Date(u.created_at).toLocaleDateString('pl-PL')}</small></div><span class="owner-user-role">${esc(u.role)}</span><span class="owner-user-status ${esc(u.status)}">${esc(u.status)}</span><div class="owner-user-actions">${actions||'<span>—</span>'}</div></article>`;}).join('')||'<p>Brak użytkowników.</p>';}
   users.addEventListener('click',async e=>{const b=e.target.closest('[data-user-action]');if(!b)return;b.disabled=true;const action=b.dataset.userAction;let patch={};if(action==='approve')patch={status:'approved',role:'member'};if(action==='block')patch={status:'blocked'};if(action==='admin')patch={role:'admin'};if(action==='member')patch={role:'member'};const {error}=await supabase.from('profiles').update(patch).eq('id',b.dataset.userId);document.querySelector('#ownerUsersMessage').textContent=error?'Błąd: '+error.message:'Zmiana zapisana.';await loadUsers();});
   document.querySelector('#refreshUsers').addEventListener('click',loadUsers);
 
   const modal=document.querySelector('#adminModal');
-  const observer=new MutationObserver(async()=>{const open=modal.classList.contains('open');document.body.classList.toggle('admin-modal-open',open);if(open){await resolveProfile();if(!adminAccess)return;if(currentTab==='users'&&!ownerAccess)showTab('events');else if(currentTab==='events'){listView.hidden=false;formView.hidden=true;}}});
+  const observer=new MutationObserver(async()=>{const open=modal.classList.contains('open');document.body.classList.toggle('admin-modal-open',open);if(open){await resolveProfile();if(!adminAccess)return;if(!tabAllowed(currentTab)){const first=['events','bosses','siege','schedule','content','users'].find(tabAllowed);if(first)showTab(first);}else if(currentTab==='events'){listView.hidden=false;formView.hidden=true;}}});
   observer.observe(modal,{attributes:true,attributeFilter:['class']});
   supabase.auth.onAuthStateChange(()=>setTimeout(resolveProfile,0));
   resolveProfile();
