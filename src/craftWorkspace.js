@@ -17,6 +17,10 @@ const throwIfError = (error) => {
   if (error) throw error;
 };
 
+const notifyCraftDataChanged = () => {
+  if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('orzel:craft-data-changed'));
+};
+
 export async function fetchAllRows(createQuery, pageSize = 500) {
   const rows = [];
   for (let from = 0; ; from += pageSize) {
@@ -67,6 +71,7 @@ export async function setCraftInventoryQuantity(supabase, itemKey, quantity) {
       .eq('user_id', user.id)
       .eq('item_key', itemKey);
     throwIfError(error);
+    notifyCraftDataChanged();
     return null;
   }
 
@@ -81,6 +86,7 @@ export async function setCraftInventoryQuantity(supabase, itemKey, quantity) {
     .select('*')
     .single();
   throwIfError(error);
+  notifyCraftDataChanged();
   return data;
 }
 
@@ -117,6 +123,7 @@ export async function createCraftProject(supabase, {
     .select('*')
     .single();
   throwIfError(error);
+  notifyCraftDataChanged();
   return data;
 }
 
@@ -156,6 +163,7 @@ export async function updateCraftProject(supabase, projectId, changes = {}) {
     .select('*')
     .single();
   throwIfError(error);
+  notifyCraftDataChanged();
   return data;
 }
 
@@ -167,6 +175,7 @@ export async function deleteCraftProject(supabase, projectId) {
     .eq('id', projectId)
     .eq('user_id', user.id);
   throwIfError(error);
+  notifyCraftDataChanged();
 }
 
 export async function reorderCraftProjects(supabase, orderedProjectIds = []) {
@@ -180,4 +189,5 @@ export async function reorderCraftProjects(supabase, orderedProjectIds = []) {
       .eq('user_id', user.id);
     throwIfError(error);
   }
+  notifyCraftDataChanged();
 }

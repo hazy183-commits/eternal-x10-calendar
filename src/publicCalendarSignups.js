@@ -52,7 +52,7 @@ import { getClanUpcomingEvents, signupIdentity } from './clanEventFeed.js';
       const time = String(row.querySelector('.event-time')?.textContent || '').trim();
       const type = norm(row.querySelector('.type-chip')?.textContent);
       const date = selectedDate();
-      return getClanUpcomingEvents(new Date(Date.now() - 14 * 86400000)).find(event =>
+      return getClanUpcomingEvents(new Date()).find(event =>
         norm(event.name) === name &&
         String(event.time || '').trim() === time &&
         norm(event.type) === type &&
@@ -106,15 +106,16 @@ import { getClanUpcomingEvents, signupIdentity } from './clanEventFeed.js';
           const info = row.querySelector('.event-info');
           if (!info) return;
           const event = eventForRow(row);
-          let button = info.querySelector('.public-signup-count');
+          let button = row.querySelector('.public-signup-count');
           if (!event) { button?.remove(); return; }
           const lists = grouped(event);
           if (!button) {
             button = document.createElement('button');
             button.type = 'button';
             button.className = 'public-signup-count';
-            info.appendChild(button);
           }
+          const status = row.querySelector('.row-status');
+          if (status && button.nextElementSibling !== status) row.insertBefore(button, status);
           const html = `<span class="psc-icon">♙</span><span class="psc-main"><b>${lists.yes.length}</b> zapisanych</span>${lists.maybe.length ? `<span class="psc-maybe">${lists.maybe.length} może</span>` : ''}<span class="psc-chevron">›</span>`;
           if (button.innerHTML !== html) button.innerHTML = html;
           button.title = 'Pokaż listę zapisanych graczy';

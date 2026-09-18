@@ -179,3 +179,46 @@ test('expands Crafted Leather and Maestro Anvil Lock through every material reci
     { itemKey: 'mat_oriharukon', name: 'Oriharukon', quantity: 2 },
   ]);
 });
+
+test('replaces a flattened Angel Slayer recipe with verified direct components', () => {
+  const directComponents = [
+    ['recipe_6887', 'Recipe: Angel Slayer (60%)', 1],
+    ['mat_angel_slayer_blade', 'Angel Slayer Blade', 17],
+    ['mat_warsmith_holder', 'Warsmith Holder', 4],
+    ['mat_mithril_alloy', 'Mithril Alloy', 264],
+    ['mat_synthetic_cokes', 'Synthetic Cokes', 264],
+    ['mat_durable_metal_plate', 'Durable Metal Plate', 132],
+    ['mat_enria', 'Enria', 132],
+    ['mat_crystal_s_grade', 'Crystal: S-Grade', 211],
+    ['mat_gemstone_s', 'Gemstone S', 43],
+  ];
+  const flatRawComponents = [
+    component('r-angel-slayer', 'mat_animal_bone', 5000),
+    component('r-angel-slayer', 'mat_thread', 3000),
+    component('r-angel-slayer', 'mat_varnish', 2000),
+  ];
+
+  const plan = planCraftWorkspace({
+    items: [
+      item('weapon_s_angel_slayer', 'Angel Slayer'),
+      ...directComponents.map(([itemKey, name]) => item(itemKey, name)),
+      item('mat_animal_bone', 'Animal Bone'),
+      item('mat_thread', 'Thread'),
+      item('mat_varnish', 'Varnish'),
+    ],
+    recipes: [recipe('r-angel-slayer', 'weapon_s_angel_slayer')],
+    components: flatRawComponents,
+    inventory: [],
+    projects: [project('angel-slayer', 'weapon_s_angel_slayer', 1)],
+  });
+
+  assert.deepEqual(
+    plan.activeProjects[0].missing,
+    directComponents
+      .map(([itemKey, name, quantity]) => ({ itemKey, name, quantity }))
+      .sort((a, b) => a.name.localeCompare(b.name)),
+  );
+  assert.equal(plan.activeProjects[0].missing.some(row => row.itemKey === 'mat_animal_bone'), false);
+  assert.equal(plan.activeProjects[0].missing.some(row => row.itemKey === 'mat_thread'), false);
+  assert.equal(plan.activeProjects[0].missing.some(row => row.itemKey === 'mat_varnish'), false);
+});

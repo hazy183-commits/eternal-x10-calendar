@@ -16,7 +16,7 @@ export function installMemberAuth(supabase) {
   layer.id = 'memberAuthLayer';
   layer.innerHTML = `
     <div class="member-auth-box">
-      <img src="/images/logo-orzel-bialy.png" alt="Orzeł Biały">
+      <img src="/images/logo-orzel-bialy.webp" alt="Orzeł Biały">
       <span class="member-kicker">ORZEŁ BIAŁY · ETERNAL X10</span>
       <h2>STREFA KLANU</h2>
       <p class="member-auth-lead">Zaloguj się, aby wejść na stronę klanu.</p>
@@ -40,7 +40,7 @@ export function installMemberAuth(supabase) {
     <div class="member-zone-box">
       <button class="member-zone-close" type="button">×</button>
       <aside class="member-zone-side">
-        <img src="/images/logo-orzel-bialy.png" alt="Orzeł Biały">
+        <img src="/images/logo-orzel-bialy.webp" alt="Orzeł Biały">
         <span class="member-kicker">ORZEŁ BIAŁY</span><h3>STREFA KLANU</h3>
         <button class="zone-nav active" data-zone-view="home">⌂ <span>Pulpit</span></button>
         <button class="zone-nav" data-zone-view="events">▣ <span>Wydarzenia</span></button>
@@ -65,6 +65,23 @@ export function installMemberAuth(supabase) {
     </div>`;
   document.body.appendChild(zone);
 
+  const decorateZoneNavIcons = () => {
+    for (const button of zone.querySelectorAll('.zone-nav')) {
+      for (const node of [...button.childNodes]) {
+        if (node.nodeType === Node.TEXT_NODE) node.remove();
+      }
+      if (!button.querySelector(':scope > .zone-nav-icon')) {
+        const icon = document.createElement('i');
+        icon.className = 'zone-nav-icon';
+        icon.setAttribute('aria-hidden', 'true');
+        button.prepend(icon);
+      }
+    }
+  };
+  decorateZoneNavIcons();
+  const zoneNavIconObserver = new MutationObserver(() => queueMicrotask(decorateZoneNavIcons));
+  zoneNavIconObserver.observe(zone.querySelector('.member-zone-side'), { childList: true, subtree: true });
+
   const css = document.createElement('style');
   css.textContent = `
     #memberZoneLayer [hidden]{display:none!important}
@@ -79,10 +96,10 @@ export function installMemberAuth(supabase) {
     .member-auth-box label{display:block;text-align:left;margin:12px 0;color:#a29b8d;font-size:11px;font-weight:800}.member-auth-box input{box-sizing:border-box;width:100%;margin-top:7px;padding:13px;border:1px solid #42392b;background:#090d0d;color:#eee}
     .member-submit,.member-admin-submit{width:100%;padding:14px;margin-top:10px;font-weight:900;cursor:pointer}.member-submit{border:1px solid #bd8d3c;background:linear-gradient(#3a2811,#20160b);color:#f0cf83}.member-admin-submit{border:1px solid #514229;background:#0b0e0e;color:#a99b7c;font-size:10px;letter-spacing:.08em}.member-admin-submit:hover{border-color:#9b7738;color:#e6bf69}#memberAuthFeedback{min-height:18px;color:#d6b46d;font-size:12px;line-height:1.45}
     .member-zone-box{position:relative;display:grid;grid-template-columns:230px 1fr;width:min(1420px,calc(100vw - 32px));height:min(850px,calc(100vh - 32px));overflow:hidden;border:1px solid #765721;background:linear-gradient(145deg,#091010,#060909);box-shadow:0 35px 110px #000;color:#d8d4ca}.member-zone-close{position:absolute;right:16px;top:10px;border:0;background:none;color:#8d887d;font-size:28px;cursor:pointer;z-index:5}
-    .member-zone-side{display:flex;flex-direction:column;padding:22px 18px;border-right:1px solid #392c18;background:linear-gradient(180deg,#0d1212,#070a0a)}.member-zone-side img{width:100px;height:82px;object-fit:contain;margin:0 auto 8px}.member-zone-side>.member-kicker{text-align:center}.member-zone-side h3{text-align:center;margin:5px 0 22px;color:#f0cf7e;font:700 22px Georgia}.zone-nav{display:flex;gap:12px;align-items:center;margin:2px 0;padding:15px 13px;border:1px solid transparent;background:transparent;color:#8c887f;text-align:left;font-weight:800;cursor:pointer}.zone-nav:hover,.zone-nav.active{border-color:#665026;background:linear-gradient(90deg,#3a2812,#18140d);color:#efc56a}.zone-side-spacer{flex:1}.zone-logout{padding:14px;border:1px solid #9a722f;background:#17130d;color:#e2b85f;font-weight:900;cursor:pointer}.zone-side-foot{padding:18px 10px 4px;margin-top:14px;border-top:1px solid #302719;color:#777168}.zone-side-foot small,.zone-side-foot b{display:block;font-size:9px;letter-spacing:.14em}
+    .member-zone-side{display:flex;flex-direction:column;padding:22px 18px;border-right:1px solid #392c18;background:linear-gradient(180deg,#0d1212,#070a0a)}.member-zone-side img{width:100px;height:82px;object-fit:contain;margin:0 auto 8px}.member-zone-side>.member-kicker{text-align:center}.member-zone-side h3{text-align:center;margin:5px 0 22px;color:#f0cf7e;font:700 22px Georgia}.zone-nav{display:flex;gap:11px;align-items:center;margin:2px 0;padding:9px 11px;border:1px solid transparent;background:transparent;color:#999389;text-align:left;font-weight:800;cursor:pointer}.zone-nav:hover,.zone-nav.active{border-color:#665026;background:linear-gradient(90deg,#3a2812,#18140d);color:#efc56a}.zone-nav-icon{display:block;flex:0 0 30px;width:30px;height:30px;background-image:url("/images/ui-clan-zone-icons-v1.png");background-repeat:no-repeat;background-size:120px 90px;filter:saturate(.82) brightness(.82);transition:filter .15s ease,transform .15s ease}.zone-nav:hover .zone-nav-icon,.zone-nav.active .zone-nav-icon{filter:saturate(1.08) brightness(1.12) drop-shadow(0 0 5px rgba(220,168,66,.42));transform:translateY(-1px)}.zone-nav[data-zone-view="home"] .zone-nav-icon{background-position:0 0}.zone-nav[data-zone-view="events"] .zone-nav-icon{background-position:33.333% 0}.zone-nav[data-zone-view="signups"] .zone-nav-icon{background-position:66.667% 0}.zone-nav[data-zone-view="announcements"] .zone-nav-icon{background-position:100% 0}.zone-nav[data-zone-view="profile"] .zone-nav-icon{background-position:0 50%}.zone-nav[data-zone-view="recruitment"] .zone-nav-icon{background-position:33.333% 50%}.zone-nav[data-zone-view="content-editor"] .zone-nav-icon{background-position:66.667% 50%}.zone-nav[data-zone-view="members"] .zone-nav-icon{background-position:100% 50%}.zone-nav[data-zone-view="needed-rb"] .zone-nav-icon{background-position:0 100%}.zone-nav[data-zone-view="craft"] .zone-nav-icon{background-position:33.333% 100%}.zone-nav[data-zone-view="attendance"] .zone-nav-icon{background-position:66.667% 100%}.zone-side-spacer{flex:1}.zone-logout{padding:14px;border:1px solid #9a722f;background:#17130d;color:#e2b85f;font-weight:900;cursor:pointer}.zone-side-foot{padding:18px 10px 4px;margin-top:14px;border-top:1px solid #302719;color:#777168}.zone-side-foot small,.zone-side-foot b{display:block;font-size:9px;letter-spacing:.14em}
     .member-zone-main{overflow:auto;padding:28px 32px}.member-zone-main>header{display:flex;padding-bottom:20px;border-bottom:1px solid #352b1d}.member-zone-main>header h2{margin:4px 0 2px;color:#eee8dc;font:700 34px Georgia}.member-zone-main>header h2 strong{color:#efcb78}.member-zone-main>header p{margin:0;color:#8b877e}.member-zone-main>header em{display:block;margin-top:7px;color:#716d65;font-size:13px}.member-zone-main>header>small{margin-left:auto;margin-right:28px;height:max-content;padding:9px 12px;border:1px solid #745a29;color:#e0b75d;font-weight:900}.zone-view{display:none}.zone-view.active{display:block}
     .member-zone-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}.member-zone-grid div{padding:17px;border:1px solid #382f20;background:#0a0e0e}.member-zone-grid b{display:block;margin-bottom:8px;color:#d6a94f;font-size:10px}.status-active{color:#70c982!important}.zone-columns,.zone-bottom{display:grid;grid-template-columns:1.65fr 1fr;gap:14px}.zone-bottom{margin-top:14px}.zone-card{padding:18px;border:1px solid #382f20;background:#0a0e0e}.zone-card-title{display:flex;align-items:center;justify-content:space-between;padding-bottom:10px;border-bottom:1px solid #292319}.zone-card-title small,.zone-section-head small{color:#c89b47;font-size:9px;font-weight:900;letter-spacing:.14em}.zone-card-title h3,.zone-section-head h3{margin:4px 0;color:#eee7da;font:700 18px Georgia}.zone-link{border:0;background:none;color:#c79a48;font-size:10px;cursor:pointer}.zone-event-row{display:grid;grid-template-columns:70px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid #282218}.zone-event-date{color:#e0b353;font-weight:900;font-size:11px}.zone-event-info b{display:block;color:#ddd;font-size:12px}.zone-event-info small{color:#7f7b73}.zone-event-type{padding:5px 7px;border:1px solid #755523;color:#d0a14c;font-size:9px;font-weight:900}.zone-announcement{padding:14px 0;border-bottom:1px solid #282218}.zone-announcement b{color:#d9aa50;font-size:12px}.zone-announcement p,.zone-muted{color:#807c74;font-size:11px;line-height:1.5}.zone-stack{display:grid;gap:7px}.zone-stack a{padding:12px 14px;border:1px solid #3f3421;background:#0a0e0e;color:#c9a75e;text-decoration:none;font-size:11px}.zone-stack b{float:right}.zone-motto{text-align:right;margin-top:14px;color:#716c63;font:italic 12px Georgia}.zone-section-head{padding:24px 0 12px}.zone-section-head h3{font-size:25px}.zone-section-head p{color:#7e7a72}.zone-empty{padding:40px;margin-top:18px;border:1px dashed #584526;color:#9b8257;text-align:center}
-    @media(max-width:900px){#memberZoneLayer{padding:5px}.member-zone-box{grid-template-columns:1fr;width:100%;height:calc(100vh - 10px)}.member-zone-side{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;padding:9px;border-right:0;border-bottom:1px solid #342918}.member-zone-side img,.member-zone-side>.member-kicker,.member-zone-side h3,.zone-side-spacer,.zone-logout,.zone-side-foot{display:none}.zone-nav{justify-content:center;padding:10px 4px;font-size:10px}.member-zone-main{padding:18px 12px}.member-zone-grid{grid-template-columns:1fr 1fr}.zone-columns,.zone-bottom{grid-template-columns:1fr}.member-zone-main>header h2{font-size:25px}}
+    @media(max-width:900px){#memberZoneLayer{padding:5px}.member-zone-box{grid-template-columns:1fr;width:100%;height:calc(100vh - 10px)}.member-zone-side{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;padding:9px;border-right:0;border-bottom:1px solid #342918}.member-zone-side img,.member-zone-side>.member-kicker,.member-zone-side h3,.zone-side-spacer,.zone-logout,.zone-side-foot{display:none}.zone-nav{justify-content:center;gap:5px;padding:7px 4px;font-size:10px}.zone-nav-icon{flex-basis:24px;width:24px;height:24px;background-size:96px 72px}.member-zone-main{padding:18px 12px}.member-zone-grid{grid-template-columns:1fr 1fr}.zone-columns,.zone-bottom{grid-template-columns:1fr}.member-zone-main>header h2{font-size:25px}}
   `;
   document.head.appendChild(css);
 
@@ -158,21 +175,27 @@ export function installMemberAuth(supabase) {
     return false;
   };
 
-  const openZone = async () => {
+  const openZone = async (initialView = 'home') => {
     const { data: { session } } = await supabase.auth.getSession();
     const profile = session ? await getProfile(session.user) : null;
     if (!isAllowed(session, profile)) {
       lockPage('Zaloguj się, aby wejść do Strefy Klanu.');
-      return;
+      return false;
     }
     const nickname = profile?.nickname || (session.user?.email || '').split('@')[0] || 'Członek';
     const role = profile?.role || (!isMemberEmail(session.user?.email || '') ? 'owner' : 'member');
     zone.querySelector('#memberZoneNick').textContent = nickname;
     zone.querySelector('#memberZoneRole').textContent = String(role).toUpperCase();
     zone.querySelector('#memberRankCard').textContent = String(role).replace(/^./, (c) => c.toUpperCase());
-    await switchView('home');
     zone.classList.add('open');
+    await switchView(initialView);
+    return true;
   };
+
+  window.addEventListener('orzel:open-craft-workspace', async () => {
+    const opened = await openZone('craft');
+    if (opened) window.dispatchEvent(new CustomEvent('orzel:craft-workspace-opened'));
+  });
 
   layer.querySelector('.member-tabs').addEventListener('click', (e) => {
     const button = e.target.closest('[data-member-tab]');
@@ -250,7 +273,7 @@ export function installMemberAuth(supabase) {
   entry.textContent = '✦ Strefa klanu';
   logout.className = 'admin-trigger member-auth-entry logout';
   logout.textContent = '↪ Wyloguj';
-  entry.addEventListener('click', openZone);
+  entry.addEventListener('click', () => openZone());
   logout.addEventListener('click', async () => { await supabase.auth.signOut(); lockPage(); });
   if (actions) actions.append(entry, logout);
 

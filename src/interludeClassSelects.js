@@ -56,8 +56,10 @@ export function installInterludeClassSelects() {
   setTimeout(applyClassSelects, 1000);
 }
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', installInterludeClassSelects, { once: true });
-} else {
-  installInterludeClassSelects();
+if (typeof document !== 'undefined') {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', installInterludeClassSelects, { once: true });
+  } else {
+    installInterludeClassSelects();
+  }
 }

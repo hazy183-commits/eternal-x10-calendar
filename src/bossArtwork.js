@@ -34,11 +34,21 @@ const bosses = new Map([
 ]);
 const loads = new Map();
 const assigned = new WeakMap();
+const pending = new WeakMap();
+
+const artworkObserver = typeof IntersectionObserver === 'undefined' ? null : new IntersectionObserver((entries) => {
+  for (const entry of entries) {
+    if (!entry.isIntersecting) continue;
+    artworkObserver.unobserve(entry.target);
+    const url = pending.get(entry.target);
+    if (url) loadArtwork(entry.target, url);
+  }
+}, { rootMargin: '400px 0px' });
 
 export function bossArtworkUrl(name = '') {
   const key = name.trim().toLowerCase().replace(/\s+/g, ' ');
   const bossSlug = bosses.get(key);
-  if (bossSlug) return `${artworkBase}${bossSlug}.jpg`;
+  if (bossSlug) return `${artworkBase}${bossSlug}.webp`;
   const clanHallUrl = clanHallArtwork.get(key) ?? [...clanHallArtwork.entries()].find(([hall]) => key.includes(hall))?.[1];
   if (clanHallUrl) return clanHallUrl;
   const castleSlug = [...castleArtwork.entries()].find(([castle]) => key.includes(castle))?.[1];
@@ -58,19 +68,26 @@ function imageLoads(url) {
   return loads.get(url);
 }
 
-export function applyBossArtwork(element, name = '') {
-  const url = bossArtworkUrl(name);
-  if (assigned.get(element) === url) return;
-  assigned.set(element, url);
-  element.classList.remove('has-boss-art');
-  element.style.removeProperty('--boss-art');
-  if (!url) return;
+function loadArtwork(element, url) {
   imageLoads(url).then((loaded) => {
     // Ignore a previous request if this card now represents another event.
     if (!loaded || assigned.get(element) !== url) return;
     element.style.setProperty('--boss-art', `url(${JSON.stringify(url)})`);
     element.classList.add('has-boss-art');
   });
+}
+
+export function applyBossArtwork(element, name = '') {
+  const url = bossArtworkUrl(name);
+  if (assigned.get(element) === url) return;
+  assigned.set(element, url);
+  element.classList.remove('has-boss-art');
+  element.style.removeProperty('--boss-art');
+  artworkObserver?.unobserve(element);
+  if (!url) return;
+  pending.set(element, url);
+  if (artworkObserver) artworkObserver.observe(element);
+  else loadArtwork(element, url);
 }
 
 export function refreshBossArtwork(root = document) {

@@ -1,26 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import './pageTitle.js';
 import { installMemberAuth } from './memberAuth.js';
-import { installMemberEventSignups } from './memberEventSignups.js';
-import { installRecruitment } from './recruitment.js';
-import { installClanContentManager } from './clanContentManager.js';
-import { installMemberRoster } from './memberRoster.js';
-import { installOwnerAccessBridge } from './ownerAccessBridge.js';
-import { installAdminEventDayGroups } from './adminEventDayGroups.js';
-import { installProfilePersistenceFix } from './profilePersistenceFix.js';
-import { installNeededRaidBosses } from './neededRaidBosses.js';
-import { installNeededRaidBossWindow } from './neededRaidBossWindow.js';
-import { installRaidBossArtworkEnhancer } from './raidBossArtworkEnhancer.js';
-import { installNeededRaidBossDetails } from './neededRaidBossDetails.js';
-import { installEpicRespawnScreenshotImport } from './epicRespawnScreenshotImport.js';
-import { installTodayClanDashboard } from './todayClanDashboard.js';
-import { installMemberZoneReliability } from './memberZoneReliability.js';
-import { installCraftPlannerUi } from './craftPlannerUi.js';
-import { installCraftHierarchyEnhancer } from './craftHierarchyEnhancer.js';
-import { installCraftInventoryDeleteEnhancer } from './craftInventoryDeleteEnhancer.js';
-import './craftWeaponSelectEnhancer.js';
-import './neededRaidBossRefreshBridge.js';
-import './interludeClassSelects.js';
 
 const url = import.meta.env.VITE_SUPABASE_URL;
 const key = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
@@ -33,8 +13,55 @@ export const supabase = url?.startsWith('https://') && key?.startsWith('sb_publi
   : null;
 
 if (typeof document !== 'undefined') {
-  const startMemberFeatures = () => {
+  const startMemberFeatures = async () => {
     installMemberAuth(supabase);
+    document.documentElement.classList.remove('access-checking');
+    const [
+      { installMemberZoneReliability },
+      { installMemberEventSignups },
+      { installRecruitment },
+      { installClanContentManager },
+      { installMemberRoster },
+      { installOwnerAccessBridge },
+      { installAdminEventDayGroups },
+      { installProfilePersistenceFix },
+      { installNeededRaidBosses },
+      { installNeededRaidBossWindow },
+      { installRaidBossArtworkEnhancer },
+      { installNeededRaidBossDetails },
+      { installEpicRespawnScreenshotImport },
+      { installTerritoryOwnershipScreenshotImport },
+      { installTodayClanDashboard },
+      { installCraftPlannerUi },
+      { installCraftHierarchyEnhancer },
+      { installCraftInventoryDeleteEnhancer },
+      { installCraftHomeSummary },
+      { installRoleEnhancements },
+    ] = await Promise.all([
+      import('./memberZoneReliability.js'),
+      import('./memberEventSignups.js'),
+      import('./recruitment.js'),
+      import('./clanContentManager.js'),
+      import('./memberRoster.js'),
+      import('./ownerAccessBridge.js'),
+      import('./adminEventDayGroups.js'),
+      import('./profilePersistenceFix.js'),
+      import('./neededRaidBosses.js'),
+      import('./neededRaidBossWindow.js'),
+      import('./raidBossArtworkEnhancer.js'),
+      import('./neededRaidBossDetails.js'),
+      import('./epicRespawnScreenshotImport.js'),
+      import('./territoryOwnershipScreenshotImport.js'),
+      import('./todayClanDashboard.js'),
+      import('./craftPlannerUi.js'),
+      import('./craftHierarchyEnhancer.js'),
+      import('./craftInventoryDeleteEnhancer.js'),
+      import('./craftHomeSummary.js'),
+      import('./roleEnhancements.js'),
+      import('./craftWeaponSelectEnhancer.js'),
+      import('./neededRaidBossRefreshBridge.js'),
+      import('./interludeClassSelects.js'),
+    ]);
     installMemberZoneReliability(supabase);
     installMemberEventSignups(supabase);
     installRecruitment(supabase);
@@ -48,13 +75,17 @@ if (typeof document !== 'undefined') {
     installRaidBossArtworkEnhancer();
     installNeededRaidBossDetails(supabase);
     installEpicRespawnScreenshotImport(supabase);
+    installTerritoryOwnershipScreenshotImport(supabase);
     installTodayClanDashboard(supabase);
     installCraftPlannerUi(supabase);
     installCraftHierarchyEnhancer(supabase);
     installCraftInventoryDeleteEnhancer(supabase);
+    installCraftHomeSummary(supabase);
+    installRoleEnhancements(supabase);
   };
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', startMemberFeatures, { once: true });
-  else queueMicrotask(startMemberFeatures);
+  const boot = () => startMemberFeatures().catch(error => console.error('MEMBER FEATURES BOOT FAILED', error));
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });
+  else queueMicrotask(boot);
 }
 
 // Keep this feature wired only on staging until the craft planner is approved for production.
