@@ -50,7 +50,7 @@ export function installDiscordReminderSettings(supabase) {
     const card = document.createElement('section');
     card.id = 'obDiscordReminderCard';
     card.className = 'ob-owner-box';
-    card.innerHTML = '<h4>Discord powiadomienia</h4><p class="zone-muted">Przypomnienia o wydarzeniach i zgłoszeniach RB. Webhook jest przechowywany poza stroną.</p><button class="ob-editor-btn" id="obOpenDiscordReminders">USTAW POWIADOMIENIA</button>';
+    card.innerHTML = '<h4>Discord powiadomienia</h4><p class="zone-muted">Codzienny raport o 08:00 oraz przypomnienia o wydarzeniach i zgłoszeniach RB. Webhook jest przechowywany poza stroną.</p><button class="ob-editor-btn" id="obOpenDiscordReminders">USTAW POWIADOMIENIA</button>';
     grid.appendChild(card);
 
     const profile = async () => {
@@ -68,7 +68,7 @@ export function installDiscordReminderSettings(supabase) {
       if (!await owner()) return;
       feedback.textContent = 'Ładowanie ustawień…';
       const [{ data: settings, error: settingsError }, { data: overrides }, { data: status }] = await Promise.all([
-        supabase.from('discord_notification_settings').select('enabled,reminder_minutes,notify_event_reminders,notify_needed_rb').eq('id', true).maybeSingle(),
+        supabase.from('discord_notification_settings').select('enabled,reminder_minutes,notify_event_reminders,notify_needed_rb,daily_digest_enabled').eq('id', true).maybeSingle(),
         supabase.from('discord_event_reminder_overrides').select('event_key,enabled,reminder_minutes'),
         supabase.rpc('discord_notification_status'),
       ]);
@@ -91,6 +91,7 @@ export function installDiscordReminderSettings(supabase) {
         <div class="ob-discord-options">
           <label class="ob-discord-option"><input id="obDiscordEvents" type="checkbox" ${bool(settings?.notify_event_reminders) ? 'checked' : ''}><span>Wydarzenia<small>RB, Epic RB, Siege, Clan Hall i Olympiada</small></span></label>
           <label class="ob-discord-option"><input id="obDiscordNeededRb" type="checkbox" ${bool(settings?.notify_needed_rb) ? 'checked' : ''}><span>Potrzebne RB<small>Zgłoszenia członków z ustawionym oknem</small></span></label>
+          <label class="ob-discord-option"><input id="obDiscordDailyDigest" type="checkbox" \${bool(settings?.daily_digest_enabled) ? 'checked' : ''}><span>Codzienny raport<small>Codziennie o 08:00 · najbliższe 24 godziny</small></span></label>
         </div>
         <label>Domyślnie ile minut wcześniej<select id="obDiscordMinutes"><option value="60" ${Number(settings?.reminder_minutes) === 60 ? 'selected' : ''}>60 minut</option><option value="30" ${Number(settings?.reminder_minutes || 30) === 30 ? 'selected' : ''}>30 minut</option><option value="15" ${Number(settings?.reminder_minutes) === 15 ? 'selected' : ''}>15 minut</option><option value="10" ${Number(settings?.reminder_minutes) === 10 ? 'selected' : ''}>10 minut</option></select></label>
         <div class="ob-discord-help"><b>Webhook nie jest zapisywany w przeglądarce ani w publicznej tabeli.</b><br>Po jego podaniu zostanie umieszczony w zaszyfrowanym sejfie Supabase. Członkowie klanu nie mają do niego dostępu.</div>
@@ -111,6 +112,7 @@ export function installDiscordReminderSettings(supabase) {
           enabled: configured && editor.querySelector('#obDiscordEnabled').checked,
           notify_event_reminders: editor.querySelector('#obDiscordEvents').checked,
           notify_needed_rb: editor.querySelector('#obDiscordNeededRb').checked,
+          daily_digest_enabled: editor.querySelector('#obDiscordDailyDigest').checked,
           reminder_minutes: Number(editor.querySelector('#obDiscordMinutes').value),
           updated_by: current.id,
           updated_at: new Date().toISOString(),

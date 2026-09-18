@@ -11,12 +11,24 @@ Vercel Cron. Dopóki brakuje sekretu `discord_webhook_url` albo ustawienie
 - Siege,
 - Clan Hall,
 - Olympiada,
-- zgłoszenia „Potrzebne RB” z ustawionym oknem.
+- zgłoszenia „Potrzebne RB” z ustawionym oknem,
+- codzienny raport planu dnia.
 
 Wiadomość zawiera godzinę Europe/Warsaw, typ wydarzenia, lokalizację oraz liczbę
 zapisów „Będę” i „Może”. Klucz wydarzenia, start i czas przypomnienia tworzą
 unikalny wpis w `discord_reminder_log`, więc ten sam alert nie jest wysyłany
 ponownie.
+
+## Codzienny raport planu dnia
+
+Codziennie o **08:00 czasu Europe/Warsaw** wysyłany jest jeden zbiorczy raport
+z wydarzeniami rozpoczynającymi się w najbliższych 24 godzinach. Raport obejmuje
+wydarzenia ręczne, RB/Epic RB, Siege, Clan Hall, Olympiadę oraz zgłoszenia
+„Potrzebne RB”. Zawiera godzinę, typ, lokalizację i aktualną liczbę zapisów
+„Będę” oraz „Może”.
+
+Raport jest niezależny od pojedynczych przypomnień, np. wysyłanych 30 minut
+przed startem. Panel Ownera pozwala go osobno włączyć lub wyłączyć.
 
 ## Podłączenie webhooka
 
@@ -39,4 +51,4 @@ ale niczego nie wysyła.
 - test i podgląd wymagają zatwierdzonego konta Owner;
 - Discord `allowed_mentions` jest pusty, więc dane wydarzenia nie mogą wywołać
   niezamierzonego `@everyone` lub wzmianki roli;
-- automatyczna wysyłka pozostaje wyłączona po migracji.
+- automatyczna wysyłka jest sterowana ustawieniami Ownera; webhook pozostaje w Supabase Vault.
