@@ -53,6 +53,33 @@ function contrastCanvas(image, thresholdMode = false) {
   return canvas;
 }
 
+export function ownershipCropRect(width, height, territoryType = 'castle') {
+  if (territoryType !== 'castle') return { x: 0, y: 0, width, height };
+  // The Eternal castle table is: number | castle | clan | leader | siege date.
+  // Stop before the Leader column so OCR never receives leader names or dates.
+  return {
+    x: 0,
+    y: Math.round(height * 0.035),
+    width: Math.round(width * 0.515),
+    height: Math.round(height * 0.945),
+  };
+}
+
+function cropOwnershipColumns(image, territoryType) {
+  const width = image.naturalWidth || image.width;
+  const height = image.naturalHeight || image.height;
+  const rect = ownershipCropRect(width, height, territoryType);
+  const scale = Math.max(1.8, Math.min(3.2, 2200 / Math.max(rect.width, rect.height)));
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.max(1, Math.round(rect.width * scale));
+  canvas.height = Math.max(1, Math.round(rect.height * scale));
+  const ctx = canvas.getContext('2d');
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(image, rect.x, rect.y, rect.width, rect.height, 0, 0, canvas.width, canvas.height);
+  return canvas;
+}
+
 function mergeResults(groups) {
   const merged = new Map();
   groups.flat().forEach((row) => {
@@ -135,7 +162,13 @@ export function installTerritoryOwnershipScreenshotImport(supabase) {
       setStatus('Przygotowuję obraz…', 3);
       try {
         const [Tesseract, image] = await Promise.all([loadTesseract(setStatus), loadImage(file)]);
-        const variants = [
+        const ownershipColumns = cropOwnershipColumns(image, type);
+        const variants = type === 'castle' ? [
+          { image: ownershipColumns, label: 'Kolumny Zamek + Klan', psm: '6' },
+          { image: contrastCanvas(ownershipColumns), label: 'Zamek + Klan — kontrast', psm: '6' },
+          { image: contrastCanvas(ownershipColumns, true), label: 'Zamek + Klan — czarno-białe', psm: '11' },
+          { image: file, label: 'Pełny screen — kontrola', psm: '6' },
+        ] : [
           { image: file, label: 'Pełny screen', psm: '6' },
           { image: contrastCanvas(image), label: 'Wysoki kontrast', psm: '6' },
           { image: contrastCanvas(image, true), label: 'Czarno-biały', psm: '11' },
@@ -147,7 +180,7 @@ export function installTerritoryOwnershipScreenshotImport(supabase) {
             tessedit_pageseg_mode: variant.psm,
             preserve_interword_spaces: '1',
             logger: (message) => {
-              if (message.status === 'recognizing text') setStatus(`${variant.label}: ${Math.round((message.progress || 0) * 100)}%`, Math.round(8 + index * 25 + (message.progress || 0) * 23));
+              if (message.status === 'recognizing text') setStatus(`${variant.label}: ${Math.round((message.progress || 0) * 100)}%`, Math.round(8 + (index / variants.length) * 72 + (message.progress || 0) * (70 / variants.length)));
             },
           });
           parsed.push(parseTerritoryOwners(result?.data?.text || '', type));

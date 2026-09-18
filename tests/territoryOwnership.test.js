@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { applyTerritoryOwners, parseTerritoryOwners } from '../src/territoryOwnership.js';
+import { ownershipCropRect } from '../src/territoryOwnershipScreenshotImport.js';
 
 test('parses castle owner names from common OCR layouts', () => {
   const rows = parseTerritoryOwners(`Aden Castle | Owner: WhiteEagles\nGiran Castle\nClan: NightWatch`, 'castle');
@@ -65,4 +66,9 @@ Gludio V ProGame Thurston 18:00 04.10.2026
   assert.deepEqual(Object.fromEntries(rows.map((row) => [row.territory_name, row.owner_clan])), {
     Oren: 'InFerNalL', Aden: 'Rise', Goddard: 'Rising', Schuttgart: 'OrzelBialy', Gludio: 'ProGame',
   });
+});
+
+test('castle OCR crop includes castle and clan columns but excludes leader and siege date', () => {
+  assert.deepEqual(ownershipCropRect(662, 294, 'castle'), { x: 0, y: 10, width: 341, height: 278 });
+  assert.deepEqual(ownershipCropRect(662, 294, 'clan_hall'), { x: 0, y: 0, width: 662, height: 294 });
 });
