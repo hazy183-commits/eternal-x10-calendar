@@ -328,3 +328,10 @@ body:before { content:""; position:fixed; z-index:-1; inset:0; background:radial
 /* Preserve the active-event badge when using the restored homepage layout. */
 #nextStatus:is(.trwa,.respawn-window-active,.siege-active,.olympiad-active){border:1px solid #568044;background:linear-gradient(180deg,#102016,#09130c);color:#b9eda0;box-shadow:0 0 15px rgba(111,178,82,.28)}
 #nextStatus:is(.trwa,.respawn-window-active,.siege-active,.olympiad-active):before{content:'● ';color:#71da68}
+
+/* Prominent owner label for both Clan Halls and castles. */
+.next-event-badges{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:2px}
+.next-owner-chip{display:inline-flex;align-items:center;gap:7px;padding:6px 10px;border:1px solid #b84e43;background:linear-gradient(180deg,#431712,#260b09);color:#ffb0a5;box-shadow:inset 0 0 10px rgba(255,91,75,.1),0 0 13px rgba(188,50,38,.24);font-size:10px;font-weight:800;line-height:1;letter-spacing:.08em;text-transform:uppercase;text-shadow:0 1px 2px #000}
+.next-owner-chip:before{content:'●';color:#ff6255;font-size:9px;text-shadow:0 0 7px #ff3c2b}
+.next-owner-chip[hidden]{display:none!important}
+@media(max-width:650px){.next-event-badges{justify-content:center}}
