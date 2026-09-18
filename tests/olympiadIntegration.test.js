@@ -6,6 +6,8 @@ test('earlier ordinary Event takes the featured card; an active boss retains its
   const { run, element } = app(t, '2026-09-14T18:01:00Z');
   run(`ordinaryEvents = [{id:'meeting', name:'Spotkanie', type:'Event', date:'2026-09-14', time:'20:00', startAt:'2026-09-14T19:00:00Z', duration:60}]; mergePublicEvents(); renderNext();`);
   assert.equal(element('#nextName').textContent, 'Spotkanie');
+  assert.equal(element('#nextStartTime').hidden, false);
+  assert.equal(element('b').textContent, '20:00');
   t.mock.timers.setTime(Date.parse('2026-09-14T20:45:00Z'));
   run(`ordinaryEvents = []; bossRespawnRows = [{boss:'Queen Ant', window_start:'2026-09-14T20:40:00Z', window_end:'2026-09-14T21:10:00Z'}]; mergePublicEvents(); renderNext();`);
   assert.equal(element('#nextName').textContent, 'Queen Ant');
