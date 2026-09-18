@@ -159,8 +159,8 @@ function ensureStyles() {
     #bossInfoModalPl{position:fixed;inset:0;z-index:30000;display:none;place-items:center;padding:18px;background:#000d;backdrop-filter:blur(8px)}
     #bossInfoModalPl.open{display:grid}
     .boss-info-pl-card{position:relative;display:grid;grid-template-columns:minmax(340px,42%) 1fr;width:min(1220px,97vw);max-height:92vh;overflow:auto;border:1px solid #a77d34;background:linear-gradient(145deg,#111615,#080b0a);box-shadow:0 30px 100px #000;color:#eee7da;scrollbar-color:#aa813d #171815;scrollbar-width:thin}
-    .boss-info-pl-art{min-height:620px;background-position:center;background-size:cover;background-repeat:no-repeat;position:sticky;top:0;align-self:start;background-color:#0b0d0c;filter:brightness(1.22) contrast(1.04) saturate(1.08)}
-    .boss-info-pl-art::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent 72%,#0b0e0dea 100%);pointer-events:none}
+    .boss-info-pl-art{min-height:620px;background-position:center top;background-size:contain;background-repeat:no-repeat;position:sticky;top:0;align-self:start;background-color:#070908;filter:brightness(1.22) contrast(1.04) saturate(1.08)}
+    .boss-info-pl-art::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent 88%,#0b0e0d99 100%);pointer-events:none}
     .boss-info-pl-content{padding:32px 36px 34px;min-width:0}
     .boss-info-pl-kicker{display:block;color:#e0b75f;font-size:11px;font-weight:900;letter-spacing:.17em;text-transform:uppercase}
     .boss-info-pl-content h3{margin:8px 0 5px;color:#fff4df;font:700 38px/1.05 Georgia,serif;text-transform:uppercase;text-shadow:0 1px 12px #d69b3230}
