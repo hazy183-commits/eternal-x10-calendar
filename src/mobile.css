@@ -133,3 +133,8 @@ html,body{width:100%;max-width:100%;overflow-x:hidden}.wrap,.schedule-layout{wid
 #memberZoneLayer .ob-recruit-card-actions{grid-template-columns:repeat(3,minmax(0,1fr))!important}
 #memberZoneLayer .ob-recruit-card-actions button{font-size:6.5px!important;padding:8px 2px!important}
 }
+
+@media(max-width:900px){
+.next-start-time{margin:8px auto 6px!important;padding:5px 9px!important}
+.next-start-time b{font-size:14px!important}
+}

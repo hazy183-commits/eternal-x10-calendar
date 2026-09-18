@@ -143,7 +143,7 @@ export function installNextEventCarousel() {
     const location = row.dataset.eventLocation ?? parts.join(' · ');
     const targetValue = row.dataset.countdownTarget;
     const target = targetValue ? new Date(targetValue) : null;
-    return { name, type, location, ownerClan: row.dataset.ownerClan || '', when, art: row.dataset.bossName || name, target, label: row.dataset.countdownLabel || 'Do rozpoczęcia' };
+    return { name, type, location, ownerClan: row.dataset.ownerClan || '', startTime: row.dataset.eventStartTime || '', when, art: row.dataset.bossName || name, target, label: row.dataset.countdownLabel || 'Do rozpoczęcia' };
   };
 
   const paintOwner = (ownerClan) => {
@@ -152,6 +152,15 @@ export function installNextEventCarousel() {
     const owner = String(ownerClan || '').trim();
     chip.hidden = !owner;
     chip.textContent = owner ? `WŁAŚCICIEL: ${owner}` : '';
+  };
+
+  const paintStart = (time) => {
+    const box = $('#nextStartTime');
+    if (!box) return;
+    const value = String(time || '').slice(0, 5);
+    box.hidden = !/^([01]\d|2[0-3]):[0-5]\d$/.test(value);
+    const label = box.querySelector('b');
+    if (label) label.textContent = box.hidden ? '--:--' : value;
   };
 
   const paintCountdown = () => {
@@ -171,6 +180,7 @@ export function installNextEventCarousel() {
     $('#nextType').textContent = selected.type;
     $('#nextType').className = `type-chip ${selected.type.toLowerCase().replaceAll(' ', '-')}`;
     paintOwner(selected.ownerClan);
+    paintStart(selected.startTime);
     $('#nextMeta').textContent = `${selected.when}${selected.location ? ` · ${selected.location}` : ''}`;
     $('#nextDescription').textContent = selected.location ? `Lokalizacja: ${selected.location}` : 'Wydarzenie z kalendarza klanu.';
     $('#nextStatus').textContent = 'NADCHODZI';
