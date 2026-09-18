@@ -322,6 +322,8 @@ export function installCraftPlannerUi(supabase) {
     setTimeout(() => refresh(), 0);
   });
 
+  window.addEventListener('orzel:craft-workspace-opened', () => refresh());
+
   ui.root.addEventListener('submit', async event => {
     if (!(event.target instanceof HTMLFormElement)) return;
     event.preventDefault();

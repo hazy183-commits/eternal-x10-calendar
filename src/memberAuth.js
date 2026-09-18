@@ -175,25 +175,26 @@ export function installMemberAuth(supabase) {
     return false;
   };
 
-  const openZone = async () => {
+  const openZone = async (initialView = 'home') => {
     const { data: { session } } = await supabase.auth.getSession();
     const profile = session ? await getProfile(session.user) : null;
     if (!isAllowed(session, profile)) {
       lockPage('Zaloguj się, aby wejść do Strefy Klanu.');
-      return;
+      return false;
     }
     const nickname = profile?.nickname || (session.user?.email || '').split('@')[0] || 'Członek';
     const role = profile?.role || (!isMemberEmail(session.user?.email || '') ? 'owner' : 'member');
     zone.querySelector('#memberZoneNick').textContent = nickname;
     zone.querySelector('#memberZoneRole').textContent = String(role).toUpperCase();
     zone.querySelector('#memberRankCard').textContent = String(role).replace(/^./, (c) => c.toUpperCase());
-    await switchView('home');
     zone.classList.add('open');
+    await switchView(initialView);
+    return true;
   };
 
   window.addEventListener('orzel:open-craft-workspace', async () => {
-    await openZone();
-    window.setTimeout(() => zone.querySelector('[data-zone-view="craft"]')?.click(), 40);
+    const opened = await openZone('craft');
+    if (opened) window.dispatchEvent(new CustomEvent('orzel:craft-workspace-opened'));
   });
 
   layer.querySelector('.member-tabs').addEventListener('click', (e) => {
@@ -272,7 +273,7 @@ export function installMemberAuth(supabase) {
   entry.textContent = '✦ Strefa klanu';
   logout.className = 'admin-trigger member-auth-entry logout';
   logout.textContent = '↪ Wyloguj';
-  entry.addEventListener('click', openZone);
+  entry.addEventListener('click', () => openZone());
   logout.addEventListener('click', async () => { await supabase.auth.signOut(); lockPage(); });
   if (actions) actions.append(entry, logout);
 
