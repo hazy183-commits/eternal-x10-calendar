@@ -96,7 +96,7 @@ const updates = Object.entries(mapping)
   .map(([key, value]) => `  ('${key.replaceAll("'", "''")}', ${value.game_item_id})`)
   .join(',\n');
 const sql = updates
-  ? `begin;\n\nupdate public.craft_items as item\nset game_item_id = source.game_item_id, updated_at = now()\nfrom (values\n${updates}\n) as source(item_key, game_item_id)\nwhere item.item_key = source.item_key\n  and item.game_item_id is distinct from source.game_item_id;\n\ncommit;\n`
+  ? `begin;\n\ncreate temporary table craft_item_icon_ids (\n  item_key text primary key,\n  game_item_id integer not null unique\n) on commit drop;\n\ninsert into craft_item_icon_ids (item_key, game_item_id) values\n${updates};\n\nupdate public.craft_items as item\nset game_item_id = null, updated_at = now()\nfrom craft_item_icon_ids as source\nwhere item.item_key = source.item_key\n  and item.game_item_id is distinct from source.game_item_id;\n\nupdate public.craft_items as item\nset game_item_id = source.game_item_id, updated_at = now()\nfrom craft_item_icon_ids as source\nwhere item.item_key = source.item_key\n  and item.game_item_id is distinct from source.game_item_id;\n\ncommit;\n`
   : '-- No missing game_item_id values were resolved.\n';
 await writeFile(new URL('../supabase/craft_item_icon_ids.sql', import.meta.url), sql);
 

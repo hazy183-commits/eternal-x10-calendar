@@ -1,8 +1,11 @@
 begin;
 
-update public.craft_items as item
-set game_item_id = source.game_item_id, updated_at = now()
-from (values
+create temporary table craft_item_icon_ids (
+  item_key text primary key,
+  game_item_id integer not null unique
+) on commit drop;
+
+insert into craft_item_icon_ids (item_key, game_item_id) values
   ('mat_adamantite_nugget', 1877),
   ('mat_angel_slayer_blade', 6691),
   ('mat_animal_bone', 1872),
@@ -120,8 +123,17 @@ from (values
   ('weapon_s_forgotten_blade', 6364),
   ('weapon_s_heavens_divider', 6372),
   ('weapon_s_imperial_staff', 6366),
-  ('weapon_s_saint_spear', 6370)
-) as source(item_key, game_item_id)
+  ('weapon_s_saint_spear', 6370);
+
+update public.craft_items as item
+set game_item_id = null, updated_at = now()
+from craft_item_icon_ids as source
+where item.item_key = source.item_key
+  and item.game_item_id is distinct from source.game_item_id;
+
+update public.craft_items as item
+set game_item_id = source.game_item_id, updated_at = now()
+from craft_item_icon_ids as source
 where item.item_key = source.item_key
   and item.game_item_id is distinct from source.game_item_id;
 
