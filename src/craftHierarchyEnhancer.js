@@ -1,5 +1,4 @@
-﻿import { loadCraftWorkspace } from './craftWorkspace.js';
-import { getInterludeItemIcon, installIconWithFallback } from './craftItemIcons.js';
+import { loadCraftWorkspace } from './craftWorkspace.js';
 
 const escapeHtml = (value = '') => String(value)
   .replaceAll('&', '&amp;')
@@ -157,8 +156,8 @@ function nodeStatus(itemKey, quantity, recipeBook, maps) {
   const missing = maps.missing.get(itemKey) || 0;
 
   if (covered >= quantity) return { cls: 'is-ready', text: `Masz ${fmt(covered)} / ${fmt(quantity)}` };
-  if (recipe?.components?.length) return { cls: 'is-craftable', text: `Masz ${fmt(covered)} / ${fmt(quantity)} Â· do zrobienia ${fmt(quantity - covered)}` };
-  return { cls: missing ? 'is-missing' : 'is-craftable', text: `Masz ${fmt(covered)} / ${fmt(quantity)}${missing ? ` Â· brakuje ${fmt(missing)}` : ''}` };
+  if (recipe?.components?.length) return { cls: 'is-craftable', text: `Masz ${fmt(covered)} / ${fmt(quantity)} · do zrobienia ${fmt(quantity - covered)}` };
+  return { cls: missing ? 'is-missing' : 'is-craftable', text: `Masz ${fmt(covered)} / ${fmt(quantity)}${missing ? ` · brakuje ${fmt(missing)}` : ''}` };
 }
 
 function renderRecipeNode(itemKey, quantity, context, depth = 0, trail = []) {
@@ -173,7 +172,7 @@ function renderRecipeNode(itemKey, quantity, context, depth = 0, trail = []) {
   if (!expandable) {
     return `
       <div class="craft-tree-leaf ${status.cls}" style="--craft-depth:${depth}">
-        <div class="craft-tree-name"><span class="craft-tree-dot">â€˘</span><b>${escapeHtml(name)}</b></div>
+        <div class="craft-tree-name"><span class="craft-tree-dot">•</span><b>${escapeHtml(name)}</b></div>
         <strong>${fmt(quantity)}</strong>
         <small>${escapeHtml(status.text)}</small>
       </div>`;
@@ -187,7 +186,7 @@ function renderRecipeNode(itemKey, quantity, context, depth = 0, trail = []) {
   return `
     <details class="craft-tree-node ${status.cls}" data-craft-tree-key="${escapeHtml(nodeKey)}" style="--craft-depth:${depth}"${openTreeNodes.has(nodeKey) ? ' open' : ''}>
       <summary>
-        <span class="craft-tree-name"><span class="craft-tree-arrow">â€ş</span><b>${escapeHtml(name)}</b></span>
+        <span class="craft-tree-name"><span class="craft-tree-arrow">›</span><b>${escapeHtml(name)}</b></span>
         <strong>${fmt(quantity)}</strong>
         <small>${escapeHtml(status.text)}</small>
       </summary>
@@ -212,8 +211,8 @@ function renderMainRecipe(project, workspace) {
   return `
     <div class="craft-main-materials">
       <div class="craft-main-materials-head">
-        <div><small>GĹĂ“WNA RECEPTA</small><b>MateriaĹ‚y do wykonania</b></div>
-        <span>Kliknij materiaĹ‚ ze strzaĹ‚kÄ…, aby zobaczyÄ‡ jego skĹ‚adniki.</span>
+        <div><small>GŁÓWNA RECEPTA</small><b>Materiały do wykonania</b></div>
+        <span>Kliknij materiał ze strzałką, aby zobaczyć jego składniki.</span>
       </div>
       <div class="craft-tree">${rows}</div>
     </div>`;
@@ -224,7 +223,7 @@ function ensureStyles() {
   const style = document.createElement('style');
   style.id = 'craftHierarchyEnhancerStyles';
   style.textContent = `
-    .craft-main-materials{margin-top:12px;border-top:1px solid #33291b;padding-top:12px}.craft-main-materials-head{display:flex;justify-content:space-between;gap:16px;align-items:end;margin-bottom:8px}.craft-main-materials-head div{display:grid;gap:2px}.craft-main-materials-head small{color:#9b824f;font-size:9px;letter-spacing:.08em}.craft-main-materials-head b{color:#e4d7b8;font-size:13px}.craft-main-materials-head span{color:#6f6a62;font-size:10px}.craft-tree{display:grid}.craft-tree-node,.craft-tree-leaf{border-top:1px solid #272118}.craft-tree-node summary,.craft-tree-leaf{display:grid;grid-template-columns:minmax(180px,1fr) 90px minmax(190px,.9fr);gap:10px;align-items:center;padding:10px 6px 10px calc(6px + (var(--craft-depth) * 18px));list-style:none}.craft-tree-node summary::-webkit-details-marker{display:none}.craft-tree-node summary{cursor:pointer}.craft-tree-name{display:flex;gap:8px;align-items:center;color:#d9d2c4}.craft-tree-arrow{display:inline-grid;place-items:center;width:18px;height:18px;border:1px solid #5c4827;color:#d8ad55;transition:transform .15s ease}.craft-tree-node[open]>summary .craft-tree-arrow{transform:rotate(90deg)}.craft-item-icon{width:32px;height:32px;min-width:32px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #66583e;background:#111;border-radius:4px;overflow:hidden;font-size:16px}.craft-item-icon img{width:32px;height:32px;object-fit:contain;image-rendering:auto}.craft-tree-dot{display:inline-grid;place-items:center;width:18px;color:#66583e}.craft-tree-node strong,.craft-tree-leaf>strong{color:#e0c98c;text-align:right}.craft-tree-node small,.craft-tree-leaf>small{color:#81796e;text-align:right}.craft-tree-node.is-ready>summary small,.craft-tree-leaf.is-ready>small{color:#69bb7d}.craft-tree-node.is-craftable>summary small{color:#c8a85c}.craft-tree-leaf.is-missing>small{color:#df8f61}.craft-tree-children{background:rgba(255,255,255,.012)}
+    .craft-main-materials{margin-top:12px;border-top:1px solid #33291b;padding-top:12px}.craft-main-materials-head{display:flex;justify-content:space-between;gap:16px;align-items:end;margin-bottom:8px}.craft-main-materials-head div{display:grid;gap:2px}.craft-main-materials-head small{color:#9b824f;font-size:9px;letter-spacing:.08em}.craft-main-materials-head b{color:#e4d7b8;font-size:13px}.craft-main-materials-head span{color:#6f6a62;font-size:10px}.craft-tree{display:grid}.craft-tree-node,.craft-tree-leaf{border-top:1px solid #272118}.craft-tree-node summary,.craft-tree-leaf{display:grid;grid-template-columns:minmax(180px,1fr) 90px minmax(190px,.9fr);gap:10px;align-items:center;padding:10px 6px 10px calc(6px + (var(--craft-depth) * 18px));list-style:none}.craft-tree-node summary::-webkit-details-marker{display:none}.craft-tree-node summary{cursor:pointer}.craft-tree-name{display:flex;gap:8px;align-items:center;color:#d9d2c4}.craft-tree-arrow{display:inline-grid;place-items:center;width:18px;height:18px;border:1px solid #5c4827;color:#d8ad55;transition:transform .15s ease}.craft-tree-node[open]>summary .craft-tree-arrow{transform:rotate(90deg)}.craft-tree-dot{display:inline-grid;place-items:center;width:18px;color:#66583e}.craft-tree-node strong,.craft-tree-leaf>strong{color:#e0c98c;text-align:right}.craft-tree-node small,.craft-tree-leaf>small{color:#81796e;text-align:right}.craft-tree-node.is-ready>summary small,.craft-tree-leaf.is-ready>small{color:#69bb7d}.craft-tree-node.is-craftable>summary small{color:#c8a85c}.craft-tree-leaf.is-missing>small{color:#df8f61}.craft-tree-children{background:rgba(255,255,255,.012)}
     @media(max-width:900px){.craft-main-materials-head{display:block}.craft-main-materials-head span{display:block;margin-top:5px}.craft-tree-node summary,.craft-tree-leaf{grid-template-columns:1fr auto;padding-left:calc(4px + (var(--craft-depth) * 13px))}.craft-tree-node small,.craft-tree-leaf>small{grid-column:1/-1;text-align:left;margin-left:26px}}
   `;
   document.head.appendChild(style);
@@ -239,7 +238,7 @@ export function installCraftHierarchyEnhancer(supabase) {
   let queued = false;
   let observer = null;
 
-  const projectStatusLabel = status => ({ active:'AKTYWNY', paused:'WSTRZYMANY', completed:'ZAKOĹCZONY', archived:'ARCHIWUM' })[status] || String(status || '').toUpperCase();
+  const projectStatusLabel = status => ({ active:'AKTYWNY', paused:'WSTRZYMANY', completed:'ZAKOŃCZONY', archived:'ARCHIWUM' })[status] || String(status || '').toUpperCase();
 
   const apply = async () => {
     if (running) { queued = true; return; }
@@ -249,20 +248,6 @@ export function installCraftHierarchyEnhancer(supabase) {
     observer?.disconnect();
     try {
       const workspace = await loadCraftWorkspace(supabase);
-
-console.table(
-  (workspace.items || [])
-    .filter(item =>
-      ['Maestro Anvil Lock','Crafted Leather','High Grade Suede','Asofe','Gemstone B']
-        .some(name => String(item.name || '').toLowerCase().includes(name.toLowerCase()))
-    )
-    .map(item => ({
-      item_key: item.item_key,
-      game_item_id: item.game_item_id,
-      name: item.name,
-      category: item.category
-    }))
-);
       const projects = new Map(workspace.plan.projects.map(project => [String(project.id), project]));
 
       for (const card of root.querySelectorAll('.craft-project-card[data-craft-project]')) {
@@ -275,19 +260,6 @@ console.table(
         const html = renderMainRecipe(project, workspace);
         if (!html) continue;
         list.innerHTML = html;
-
-for (const node of list.querySelectorAll('.craft-item-icon[data-item-id]')) {
-  const id = node.dataset.itemId;
-  const name = node.dataset.itemName || '';
-
-  if (!id) continue;
-
-  getInterludeItemIcon(id, name).then(icon => {
-    if (icon?.candidates?.length) {
-      installIconWithFallback(node, icon.candidates, '⚒');
-    }
-  });
-}
         list.dataset.hierarchyRenderKey = renderKey;
         const meta = card.querySelector('.craft-project-head>div>small');
         if (meta) meta.textContent = projectStatusLabel(project.status);
@@ -322,6 +294,3 @@ for (const node of list.querySelectorAll('.craft-item-icon[data-item-id]')) {
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once:true });
   else queueMicrotask(start);
 }
-
-
-
