@@ -6,6 +6,7 @@ import { renderPvpEventPanel, renderPvpSidebar, updatePvpRowCountdowns } from '.
 import * as olympiad from '../src/olympiadSchedule.js';
 import * as bosses from '../src/bossRespawns.js';
 import * as sieges from '../src/siegeSchedules.js';
+import * as territory from '../src/territoryOwnership.js';
 import { renderOlympiadPanel } from '../src/olympiadPanel.js';
 
 // Run the real public rendering/merge code with a local DOM stand-in and an inert
@@ -23,8 +24,8 @@ export function app(t, iso) {
     return elements.get(selector);
   };
   const context = vm.createContext({
-    ...olympiad, ...bosses, ...sieges, ...pvp, renderOlympiadPanel, renderPvpEventPanel, renderPvpSidebar, updatePvpRowCountdowns,
-    publishClanEventSources, Date, Intl, console: { log() {} },
+    ...olympiad, ...bosses, ...sieges, ...territory, ...pvp, renderOlympiadPanel, renderPvpEventPanel, renderPvpSidebar, updatePvpRowCountdowns,
+    publishClanEventSources, Date, Intl, console: { log() {} }, supabase: null,
     SupabaseEventRepository: class {}, SupabaseBossRespawnRepository: class {}, SupabaseSiegeScheduleRepository: class {},
     applyBossArtwork() {}, refreshBossArtwork() {},
     document: { readyState: 'loading', addEventListener() {}, querySelector: element },
@@ -32,4 +33,3 @@ export function app(t, iso) {
   vm.runInContext(source, context);
   return { run: (code) => vm.runInContext(code, context), element };
 }
-

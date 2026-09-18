@@ -27,6 +27,8 @@
 .unified-calendar .event-table-head span:nth-child(4) { grid-column:5; }
 .unified-calendar .event-table-head span:nth-child(5) { grid-column:6; }
 .unified-calendar .event-table-head span:nth-child(6) { grid-column:7; text-align:right; }
+.unified-calendar .event-row>.public-signup-count { grid-column:6; }
+.unified-calendar .event-row>.row-status { grid-column:7; }
 .unified-calendar .event-row[data-calendar-nearest="true"] { box-shadow:inset 0 0 0 1px #bc944980; background:linear-gradient(90deg,#6c4c1e22,transparent); }
 .unified-calendar .event-row[data-calendar-state="active"] { background:linear-gradient(90deg,#1b422533,#0c1512); box-shadow:inset 3px 0 #71b66b; }
 .unified-calendar [data-calendar-state="active"] .status-dot { display:inline-block; justify-self:end; padding:5px 9px; border:1px solid #568044; background:#102016; color:#b9eda0; }

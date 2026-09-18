@@ -52,7 +52,7 @@ import { getClanUpcomingEvents, signupIdentity } from './clanEventFeed.js';
       const time = String(row.querySelector('.event-time')?.textContent || '').trim();
       const type = norm(row.querySelector('.type-chip')?.textContent);
       const date = selectedDate();
-      return getClanUpcomingEvents(new Date(Date.now() - 14 * 86400000)).find(event =>
+      return getClanUpcomingEvents(new Date()).find(event =>
         norm(event.name) === name &&
         String(event.time || '').trim() === time &&
         norm(event.type) === type &&
