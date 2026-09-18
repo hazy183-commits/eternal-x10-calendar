@@ -54,13 +54,14 @@ function contrastCanvas(image, thresholdMode = false) {
 }
 
 export function ownershipCropRect(width, height, territoryType = 'castle') {
-  if (territoryType !== 'castle') return { x: 0, y: 0, width, height };
-  // The Eternal castle table is: number | castle | clan | leader | siege date.
-  // Stop before the Leader column so OCR never receives leader names or dates.
+  const clanColumnEnd = territoryType === 'clan_hall' ? 0.455 : 0.515;
+  // Eternal tables are: number | territory | clan | leader | siege date.
+  // Clan Hall names need more horizontal room, but both crops stop before the
+  // Leader column so OCR never receives leader names or dates.
   return {
     x: 0,
     y: Math.round(height * 0.035),
-    width: Math.round(width * 0.515),
+    width: Math.round(width * clanColumnEnd),
     height: Math.round(height * 0.945),
   };
 }
@@ -163,15 +164,12 @@ export function installTerritoryOwnershipScreenshotImport(supabase) {
       try {
         const [Tesseract, image] = await Promise.all([loadTesseract(setStatus), loadImage(file)]);
         const ownershipColumns = cropOwnershipColumns(image, type);
-        const variants = type === 'castle' ? [
-          { image: ownershipColumns, label: 'Kolumny Zamek + Klan', psm: '6' },
-          { image: contrastCanvas(ownershipColumns), label: 'Zamek + Klan — kontrast', psm: '6' },
-          { image: contrastCanvas(ownershipColumns, true), label: 'Zamek + Klan — czarno-białe', psm: '11' },
+        const territoryLabel = type === 'castle' ? 'Zamek' : 'Clan Hall';
+        const variants = [
+          { image: ownershipColumns, label: `Kolumny ${territoryLabel} + Klan`, psm: '6' },
+          { image: contrastCanvas(ownershipColumns), label: `${territoryLabel} + Klan — kontrast`, psm: '6' },
+          { image: contrastCanvas(ownershipColumns, true), label: `${territoryLabel} + Klan — czarno-białe`, psm: '11' },
           { image: file, label: 'Pełny screen — kontrola', psm: '6' },
-        ] : [
-          { image: file, label: 'Pełny screen', psm: '6' },
-          { image: contrastCanvas(image), label: 'Wysoki kontrast', psm: '6' },
-          { image: contrastCanvas(image, true), label: 'Czarno-biały', psm: '11' },
         ];
         const parsed = [];
         for (let index = 0; index < variants.length; index += 1) {

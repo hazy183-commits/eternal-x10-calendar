@@ -70,5 +70,25 @@ Gludio V ProGame Thurston 18:00 04.10.2026
 
 test('castle OCR crop includes castle and clan columns but excludes leader and siege date', () => {
   assert.deepEqual(ownershipCropRect(662, 294, 'castle'), { x: 0, y: 10, width: 341, height: 278 });
-  assert.deepEqual(ownershipCropRect(662, 294, 'clan_hall'), { x: 0, y: 0, width: 662, height: 294 });
+  assert.deepEqual(ownershipCropRect(742, 215, 'clan_hall'), { x: 0, y: 8, width: 338, height: 203 });
+});
+
+test('parses the real Clan Hall name and clan columns', () => {
+  const rows = parseTerritoryOwners(`
+# Hall name Clan name
+1 Fortress of Resistance Arcane
+2 Devastated Castle Notabene
+3 Bandit Stronghold Nieogary
+4 Rainbow Spring Chateau OrzelBialy
+5 Wild Beast Reserve VisioN
+6 Fortress of the Dead NoldoR
+  `, 'clan_hall');
+  assert.deepEqual(Object.fromEntries(rows.map((row) => [row.territory_name, row.owner_clan])), {
+    'Fortress of Resistance': 'Arcane',
+    'Devastated Castle': 'Notabene',
+    'Bandit Stronghold': 'Nieogary',
+    'Rainbow Spring Chateau': 'OrzelBialy',
+    'Wild Beast Reserve': 'VisioN',
+    'Fortress of the Dead': 'NoldoR',
+  });
 });
