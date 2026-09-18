@@ -1,5 +1,29 @@
 const ACTIVE_STATUS = 'active';
 
+const MAIN_MATERIAL_ORDER = [
+  'mat_maestro_anvil_lock',
+  'mat_crafted_leather',
+  'mat_warsmith_holder',
+  'mat_craftsman_mold',
+  'mat_maestro_holder',
+  'mat_oriharukon',
+  'mat_high_grade_suede',
+  'mat_compound_braid',
+  'mat_durable_metal_plate',
+  'mat_synthetic_cokes',
+  'mat_mithril_alloy',
+  'mat_coarse_bone_powder',
+];
+
+function craftableMaterialOrder(recipeBook) {
+  const preferred = MAIN_MATERIAL_ORDER.filter(key => recipeBook.get(key)?.components?.length);
+  const remaining = [...recipeBook.entries()]
+    .filter(([key, recipe]) => key.startsWith('mat_') && recipe?.components?.length && !preferred.includes(key))
+    .map(([key]) => key)
+    .sort();
+  return [...preferred, ...remaining];
+}
+
 export class CraftPlannerError extends Error {
   constructor(message, details = {}) {
     super(message);
@@ -38,6 +62,71 @@ const mapToSortedRows = (map, itemIndex) => [...map.entries()]
   }))
   .sort((a, b) => a.name.localeCompare(b.name, 'pl'));
 
+function flattenLeaves(itemKey, recipeBook, memo = new Map(), trail = new Set()) {
+  if (memo.has(itemKey)) return new Map(memo.get(itemKey));
+  if (trail.has(itemKey)) return new Map([[itemKey, 1]]);
+  const recipe = recipeBook.get(itemKey);
+  if (!recipe?.components?.length || itemKey.startsWith('weapon_')) return new Map([[itemKey, 1]]);
+
+  const nextTrail = new Set(trail);
+  nextTrail.add(itemKey);
+  const result = new Map();
+  const outputQty = Math.max(1, Number(recipe.outputQuantity || 1));
+  for (const component of recipe.components) {
+    const leaves = flattenLeaves(component.itemKey, recipeBook, memo, nextTrail);
+    const factor = Number(component.quantity || 0) / outputQty;
+    for (const [leafKey, leafQty] of leaves) {
+      result.set(leafKey, (result.get(leafKey) || 0) + leafQty * factor);
+    }
+  }
+  memo.set(itemKey, [...result.entries()]);
+  return result;
+}
+
+function collapseFlatWeaponComponents(components, recipeBook) {
+  if (!components?.length) return [];
+  const alreadyStructured = components.some(component =>
+    component.itemKey.startsWith('mat_') && recipeBook.get(component.itemKey)?.components?.length
+  );
+  if (alreadyStructured) return components;
+
+  const available = new Map();
+  const originalOrder = [];
+  for (const component of components) {
+    const qty = Number(component.quantity || 0);
+    available.set(component.itemKey, (available.get(component.itemKey) || 0) + qty);
+    originalOrder.push(component.itemKey);
+  }
+
+  const memo = new Map();
+  const collapsed = [];
+  for (const materialKey of craftableMaterialOrder(recipeBook)) {
+    const recipe = recipeBook.get(materialKey);
+    if (!recipe?.components?.length) continue;
+    const leaves = flattenLeaves(materialKey, recipeBook, memo);
+    let crafts = Infinity;
+    for (const [leafKey, leafQty] of leaves) {
+      if (!(leafQty > 0)) continue;
+      crafts = Math.min(crafts, Math.floor((available.get(leafKey) || 0) / leafQty));
+    }
+    if (!Number.isFinite(crafts) || crafts <= 0) continue;
+
+    collapsed.push({ itemKey: materialKey, quantity: crafts * Math.max(1, Number(recipe.outputQuantity || 1)) });
+    for (const [leafKey, leafQty] of leaves) {
+      available.set(leafKey, Math.max(0, (available.get(leafKey) || 0) - leafQty * crafts));
+    }
+  }
+
+  const seen = new Set();
+  for (const itemKey of originalOrder) {
+    if (seen.has(itemKey)) continue;
+    seen.add(itemKey);
+    const qty = Math.round((available.get(itemKey) || 0) * 1e6) / 1e6;
+    if (qty > 0) collapsed.push({ itemKey, quantity: qty });
+  }
+  return collapsed.length ? collapsed : components;
+}
+
 export function buildRecipeBook(recipes = [], components = []) {
   const componentsByRecipe = new Map();
 
@@ -68,6 +157,11 @@ export function buildRecipeBook(recipes = [], components = []) {
   for (const [itemKey, list] of candidates) {
     const selected = list.find(recipe => recipe.isPrimary) || list[0];
     recipeBook.set(itemKey, selected);
+  }
+
+  for (const [itemKey, recipe] of recipeBook) {
+    if (!itemKey.startsWith('weapon_')) continue;
+    recipe.components = collapseFlatWeaponComponents(recipe.components, recipeBook);
   }
   return recipeBook;
 }
@@ -130,7 +224,6 @@ function createProjectPlan(project, context) {
   };
 
   const targetQuantity = toPositiveInteger(project.target_quantity, 'Liczba sztuk w projekcie');
-  // The target means "craft this many". Already-owned finished items do not reduce it.
   fulfill(project.target_item_key, targetQuantity, [], false);
 
   const requiredRows = mapToSortedRows(requirements, context.itemIndex).map(row => ({
