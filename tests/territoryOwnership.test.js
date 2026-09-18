@@ -28,3 +28,28 @@ test('adds owner information without changing schedule fields', () => {
   assert.equal(owned.time, event.time);
   assert.equal(owned.duration, event.duration);
 });
+
+test('separates clan, leader and siege date from the real castle table OCR', () => {
+  const rows = parseTerritoryOwners(`
+Oren InFerNalL arr 18:00 11.10.2026
+Aden Rise PirataDM 18:00 27.09.2026
+Goddard Rising Riska 180011102026
+Schuttgart OrzelBialy Unqual 18:0020.09.2026
+Gludio ProGame Thurston 18:00 04.10.2026
+Dion UnRespectabless Eulabia 18:00 11.10.2026
+Giran Valhalla RagnarBR 18:00 20.09.2026
+Innadril SevenSerpents LittleHammer 18:00 20.09.2026
+Rune LastKingdom Concrete 18:00 04.10.2026
+  `, 'castle');
+  assert.deepEqual(Object.fromEntries(rows.map((row) => [row.territory_name, row.owner_clan])), {
+    Oren: 'InFerNalL',
+    Aden: 'Rise',
+    Goddard: 'Rising',
+    Schuttgart: 'OrzelBialy',
+    Gludio: 'ProGame',
+    Dion: 'UnRespectabless',
+    Giran: 'Valhalla',
+    Innadril: 'SevenSerpents',
+    Rune: 'LastKingdom',
+  });
+});

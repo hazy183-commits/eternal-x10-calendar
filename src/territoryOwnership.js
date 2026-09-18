@@ -15,6 +15,7 @@ export const TERRITORY_GROUPS = Object.freeze({
 const OWNER_LABEL = /\b(?:owner|owned\s+by|clan|clan\s+name|ruler|lord|possession)\b\s*[:\-–—]?\s*/i;
 const EMPTY_OWNER = /^(?:none|no\s+owner|unowned|neutral|npc|brak|-)$/i;
 const EXPLICIT_EMPTY_OWNER = /\b(?:none|no\s+owner|unowned|neutral|brak)\b/i;
+const SCHEDULE_MARKER = /(?:\b(?:[0-2]?\d)\s*[:.,]\s*[0-5]\d\b|\b(?:[01]\d|2[0-3])[0-5]\d(?:\d{6,8})?\b|\b\d{1,2}[./-]\d{1,2}(?:[./-]\d{2,4})?\b|\b20\d{2}\b)/i;
 
 function normalized(value = '') {
   return String(value)
@@ -33,12 +34,18 @@ function compact(value = '') {
 function cleanOwner(value = '') {
   const raw = String(value).replace(/^[\s:|=\-–—>]+|[\s:|=\-–—<]+$/g, '').trim();
   if (!raw || EMPTY_OWNER.test(raw)) return '';
-  const cleaned = raw
+  const scheduleAt = raw.search(SCHEDULE_MARKER);
+  const withoutSchedule = scheduleAt >= 0 ? raw.slice(0, scheduleAt).trim() : raw;
+  let cleaned = withoutSchedule
     .replace(OWNER_LABEL, '')
     .replace(/^[\s:|=\-–—>]+|[\s:|=\-–—<]+$/g, '')
     .replace(/\s{2,}/g, ' ')
     .trim();
   if (!cleaned || EMPTY_OWNER.test(cleaned)) return '';
+  // The server table has separate Clan and Leader columns. OCR flattens both
+  // columns into one line before the siege time, while Interlude clan names
+  // themselves cannot contain spaces. Keep only the Clan column in that case.
+  if (scheduleAt >= 0) cleaned = cleaned.split(/\s+/)[0];
   return cleaned.slice(0, 80);
 }
 
