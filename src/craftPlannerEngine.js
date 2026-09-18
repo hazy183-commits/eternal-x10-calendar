@@ -1,3 +1,5 @@
+import { verifiedWeaponComponents } from './craftWeaponComponents.js';
+
 const ACTIVE_STATUS = 'active';
 
 const MAIN_MATERIAL_ORDER = [
@@ -161,7 +163,8 @@ export function buildRecipeBook(recipes = [], components = []) {
 
   for (const [itemKey, recipe] of recipeBook) {
     if (!itemKey.startsWith('weapon_')) continue;
-    recipe.components = collapseFlatWeaponComponents(recipe.components, recipeBook);
+    recipe.components = verifiedWeaponComponents(itemKey)
+      || collapseFlatWeaponComponents(recipe.components, recipeBook);
   }
   return recipeBook;
 }

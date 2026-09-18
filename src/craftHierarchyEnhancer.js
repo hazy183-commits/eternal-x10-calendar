@@ -1,5 +1,6 @@
 import { loadCraftWorkspace } from './craftWorkspace.js';
 import { craftItemIconMarkup } from './craftItemIcons.js';
+import { verifiedWeaponComponents } from './craftWeaponComponents.js';
 
 const escapeHtml = (value = '') => String(value)
   .replaceAll('&', '&amp;')
@@ -51,6 +52,10 @@ function buildRecipeBook(workspace) {
       outputQuantity: Number(recipe.output_quantity || 1),
       components: componentsByRecipe.get(recipe.id) || [],
     });
+  }
+  for (const [itemKey, recipe] of book) {
+    const verified = verifiedWeaponComponents(itemKey);
+    if (verified) recipe.components = verified;
   }
   return book;
 }
