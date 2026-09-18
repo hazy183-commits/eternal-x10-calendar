@@ -9,6 +9,7 @@ const escapeHtml = (value = '') => String(value)
   .replaceAll("'", '&#039;');
 
 const fmt = value => Number(value || 0).toLocaleString('pl-PL');
+const CRAFT_PANEL_LABEL = '<div class="craft-home-label"><span>⚒</span><b>CRAFT CALCULATOR</b><small>POSTĘP PROJEKTU</small></div>';
 
 export function summarizeCraftProject(project) {
   const relevant = (project?.requirements || []).filter(row => {
@@ -44,6 +45,7 @@ function targetItem(workspace, project) {
 function renderEmpty(root) {
   root.classList.remove('is-complete');
   root.innerHTML = `
+    ${CRAFT_PANEL_LABEL}
     <div class="craft-home-empty">
       <span class="eyebrow">Mój projekt craftu</span>
       <h2 id="craftHomeTitle">Nie masz jeszcze projektu craftu</h2>
@@ -62,6 +64,7 @@ function renderWorkspace(root, workspace, requestedIndex = 0) {
   const item = targetItem(workspace, project);
   root.classList.toggle('is-complete', summary.percent === 100);
   root.innerHTML = `
+    ${CRAFT_PANEL_LABEL}
     <div class="craft-home-main">
       ${craftItemIconMarkup(item, 'craft-home-icon')}
       <div class="craft-home-copy">
@@ -71,7 +74,7 @@ function renderWorkspace(root, workspace, requestedIndex = 0) {
       </div>
     </div>
     <div class="craft-home-progress">
-      <div class="craft-home-progress-head"><span>Postęp materiałów</span><b>${summary.percent}%</b></div>
+      <div class="craft-home-progress-head"><span>Ukończenie projektu</span><b>${summary.percent}%</b></div>
       <div class="craft-home-progress-track" role="progressbar" aria-label="Postęp projektu craftu" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${summary.percent}"><i style="--craft-progress:${summary.percent}%"></i></div>
     </div>
     <div class="craft-home-actions">
@@ -103,7 +106,7 @@ export function installCraftHomeSummary(supabase) {
       if (current === request) paint(workspace);
     } catch (error) {
       if (current !== request) return;
-      root.innerHTML = `<div class="craft-home-empty"><span class="eyebrow">Mój projekt craftu</span><h2 id="craftHomeTitle">Nie udało się wczytać projektu</h2><p>${escapeHtml(error?.message || error)}</p></div><button class="primary-btn craft-home-open" type="button">Otwórz Craft Calculator</button>`;
+      root.innerHTML = `${CRAFT_PANEL_LABEL}<div class="craft-home-empty"><span class="eyebrow">Mój projekt craftu</span><h2 id="craftHomeTitle">Nie udało się wczytać projektu</h2><p>${escapeHtml(error?.message || error)}</p></div><button class="primary-btn craft-home-open" type="button">Otwórz Craft Calculator</button>`;
     }
   };
 
