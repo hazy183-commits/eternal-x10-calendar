@@ -78,6 +78,7 @@ export function installClanContentManager(supabase){
 
     const loadAnnouncements=async()=>{
       const p=await getRole();
+      // Private clan content is queried only after an authenticated profile exists.
       if(!p){announcements=[];renderAnnouncements();return}
       const {data,error}=await supabase.from('clan_announcements').select('id,title,body,is_pinned,is_active,created_at,updated_at').order('is_pinned',{ascending:false}).order('created_at',{ascending:false});
       if(error){console.error('ANNOUNCEMENTS LOAD FAILED',error);return}
