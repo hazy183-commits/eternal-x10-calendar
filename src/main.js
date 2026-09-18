@@ -143,6 +143,7 @@ function miniRow(event) { const sameDay = event.date === (event.isOlympiadSchedu
 function renderOverview() { const todays = sorted(events.filter((event) => !event.isPvpSchedule && event.date === (event.isOlympiadSchedule ? olympiadLocalDate() : dateKey(today)))); $('#todayCount').textContent = todays.length; $('#todayEvents').innerHTML = todays.length ? todays.map(miniRow).join('') : '<p class="empty-mini">Dziś nie zaplanowano wydarzeń.</p>'; const upcoming = getUpcoming().slice(0, 5); $('#upcomingEvents').innerHTML = upcoming.length ? upcoming.map(miniRow).join('') : '<p class="empty-mini">Brak nadchodzących wydarzeń.</p>'; refreshBossArtwork($('#statistics')); renderPvpSidebar($('#pvpSidebarEvents')); }
 function eventWindowLabel(event) { if (event?.isOlympiadSchedule) return `${formatOlympiadDate(event)} · ${event.timeRange} · Europe/Warsaw`; if (!event?.isBossRespawn && !event?.isSiegeSchedule) return `${formatDate(dateFromEvent(event), { weekday: 'long', day: 'numeric', month: 'long' })} · ${event.time}${event.location ? ` · ${event.location}` : ''}`; const start = dateFromEvent(event); const end = event.endAt ? new Date(event.endAt) : new Date(start.getTime() + event.duration * 60000); const endTime = new Intl.DateTimeFormat('pl-PL', { timeZone: TIME_ZONE, hour: '2-digit', minute: '2-digit' }).format(end); return `${formatLocalDateTime(start, { dateStyle: 'full', timeStyle: 'short' })}–${endTime}${event.location ? ` · ${event.location}` : ''}`; }
 function renderFeaturedOwner(ownerClan) { const chip = $('#nextOwner'); if (!chip) return; const owner = String(ownerClan || '').trim(); chip.hidden = !owner; chip.textContent = owner ? `WŁAŚCICIEL: ${owner}` : ''; }
+function featuredDescription(event) { const description = String(event?.description || '').trim(); const owner = String(event?.ownerClan || '').trim(); if (!owner) return description; const ownerSuffix = `Właściciel: ${owner}.`; return description.endsWith(ownerSuffix) ? description.slice(0, -ownerSuffix.length).trim() : description; }
 function renderNext() {
   const event = getUpcoming()[0];
   const nextId = event?.id ?? null;
@@ -173,7 +174,7 @@ function renderNext() {
   $('#nextType').className = `type-chip ${event.type.toLowerCase().replaceAll(' ', '-')}`;
   renderFeaturedOwner(event.ownerClan);
   $('#nextMeta').textContent = eventWindowLabel(event);
-  $('#nextDescription').textContent = event.description || '';
+  $('#nextDescription').textContent = featuredDescription(event);
   $('#nextStatus').textContent = eventStatus(event);
   $('#nextStatus').className = `live-status ${eventStatus(event).toLowerCase().replaceAll(' ', '-')}`;
 }
