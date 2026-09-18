@@ -351,7 +351,7 @@ body:before { content:""; position:fixed; z-index:-1; inset:0; background:radial
 .craft-home-summary:before{inset:4px;border-color:#d4a64d35}.craft-home-label{position:absolute;z-index:3;top:0;right:0;left:0;display:flex;align-items:center;gap:9px;height:34px;padding:0 20px;border-bottom:1px solid #7b5a27;background:linear-gradient(90deg,#2b1c0b,#100e09 55%,#080b0b);color:#e6bd64;font-size:10px;letter-spacing:.13em}.craft-home-label span{font-size:16px}.craft-home-label b{font-weight:900}.craft-home-label small{padding-left:9px;border-left:1px solid #725629;color:#92846a;font-size:8px;font-weight:800;letter-spacing:.12em}.craft-home-progress{padding:12px 14px;border:1px solid #574322;background:#070a0a;box-shadow:inset 0 0 16px #000}.craft-home-progress-head span{color:#d0aa59}.craft-home-progress-track{height:13px}
 @media(max-width:650px){.craft-home-summary{padding:50px 18px 20px}.craft-home-label{padding:0 14px}.craft-home-label small{font-size:7px}}
 
-/* Featured event window start time. */
+/* Featured event start time beside its details. */
 .next-start-time{display:flex;align-items:center;gap:11px;width:max-content;max-width:100%;margin:13px 0 0;padding:7px 11px 7px 10px;border-left:2px solid #b98a3c;background:linear-gradient(90deg,#241a0eaa,transparent);color:#b9ad98;font-size:9px;font-weight:900;letter-spacing:.12em;white-space:nowrap}
 .next-start-time[hidden]{display:none}
 .next-start-time b{color:#f0c96f;font:700 18px Cinzel,Georgia,serif;letter-spacing:.04em;font-variant-numeric:tabular-nums;text-shadow:0 0 10px #d4a64d38}
