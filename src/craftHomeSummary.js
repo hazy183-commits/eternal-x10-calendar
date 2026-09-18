@@ -23,6 +23,17 @@ export function summarizeCraftProject(project) {
   return { have, missing, total, percent };
 }
 
+export function wrapProjectIndex(index, projectCount) {
+  if (!projectCount) return 0;
+  return ((Number(index) % projectCount) + projectCount) % projectCount;
+}
+
+function visibleProjects(workspace) {
+  return workspace.plan.activeProjects.length
+    ? workspace.plan.activeProjects
+    : workspace.plan.projects;
+}
+
 function targetItem(workspace, project) {
   return workspace.items.find(item => item.item_key === project.targetItemKey) || {
     item_key: project.targetItemKey,
@@ -41,11 +52,10 @@ function renderEmpty(root) {
     <button class="primary-btn craft-home-open" type="button">⚒ Otwórz Craft Calculator</button>`;
 }
 
-function renderWorkspace(root, workspace) {
-  const projects = workspace.plan.activeProjects.length
-    ? workspace.plan.activeProjects
-    : workspace.plan.projects;
-  const project = projects[0];
+function renderWorkspace(root, workspace, requestedIndex = 0) {
+  const projects = visibleProjects(workspace);
+  const projectIndex = wrapProjectIndex(requestedIndex, projects.length);
+  const project = projects[projectIndex];
   if (!project) return renderEmpty(root);
 
   const summary = summarizeCraftProject(project);
@@ -55,7 +65,7 @@ function renderWorkspace(root, workspace) {
     <div class="craft-home-main">
       ${craftItemIconMarkup(item, 'craft-home-icon')}
       <div class="craft-home-copy">
-        <span class="eyebrow">Mój projekt craftu${projects.length > 1 ? ` · 1 z ${projects.length}` : ''}</span>
+        <span class="eyebrow">Mój projekt craftu</span>
         <h2 id="craftHomeTitle">${escapeHtml(project.name || project.targetName)}</h2>
         <p>${escapeHtml(project.targetName)} × ${fmt(project.targetQuantity)}${project.status !== 'active' ? ' · Projekt wstrzymany' : ''}</p>
       </div>
@@ -64,7 +74,10 @@ function renderWorkspace(root, workspace) {
       <div class="craft-home-progress-head"><span>Postęp materiałów</span><b>${summary.percent}%</b></div>
       <div class="craft-home-progress-track" role="progressbar" aria-label="Postęp projektu craftu" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${summary.percent}"><i style="--craft-progress:${summary.percent}%"></i></div>
     </div>
-    <button class="primary-btn craft-home-open" type="button">Zobacz projekt →</button>`;
+    <div class="craft-home-actions">
+      ${projects.length > 1 ? `<div class="craft-home-switcher" aria-label="Przełącz projekt craftu"><button type="button" data-craft-project-step="-1" aria-label="Poprzedni projekt">‹</button><span>${projectIndex + 1} / ${projects.length}</span><button type="button" data-craft-project-step="1" aria-label="Następny projekt">›</button></div>` : ''}
+      <button class="primary-btn craft-home-open" type="button">Zobacz projekt →</button>
+    </div>`;
 }
 
 export function installCraftHomeSummary(supabase) {
@@ -72,12 +85,22 @@ export function installCraftHomeSummary(supabase) {
   if (!root || !supabase || root.dataset.installed === '1') return;
   root.dataset.installed = '1';
   let request = 0;
+  let workspaceCache = null;
+  let selectedProjectId = null;
+
+  const paint = workspace => {
+    workspaceCache = workspace;
+    const projects = visibleProjects(workspace);
+    const selectedIndex = Math.max(0, projects.findIndex(project => String(project.id) === String(selectedProjectId)));
+    selectedProjectId = projects[selectedIndex]?.id ?? null;
+    renderWorkspace(root, workspace, selectedIndex);
+  };
 
   const refresh = async () => {
     const current = ++request;
     try {
       const workspace = await loadCraftWorkspace(supabase);
-      if (current === request) renderWorkspace(root, workspace);
+      if (current === request) paint(workspace);
     } catch (error) {
       if (current !== request) return;
       root.innerHTML = `<div class="craft-home-empty"><span class="eyebrow">Mój projekt craftu</span><h2 id="craftHomeTitle">Nie udało się wczytać projektu</h2><p>${escapeHtml(error?.message || error)}</p></div><button class="primary-btn craft-home-open" type="button">Otwórz Craft Calculator</button>`;
@@ -85,10 +108,19 @@ export function installCraftHomeSummary(supabase) {
   };
 
   root.addEventListener('click', event => {
+    const stepButton = event.target.closest('[data-craft-project-step]');
+    if (stepButton && workspaceCache) {
+      const projects = visibleProjects(workspaceCache);
+      const currentIndex = Math.max(0, projects.findIndex(project => String(project.id) === String(selectedProjectId)));
+      const nextIndex = wrapProjectIndex(currentIndex + Number(stepButton.dataset.craftProjectStep), projects.length);
+      selectedProjectId = projects[nextIndex]?.id ?? null;
+      renderWorkspace(root, workspaceCache, nextIndex);
+      return;
+    }
     if (event.target.closest('.craft-home-open')) window.dispatchEvent(new CustomEvent('orzel:open-craft-workspace'));
   });
   window.addEventListener('orzel:craft-workspace-updated', event => {
-    if (event.detail) renderWorkspace(root, event.detail);
+    if (event.detail) paint(event.detail);
   });
   window.addEventListener('orzel:craft-data-changed', () => window.setTimeout(refresh, 80));
   window.addEventListener('focus', refresh);

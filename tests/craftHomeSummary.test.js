@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { summarizeCraftProject } from '../src/craftHomeSummary.js';
+import { summarizeCraftProject, wrapProjectIndex } from '../src/craftHomeSummary.js';
 
 test('summarizes owned and missing terminal craft materials as a percentage', () => {
   const summary = summarizeCraftProject({
@@ -27,4 +27,10 @@ test('keeps one decimal place so partial progress never appears stuck at zero', 
     ],
   });
   assert.equal(summary.percent, 9.3);
+});
+
+test('project navigation wraps in both directions', () => {
+  assert.equal(wrapProjectIndex(2, 2), 0);
+  assert.equal(wrapProjectIndex(-1, 2), 1);
+  assert.equal(wrapProjectIndex(7, 0), 0);
 });
