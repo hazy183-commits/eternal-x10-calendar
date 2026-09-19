@@ -121,3 +121,12 @@ test('member profile supports multiple loadouts and shareable buff presets', asy
   assert.match(sql, /enable row level security/);
   assert.match(sql, /auth\.uid\(\)\) = user_id or is_shared/);
 });
+
+test('subclass editor uses visual equipment and buff pickers', async () => {
+  const js = await readFile(new URL('../src/memberBuildProfiles.js', import.meta.url), 'utf8');
+  assert.doesNotMatch(js, /Nazwa postaci<input/);
+  assert.match(js, /class="item-tile/);
+  assert.match(js, /class="buff-choice/);
+  assert.match(js, /buff-icons\/skill\$\{id\}\.png/);
+  assert.match(js, /maksymalnie 24 buffy/);
+});
