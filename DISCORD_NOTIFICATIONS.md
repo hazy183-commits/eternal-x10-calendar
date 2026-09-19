@@ -14,7 +14,8 @@ Vercel Cron. Dopóki brakuje sekretu `discord_webhook_url` albo ustawienie
 - zgłoszenia „Potrzebne RB” z ustawionym oknem,
 - codzienny raport planu dnia.
 
-Pojedyncze przypomnienie przed wydarzeniem zawiera godzinę Europe/Warsaw, typ,
+Pojedyncze przypomnienie jest wysyłane godzinę przed wydarzeniem i informuje,
+że zbiórka odbędzie się za pół godziny. Zawiera godzinę Europe/Warsaw, typ,
 lokalizację, liczbę zapisów oraz listy nicków „Będę” i „Może”. Klucz wydarzenia,
 start i czas przypomnienia tworzą unikalny wpis w `discord_reminder_log`, więc
 ten sam alert nie jest wysyłany ponownie.
@@ -27,8 +28,8 @@ wydarzenia ręczne, RB/Epic RB, Siege, Clan Hall, Olympiadę oraz zgłoszenia
 „Potrzebne RB”. Zawiera tylko godzinę, typ i lokalizację — bez list „Będę” i
 „Może”.
 
-Raport jest niezależny od pojedynczych przypomnień, np. wysyłanych 30 minut
-przed startem. Panel Ownera pozwala go osobno włączyć lub wyłączyć.
+Raport jest niezależny od pojedynczych przypomnień wysyłanych godzinę przed
+startem. Panel Ownera pozwala go osobno włączyć lub wyłączyć.
 
 ## Podłączenie webhooka
 
