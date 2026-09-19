@@ -27,3 +27,15 @@ test('complete profiles store enchant, epic jewelry and augment recommendations'
   assert.match(js, /Rekomendowane augmentacje/);
   assert.match(js, /AUGMENTS\.length/);
 });
+
+test('Eternal overrides remove Acumen augments and prioritize song/dance resists', async () => {
+  const js = await readFile(new URL('../public/pvp-profile-v2.js', import.meta.url), 'utf8');
+  assert.doesNotMatch(js, /Passive: Acumen/);
+  assert.doesNotMatch(js, /Active: Acumen/);
+  assert.match(js, /Song of Flame Guard/);
+  assert.match(js, /Dance of Aqua Guard/);
+  assert.match(js, /hotSpringsNoSlot:true/);
+  assert.match(js, /Core \(\+1 STR Eternal\)/);
+  assert.match(js, /Orfen \(\+1 INT Eternal\)/);
+  assert.match(js, /magicCritCap:'70%'/);
+});
