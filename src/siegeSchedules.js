@@ -1,7 +1,7 @@
 import { TIME_ZONE, localDateTimeToDate } from './bossRespawns.js';
 
 export const SIEGE_DURATION_MINUTES = 120;
-// Siege times are entered in the game server clock, which is two hours behind Poland.
+// Siege times are entered in the UTC game server clock; Poland is +2 hours in summer and +1 hour in winter.
 export const SIEGE_SERVER_TIME_ZONE = 'UTC';
 export const SIEGE_CASTLES = Object.freeze([
   'Gludio', 'Dion', 'Giran', 'Oren', 'Aden', 'Innadril', 'Goddard', 'Rune', 'Schuttgart',
