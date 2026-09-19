@@ -28,3 +28,36 @@ body > .topbar { position:fixed!important; inset:0 0 auto!important; width:100%!
   #memberZoneLayer .member-zone-main { padding-top:14px!important; }
 }
 #mobileHeaderMenu .mobile-menu-panel { height:100%!important; }
+/* One desktop row, including the authenticated account actions. */
+@media(min-width:901px) {
+  body > .topbar { background:#080d10!important; }
+  body > .topbar .topbar-inner { width:calc(100% - 32px); max-width:1600px; min-height:72px!important; flex-wrap:nowrap!important; gap:14px!important; padding-block:0!important; }
+  body > .topbar .brand { flex:0 0 auto!important; gap:10px!important; }
+  body > .topbar .brand-logo { width:80px!important; height:56px!important; max-width:80px!important; }
+  body > .topbar .brand-copy { font-size:16px!important; letter-spacing:.07em!important; }
+  body > .topbar .brand-subtitle-link { font-size:7px!important; letter-spacing:.13em!important; max-width:90px; }
+  body > .topbar .main-nav { flex:0 1 auto; margin:0 auto!important; gap:16px!important; }
+  body > .topbar .main-nav a { padding-block:28px!important; font-size:10px!important; letter-spacing:.02em; }
+  body > .topbar .header-actions { flex:0 0 auto!important; flex-wrap:nowrap!important; gap:8px!important; margin-left:0!important; }
+  body > .topbar .header-actions .admin-trigger { min-height:38px; padding:9px 12px!important; font-size:10px!important; letter-spacing:.02em; }
+  body > .topbar .header-clock { min-width:70px!important; font-size:8px; letter-spacing:.03em; }
+  body > .topbar .header-clock:before { font-size:16px; }
+}
+@media(min-width:901px) and (max-width:1200px) {
+  body > .topbar .topbar-inner { gap:9px!important; width:calc(100% - 24px); }
+  body > .topbar .brand-subtitle-link, body > .topbar .header-clock { display:none!important; }
+  body > .topbar .main-nav { gap:10px!important; }
+  body > .topbar .brand-logo { width:58px!important; height:46px!important; max-width:58px!important; }
+  body > .topbar .brand-copy { font-size:14px!important; }
+  body > .topbar .header-actions { gap:5px!important; }
+  body > .topbar .header-actions .admin-trigger { padding-inline:8px!important; font-size:9px!important; }
+}
+@media(min-width:901px) and (max-width:1000px) {
+  body > .topbar .topbar-inner { gap:5px!important; }
+  body > .topbar .brand { gap:6px!important; }
+  body > .topbar .brand-logo { width:40px!important; max-width:40px!important; }
+  body > .topbar .brand-copy { font-size:11px!important; }
+  body > .topbar .main-nav { gap:8px!important; }
+  body > .topbar .main-nav a { font-size:9px!important; }
+  body > .topbar .header-actions .admin-trigger { padding-inline:6px!important; }
+}

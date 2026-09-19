@@ -47,3 +47,15 @@
   #top .pvp-sidebar-event { grid-template-columns:minmax(0,1fr); }
 }
 #top > .hero h1, #top > .hero .hero-subtitle, #top > .hero .hero-tagline { transform:none!important; }
+/* A compact server masthead aligned with the content below. */
+#top > .hero { min-height:98px!important; padding:17px 20px!important; margin-top:14px; margin-bottom:18px; border:1px solid #bd92432b; border-left:3px solid #bc9349; background:linear-gradient(105deg,#b5893014,#090e10 65%)!important; }
+#top > .hero:before { display:none; }
+#top > .hero h1 { font-size:clamp(25px,2.5vw,36px)!important; letter-spacing:.035em; }
+#top > .hero h1 span { color:#efcb7b; }
+#top > .hero .hero-subtitle { color:#bcb5a5; font:600 10px/1.5 Inter,Arial,sans-serif!important; letter-spacing:.2em; }
+#top > .hero .hero-tagline { width:330px!important; max-width:100%; color:#bcb5a5; font:400 12px/1.6 Inter,Arial,sans-serif!important; letter-spacing:.025em; text-transform:none; }
+@media(max-width:900px) {
+  #top > .hero { min-height:0!important; padding:13px 14px!important; margin-top:10px; margin-bottom:12px; }
+  #top > .hero h1 { font-size:clamp(23px,6vw,32px)!important; }
+  #top > .hero .hero-tagline { width:auto!important; font-size:11px!important; }
+}
