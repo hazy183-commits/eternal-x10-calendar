@@ -1,6 +1,8 @@
 import { TIME_ZONE, localDateTimeToDate } from './bossRespawns.js';
 
 export const SIEGE_DURATION_MINUTES = 120;
+// Siege times are entered in the game server clock, which is two hours behind Poland.
+export const SIEGE_SERVER_OFFSET_MINUTES = 120;
 export const SIEGE_CASTLES = Object.freeze([
   'Gludio', 'Dion', 'Giran', 'Oren', 'Aden', 'Innadril', 'Goddard', 'Rune', 'Schuttgart',
 ]);
@@ -28,6 +30,23 @@ function parseDateKey(value) {
 
 function daysInMonth(year, monthIndex) {
   return new Date(Date.UTC(year, monthIndex + 1, 0, 12)).getUTCDate();
+}
+
+function serverDateTimeToLocal(dateKey, time) {
+  const date = parseDateKey(dateKey);
+  const match = /^(\\d{2}):(\\d{2})$/.exec(String(time ?? ''));
+  if (!date || !match) return null;
+  const shifted = new Date(Date.UTC(
+    date.getUTCFullYear(),
+    date.getUTCMonth(),
+    date.getUTCDate(),
+    Number(match[1]),
+    Number(match[2]),
+  ) + SIEGE_SERVER_OFFSET_MINUTES * 60000);
+  return {
+    date: \`${shifted.getUTCFullYear()}-${pad(shifted.getUTCMonth() + 1)}-${pad(shifted.getUTCDate())}\`,
+    time: \`${pad(shifted.getUTCHours())}:${pad(shifted.getUTCMinutes())}\`,
+  };
 }
 
 export function addMonthsClamped(dateKey, months) {
@@ -81,10 +100,11 @@ export function nextMonthlyOccurrence(row, now = new Date()) {
   const firstMonth = Math.max(0, monthDistance(referenceDate, currentDate));
   for (let offset = firstMonth; offset < firstMonth + 2400; offset += 1) {
     const date = addMonthsClamped(normalizedRow.reference_date, offset);
-    const start = localDateTimeToDate(date, normalizedRow.reference_time);
+    const localReference = serverDateTimeToLocal(date, normalizedRow.reference_time);
+    const start = localReference ? localDateTimeToDate(localReference.date, localReference.time) : null;
     if (!start) continue;
     const end = new Date(start.getTime() + normalizedRow.duration_minutes * 60000);
-    if (end > now) return { date, time: normalizedRow.reference_time, start, end, duration: normalizedRow.duration_minutes };
+    if (end > now) return { date: localReference.date, time: localReference.time, serverDate: date, serverTime: normalizedRow.reference_time, start, end, duration: normalizedRow.duration_minutes };
   }
   return null;
 }
