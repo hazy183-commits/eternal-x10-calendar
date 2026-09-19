@@ -33,6 +33,7 @@ const bosses = new Map([
   ['antharas', 'antharas'], ['valakas', 'valakas'],
 ]);
 const loads = new Map();
+const loadedArtworks = new Set();
 const assigned = new WeakMap();
 const pending = new WeakMap();
 
@@ -60,7 +61,10 @@ function imageLoads(url) {
   if (!loads.has(url)) {
     loads.set(url, new Promise((resolve) => {
       const image = new Image();
-      image.onload = () => resolve(true);
+      image.onload = () => {
+        loadedArtworks.add(url);
+        resolve(true);
+      };
       image.onerror = () => resolve(false);
       image.src = url;
     }));
@@ -68,18 +72,30 @@ function imageLoads(url) {
   return loads.get(url);
 }
 
+function paintArtwork(element, url) {
+  // Ignore a previous request if this card now represents another event.
+  if (assigned.get(element) !== url) return;
+  element.style.setProperty('--boss-art', `url(${JSON.stringify(url)})`);
+  element.classList.add('has-boss-art');
+}
+
 function loadArtwork(element, url) {
+  if (loadedArtworks.has(url)) {
+    paintArtwork(element, url);
+    return;
+  }
   imageLoads(url).then((loaded) => {
-    // Ignore a previous request if this card now represents another event.
-    if (!loaded || assigned.get(element) !== url) return;
-    element.style.setProperty('--boss-art', `url(${JSON.stringify(url)})`);
-    element.classList.add('has-boss-art');
+    if (!loaded) return;
+    paintArtwork(element, url);
   });
 }
 
 export function applyBossArtwork(element, name = '') {
   const url = bossArtworkUrl(name);
-  if (assigned.get(element) === url) return;
+  if (assigned.get(element) === url) {
+    if (url && loadedArtworks.has(url)) paintArtwork(element, url);
+    return;
+  }
   assigned.set(element, url);
   element.classList.remove('has-boss-art');
   element.style.removeProperty('--boss-art');
