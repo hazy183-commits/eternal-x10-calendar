@@ -2,7 +2,7 @@ import { TIME_ZONE, localDateTimeToDate } from './bossRespawns.js';
 
 export const SIEGE_DURATION_MINUTES = 120;
 // Siege times are entered in the game server clock, which is two hours behind Poland.
-export const SIEGE_SERVER_OFFSET_MINUTES = 120;
+export const SIEGE_SERVER_TIME_ZONE = 'UTC';
 export const SIEGE_CASTLES = Object.freeze([
   'Gludio', 'Dion', 'Giran', 'Oren', 'Aden', 'Innadril', 'Goddard', 'Rune', 'Schuttgart',
 ]);
@@ -36,16 +36,31 @@ function serverDateTimeToLocal(dateKey, time) {
   const date = parseDateKey(dateKey);
   const match = /^(\d{2}):(\d{2})$/.exec(String(time ?? ''));
   if (!date || !match) return null;
-  const shifted = new Date(Date.UTC(
+
+  // The game server clock is UTC. Intl applies Europe/Warsaw DST automatically:
+  // +2 hours in summer and +1 hour in winter.
+  const instant = new Date(Date.UTC(
     date.getUTCFullYear(),
     date.getUTCMonth(),
     date.getUTCDate(),
     Number(match[1]),
     Number(match[2]),
-  ) + SIEGE_SERVER_OFFSET_MINUTES * 60000);
+  ));
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: TIME_ZONE,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hourCycle: 'h23',
+  }).formatToParts(instant).reduce((result, part) => {
+    if (part.type !== 'literal') result[part.type] = part.value;
+    return result;
+  }, {});
   return {
-    date: `${shifted.getUTCFullYear()}-${pad(shifted.getUTCMonth() + 1)}-${pad(shifted.getUTCDate())}`,
-    time: `${pad(shifted.getUTCHours())}:${pad(shifted.getUTCMinutes())}`,
+    date: `${parts.year}-${parts.month}-${parts.day}`,
+    time: `${parts.hour}:${parts.minute}`,
   };
 }
 
