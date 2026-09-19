@@ -137,3 +137,8 @@
     display:none!important;
   }
 }
+
+/* Ukryj dodatkowy pasek wyboru dni — nawigacja pozostaje w nagłówku kalendarza. */
+.unified-calendar .calendar-week {
+  display:none!important;
+}
