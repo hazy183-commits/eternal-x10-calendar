@@ -39,3 +39,14 @@ test('Eternal overrides remove Acumen augments and prioritize song/dance resists
   assert.match(js, /Orfen \(\+1 INT Eternal\)/);
   assert.match(js, /magicCritCap:'70%'/);
 });
+
+test('Noblesse is slot-free and Duelist reserves room for active effects', async () => {
+  const js = await readFile(new URL('../public/pvp-profile-v2.js', import.meta.url), 'utf8');
+  assert.match(js, /noblesseNoSlot:true/);
+  assert.match(js, /Duelist Spirit/);
+  assert.match(js, /War Cry/);
+  assert.match(js, /Sonic Move/);
+  assert.match(js, /Sonic Barrier/);
+  assert.match(js, /Celestial Shield \(augmentacja\)/);
+  assert.match(js, /pierwszy do usunięcia/);
+});
