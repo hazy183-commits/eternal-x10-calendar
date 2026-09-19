@@ -75,7 +75,7 @@ function getUpcoming() {
   return sorted(candidates);
 }
 
-function renderFilters() { $('#filters').innerHTML = ['Wszystkie', ...TYPES].map((item) => `<button class="filter-btn ${filter === item ? 'active' : ''}" data-filter="${item}">${item}</button>`).join(''); }
+function renderFilters() { const filters = $('#filters'); if (!filters) return; filters.innerHTML = ['Wszystkie', ...TYPES].map((item) => `<button class="filter-btn ${filter === item ? 'active' : ''}" data-filter="${item}">${item}</button>`).join(''); }
 function rowCountdown(event) {
   if (event.isPvpSchedule) return pvpCountdownText(event);
   const currentStatus = eventStatus(event);
@@ -688,7 +688,7 @@ async function initializeApp() {
     $('#eventDuration').addEventListener('input', () => {
       if (formMode === 'new') automaticDuration = false;
     });
-    $('#filters').addEventListener('click', (event) => { if (!event.target.dataset.filter) return; filter = event.target.dataset.filter; renderFilters(); renderCalendar(); });
+    $('#filters')?.addEventListener('click', (event) => { if (!event.target.dataset.filter) return; filter = event.target.dataset.filter; renderFilters(); renderCalendar(); });
     $('#calendarWeek').addEventListener('click', (event) => {
       const button = event.target.closest('[data-calendar-day]');
       if (!button) return;
