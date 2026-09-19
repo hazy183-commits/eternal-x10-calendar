@@ -50,3 +50,12 @@ test('Noblesse is slot-free and Duelist reserves room for active effects', async
   assert.match(js, /Celestial Shield \(augmentacja\)/);
   assert.match(js, /pierwszy do usunięcia/);
 });
+
+test('clan Discord guidance is encoded for documented classes', async () => {
+  const js = await readFile(new URL('../public/pvp-profile-v2.js', import.meta.url), 'utf8');
+  for (const id of ['SPS','NECRO','OL','HE','TH','BP','WL']) assert.match(js, new RegExp(`${id}:\\{gear:`));
+  assert.match(js, /zdejmij Berserker Spirit/);
+  assert.match(js, /zdejmij Wind Walk/);
+  assert.match(js, /zdejmij Arcane Protection/);
+  assert.match(js, /Magnus jest z reguły wybierany zamiast CoV/);
+});
