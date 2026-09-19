@@ -123,7 +123,13 @@ export function installNextEventCarousel() {
   controls.id = 'nextEventCarouselControls';
   controls.className = 'next-event-carousel-controls';
   controls.innerHTML = `<button type="button" class="next-event-arrow" data-prev aria-label="Poprzednie wydarzenie">‹</button><div class="next-event-dots"></div><span class="next-event-position" aria-live="polite"></span><button type="button" class="next-event-arrow" data-next aria-label="Następne wydarzenie">›</button>`;
-  card.appendChild(controls);
+  const footer = document.createElement('footer');
+  footer.className = 'event-card-footer';
+  const caption = document.createElement('span');
+  caption.className = 'event-card-footer-caption';
+  caption.textContent = 'NAJBLIŻSZE WYDARZENIA';
+  footer.append(caption, controls);
+  card.appendChild(footer);
 
   const style = document.createElement('style');
   style.textContent = `.next-event-card{position:relative}.next-event-carousel-controls{position:absolute;right:18px;bottom:14px;z-index:20;display:flex;align-items:center;gap:8px;padding:5px 7px;border:1px solid #8d6a2f;background:#070b0cf2;box-shadow:0 5px 18px #000a}.next-event-arrow{width:34px;height:34px;border:1px solid #8d6a2f;background:#111617;color:#e3b85f;font:700 25px/1 Georgia,serif;cursor:pointer}.next-event-arrow:hover,.next-event-arrow:focus{outline:none;border-color:#e3b85f;background:#2a2012}.next-event-dots{display:flex;gap:7px}.next-event-dot{width:9px;height:9px;padding:0;border:1px solid #a47d37;background:#191b18;transform:rotate(45deg);cursor:pointer}.next-event-dot.active{background:#e3b85f;box-shadow:0 0 8px #e3b85f88}.next-event-position{min-width:28px;color:#aaa294;font:700 9px Inter,Arial,sans-serif;text-align:center}@media(max-width:700px){.next-event-carousel-controls{left:50%;right:auto;bottom:10px;transform:translateX(-50%);width:max-content;max-width:calc(100% - 20px);justify-content:center}.next-event-arrow{width:38px;height:38px}}`;
@@ -162,7 +168,7 @@ export function installNextEventCarousel() {
     box.hidden = !/^([01]\d|2[0-3]):[0-5]\d$/.test(value);
     const caption = box.querySelector('span');
     const label = box.querySelector('b');
-    if (caption) caption.textContent = 'GODZINA ROZPOCZĘCIA';
+    if (caption) caption.textContent = 'START WYDARZENIA';
     if (label) label.textContent = box.hidden ? '--:--' : value;
   };
 
@@ -173,7 +179,7 @@ export function installNextEventCarousel() {
     const days = Math.floor(sec / 86400); sec %= 86400;
     const hours = Math.floor(sec / 3600); sec %= 3600;
     const mins = Math.floor(sec / 60); const secs = sec % 60;
-    $('#countdown').innerHTML = [days, hours, mins, secs].map((v, i) => `<b>${pad(v)}</b>${i < 3 ? '<i>:</i>' : ''}`).join('');
+    $('#countdown').innerHTML = [days, hours, mins, secs].map((v, i) => `<b data-digits="${pad(v).length}">${pad(v)}</b>${i < 3 ? '<i>:</i>' : ''}`).join('');
     $('#countdownLabel').textContent = selected.label;
   };
 
@@ -184,8 +190,9 @@ export function installNextEventCarousel() {
     $('#nextType').className = `type-chip ${selected.type.toLowerCase().replaceAll(' ', '-')}`;
     paintOwner(selected.ownerClan);
     paintStart(selected.startTime);
-    $('#nextMeta').textContent = `${selected.when}${selected.location ? ` · ${selected.location}` : ''}`;
-    $('#nextDescription').textContent = selected.location ? `Lokalizacja: ${selected.location}` : 'Wydarzenie z kalendarza klanu.';
+    $('#nextMeta').textContent = selected.when;
+    $('#nextLocation').textContent = selected.location || 'Do ustalenia';
+    $('#nextDescription').textContent = '';
     $('#nextStatus').textContent = 'NADCHODZI';
     $('#nextStatus').className = 'live-status nadchodzi';
     applyBossArtwork($('.event-art-large'), selected.art);
@@ -195,11 +202,13 @@ export function installNextEventCarousel() {
   const show = (i) => {
     const list = rows();
     if (!list.length) return;
+    const previousIndex = index;
     index = (i + list.length) % list.length;
     card.dataset.carouselIndex = String(index);
     selected = index === 0 ? null : readRow(list[index]);
     drawDots();
     if (selected) paint();
+    else if (previousIndex !== 0) window.dispatchEvent(new Event('orzel:featured-event-return'));
   };
 
   controls.addEventListener('click', (event) => {

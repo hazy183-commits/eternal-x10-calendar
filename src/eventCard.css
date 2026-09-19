@@ -1,0 +1,66 @@
+/* Approved artwork + full-width four-tile countdown composition. */
+#top #nextEventCard {
+  grid-template-columns:40% minmax(0,1fr); grid-template-rows:auto 1fr auto;
+  min-height:370px; padding:0!important; overflow:hidden;
+  background:radial-gradient(ellipse at 75% 60%,#bd913512,transparent 60%),#070d0d;
+  border:1px solid #9b763e; container-type:inline-size;
+}
+#top #nextEventCard .next-event-content { grid-column:2; grid-row:1; align-self:start; padding:18px 24px 0!important; }
+#top #nextEventCard .event-art-large { inset:0 58% 0 0!important; }
+#top #nextEventCard .event-aura { pointer-events:none; }
+#top #nextEventCard .next-event-badges { display:flex; align-items:center; flex-wrap:wrap; gap:8px; }
+#top #nextEventCard #nextStatus { display:block!important; margin-left:auto; font-size:9px; letter-spacing:.16em; color:#d5af63; white-space:nowrap; }
+#top #nextEventCard .next-owner-chip { order:3; }
+#top #nextEventCard #nextName { margin:10px 0 6px; font:600 clamp(28px,5cqi,48px)/1.1 Cinzel,Georgia,serif!important; color:#f8e9c1; letter-spacing:.03em; }
+#top #nextEventCard #nextMeta { font-size:11px; color:#a69e8d; }
+#top #nextEventCard .event-facts { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:18px; margin-top:14px; }
+#top #nextEventCard .featured-event-location, #top #nextEventCard #nextStartTime { display:flex; flex-direction:column; align-items:flex-start; justify-content:center; gap:7px; min-width:0; margin:0; padding:0; background:none; border:0; white-space:normal; }
+#top #nextEventCard #nextStartTime { border-left:1px solid #92703977; padding-left:18px; }
+#top #nextEventCard #nextStartTime[hidden] { display:none; }
+#top #nextEventCard .event-facts span { font:600 9px/1.4 Inter,Arial,sans-serif; letter-spacing:.12em; color:#a99a79; }
+#top #nextEventCard .featured-event-location b { font:400 clamp(13px,1.8cqi,18px)/1.3 Inter,Arial,sans-serif; color:#e9e1cf; overflow-wrap:anywhere; }
+#top #nextEventCard #nextStartTime b { font:600 25px/1.1 Georgia,serif; color:#f0cb78; }
+#top #nextEventCard #nextDescription { max-width:none; margin:9px 0 0; font-size:11px; line-height:1.4; color:#b4aa98; }
+#top #nextEventCard #nextDescription:empty { display:none; }
+#top #nextEventCard .countdown-block { display:grid; grid-template-columns:minmax(0,1fr); grid-template-rows:auto auto; grid-column:2; grid-row:2; align-self:center; gap:10px; padding:16px 24px 20px!important; border:0!important; overflow:visible!important; }
+#top #nextEventCard #countdownLabel { grid-row:1; padding-top:13px; border-top:1px solid #9b773f66; text-align:left; font-size:10px; letter-spacing:.15em; }
+#top #nextEventCard #countdown { grid-column:1; grid-row:2; display:grid!important; grid-template-columns:repeat(4,minmax(0,1fr))!important; gap:9px!important; width:100%!important; max-width:none!important; margin:0!important; font:600 clamp(27px,5.1cqi,50px)/1 Georgia,serif!important; font-variant-numeric:tabular-nums!important; letter-spacing:0!important; }
+#top #nextEventCard #countdown i { display:none!important; }
+#top #nextEventCard #countdown b { display:block; min-width:0; text-align:center; padding:16px 1px 35px; border:1px solid #b18a45; border-radius:3px; background:radial-gradient(ellipse at top,#b7943822,transparent 90%); box-shadow:inset 0 1px #f1ca7733; color:#f4d587; font-weight:600; }
+#top #nextEventCard .countdown-block small { grid-column:1; grid-row:2; align-self:end; z-index:1; display:grid!important; grid-template-columns:repeat(4,minmax(0,1fr))!important; gap:9px!important; width:100%!important; max-width:none!important; margin:0 0 13px!important; font:500 9px/1.2 Inter,Arial,sans-serif!important; letter-spacing:.1em!important; text-align:center!important; pointer-events:none; }
+#top #nextEventCard .event-card-footer { grid-column:2; grid-row:3; position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between; gap:12px; min-width:0; padding:12px 24px; border-top:1px solid #9b773f77; }
+#top #nextEventCard .event-card-footer-caption { color:#c5a567; font:600 9px/1.4 Inter,Arial,sans-serif; letter-spacing:.12em; }
+#top #nextEventCarouselControls { position:static!important; inset:auto!important; transform:none!important; display:flex; flex-shrink:0; width:auto!important; max-width:none!important; padding:0; border:0; box-shadow:none; background:none; gap:8px; }
+#top #nextEventCarouselControls .next-event-arrow { width:34px!important; height:34px!important; }
+@media(max-width:1100px) and (min-width:901px) { #top > .focus-section { grid-template-columns:320px minmax(0,1fr); } #top #nextEventCard { grid-template-columns:30% minmax(0,1fr); } #top #nextEventCard .event-art-large { right:68%!important; } }
+@media(max-width:600px) {
+  #top #nextEventCard { grid-template-columns:28% minmax(0,1fr); min-height:340px; }
+  #top #nextEventCard .event-art-large { right:70%!important; }
+  #top #nextEventCard .next-event-content { padding:15px 12px 0!important; }
+  #top #nextEventCard #nextStatus { font-size:7px; letter-spacing:.05em; }
+  #top #nextEventCard #nextName { font-size:clamp(23px,7cqi,34px)!important; }
+  #top #nextEventCard .event-facts { gap:9px; }
+  #top #nextEventCard #nextStartTime { padding-left:9px; }
+  #top #nextEventCard .event-facts span { font-size:7px; letter-spacing:.05em; }
+  #top #nextEventCard #nextStartTime b { font-size:22px; }
+  #top #nextEventCard .countdown-block { padding:12px 12px 16px!important; }
+  #top #nextEventCard #countdown { gap:5px!important; font-size:clamp(22px,7cqi,34px)!important; }
+  #top #nextEventCard #countdown b { padding:14px 0 29px; }
+  #top #nextEventCard .countdown-block small { gap:5px!important; font-size:7px!important; margin-bottom:11px!important; }
+  #top #nextEventCard .event-card-footer { grid-column:1 / -1; padding:10px 12px; background:#070d0deb; }
+  #top #nextEventCard .event-card-footer-caption { font-size:8px; }
+}
+
+#top #nextEventCard #nextStatus.nadchodzi {border:0;background:none;padding:0;}
+#top #nextEventCard #nextStatus.nadchodzi::before {content:'◇';margin-right:8px;}
+#top #nextEventCard .featured-event-location {display:flex!important;}
+#top #nextEventCard #nextStartTime {margin:0!important;padding-block:0!important;text-align:left!important;}
+#top #nextEventCard #countdown b[data-digits="3"] {font-size:.8em;}
+#top #nextEventCard #countdown b[data-digits="4"] {font-size:.6em;line-height:1.6667;}
+#top #nextEventCard #countdown b[data-digits="3"] {line-height:1.25;}
+
+#top #nextEventCard .featured-event-location,#top #nextEventCard #nextStartTime {position:relative;padding-left:42px;}
+#top #nextEventCard #nextStartTime {padding-left:54px;}
+#top #nextEventCard .event-fact-icon {position:absolute;left:0;top:50%;transform:translateY(-50%);width:28px;height:32px;fill:none;stroke:#d9ac56;stroke-width:1.4;}
+#top #nextEventCard #nextStartTime .event-fact-icon {left:16px;}
+@media(max-width:600px){#top #nextEventCard .event-fact-icon{display:none;}#top #nextEventCard .featured-event-location{padding-left:0;}#top #nextEventCard #nextStartTime{padding-left:9px;}}

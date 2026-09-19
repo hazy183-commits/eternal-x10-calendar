@@ -145,7 +145,7 @@ function renderCalendar() {
 function renderOverview() { const todays = sorted(events.filter((event) => !event.isPvpSchedule && event.date === (event.isOlympiadSchedule ? olympiadLocalDate() : dateKey(today)))); $('#todayCount').textContent = todays.length; $('#todayEvents').innerHTML = todays.length ? todays.map(miniRow).join('') : '<p class="empty-mini">Dziś nie zaplanowano wydarzeń.</p>'; const upcoming = getUpcoming().slice(0, 5); $('#upcomingEvents').innerHTML = upcoming.length ? upcoming.map(miniRow).join('') : '<p class="empty-mini">Brak nadchodzących wydarzeń.</p>'; refreshBossArtwork($('#statistics')); renderPvpSidebar($('#pvpSidebarEvents')); }
 function eventWindowLabel(event) { if (event?.isOlympiadSchedule) return `${formatOlympiadDate(event)} · ${event.timeRange} · Europe/Warsaw`; if (!event?.isBossRespawn && !event?.isSiegeSchedule) return `${formatDate(dateFromEvent(event), { weekday: 'long', day: 'numeric', month: 'long' })} · ${event.time}${event.location ? ` · ${event.location}` : ''}`; const start = dateFromEvent(event); const end = event.endAt ? new Date(event.endAt) : new Date(start.getTime() + event.duration * 60000); const endTime = new Intl.DateTimeFormat('pl-PL', { timeZone: TIME_ZONE, hour: '2-digit', minute: '2-digit' }).format(end); return `${formatLocalDateTime(start, { dateStyle: 'full', timeStyle: 'short' })}–${endTime}${event.location ? ` · ${event.location}` : ''}`; }
  function renderFeaturedOwner(ownerClan) { const chip = $('#nextOwner'); if (!chip) return; const owner = String(ownerClan || '').trim(); chip.hidden = !owner; chip.textContent = owner ? `WŁAŚCICIEL: ${owner}` : ''; }
- function renderFeaturedStart(time) { const box = $('#nextStartTime'); if (!box) return; const value = String(time || '').slice(0, 5); box.hidden = !/^([01]\d|2[0-3]):[0-5]\d$/.test(value); const caption = box.querySelector('span'); const label = box.querySelector('b'); if (caption) caption.textContent = 'GODZINA ROZPOCZĘCIA'; if (label) label.textContent = box.hidden ? '--:--' : value; }
+ function renderFeaturedStart(time) { const box = $('#nextStartTime'); if (!box) return; const value = String(time || '').slice(0, 5); box.hidden = !/^([01]\d|2[0-3]):[0-5]\d$/.test(value); const caption = box.querySelector('span'); const label = box.querySelector('b'); if (caption) caption.textContent = 'START WYDARZENIA'; if (label) label.textContent = box.hidden ? '--:--' : value; }
 function featuredDescription(event) { const description = String(event?.description || '').trim(); const owner = String(event?.ownerClan || '').trim(); if (!owner) return description; const ownerSuffix = `Właściciel: ${owner}.`; return description.endsWith(ownerSuffix) ? description.slice(0, -ownerSuffix.length).trim() : description; }
 function renderNext() {
   const event = getUpcoming()[0];
@@ -172,6 +172,7 @@ function renderNext() {
     $('#nextType').className = 'type-chip';
     renderFeaturedOwner('');
     renderFeaturedStart('');
+    $('#nextLocation').textContent = '—';
     $('#nextMeta').textContent = 'Dodaj nowe wydarzenie w panelu administratora.';
     $('#nextDescription').textContent = 'Gdy wydarzenie zostanie zaplanowane, pojawi się tutaj z pełnym odliczaniem.';
     $('#nextStatus').textContent = 'OCZEKUJE';
@@ -183,12 +184,14 @@ function renderNext() {
   $('#nextType').className = `type-chip ${event.type.toLowerCase().replaceAll(' ', '-')}`;
   renderFeaturedOwner(event.ownerClan);
   renderFeaturedStart(event.time);
-  $('#nextMeta').textContent = eventWindowLabel(event);
-  $('#nextDescription').textContent = featuredDescription(event);
+  $('#nextLocation').textContent = event.location || 'Do ustalenia';
+  $('#nextMeta').textContent = eventWindowLabel(event).replace(event.location ? ' · ' + event.location : '\u0000', '');
+  const description = featuredDescription(event);
+  $('#nextDescription').textContent = description === 'Lokalizacja: ' + event.location ? '' : description;
   $('#nextStatus').textContent = eventStatus(event);
   $('#nextStatus').className = `live-status ${eventStatus(event).toLowerCase().replaceAll(' ', '-')}`;
 }
-function updateCountdown() { const carouselCard = $('#nextEventCard'); if (carouselCard?.dataset?.carouselIndex && carouselCard.dataset.carouselIndex !== '0') return; const event = getUpcoming()[0]; if (!event) { $('#countdownLabel').textContent = 'Do rozpoczęcia'; $('#countdown').innerHTML = '<b>00</b><i>:</i><b>00</b><i>:</i><b>00</b><i>:</i><b>00</b>'; return; } const currentStatus = eventStatus(event); const countdown = countdownTargetFor(event); $('#countdownLabel').textContent = countdown.label; let seconds = Math.max(0, Math.floor((countdown.target - Date.now()) / 1000)); const values = [Math.floor(seconds / 86400), Math.floor((seconds %= 86400) / 3600), Math.floor((seconds %= 3600) / 60), seconds % 60]; $('#countdown').innerHTML = values.map((value, index) => `<b>${pad(value)}</b>${index < 3 ? '<i>:</i>' : ''}`).join(''); const status = $('#nextStatus'); if (status.textContent !== currentStatus) status.textContent = currentStatus; status.className = `live-status ${currentStatus.toLowerCase().replaceAll(' ', '-')}`; }
+function updateCountdown() { const carouselCard = $('#nextEventCard'); if (carouselCard?.dataset?.carouselIndex && carouselCard.dataset.carouselIndex !== '0') return; const event = getUpcoming()[0]; if (!event) { $('#countdownLabel').textContent = 'Do rozpoczęcia'; $('#countdown').innerHTML = '<b>00</b><i>:</i><b>00</b><i>:</i><b>00</b><i>:</i><b>00</b>'; return; } const currentStatus = eventStatus(event); const countdown = countdownTargetFor(event); $('#countdownLabel').textContent = countdown.label; let seconds = Math.max(0, Math.floor((countdown.target - Date.now()) / 1000)); const values = [Math.floor(seconds / 86400), Math.floor((seconds %= 86400) / 3600), Math.floor((seconds %= 3600) / 60), seconds % 60]; $('#countdown').innerHTML = values.map((value, index) => `<b data-digits="${pad(value).length}">${pad(value)}</b>${index < 3 ? '<i>:</i>' : ''}`).join(''); const status = $('#nextStatus'); if (status.textContent !== currentStatus) status.textContent = currentStatus; status.className = `live-status ${currentStatus.toLowerCase().replaceAll(' ', '-')}`; }
 function renderAdminFilters() {
   $('#adminFilters').innerHTML = ADMIN_FILTERS.map((item) => `<button class="admin-filter-btn ${adminFilter === item ? 'active' : ''}" type="button" data-admin-filter="${item}">${item}</button>`).join('');
   $('#adminSort').value = adminSort;
@@ -873,3 +876,5 @@ async function initializeApp() {
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initializeApp, { once: true });
 else initializeApp();
+
+if (typeof window !== 'undefined') window.addEventListener('orzel:featured-event-return', () => { featuredRenderSignature = null; renderNext(); updateCountdown(); });
