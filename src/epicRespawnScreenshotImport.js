@@ -557,11 +557,32 @@ export function installEpicRespawnScreenshotImport(supabase) {
     });
   }
 
+  async function mountWhenAllowed(manager) {
+    if (!manager || manager.querySelector('[data-epic-ocr-import]')) return;
+    if (!await canManage()) return;
+
+    // The manager used to live inside the hidden "new event" form.
+    // Keep Epic Boss tools available in the main admin view as well.
+    const panel = manager.closest('.admin-panel');
+    const hiddenForm = manager.closest('#adminFormView');
+    if (panel && hiddenForm) panel.appendChild(manager);
+
+    mount(manager);
+  }
+
   const waitForManager = async () => {
     const manager = document.querySelector('#bossRespawnManager');
     if (!manager) { setTimeout(waitForManager, 180); return; }
-    if (await canManage()) mount(manager);
+    await mountWhenAllowed(manager);
   };
+
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (!session || !['SIGNED_IN', 'INITIAL_SESSION', 'TOKEN_REFRESHED'].includes(event)) return;
+    window.setTimeout(() => {
+      const manager = document.querySelector('#bossRespawnManager');
+      if (manager) mountWhenAllowed(manager);
+    }, 0);
+  });
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', waitForManager, { once: true });
   else waitForManager();
