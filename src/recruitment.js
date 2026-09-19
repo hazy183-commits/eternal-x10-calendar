@@ -48,6 +48,7 @@ export function installRecruitment(supabase) {
     .ob-recruit-card-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:13px;padding-top:11px;border-top:1px solid #292319}
     .ob-recruit-card-actions button{padding:8px 10px;border:1px solid #564426;background:#12100c;color:#d1aa58;font-size:9px;font-weight:900;cursor:pointer}
     .ob-recruit-card-actions button.active{border-color:#bb8734;background:#2d1e0c;color:#f0ca79}
+    .ob-recruit-card-actions [data-recruit-delete]{border-color:#884239;color:#ef9c8c;margin-left:auto;min-height:40px}.ob-recruit-delete-error{color:#ef9c8c;font-size:13px}
     .ob-recruit-empty{padding:34px;border:1px dashed #514328;color:#8d8067;text-align:center}
     @media(max-width:900px){
       .member-zone-side.ob-recruit-ready{grid-template-columns:repeat(5,1fr)!important}
@@ -210,6 +211,7 @@ export function installRecruitment(supabase) {
           <button type="button" data-recruit-status="new" class="${row.status === 'new' ? 'active' : ''}">NOWE</button>
           <button type="button" data-recruit-status="contacted" class="${row.status === 'contacted' ? 'active' : ''}">SKONTAKTOWANO</button>
           <button type="button" data-recruit-status="closed" class="${row.status === 'closed' ? 'active' : ''}">ZAMKNIĘTE</button>
+          <button type="button" data-recruit-delete aria-label="Usuń zgłoszenie: ${esc(row.nickname)}">USUŃ</button>
         </div></article>`;
     }).join('');
   }
@@ -232,6 +234,26 @@ export function installRecruitment(supabase) {
   panel.querySelector('#obRecruitRefresh')?.addEventListener('click', loadRecruitment);
   nav.addEventListener('click', () => setTimeout(loadRecruitment, 0));
   panel.addEventListener('click', async (event) => {
+    const remove = event.target.closest('[data-recruit-delete]');
+    if (remove) {
+      if (remove.disabled || !await isStaff()) return;
+      const card = remove.closest('[data-recruit-id]');
+      const id = Number(card?.dataset.recruitId);
+      if (!id || !window.confirm(`Usunąć zgłoszenie „${card.querySelector('h4').textContent}”? Tej operacji nie można cofnąć.`)) return;
+      remove.disabled = true;
+      card.querySelector('.ob-recruit-delete-error')?.remove();
+      try {
+        const { data, error } = await supabase.from('recruitment_messages').delete().eq('id', id).select('id');
+        if (error || !data?.length) throw new Error('Nie udało się usunąć zgłoszenia. Odśwież listę i spróbuj ponownie.');
+        await loadRecruitment();
+      } catch (error) {
+        const message = document.createElement('p');
+        message.className = 'ob-recruit-delete-error'; message.setAttribute('role', 'alert');
+        message.textContent = 'Nie udało się usunąć zgłoszenia. Spróbuj ponownie.';
+        card.appendChild(message);
+      } finally { remove.disabled = false; }
+      return;
+    }
     const button = event.target.closest('[data-recruit-status]');
     if (!button || !await isStaff()) return;
     const card = button.closest('[data-recruit-id]');

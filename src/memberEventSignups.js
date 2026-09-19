@@ -196,6 +196,7 @@ export function installMemberEventSignups(supabase){
 
   ensureProfileUi();
   window.addEventListener('orzel:signup-updated', load);
+  window.addEventListener('orzel:profile-updated', load);
   subscribeClanEvents(()=>{events=getClanUpcomingEvents();getUser().then(u=>{if(u)load()})});
   const zone=document.querySelector('#memberZoneLayer');
   let wasOpen=false;

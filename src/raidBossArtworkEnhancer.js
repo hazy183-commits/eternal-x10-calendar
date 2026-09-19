@@ -198,7 +198,7 @@ export function installRaidBossArtworkEnhancer() {
   style.textContent = `
     .needed-rb-portrait{width:82px;height:82px;object-fit:cover;object-position:center;border:1px solid #8b672f;border-radius:8px;background:#090c0c;box-shadow:0 7px 24px #0008;flex:0 0 82px}
     .needed-rb-head{align-items:center!important}.needed-rb-level{flex:0 0 auto}.needed-rb-copy{padding-left:2px}
-    .needed-rb-location{display:inline-flex;align-items:center;justify-content:center;padding:8px 10px;border:1px solid #496044;background:#10190f;color:#b8d290;font-size:10px;font-weight:900;text-decoration:none;cursor:pointer}.needed-rb-location:hover{border-color:#6d8c62;background:#172217;color:#d3e8b3}
+    .needed-rb-location{display:inline-flex;align-items:center;justify-content:center;padding:8px 10px;border:1px solid #65502b;background:#13110c;color:#d8ad59;font-size:10px;font-weight:900;text-decoration:none;cursor:pointer}.needed-rb-location:hover{border-color:#b98739;background:#3a2812;color:#f0cb78}
     .needed-rb-calendar-row .event-thumb.needed-rb-has-art,.needed-rb-calendar-row .needed-rb-thumb.needed-rb-has-art{padding:0!important;overflow:hidden;background:#090c0c!important}
     .needed-rb-calendar-image{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
     .needed-rb-real-fallback{display:grid;place-items:center;width:82px;height:82px;flex:0 0 82px;border:1px solid #66502b;border-radius:8px;background:linear-gradient(145deg,#17140e,#090b0b);color:#b7934c;font-weight:900;letter-spacing:.12em}

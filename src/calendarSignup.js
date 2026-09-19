@@ -1,7 +1,7 @@
 import { signupIdentity } from './clanEventFeed.js';
 
 export async function saveCalendarSignup(client, event, response) {
-  if (!['yes', 'maybe'].includes(response)) throw new Error('Nieprawidłowa odpowiedź.');
+  if (!['yes', 'maybe', 'no'].includes(response)) throw new Error('Nieprawidłowa odpowiedź.');
   if (!event?.id || !(new Date(event.endAt).getTime() > Date.now())) {
     throw new Error('To wydarzenie już się zakończyło.');
   }

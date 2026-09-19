@@ -34,7 +34,7 @@ export function installProfilePersistenceFix(supabase){
       if(!data)throw new Error('Profil nie został zapisany w bazie.');
 
       const signupPayload={character_class:className,character_level:level,subclass,party_role:partyRole};
-      await supabase.from('event_signups').update(signupPayload).eq('user_id',user.id);
+      const {error:signupError}=await supabase.from('event_signups').update(signupPayload).eq('user_id',user.id);
 
       const summary=document.querySelector('#zoneProfileSummary');
       if(summary){
@@ -43,7 +43,9 @@ export function installProfilePersistenceFix(supabase){
         const bits=[data.nickname,data.character_class,data.character_level?`Lv. ${data.character_level}`:'',data.subclass?`Sub: ${data.subclass}`:'',data.party_role?labels[data.party_role]:''].filter(Boolean);
         summary.innerHTML=bits.map(v=>`<span class="zone-profile-chip">${esc(v)}</span>`).join('');
       }
-      if(msg)msg.textContent='Profil zapisany.';
+      if(msg)msg.textContent=signupError ? 'Profil zapisany. Nie udało się zaktualizować danych przy wcześniejszych zapisach.' : 'Profil zapisany.';
+      window.dispatchEvent(new CustomEvent('orzel:profile-updated'));
+      if(!signupError)window.dispatchEvent(new CustomEvent('orzel:signup-updated'));
     }catch(error){
       console.error('PROFILE SAVE FAILED',error);
       if(msg)msg.textContent=`Błąd zapisu: ${error.message||'nieznany błąd'}`;
