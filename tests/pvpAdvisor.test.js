@@ -129,4 +129,7 @@ test('subclass editor uses visual equipment and buff pickers', async () => {
   assert.match(js, /class="buff-choice/);
   assert.match(js, /buff-icons\/skill\$\{id\}\.png/);
   assert.match(js, /maksymalnie 24 buffy/);
+  assert.match(js, /buffOrder\.push\(choice\.dataset\.buff\)/);
+  assert.match(js, /const buffs=\[\.\.\.buffOrder\]/);
+  assert.match(js, /data-order/);
 });
