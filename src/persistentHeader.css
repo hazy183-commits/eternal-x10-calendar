@@ -1,0 +1,30 @@
+/* Shared header stays outside the scrolling page and workspace panels. */
+:root { --site-header-height:77px; }
+html { scroll-padding-top:calc(var(--site-header-height) + 12px); }
+body { padding-top:var(--site-header-height); }
+body > .topbar { position:fixed!important; inset:0 0 auto!important; width:100%!important; z-index:11000!important; }
+.topbar .topbar-inner { flex-wrap:wrap; }
+.topbar .header-actions { margin-left:auto; }
+#memberZoneLayer, #adminModal, #mobileHeaderMenu { top:var(--site-header-height)!important; }
+#memberZoneLayer { padding:12px!important; }
+#memberZoneLayer .member-zone-box { width:min(1420px,100%)!important; height:100%!important; max-height:850px; min-height:0; grid-template-columns:230px minmax(0,1fr); }
+#memberZoneLayer .member-zone-side { min-height:0; overflow-y:auto!important; overscroll-behavior:contain; scrollbar-width:thin; }
+#memberZoneLayer .member-zone-side > * { flex-shrink:0; }
+#memberZoneLayer .zone-logout { display:block!important; position:sticky; bottom:0; z-index:2; background:#17130d; box-shadow:0 -8px 12px #070a0a; }
+#memberZoneLayer .zone-side-foot { display:none; }
+#memberZoneLayer .member-zone-main { min-width:0; min-height:0; padding-top:28px!important; }
+#adminModal > .admin-panel { max-height:100%!important; }
+#mobileHeaderMenu { z-index:11001!important; }
+@media(max-width:1100px) and (min-width:901px) {
+  .topbar .topbar-inner { gap:8px; padding-block:6px; }
+  .topbar .header-actions { flex-wrap:wrap; justify-content:flex-end; }
+}
+@media(max-width:900px) {
+  body > main { padding-top:0!important; }
+  #memberZoneLayer { padding:4px!important; }
+  #memberZoneLayer .member-zone-box { grid-template-columns:minmax(0,1fr)!important; grid-template-rows:minmax(0,auto) minmax(0,1fr)!important; }
+  #memberZoneLayer .member-zone-side { max-height:32dvh; overflow-y:auto!important; }
+  #memberZoneLayer .zone-logout { position:static; padding:8px; font-size:10px; }
+  #memberZoneLayer .member-zone-main { padding-top:14px!important; }
+}
+#mobileHeaderMenu .mobile-menu-panel { height:100%!important; }

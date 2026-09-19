@@ -1,3 +1,4 @@
+import './persistentHeader.js';
 import { publishClanEventSources } from './clanEventFeed.js';
 import { SupabaseEventRepository } from './supabaseEvents.js';
 import { supabase } from './supabaseClient.js';
