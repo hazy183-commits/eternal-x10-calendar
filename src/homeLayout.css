@@ -47,15 +47,46 @@
   #top .pvp-sidebar-event { grid-template-columns:minmax(0,1fr); }
 }
 #top > .hero h1, #top > .hero .hero-subtitle, #top > .hero .hero-tagline { transform:none!important; }
-/* A compact server masthead aligned with the content below. */
-#top > .hero { min-height:98px!important; padding:17px 20px!important; margin-top:14px; margin-bottom:18px; border:1px solid #bd92432b; border-left:3px solid #bc9349; background:linear-gradient(105deg,#b5893014,#090e10 65%)!important; }
-#top > .hero:before { display:none; }
-#top > .hero h1 { font-size:clamp(25px,2.5vw,36px)!important; letter-spacing:.035em; }
-#top > .hero h1 span { color:#efcb7b; }
-#top > .hero .hero-subtitle { color:#bcb5a5; font:600 10px/1.5 Inter,Arial,sans-serif!important; letter-spacing:.2em; }
-#top > .hero .hero-tagline { width:330px!important; max-width:100%; color:#bcb5a5; font:400 12px/1.6 Inter,Arial,sans-serif!important; letter-spacing:.025em; text-transform:none; }
+/* Full-width, symmetrical server banner. */
+#top > .hero {
+  display:grid!important; grid-template-columns:minmax(20px,1fr) auto minmax(20px,1fr);
+  grid-template-rows:auto auto auto; align-items:center!important; justify-items:center;
+  gap:7px 30px; min-height:130px!important; padding:18px 32px!important;
+  margin-top:14px; margin-bottom:18px;
+  border:1px solid #bd924342; border-inline-color:#bd92431a;
+  background:radial-gradient(ellipse at 50% 40%,#b6882b24,transparent 65%),linear-gradient(90deg,#070c0e,#101514,#070c0e)!important;
+  box-shadow:inset 0 1px #f2d5920d,inset 0 -1px #f2d5920d;
+}
+#top > .hero:before, #top > .hero:after {
+  content:''; display:block; position:static; inset:auto; grid-row:2;
+  width:100%; height:1px; pointer-events:none;
+  background:linear-gradient(90deg,transparent,#d5ac5f88);
+}
+#top > .hero:before { grid-column:1; }
+#top > .hero:after { grid-column:3; transform:scaleX(-1); }
+#top > .hero h1 {
+  grid-column:2; grid-row:2; margin:0!important; width:auto!important;
+  font-size:clamp(26px,2.8vw,40px)!important; line-height:1.15!important;
+  letter-spacing:.08em; text-align:center!important;
+}
+#top > .hero h1 span { color:#f0cb78; }
+#top > .hero .hero-subtitle {
+  grid-column:1 / -1; grid-row:1; margin:0!important; width:auto!important;
+  font:600 9px/1.5 Inter,Arial,sans-serif!important; letter-spacing:.4em;
+  color:#cbb88e; text-align:center!important;
+}
+#top > .hero .hero-tagline {
+  grid-column:1 / -1; grid-row:3; margin:0!important; width:auto!important;
+  max-width:100%; color:#b4b3a9; font:400 12px/1.5 Inter,Arial,sans-serif!important;
+  letter-spacing:.04em; text-transform:none; text-align:center!important;
+}
 @media(max-width:900px) {
-  #top > .hero { min-height:0!important; padding:13px 14px!important; margin-top:10px; margin-bottom:12px; }
-  #top > .hero h1 { font-size:clamp(23px,6vw,32px)!important; }
-  #top > .hero .hero-tagline { width:auto!important; font-size:11px!important; }
+  #top > .hero { min-height:116px!important; padding:15px 14px!important; gap:7px 14px; margin-top:10px; margin-bottom:12px; }
+  #top > .hero h1 { font-size:clamp(22px,4.2vw,32px)!important; letter-spacing:.045em; }
+}
+@media(max-width:480px) {
+  #top > .hero { grid-template-columns:minmax(0,1fr); }
+  #top > .hero:before, #top > .hero:after { display:none; }
+  #top > .hero h1 { grid-column:1; font-size:clamp(20px,5.7vw,26px)!important; }
+  #top > .hero .hero-tagline { font-size:11px!important; }
 }
