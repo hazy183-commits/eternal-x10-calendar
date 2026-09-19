@@ -129,13 +129,17 @@ test('subclass editor uses visual equipment and buff pickers', async () => {
   assert.match(js, /class="buff-choice/);
   assert.match(js, /buff-icons\/skill\$\{id\}\.png/);
   assert.match(js, /maksymalnie 24 buffy/);
-  assert.match(js, /buffOrder\.push\(choice\.dataset\.buff\)/);
+  assert.match(js, /buffOrder\.push\(name\)/);
   assert.match(js, /const buffs=\[\.\.\.buffOrder\]/);
   assert.match(js, /data-order/);
   assert.match(js, /<details class="build-card loadout-card"/);
   assert.match(js, /data-buff-filter="songs"/);
   assert.match(js, /data-buff-filter="dances"/);
   assert.match(js, /data-buff-filter="prophecies"/);
+  assert.match(js, /data-buff-filter="free"/);
+  assert.match(js, /FREE_BUFFS=new Set\(\['Malaria','Flu'\]\)/);
+  assert.match(js, /FREE_BUFFS\.has\(name\)\|\|slotCount\(buffOrder\)<24/);
+  assert.match(js, /Malaria i Flu są poza limitem/);
   assert.match(js, /x\.hidden=category!==['"]all['"]&&x\.dataset\.category!==category/);
   for (const selfBuff of ['Dash','Focus Death','Mirage','Hawk Eye','Snipe','Rapid Fire','Dead Eye','Lionheart','Frenzy','Zealot','Ultimate Defense','Arcane Power']) {
     assert.match(js, new RegExp(`\\['${selfBuff}'`));
