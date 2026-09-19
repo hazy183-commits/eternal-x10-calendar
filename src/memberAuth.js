@@ -90,6 +90,9 @@ export function installMemberAuth(supabase) {
     html.member-locked #memberAuthLayer{display:grid!important}
     #memberAuthLayer,#memberZoneLayer{position:fixed;inset:0;z-index:10000;display:none;place-items:center;padding:16px;background:radial-gradient(circle at 50% 8%,#2d210f,#030506 58%);backdrop-filter:blur(9px)}
     #memberAuthLayer.open,#memberZoneLayer.open{display:grid}
+    html:has(#memberZoneLayer.open),body:has(#memberZoneLayer.open){overflow:hidden!important}
+    #memberZoneLayer{overflow:hidden;overscroll-behavior:none}
+    #memberZoneLayer .member-zone-main{min-height:0;overscroll-behavior:contain}
     .member-auth-box{width:min(430px,100%);padding:34px;border:1px solid #8d6a2f;background:#080c0c;color:#ddd;text-align:center;box-shadow:0 30px 90px #000}
     .member-auth-box img{width:108px}.member-kicker{display:block;color:#d3a446;font:800 10px/1.4 Arial;letter-spacing:.19em}.member-auth-box h2{margin:8px 0;color:#efd089;font:700 28px Georgia}.member-auth-lead{color:#858178}
     .member-tabs{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #382e1e;margin:20px 0}.member-tabs button{padding:12px;border:0;background:none;color:#777;font-weight:800;cursor:pointer}.member-tabs .active{color:#e4b95e;border-bottom:2px solid #e4b95e}
