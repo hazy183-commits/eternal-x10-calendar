@@ -132,4 +132,7 @@ test('subclass editor uses visual equipment and buff pickers', async () => {
   assert.match(js, /buffOrder\.push\(choice\.dataset\.buff\)/);
   assert.match(js, /const buffs=\[\.\.\.buffOrder\]/);
   assert.match(js, /data-order/);
+  for (const selfBuff of ['Dash','Focus Death','Mirage','Hawk Eye','Snipe','Rapid Fire','Dead Eye','Lionheart','Frenzy','Zealot','Ultimate Defense','Arcane Power']) {
+    assert.match(js, new RegExp(`\\['${selfBuff}'`));
+  }
 });
