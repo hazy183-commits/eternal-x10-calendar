@@ -1,3 +1,4 @@
+import { removeMember } from './memberRemoval.js';
 import { getClanUpcomingEvents } from './clanEventFeed.js';
 const ROLE_LABELS={owner:'Właściciel',admin:'Administrator',leader:'Lider',member:'Członek',pending:'Oczekuje'};
 const esc=(value='')=>String(value).replace(/[&<>"']/g,(c)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -170,7 +171,7 @@ export function installRoleEnhancements(supabase){
     const list=manager.querySelector('#obRoleList');
     if(msg)msg.textContent=message||'Ładowanie użytkowników…';
     try{
-      const {data,error}=await supabase.from('profiles').select('id,nickname,role,status,created_at').order('created_at',{ascending:false});
+      const {data,error}=await supabase.from('profiles').select('id,nickname,role,status,created_at').is('removed_at',null).order('created_at',{ascending:false});
       if(error)throw error;
       const rows=data||[];
       const setStat=(key,value)=>{const el=manager.querySelector(`[data-role-stat="${key}"]`);if(el)el.textContent=String(value)};
@@ -182,7 +183,7 @@ export function installRoleEnhancements(supabase){
       list.innerHTML=rows.map((u)=>{
         const self=u.id===profile.id;
         const owner=u.role==='owner';
-        const actions=(!self&&!owner)?`<button data-ob-role="member" data-user-id="${u.id}" class="${u.status==='approved'&&u.role==='member'?'active':''}">Członek</button><button data-ob-role="leader" data-user-id="${u.id}" class="${u.status==='approved'&&u.role==='leader'?'active':''}">Lider</button><button data-ob-role="admin" data-user-id="${u.id}" class="${u.status==='approved'&&u.role==='admin'?'active':''}">Administrator</button>${u.status!=='blocked'?`<button class="danger" data-ob-block data-user-id="${u.id}">Zablokuj</button>`:''}`:'<span>—</span>';
+        const actions=(!self&&!owner)?`<button class="danger" data-ob-remove data-user-id="${u.id}">Usuń z klanu</button><button data-ob-role="member" data-user-id="${u.id}" class="${u.status==='approved'&&u.role==='member'?'active':''}">Członek</button><button data-ob-role="leader" data-user-id="${u.id}" class="${u.status==='approved'&&u.role==='leader'?'active':''}">Lider</button><button data-ob-role="admin" data-user-id="${u.id}" class="${u.status==='approved'&&u.role==='admin'?'active':''}">Administrator</button>${u.status!=='blocked'?`<button class="danger" data-ob-block data-user-id="${u.id}">Zablokuj</button>`:''}`:'<span>—</span>';
         return `<article class="ob-role-row"><div class="ob-role-user"><b>${esc(u.nickname)}</b><small>${self?'Twoje konto':new Date(u.created_at).toLocaleDateString('pl-PL')}</small></div><span class="ob-role-name">${esc(ROLE_LABELS[u.role]||u.role||'—')}</span><span class="ob-role-status ${esc(u.status)}">${esc(u.status)}</span><div class="ob-role-actions">${actions}</div></article>`;
       }).join('')||'<p>Brak użytkowników.</p>';
       if(msg)msg.textContent=message;
@@ -206,7 +207,9 @@ export function installRoleEnhancements(supabase){
     await renderRoleManager(error?'Błąd: '+error.message:'Użytkownik został zablokowany.');
   }
 
-  document.addEventListener('click',(event)=>{
+  document.addEventListener('click',async (event)=>{
+    const removeButton=event.target.closest('[data-ob-remove]');
+    if(removeButton){event.preventDefault();event.stopPropagation();removeButton.disabled=true;try{if(await removeMember(supabase,{id:removeButton.dataset.userId,nickname:removeButton.closest('article')?.querySelector('.ob-role-user b')?.textContent})){await renderRoleManager('Członek został usunięty z klanu.');window.dispatchEvent(new Event('orzel:member-removed'));}}catch(error){const msg=document.querySelector('#obRoleMessage');if(msg)msg.textContent='Błąd: '+error.message;}finally{removeButton.disabled=false;}return;}
     const roleButton=event.target.closest('[data-ob-role]');
     if(roleButton){event.preventDefault();event.stopPropagation();setUserRole(roleButton.dataset.userId,roleButton.dataset.obRole);return;}
     const blockButton=event.target.closest('[data-ob-block]');

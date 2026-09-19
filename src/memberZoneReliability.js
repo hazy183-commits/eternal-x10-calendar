@@ -34,7 +34,7 @@ export function installMemberZoneReliability(supabase) {
     for (let attempt = 0; attempt < retries; attempt += 1) {
       const { data, error } = await supabase
         .from('profiles')
-        .select('nickname,role,status')
+        .select('nickname,role,status,removed_at')
         .eq('id', user.id)
         .maybeSingle();
       if (!error) {
@@ -48,7 +48,7 @@ export function installMemberZoneReliability(supabase) {
   }
 
   function allowed(session, profile) {
-    if (!session) return false;
+    if (!session || profile?.removed_at || profile?.status === 'blocked') return false;
     if (!isMemberEmail(session.user?.email || '')) return true;
     return profile?.status === 'approved';
   }
@@ -70,9 +70,7 @@ export function installMemberZoneReliability(supabase) {
     if (!session?.user) return null;
     const result = await fetchProfile(session.user);
     if (result.profile) return result.profile;
-    // Only fall back to the last known approved profile on a transport/query error.
-    // A successful query returning no row must not bypass access control.
-    if (result.error) return readCache(session.user.id);
+    // Access changes must not be bypassed by an older approved profile.
     return null;
   }
 
@@ -103,7 +101,7 @@ export function installMemberZoneReliability(supabase) {
         showLogin('Zaloguj się, aby wejść do Strefy Klanu.');
         return;
       }
-      const profile = cachedProfile || await resolveProfile(session);
+      const profile = await resolveProfile(session);
       if (!allowed(session, profile)) {
         showLogin(profile?.status === 'blocked' ? 'To konto jest zablokowane.' : 'Konto nie ma dostępu do Strefy Klanu.');
         return;

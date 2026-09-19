@@ -147,12 +147,12 @@ export function installMemberAuth(supabase) {
 
   const getProfile = async (user) => {
     if (!user) return null;
-    const { data } = await supabase.from('profiles').select('nickname,role,status').eq('id', user.id).maybeSingle();
+    const { data } = await supabase.from('profiles').select('nickname,role,status,removed_at').eq('id', user.id).maybeSingle();
     return data || null;
   };
 
   const isAllowed = (session, profile) => {
-    if (!session) return false;
+    if (!session || profile?.removed_at || profile?.status === 'blocked') return false;
     if (!isMemberEmail(session.user?.email || '')) return true;
     return profile?.status === 'approved';
   };
