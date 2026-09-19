@@ -95,3 +95,12 @@ test('buff planner fills every non-reserved slot', async () => {
   assert.match(js, /Math\.max\(0,target-important\.length\)/);
   assert.match(js, /const slots=\[\.\.\.low\.slice/);
 });
+
+test('buff cards use locally stored Lineage 2 skill icons', async () => {
+  const js = await readFile(new URL('../public/pvp-profile-v2.js', import.meta.url), 'utf8');
+  assert.match(js, /const BUFF_ICON_IDS=/);
+  assert.match(js, /buff-icons\/skill\$\{id\}\.png/);
+  for (const buff of ['Acumen','Dance of Siren','Prophecy of Water','Chant of Victory']) {
+    assert.match(js, new RegExp(`['"]${buff}['"]:['"]\\d+['"]`));
+  }
+});
