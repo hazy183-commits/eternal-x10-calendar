@@ -42,7 +42,7 @@
 .hero-tagline { width:430px; max-width:100%; margin:19px 0 0; text-align:center; }
 
 /* Strong, readable signup badge in public calendar. */
-#dailyEvents .event-row>.public-signup-count{display:inline-flex!important;align-items:center!important;justify-self:start!important;gap:8px!important;margin:0!important;padding:7px 10px!important;border:1px solid #3f8a51!important;border-radius:4px!important;background:linear-gradient(180deg,#17301d,#0e1d13)!important;box-shadow:inset 0 0 0 1px #0008,0 3px 12px #0007!important;color:#e7f7e9!important;font-size:10px!important;font-weight:900!important;letter-spacing:.04em!important}
+#dailyEvents .event-row>.public-signup-count{display:inline-flex!important;align-items:center!important;justify-self:center!important;gap:8px!important;margin:0!important;padding:7px 10px!important;border:1px solid #3f8a51!important;border-radius:4px!important;background:linear-gradient(180deg,#17301d,#0e1d13)!important;box-shadow:inset 0 0 0 1px #0008,0 3px 12px #0007!important;color:#e7f7e9!important;font-size:11px!important;font-weight:900!important;letter-spacing:.04em!important}
 #dailyEvents .public-signup-count .psc-icon{width:21px!important;height:21px!important;border-color:#4f9d61!important;background:#0b170f!important;color:#9af0aa!important;font-size:12px!important}
 #dailyEvents .public-signup-count .psc-main{display:inline-flex!important;align-items:baseline!important;gap:4px!important;color:#d8f0dc!important;text-transform:uppercase!important}
 #dailyEvents .public-signup-count .psc-main b{font:700 16px/1 Cinzel,Georgia,serif!important;color:#9df2ad!important;text-shadow:0 0 10px #65d87a55!important}
@@ -50,10 +50,10 @@
 #dailyEvents .public-signup-count .psc-chevron{margin-left:1px!important;color:#b8d9bd!important;font-size:14px!important}
 #dailyEvents .public-signup-count:hover{border-color:#66bd78!important;background:linear-gradient(180deg,#1d3c25,#102519)!important;box-shadow:inset 0 0 0 1px #0008,0 5px 16px #0008,0 0 14px #53c86b2f!important}
 
-@media(max-width:1000px) and (min-width:821px) {
+@media(max-width:1000px) and (min-width:901px) {
   .unified-calendar .event-row,.unified-calendar .event-table-head { grid-template-columns:55px 40px minmax(110px,1fr) 82px minmax(90px,1fr) 140px 105px; gap:10px; }
 }
-@media(max-width:820px) {
+@media(max-width:900px) {
   .unified-calendar .calendar-heading { padding:16px 12px!important; flex-wrap:wrap; }
   .unified-calendar .calendar-heading h2 { font-size:21px; }
   .unified-calendar .calendar-week { gap:5px; padding:12px 10px; }
@@ -74,7 +74,7 @@
 }
 
 /* Mobile calendar: collapse the desktop seven-column event grid into a compact card. */
-@media(max-width:820px) {
+@media(max-width:900px) {
   .unified-calendar .event-list {
     width:100%!important;
     min-width:0!important;
@@ -145,4 +145,37 @@
   .hero-tagline {
     transform:translateX(clamp(28px,3.6vw,56px));
   }
+}
+
+/* Readable event table with headers and cells sharing the same alignment. */
+.unified-calendar .event-row .event-time { padding-left:0; font-size:15px; text-align:center; }
+.unified-calendar .event-info h3 { font-size:15px; line-height:1.4; }
+.unified-calendar .event-location { font-size:13px; }
+.unified-calendar .event-row>.type-chip { font-size:10px; white-space:nowrap; padding:4px 6px; }
+.unified-calendar .row-status { font-size:17px; line-height:1.35; font-weight:600; }
+.unified-calendar .row-status .status-dot { font-size:11px; }
+@media(min-width:901px) {
+  .unified-calendar .event-row,.unified-calendar .event-table-head {
+    grid-template-columns:60px 44px minmax(100px,1.3fr) 80px minmax(90px,1fr) 230px 150px;
+    gap:12px;
+  }
+  .unified-calendar .event-table-head { font-size:11px; text-align:center; align-items:center; }
+  .unified-calendar .event-table-head span:nth-child(2) { grid-column:3; }
+  .unified-calendar .event-table-head span:nth-child(6),.unified-calendar .event-row>.row-status { text-align:center; }
+  .unified-calendar .event-row>.event-info,.unified-calendar .event-row>.event-location { text-align:center; min-width:0; }
+  .unified-calendar .event-info h3 { overflow-wrap:anywhere; }
+  .unified-calendar .event-row>.type-chip,.unified-calendar .event-row .status-dot { justify-self:center; }
+}
+@media(min-width:901px) and (max-width:1100px) {
+  .unified-calendar .event-row,.unified-calendar .event-table-head {
+    grid-template-columns:50px 36px minmax(90px,1.2fr) 60px minmax(80px,1fr) 190px 125px;
+    gap:8px; padding-inline:12px;
+  }
+  #dailyEvents .event-row>.public-signup-count { flex-wrap:wrap!important; justify-content:center; max-width:100%; }
+}
+@media(max-width:900px) {
+  .unified-calendar .event-row .event-time { font-size:13px!important; }
+  .unified-calendar .event-info h3 { font-size:14px; }
+  .unified-calendar .event-row>.row-status { display:grid; font-size:14px; gap:4px; }
+  .unified-calendar .row-status .status-dot { font-size:10px; }
 }
