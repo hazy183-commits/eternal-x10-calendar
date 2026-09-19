@@ -64,3 +64,8 @@ test('PvP presets omit Bless the Soul because Eternal has MP potions', async () 
   const js = await readFile(new URL('../public/pvp-profile-v2.js', import.meta.url), 'utf8');
   assert.doesNotMatch(js, /Bless the Soul/);
 });
+
+test('legacy advisor does not render a duplicate buff setup', async () => {
+  const js = await readFile(new URL('../public/pvp-advisor.js', import.meta.url), 'utf8');
+  assert.doesNotMatch(js, /<h3>Buff setup<\/h3>/);
+});
