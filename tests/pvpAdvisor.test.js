@@ -80,6 +80,15 @@ test('class presets include one appropriate final prophecy or chant', async () =
   assert.match(js, /nie nakładaj ich jednocześnie/);
 });
 
+test('every rendered buff includes a readable effect description', async () => {
+  const js = await readFile(new URL('../public/pvp-profile-v2.js', import.meta.url), 'utf8');
+  assert.match(js, /const BUFF_DESCRIPTIONS=/);
+  assert.match(js, /buffDescription\(b\)/);
+  for (const buff of ['Acumen','Empower','Resist Shock','Song of Warding','Dance of Siren','Prophecy of Water']) {
+    assert.match(js, new RegExp(`['"]${buff}['"]:`));
+  }
+});
+
 test('buff planner fills every non-reserved slot', async () => {
   const js = await readFile(new URL('../public/pvp-profile-v2.js', import.meta.url), 'utf8');
   assert.match(js, /target=24-reserve/);
