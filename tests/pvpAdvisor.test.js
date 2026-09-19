@@ -79,3 +79,10 @@ test('class presets include one appropriate final prophecy or chant', async () =
   assert.match(js, /Magnus' Chant/);
   assert.match(js, /nie nakładaj ich jednocześnie/);
 });
+
+test('buff planner fills every non-reserved slot', async () => {
+  const js = await readFile(new URL('../public/pvp-profile-v2.js', import.meta.url), 'utf8');
+  assert.match(js, /target=24-reserve/);
+  assert.match(js, /Math\.max\(0,target-important\.length\)/);
+  assert.match(js, /const slots=\[\.\.\.low\.slice/);
+});
