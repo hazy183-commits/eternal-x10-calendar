@@ -4,7 +4,7 @@ export function canAccessClanView(profile, view) {
   if (view !== 'content-editor' && view !== 'recruitment') return true;
   if (profile?.status !== 'approved') return false;
   const role = String(profile.role || '').toLowerCase();
-  return view === 'content-editor' ? role === 'owner' : ['owner', 'admin', 'leader'].includes(role);
+  return view === 'content-editor' ? ['owner', 'admin'].includes(role) : ['owner', 'admin', 'leader'].includes(role);
 }
 
 export function switchClanView(zone, profile, requestedView) {
