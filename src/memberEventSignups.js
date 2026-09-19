@@ -189,12 +189,13 @@ export function installMemberEventSignups(supabase){
       const identity=signupIdentity(id);
       const row={...identity,user_id:u.id,nickname,response,character_class:profile?.character_class||null,character_level:profile?.character_level||null,subclass:profile?.subclass||null,party_role:profile?.party_role||null,updated_at:new Date().toISOString()};
       const r=await supabase.from('event_signups').upsert(row,{onConflict:identity.event_id?'event_id,user_id':'schedule_key,user_id'});
-      if(r.error){tableReady=false;mine=writeLocal(u,id,response)}else mine.set(String(id),response);
+      if(r.error){tableReady=false;mine=writeLocal(u,id,response)}else { mine.set(String(id),response); window.dispatchEvent(new CustomEvent('orzel:signup-updated')); }
     }else mine=writeLocal(u,id,response);
     await load();
   }
 
   ensureProfileUi();
+  window.addEventListener('orzel:signup-updated', load);
   subscribeClanEvents(()=>{events=getClanUpcomingEvents();getUser().then(u=>{if(u)load()})});
   const zone=document.querySelector('#memberZoneLayer');
   let wasOpen=false;

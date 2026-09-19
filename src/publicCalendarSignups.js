@@ -1,5 +1,6 @@
 import { supabase } from './supabaseClient.js';
 import { getClanUpcomingEvents, signupIdentity } from './clanEventFeed.js';
+import { saveCalendarSignup } from './calendarSignup.js';
 
 // Public signup roster UI v5 — isolated from member/admin modules.
 (function bootPublicCalendarSignups(){
@@ -7,7 +8,7 @@ import { getClanUpcomingEvents, signupIdentity } from './clanEventFeed.js';
     if (!supabase || window.__publicCalendarSignupsStarted) return;
     window.__publicCalendarSignupsStarted = true;
 
-    const state = { rows: new Map() };
+    const state = { rows: new Map(), user: null, event: null, saving: false, loadingUser: false, message: '', revision: 0 };
     const esc = (value = '') => String(value).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
     const keyFor = row => String(row?.event_id ?? row?.schedule_key ?? '');
     const norm = value => String(value || '').trim().replace(/\s+/g, ' ').toLowerCase();
@@ -35,9 +36,13 @@ import { getClanUpcomingEvents, signupIdentity } from './clanEventFeed.js';
       @media(max-width:430px){.public-signup-count .psc-chevron{display:none!important}.psc-summary{grid-template-columns:1fr}.psc-pill{padding:9px 10px}.psc-badges{padding-left:0}.psc-badge{font-size:7.5px;padding:5px 7px}.psc-person-copy b{font-size:11.5px}}
     `;
     document.head.appendChild(style);
+    const actionStyle = document.createElement('style');
+    actionStyle.textContent = `.psc-actions{margin-bottom:18px;padding:14px;border:1px solid #4b3d25;background:#101410}.psc-actions h4{margin:0 0 10px;font-size:14px;color:#e8d6af}.psc-actions-buttons{display:flex;gap:10px;flex-wrap:wrap}.psc-response{min-height:44px;flex:1;padding:10px 16px;border:1px solid #458856;background:#112318;color:#a4efb3;font:700 14px Inter,Arial,sans-serif;cursor:pointer}.psc-response[data-response="maybe"]{border-color:#947333;background:#261e10;color:#f0cc75}.psc-response[aria-pressed="true"]{outline:2px solid currentColor;outline-offset:2px}.psc-response:focus-visible{outline:2px solid #fff;outline-offset:3px}.psc-response:disabled{opacity:.55;cursor:wait}.psc-feedback{margin:12px 0 0;color:#d7c59e;font-size:13px;line-height:1.5}`;
+    document.head.appendChild(actionStyle);
 
     const dialog = document.createElement('dialog');
     dialog.className = 'public-signup-dialog';
+    dialog.setAttribute('aria-labelledby', 'pscTitle');
     dialog.innerHTML = `<div class="psc-head"><div><span class="psc-kicker">ZAPISY KLANOWE</span><h3 id="pscTitle">Wydarzenie</h3><div class="psc-meta" id="pscMeta"></div></div><button class="psc-close" type="button" aria-label="Zamknij">×</button></div><div class="psc-body" id="pscBody"></div>`;
     document.body.appendChild(dialog);
     dialog.querySelector('.psc-close').addEventListener('click', () => dialog.close());
@@ -88,17 +93,61 @@ import { getClanUpcomingEvents, signupIdentity } from './clanEventFeed.js';
       return rows.length ? `<div class="psc-roster ${tone}">${rows.map(personRow).join('')}</div>` : `<div class="psc-empty">${emptyText}</div>`;
     }
 
-    function openList(event){
+    function paintList(event){
       const lists = grouped(event);
       dialog.querySelector('#pscTitle').textContent = event.name || 'Wydarzenie';
       dialog.querySelector('#pscMeta').textContent = [event.date || '', event.time || '', event.location || ''].filter(Boolean).join(' · ');
       dialog.querySelector('#pscBody').innerHTML = `
+        <section class="psc-actions"><h4>Twoja obecność</h4><div class="psc-actions-buttons">${['yes','maybe'].map(response => {
+          const selected = [...lists.yes,...lists.maybe].some(row => row.user_id === state.user?.id && row.response === response);
+          return `<button type="button" class="psc-response" data-response="${response}" aria-pressed="${selected}" ${state.saving || state.loadingUser || !state.user ? 'disabled' : ''}>${response === 'yes' ? 'Zapisz się' : 'Może'}</button>`;
+        }).join('')}</div><p class="psc-feedback" role="status">${esc(state.message || (state.loadingUser ? 'Sprawdzanie Twojej odpowiedzi…' : !state.user ? 'Zaloguj się, aby wybrać odpowiedź.' : 'Możesz zmienić swoją odpowiedź w dowolnej chwili.'))}</p></section>
         <div class="psc-summary"><span class="psc-pill yes"><span>POTWIERDZENI</span><strong>${lists.yes.length}</strong></span><span class="psc-pill maybe"><span>MOŻE</span><strong>${lists.maybe.length}</strong></span></div>
         <section class="psc-group yes"><h4>Potwierdzeni gracze · ${lists.yes.length}</h4>${roster(lists.yes,'Nikt jeszcze nie potwierdził obecności.','yes')}</section>
         <section class="psc-group maybe"><h4>Może dołączyć · ${lists.maybe.length}</h4>${roster(lists.maybe,'Brak osób oznaczonych jako „może”.','maybe')}</section>
       `;
-      if (typeof dialog.showModal === 'function') dialog.showModal();
     }
+
+    async function openList(event){
+      state.event = event; state.message = ''; state.loadingUser = true;
+      paintList(event);
+      if (!dialog.open) dialog.showModal();
+      try {
+        const { data, error } = await supabase.auth.getUser();
+        state.user = error ? null : data?.user || null;
+        await load();
+      } catch { state.user = null; }
+      finally {
+        state.loadingUser = false;
+        if (dialog.open && state.event === event) paintList(event);
+      }
+    }
+
+    dialog.addEventListener('click', async event => {
+      const button = event.target.closest('[data-response]');
+      if (!button || state.saving || !state.event) return;
+      const selectedEvent = state.event;
+      const response = button.dataset.response;
+      state.saving = true; state.message = 'Zapisywanie…';
+      paintList(selectedEvent);
+      try {
+        const row = await saveCalendarSignup(supabase, selectedEvent, response);
+        state.revision++;
+        const key = keyFor(row);
+        state.rows.set(key, [...(state.rows.get(key) || []).filter(item => item.user_id !== row.user_id), row]);
+        if (state.event === selectedEvent) state.message = response === 'yes' ? 'Zapisano: będziesz na wydarzeniu.' : 'Zapisano odpowiedź: może.';
+        render();
+        window.dispatchEvent(new CustomEvent('orzel:signup-updated'));
+      } catch (error) {
+        if (state.event === selectedEvent) state.message = error.message || 'Nie udało się zapisać odpowiedzi. Spróbuj ponownie.';
+      } finally {
+        state.saving = false;
+        if (dialog.open) {
+          paintList(state.event);
+          dialog.querySelector(`[data-response="${response}"]`)?.focus();
+        }
+      }
+    });
 
     function render(){
       try {
@@ -129,8 +178,10 @@ import { getClanUpcomingEvents, signupIdentity } from './clanEventFeed.js';
 
     async function load(){
       try {
-        const { data, error } = await supabase.from('event_signups').select('event_id,schedule_key,nickname,response,character_class,character_level,party_role');
+        const revision = state.revision;
+        const { data, error } = await supabase.from('event_signups').select('event_id,schedule_key,user_id,nickname,response,character_class,character_level,party_role');
         if (error) return;
+        if (revision !== state.revision) return;
         const next = new Map();
         (data || []).forEach(row => {
           const key = keyFor(row);
@@ -140,6 +191,7 @@ import { getClanUpcomingEvents, signupIdentity } from './clanEventFeed.js';
         });
         state.rows = next;
         render();
+        if (dialog.open && !state.saving) paintList(state.event);
       } catch (error) {
         console.warn('Public signup load skipped', error);
       }
@@ -150,6 +202,12 @@ import { getClanUpcomingEvents, signupIdentity } from './clanEventFeed.js';
     document.querySelector('#calendarWeek')?.addEventListener('click', () => setTimeout(render, 0));
     document.querySelector('#filters')?.addEventListener('click', () => setTimeout(render, 0));
     document.addEventListener('visibilitychange', () => { if (!document.hidden) load(); });
+    window.addEventListener('orzel:signup-updated', load);
+    supabase.auth.onAuthStateChange((_event, session) => {
+      state.user = session?.user || null;
+      if (!state.user) { state.rows = new Map(); state.revision++; dialog.close(); }
+      setTimeout(load, 0);
+    });
 
     try {
       supabase.channel('public-calendar-signups-v3')
