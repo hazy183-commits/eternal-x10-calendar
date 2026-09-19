@@ -82,7 +82,7 @@ export function installDiscordReminderSettings(supabase) {
         const key = eventKey(event.id);
         const override = overrideMap.get(key);
         const enabled = override?.enabled !== false;
-        const minutes = override?.reminder_minutes ?? settings?.reminder_minutes ?? 30;
+        const minutes = override?.reminder_minutes ?? settings?.reminder_minutes ?? 60;
         return `<div class="ob-discord-event" data-event-key="${esc(key)}"><div><b>${esc(event.name || 'Wydarzenie')}</b><small>${esc(event.date || event.event_date || '')} ${esc(String(event.time || event.event_time || '').slice(0, 5))}${event.location ? ` · ${esc(event.location)}` : ''}</small></div><select data-reminder-minutes><option value="60" ${minutes === 60 ? 'selected' : ''}>60 min</option><option value="30" ${minutes === 30 ? 'selected' : ''}>30 min</option><option value="15" ${minutes === 15 ? 'selected' : ''}>15 min</option><option value="10" ${minutes === 10 ? 'selected' : ''}>10 min</option></select><button type="button" data-reminder-toggle data-enabled="${enabled ? '1' : '0'}">${enabled ? 'WŁĄCZONE' : 'WYŁĄCZONE'}</button></div>`;
       }).join('');
 
@@ -94,7 +94,7 @@ export function installDiscordReminderSettings(supabase) {
           <label class="ob-discord-option"><input id="obDiscordNeededRb" type="checkbox" ${bool(settings?.notify_needed_rb) ? 'checked' : ''}><span>Potrzebne RB<small>Zgłoszenia członków z ustawionym oknem</small></span></label>
           <label class="ob-discord-option"><input id="obDiscordDailyDigest" type="checkbox" \${bool(settings?.daily_digest_enabled) ? 'checked' : ''}><span>Codzienny raport<small>Codziennie o 08:00 · najbliższe 24 godziny</small></span></label>
         </div>
-        <label>Domyślnie ile minut wcześniej<select id="obDiscordMinutes"><option value="60" ${Number(settings?.reminder_minutes) === 60 ? 'selected' : ''}>60 minut</option><option value="30" ${Number(settings?.reminder_minutes || 30) === 30 ? 'selected' : ''}>30 minut</option><option value="15" ${Number(settings?.reminder_minutes) === 15 ? 'selected' : ''}>15 minut</option><option value="10" ${Number(settings?.reminder_minutes) === 10 ? 'selected' : ''}>10 minut</option></select></label>
+        <label>Domyślnie ile minut wcześniej<select id="obDiscordMinutes"><option value="60" ${Number(settings?.reminder_minutes) === 60 ? 'selected' : ''}>60 minut</option><option value="30" ${Number(settings?.reminder_minutes || 60) === 30 ? 'selected' : ''}>30 minut</option><option value="15" ${Number(settings?.reminder_minutes) === 15 ? 'selected' : ''}>15 minut</option><option value="10" ${Number(settings?.reminder_minutes) === 10 ? 'selected' : ''}>10 minut</option></select></label>
         <div class="ob-discord-help"><b>Webhook nie jest zapisywany w przeglądarce ani w publicznej tabeli.</b><br>Po jego podaniu zostanie umieszczony w zaszyfrowanym sejfie Supabase. Członkowie klanu nie mają do niego dostępu.</div>
         <div class="ob-ann-actions"><button class="ob-save-settings" type="submit">ZAPISZ USTAWIENIA</button><button type="button" id="obDiscordPreview">PODGLĄD WIADOMOŚCI</button><button type="button" id="obDiscordTest" ${configured ? '' : 'disabled'}>WYŚLIJ TEST</button><button type="button" id="obDiscordClose">ZAMKNIJ</button></div>
         <div id="obDiscordPreviewBox"></div>
