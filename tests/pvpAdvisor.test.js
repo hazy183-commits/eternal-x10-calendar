@@ -69,3 +69,13 @@ test('legacy advisor does not render a duplicate buff setup', async () => {
   const js = await readFile(new URL('../public/pvp-advisor.js', import.meta.url), 'utf8');
   assert.doesNotMatch(js, /<h3>Buff setup<\/h3>/);
 });
+
+test('class presets include one appropriate final prophecy or chant', async () => {
+  const js = await readFile(new URL('../public/pvp-profile-v2.js', import.meta.url), 'utf8');
+  assert.match(js, /Prophecy of Water/);
+  assert.match(js, /Prophecy of Wind/);
+  assert.match(js, /Prophecy of Fire/);
+  assert.match(js, /Chant of Victory/);
+  assert.match(js, /Magnus' Chant/);
+  assert.match(js, /nie nakładaj ich jednocześnie/);
+});
