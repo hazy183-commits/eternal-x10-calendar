@@ -13,3 +13,17 @@ test('PvP Advisor exposes matchup, profiles and Reborn effects', async () => {
   assert.match(js, /Array\.from\(\{length:5\}/);
   assert.match(js, /slice\(0,24\)/);
 });
+
+test('complete profiles store enchant, epic jewelry and augment recommendations', async () => {
+  const html = await readFile(new URL('../public/pvp-advisor.html', import.meta.url), 'utf8');
+  const js = await readFile(new URL('../public/pvp-profile-v2.js', import.meta.url), 'utf8');
+  assert.match(html, /id="editSetup"/);
+  assert.match(html, /id="setupForm"/);
+  assert.match(js, /fullEpic/);
+  assert.match(js, /Frintezza/);
+  assert.match(js, /Antharas/);
+  assert.match(js, /Queen Ant/);
+  assert.match(js, /enchant\.weapon/);
+  assert.match(js, /Rekomendowane augmentacje/);
+  assert.match(js, /AUGMENTS\.length/);
+});
