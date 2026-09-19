@@ -144,4 +144,10 @@ test('subclass editor uses visual equipment and buff pickers', async () => {
   for (const selfBuff of ['Dash','Focus Death','Mirage','Hawk Eye','Snipe','Rapid Fire','Dead Eye','Lionheart','Frenzy','Zealot','Ultimate Defense','Arcane Power']) {
     assert.match(js, new RegExp(`\\['${selfBuff}'`));
   }
+  for (const song of ['Earth','Life','Water','Warding','Wind','Hunter','Invocation','Vitality','Storm Guard','Flame Guard','Meditation','Renewal','Vengeance','Champion']) {
+    assert.match(js, new RegExp(`Song of ${song}`));
+  }
+  for (const dance of ['Warrior','Inspiration','Mystic','Fire','Fury','Concentration','Light','Aqua Guard','Earth Guard','Vampire','Protection','Siren']) {
+    assert.match(js, new RegExp(`Dance of ${dance}`));
+  }
 });
