@@ -61,3 +61,13 @@ body > .topbar { position:fixed!important; inset:0 0 auto!important; width:100%!
   body > .topbar .main-nav a { font-size:9px!important; }
   body > .topbar .header-actions .admin-trigger { padding-inline:6px!important; }
 }
+/* Shared desktop edges for navigation, server banner and event cards. */
+@media(min-width:1201px) {
+  body > .topbar .topbar-inner { width:min(1380px,calc(100% - 48px))!important; max-width:1380px!important; gap:10px!important; }
+  body > .topbar .brand-subtitle-link { display:none!important; }
+  body > .topbar .main-nav { gap:12px!important; }
+  body > .topbar .header-actions .admin-trigger { padding-inline:9px!important; }
+}
+body > .topbar { z-index:13000!important; }
+#mobileHeaderMenu { z-index:13001!important; }
+#adminModal.ob-owner-admin-open > .admin-panel { max-height:100%!important; }
