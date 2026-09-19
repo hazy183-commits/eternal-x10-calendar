@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { access, readFile } from 'node:fs/promises';
 
 test('PvP Advisor exposes matchup, profiles and Reborn effects', async () => {
   const html = await readFile(new URL('../public/pvp-advisor.html', import.meta.url), 'utf8');
@@ -149,5 +149,9 @@ test('subclass editor uses visual equipment and buff pickers', async () => {
   }
   for (const dance of ['Warrior','Inspiration','Mystic','Fire','Fury','Concentration','Light','Aqua Guard','Earth Guard','Vampire','Protection','Siren']) {
     assert.match(js, new RegExp(`Dance of ${dance}`));
+  }
+  for (const id of ['0265','0266','0268','0305','0363','0364','0272','0277','0309','0310']) {
+    await access(new URL(`../public/assets/interlude/buff-icons/skill${id}.png`, import.meta.url));
+    assert.match(js, new RegExp(`'${id}'`));
   }
 });
