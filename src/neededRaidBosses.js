@@ -1,3 +1,4 @@
+import { warsawLocalToIso } from './neededRaidBossWindow.js';
 const RAID_BOSSES = [
   { level: 60, name: 'Ancient Weird Drake' },
   { level: 60, name: 'Ghost of the Well Lidia' },
@@ -95,10 +96,11 @@ export function installNeededRaidBosses(supabase) {
       panel.className = 'zone-view';
       panel.dataset.zonePanel = 'needed-rb';
       panel.innerHTML = `
-        <div class="zone-section-head"><small>WSPÓLNE CELE</small><h3>POTRZEBNE RAID BOSSY</h3><p>Zgłoś zwykłego RB 60+, którego chcesz zabić. Wpis wygasa po 48 godzinach i nie trafia do głównego kalendarza.</p></div>
+        <div class="zone-section-head"><small>WSPÓLNE CELE</small><h3>POTRZEBNE RAID BOSSY</h3><p>Zgłoś zwykłego RB 60+, którego chcesz zabić. Wybierz datę i godzinę rozpoczęcia. Okno RB trwa 30 minut i jest widoczne w kalendarzu pod filtrem RB.</p></div>
         <div class="needed-rb-layout">
           <form id="neededRbForm" class="zone-card needed-rb-form">
             <label>Raid Boss<select id="neededRbBoss" required>${bossOptions()}</select></label>
+            <label class="needed-rb-window-field">Data i godzina rozpoczęcia RB<input id="neededRbWindowStart" name="window_start" type="datetime-local" required><small>Koniec okna: 30 minut po rozpoczęciu. Czas polski.</small></label>
             <label>Po co / uwagi<textarea id="neededRbNote" maxlength="180" placeholder="np. quest, drop, potrzebuję kill do questa"></textarea></label>
             <button class="needed-rb-primary" type="submit">+ DODAJ RB</button>
             <p id="neededRbMessage" class="zone-muted"></p>
@@ -110,7 +112,7 @@ export function installNeededRaidBosses(supabase) {
 
     const style = document.createElement('style');
     style.textContent = `
-      .needed-rb-layout{display:grid;grid-template-columns:340px 1fr;gap:16px}.needed-rb-form{align-self:start;display:grid;gap:12px}.needed-rb-form label{display:grid;gap:7px;color:#c5a565;font-size:10px;font-weight:900;letter-spacing:.04em}.needed-rb-form select,.needed-rb-form textarea{width:100%;box-sizing:border-box;padding:12px;border:1px solid #4a3b26;background:#080c0c;color:#ddd}.needed-rb-form textarea{min-height:92px;resize:vertical}.needed-rb-primary{padding:13px;border:1px solid #a27631;background:linear-gradient(#3a2811,#21160b);color:#efc56a;font-weight:900;cursor:pointer}.needed-rb-list{display:grid;gap:10px}.needed-rb-card{border:1px solid #3a3123;background:#0a0e0e;padding:14px}.needed-rb-head{display:flex;gap:12px;align-items:flex-start}.needed-rb-level{display:grid;place-items:center;min-width:58px;height:52px;border:1px solid #8b642c;background:#2b1d0d;color:#efc56a;font-weight:900}.needed-rb-copy{min-width:0;flex:1}.needed-rb-copy b{display:block;color:#eee5d6;font-size:14px}.needed-rb-copy small{display:block;color:#817c72;margin-top:4px}.needed-rb-note{margin:10px 0;color:#b7b0a3;font-size:11px}.needed-rb-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.needed-rb-help,.needed-rb-delete,.needed-rb-close{padding:8px 10px;border:1px solid #65502b;background:#13110c;color:#d8ad59;font-size:10px;font-weight:900;cursor:pointer}.needed-rb-help{border-color:#496044;background:#10190f;color:#b8d290}.needed-rb-help.active,.needed-rb-help:hover{border-color:#6d8c62;background:#172217;color:#d3e8b3}.needed-rb-delete{border-color:#60342c;color:#d98574}.needed-rb-helpers{color:#827d74;font-size:10px}.needed-rb-helper-names{margin-top:8px;color:#9b9488;font-size:10px}.needed-rb-empty{padding:28px;border:1px dashed #584526;color:#927d58;text-align:center}.needed-rb-expire{margin-left:auto;color:#9a8b70;font-size:9px;white-space:nowrap}@media(max-width:900px){.needed-rb-layout{grid-template-columns:1fr}.needed-rb-head{flex-wrap:wrap}.needed-rb-expire{margin-left:0;width:100%}}
+      .needed-rb-layout{display:grid;grid-template-columns:340px 1fr;gap:16px}.needed-rb-form{align-self:start;display:grid;gap:12px}.needed-rb-form label{display:grid;gap:7px;color:#c5a565;font-size:10px;font-weight:900;letter-spacing:.04em}.needed-rb-form input,.needed-rb-form select,.needed-rb-form input{min-width:0;color-scheme:dark}.needed-rb-window-field small{color:#a69b85;font-weight:400;line-height:1.5}.needed-rb-form textarea{width:100%;box-sizing:border-box;padding:12px;border:1px solid #4a3b26;background:#080c0c;color:#ddd}.needed-rb-form textarea{min-height:92px;resize:vertical}.needed-rb-primary{padding:13px;border:1px solid #a27631;background:linear-gradient(#3a2811,#21160b);color:#efc56a;font-weight:900;cursor:pointer}.needed-rb-list{display:grid;gap:10px}.needed-rb-card{border:1px solid #3a3123;background:#0a0e0e;padding:14px}.needed-rb-head{display:flex;gap:12px;align-items:flex-start}.needed-rb-level{display:grid;place-items:center;min-width:58px;height:52px;border:1px solid #8b642c;background:#2b1d0d;color:#efc56a;font-weight:900}.needed-rb-copy{min-width:0;flex:1}.needed-rb-copy b{display:block;color:#eee5d6;font-size:14px}.needed-rb-copy small{display:block;color:#817c72;margin-top:4px}.needed-rb-note{margin:10px 0;color:#b7b0a3;font-size:11px}.needed-rb-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.needed-rb-help,.needed-rb-delete,.needed-rb-close{padding:8px 10px;border:1px solid #65502b;background:#13110c;color:#d8ad59;font-size:10px;font-weight:900;cursor:pointer}.needed-rb-help{border-color:#496044;background:#10190f;color:#b8d290}.needed-rb-help.active,.needed-rb-help:hover{border-color:#6d8c62;background:#172217;color:#d3e8b3}.needed-rb-delete{border-color:#60342c;color:#d98574}.needed-rb-helpers{color:#827d74;font-size:10px}.needed-rb-helper-names{margin-top:8px;color:#9b9488;font-size:10px}.needed-rb-empty{padding:28px;border:1px dashed #584526;color:#927d58;text-align:center}.needed-rb-expire{margin-left:auto;color:#9a8b70;font-size:9px;white-space:nowrap}@media(max-width:900px){.needed-rb-layout{grid-template-columns:1fr}.needed-rb-head{flex-wrap:wrap}.needed-rb-expire{margin-left:0;width:100%}}
     `;
     document.head.appendChild(style);
 
@@ -172,12 +174,20 @@ export function installNeededRaidBosses(supabase) {
       const option = select.selectedOptions[0];
       const message = main.querySelector('#neededRbMessage');
       if (!select.value || !option?.dataset.level) { message.textContent = 'Wybierz Raid Bossa.'; return; }
+      const windowInput = main.querySelector('#neededRbWindowStart');
+      const windowStart = warsawLocalToIso(windowInput?.value);
+      if (!windowStart || new Date(windowStart).getTime() < Date.now() - 30 * 60000) {
+        message.textContent = 'Wybierz aktualną lub przyszłą datę i godzinę RB.';
+        windowInput?.focus();
+        return;
+      }
       message.textContent = 'Dodawanie…';
-      const payload = { user_id: currentUser.id, nickname: currentProfile.nickname || 'Gracz', boss_name: select.value, boss_level: Number(option.dataset.level), note: main.querySelector('#neededRbNote').value.trim() || null };
+      const payload = { window_start: windowStart, user_id: currentUser.id, nickname: currentProfile.nickname || 'Gracz', boss_name: select.value, boss_level: Number(option.dataset.level), note: main.querySelector('#neededRbNote').value.trim() || null };
       const { error } = await supabase.from('raid_boss_requests').insert(payload);
       if (error) { message.textContent = `Błąd: ${error.message}`; return; }
-      event.currentTarget.reset();
-      message.textContent = 'RB dodany. Zgłoszenie wygaśnie za 48 godzin.';
+      main.querySelector('#neededRbForm').reset();
+      message.textContent = 'RB dodany z wybraną datą i godziną. Okno trwa 30 minut.';
+      window.dispatchEvent(new Event('ob:needed-rb-changed'));
       await load();
     }
 

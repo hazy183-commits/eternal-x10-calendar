@@ -1,7 +1,7 @@
 const esc = (v = '') => String(v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const pad = n => String(n).padStart(2, '0');
 
-function warsawLocalToIso(value) {
+export function warsawLocalToIso(value) {
   if (!value) return null;
   const match = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/.exec(value);
   if (!match) return null;
@@ -162,12 +162,15 @@ export function installNeededRaidBossWindow(supabase) {
     const form = document.querySelector('#neededRbForm');
     if (!form || form.dataset.windowEnhanced === '1') return false;
     form.dataset.windowEnhanced = '1';
-    const bossLabel = form.querySelector('label');
-    const label = document.createElement('label');
-    label.className = 'needed-rb-window-field';
-    label.innerHTML = 'Rozpoczęcie okna RB <input id="neededRbWindowStart" type="datetime-local" required><small style="color:#81796c;font-weight:500">Koniec okna zostanie wyliczony automatycznie: +30 minut.</small>';
-    bossLabel?.insertAdjacentElement('afterend', label);
-    setDefaultWindow(label.querySelector('input'));
+    let input = form.querySelector('#neededRbWindowStart');
+    if (!input) {
+      const label = document.createElement('label');
+      label.className = 'needed-rb-window-field';
+      label.innerHTML = 'Data i godzina rozpoczęcia RB <input id="neededRbWindowStart" type="datetime-local" required><small>Koniec okna: 30 minut po rozpoczęciu. Czas polski.</small>';
+      form.querySelector('label')?.insertAdjacentElement('afterend', label);
+      input = label.querySelector('input');
+    }
+    setDefaultWindow(input);
     form.addEventListener('submit', handleSubmit, true);
     return true;
   }
@@ -221,8 +224,8 @@ export function installNeededRaidBossWindow(supabase) {
     const list = document.querySelector('#neededRbList');
     const calendar = document.querySelector('#dailyEvents');
     const filters = document.querySelector('#filters');
+    if (form) enhanceForm();
     if (!form || !list || !calendar || !filters) { setTimeout(waitForUi, 150); return; }
-    enhanceForm();
     removeEventFilter();
 
     let listTimer;
