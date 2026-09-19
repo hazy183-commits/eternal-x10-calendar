@@ -25,10 +25,9 @@ export function installMemberAuth(supabase) {
         <button type="button" data-member-tab="register">Zarejestruj się</button>
       </div>
       <form id="memberAuthForm" autocomplete="off">
-        <label>Nick w grze<input id="memberNick" autocomplete="off" maxlength="24" required placeholder="np. KiRY"></label>
-        <label>Hasło<input id="memberPassword" type="password" autocomplete="new-password" minlength="6" required placeholder="Minimum 6 znaków"></label>
+        <label>Nick w grze / login<input id="memberNick" autocomplete="username" maxlength="120" required placeholder="np. KiRY lub adres e-mail"></label>
+        <label>Hasło<input id="memberPassword" type="password" autocomplete="current-password" minlength="6" required placeholder="Minimum 6 znaków"></label>
         <button class="member-submit" type="submit">ZALOGUJ SIĘ</button>
-        <button class="member-admin-submit" id="memberAdminLogin" type="button">♛ ZALOGUJ JAKO ADMINISTRATOR</button>
         <p id="memberAuthFeedback"></p>
       </form>
     </div>`;
@@ -97,7 +96,7 @@ export function installMemberAuth(supabase) {
     .member-auth-box img{width:108px}.member-kicker{display:block;color:#d3a446;font:800 10px/1.4 Arial;letter-spacing:.19em}.member-auth-box h2{margin:8px 0;color:#efd089;font:700 28px Georgia}.member-auth-lead{color:#858178}
     .member-tabs{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #382e1e;margin:20px 0}.member-tabs button{padding:12px;border:0;background:none;color:#777;font-weight:800;cursor:pointer}.member-tabs .active{color:#e4b95e;border-bottom:2px solid #e4b95e}
     .member-auth-box label{display:block;text-align:left;margin:12px 0;color:#a29b8d;font-size:11px;font-weight:800}.member-auth-box input{box-sizing:border-box;width:100%;margin-top:7px;padding:13px;border:1px solid #42392b;background:#090d0d;color:#eee}
-    .member-submit,.member-admin-submit{width:100%;padding:14px;margin-top:10px;font-weight:900;cursor:pointer}.member-submit{border:1px solid #bd8d3c;background:linear-gradient(#3a2811,#20160b);color:#f0cf83}.member-admin-submit{border:1px solid #514229;background:#0b0e0e;color:#a99b7c;font-size:10px;letter-spacing:.08em}.member-admin-submit:hover{border-color:#9b7738;color:#e6bf69}#memberAuthFeedback{min-height:18px;color:#d6b46d;font-size:12px;line-height:1.45}
+    .member-submit{width:100%;padding:14px;margin-top:10px;font-weight:900;cursor:pointer;border:1px solid #bd8d3c;background:linear-gradient(#3a2811,#20160b);color:#f0cf83}#memberAuthFeedback{min-height:18px;color:#d6b46d;font-size:12px;line-height:1.45}
     .member-zone-box{position:relative;display:grid;grid-template-columns:230px 1fr;width:min(1420px,calc(100vw - 32px));height:min(850px,calc(100vh - 32px));overflow:hidden;border:1px solid #765721;background:linear-gradient(145deg,#091010,#060909);box-shadow:0 35px 110px #000;color:#d8d4ca}.member-zone-close{position:absolute;right:16px;top:10px;border:0;background:none;color:#8d887d;font-size:28px;cursor:pointer;z-index:5}
     .member-zone-side{display:flex;flex-direction:column;padding:22px 18px;border-right:1px solid #392c18;background:linear-gradient(180deg,#0d1212,#070a0a)}.member-zone-side img{width:100px;height:82px;object-fit:contain;margin:0 auto 8px}.member-zone-side>.member-kicker{text-align:center}.member-zone-side h3{text-align:center;margin:5px 0 22px;color:#f0cf7e;font:700 22px Georgia}.zone-nav{display:flex;gap:11px;align-items:center;margin:2px 0;padding:9px 11px;border:1px solid transparent;background:transparent;color:#999389;text-align:left;font-weight:800;cursor:pointer}.zone-nav:hover,.zone-nav.active{border-color:#665026;background:linear-gradient(90deg,#3a2812,#18140d);color:#efc56a}.zone-nav-icon{display:block;flex:0 0 30px;width:30px;height:30px;background-image:url("/images/ui-clan-zone-icons-v1.png");background-repeat:no-repeat;background-size:120px 90px;filter:saturate(.82) brightness(.82);transition:filter .15s ease,transform .15s ease}.zone-nav:hover .zone-nav-icon,.zone-nav.active .zone-nav-icon{filter:saturate(1.08) brightness(1.12) drop-shadow(0 0 5px rgba(220,168,66,.42));transform:translateY(-1px)}.zone-nav[data-zone-view="home"] .zone-nav-icon{background-position:0 0}.zone-nav[data-zone-view="events"] .zone-nav-icon{background-position:33.333% 0}.zone-nav[data-zone-view="signups"] .zone-nav-icon{background-position:66.667% 0}.zone-nav[data-zone-view="announcements"] .zone-nav-icon{background-position:100% 0}.zone-nav[data-zone-view="profile"] .zone-nav-icon{background-position:0 50%}.zone-nav[data-zone-view="recruitment"] .zone-nav-icon{background-position:33.333% 50%}.zone-nav[data-zone-view="content-editor"] .zone-nav-icon{background-position:66.667% 50%}.zone-nav[data-zone-view="members"] .zone-nav-icon{background-position:100% 50%}.zone-nav[data-zone-view="needed-rb"] .zone-nav-icon{background-position:0 100%}.zone-nav[data-zone-view="craft"] .zone-nav-icon{background-position:33.333% 100%}.zone-nav[data-zone-view="attendance"] .zone-nav-icon{background-position:66.667% 100%}.zone-side-spacer{flex:1}.zone-logout{padding:14px;border:1px solid #9a722f;background:#17130d;color:#e2b85f;font-weight:900;cursor:pointer}.zone-side-foot{padding:18px 10px 4px;margin-top:14px;border-top:1px solid #302719;color:#777168}.zone-side-foot small,.zone-side-foot b{display:block;font-size:9px;letter-spacing:.14em}
     .member-zone-main{overflow:auto;padding:28px 32px}.member-zone-main>header{display:flex;padding-bottom:20px;border-bottom:1px solid #352b1d}.member-zone-main>header h2{margin:4px 0 2px;color:#eee8dc;font:700 34px Georgia}.member-zone-main>header h2 strong{color:#efcb78}.member-zone-main>header p{margin:0;color:#8b877e}.member-zone-main>header em{display:block;margin-top:7px;color:#716d65;font-size:13px}.member-zone-main>header>small{margin-left:auto;margin-right:28px;height:max-content;padding:9px 12px;border:1px solid #745a29;color:#e0b75d;font-weight:900}.zone-view{display:none}.zone-view.active{display:block}
@@ -117,6 +116,7 @@ export function installMemberAuth(supabase) {
     mode = next;
     layer.querySelectorAll('[data-member-tab]').forEach((b) => b.classList.toggle('active', b.dataset.memberTab === next));
     submit.textContent = next === 'login' ? 'ZALOGUJ SIĘ' : 'UTWÓRZ KONTO';
+    password.autocomplete = next === 'login' ? 'current-password' : 'new-password';
     feedback.textContent = '';
     nick.value = '';
     password.value = '';
@@ -218,28 +218,28 @@ export function installMemberAuth(supabase) {
     lockPage();
   });
 
-  layer.querySelector('#memberAdminLogin').addEventListener('click', () => {
-    const modal = document.querySelector('#loginModal');
-    if (!modal) return;
-    modal.style.zIndex = '10005';
-    document.querySelector('#loginForm')?.reset();
-    modal.classList.add('open');
-    modal.setAttribute('aria-hidden', 'false');
-  });
-
   layer.querySelector('#memberAuthForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const nickname = nick.value.trim();
+    const identifier = nick.value.trim();
     const secret = password.value;
-    if (!/^[A-Za-z0-9_-]{2,24}$/.test(nickname)) {
-      feedback.textContent = 'Nick: 2–24 znaki, litery/cyfry oraz _ lub -.';
+    const isEmailIdentifier = identifier.includes('@');
+    const isValidNickname = /^[A-Za-z0-9_-]{2,24}$/.test(identifier);
+    const isValidEmail = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(identifier);
+
+    if (mode === 'register' && !isValidNickname) {
+      feedback.textContent = 'Przy rejestracji użyj nicku: 2–24 znaki, litery/cyfry oraz _ lub -.';
       return;
     }
+    if (mode === 'login' && !isValidNickname && !(isEmailIdentifier && isValidEmail)) {
+      feedback.textContent = 'Wpisz nick w grze albo poprawny adres e-mail administratora.';
+      return;
+    }
+
     submit.disabled = true;
     feedback.textContent = 'Proszę czekać…';
     try {
       if (mode === 'register') {
-        const { error } = await supabase.auth.signUp({ email: emailForNick(nickname), password: secret, options: { data: { nickname } } });
+        const { error } = await supabase.auth.signUp({ email: emailForNick(identifier), password: secret, options: { data: { nickname: identifier } } });
         if (error) throw error;
         await supabase.auth.signOut();
         feedback.textContent = 'Konto utworzone. Czeka na akceptację Ownera.';
@@ -248,21 +248,36 @@ export function installMemberAuth(supabase) {
         return;
       }
 
-      const { data, error } = await supabase.auth.signInWithPassword({ email: emailForNick(nickname), password: secret });
-      if (error) throw error;
+      const loginEmail = isEmailIdentifier ? identifier.toLowerCase() : emailForNick(identifier);
+      const { data, error } = await supabase.auth.signInWithPassword({ email: loginEmail, password: secret });
+      if (error || !data?.session) throw error || new Error('Logowanie nie zwróciło aktywnej sesji.');
+
       const profile = await getProfile(data.user);
-      if (!profile || profile.status !== 'approved') {
+      const role = String(profile?.role || '').toLowerCase();
+      const isAdminAccount = !isMemberEmail(data.user?.email || '') || role === 'owner' || role === 'admin';
+
+      if (profile?.removed_at || profile?.status === 'blocked') {
         await supabase.auth.signOut();
-        feedback.textContent = profile?.status === 'blocked' ? 'To konto jest zablokowane.' : 'Konto czeka na akceptację Ownera.';
+        feedback.textContent = 'To konto jest zablokowane.';
         return;
       }
+      if (!isAdminAccount && (!profile || profile.status !== 'approved')) {
+        await supabase.auth.signOut();
+        feedback.textContent = 'Konto czeka na akceptację Ownera.';
+        return;
+      }
+
       currentProfile = profile;
       unlockPage();
       updateAdminVisibility(data.session, profile);
-      setTimeout(openZone, 150);
+      setTimeout(() => {
+        const adminTrigger = document.querySelector('#adminTrigger');
+        if (isAdminAccount && adminTrigger && !adminTrigger.hidden) adminTrigger.click();
+        else openZone();
+      }, 350);
     } catch (err) {
       const msg = String(err?.message || '');
-      feedback.textContent = msg.includes('Invalid login') ? 'Nieprawidłowy nick lub hasło.' : msg.includes('already registered') ? 'Ten nick jest już zajęty.' : 'Nie udało się wykonać operacji.';
+      feedback.textContent = msg.includes('Invalid login') ? 'Nieprawidłowy nick/e-mail lub hasło.' : msg.includes('already registered') ? 'Ten nick jest już zajęty.' : 'Nie udało się wykonać operacji.';
     } finally {
       submit.disabled = false;
     }
