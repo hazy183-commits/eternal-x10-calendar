@@ -59,3 +59,8 @@ test('clan Discord guidance is encoded for documented classes', async () => {
   assert.match(js, /zdejmij Arcane Protection/);
   assert.match(js, /Magnus jest z reguły wybierany zamiast CoV/);
 });
+
+test('PvP presets omit Bless the Soul because Eternal has MP potions', async () => {
+  const js = await readFile(new URL('../public/pvp-profile-v2.js', import.meta.url), 'utf8');
+  assert.doesNotMatch(js, /Bless the Soul/);
+});
