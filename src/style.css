@@ -381,4 +381,7 @@ body:before { content:""; position:fixed; z-index:-1; inset:0; background:radial
 .calendar-toolbar > .filters {
   display:none;
 }
+@media(min-width:901px) {
+  .pvp-hero-panel { margin-top:160px; }
+}
 
