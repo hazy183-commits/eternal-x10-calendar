@@ -34,7 +34,7 @@ function daysInMonth(year, monthIndex) {
 
 function serverDateTimeToLocal(dateKey, time) {
   const date = parseDateKey(dateKey);
-  const match = /^(\\d{2}):(\\d{2})$/.exec(String(time ?? ''));
+  const match = /^(\d{2}):(\d{2})$/.exec(String(time ?? ''));
   if (!date || !match) return null;
   const shifted = new Date(Date.UTC(
     date.getUTCFullYear(),
@@ -44,8 +44,8 @@ function serverDateTimeToLocal(dateKey, time) {
     Number(match[2]),
   ) + SIEGE_SERVER_OFFSET_MINUTES * 60000);
   return {
-    date: \`${shifted.getUTCFullYear()}-${pad(shifted.getUTCMonth() + 1)}-${pad(shifted.getUTCDate())}\`,
-    time: \`${pad(shifted.getUTCHours())}:${pad(shifted.getUTCMinutes())}\`,
+    date: `${shifted.getUTCFullYear()}-${pad(shifted.getUTCMonth() + 1)}-${pad(shifted.getUTCDate())}`,
+    time: `${pad(shifted.getUTCHours())}:${pad(shifted.getUTCMinutes())}`,
   };
 }
 
