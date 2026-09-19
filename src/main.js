@@ -607,7 +607,7 @@ function openSiegeDialog(castle) {
   const time = row?.reference_time || '18:00';
   $('#siegeScheduleCastle').value = castle;
   $('#siegeScheduleDialogTitle').textContent = `Ustaw termin Siege: ${castle}`;
-  $('#siegeScheduleDialogHint').textContent = 'Podaj godzinę z zegara serwera. Na stronie zostanie pokazana godzina lokalna (+2 h). Kolejne miesiące zostaną wyliczone automatycznie.';
+  $('#siegeScheduleDialogHint').textContent = 'Podaj godzinę z zegara serwera. Na stronie zostanie pokazana godzina polska (+2 h latem / +1 h zimą). Kolejne miesiące zostaną wyliczone automatycznie.';
   $('#siegeScheduleDate').value = date;
   $('#siegeScheduleTime').value = time;
   $('#siegeScheduleFeedback').textContent = '';
