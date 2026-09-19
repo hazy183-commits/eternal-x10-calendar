@@ -76,8 +76,8 @@ export function renderPvpSidebar(root, now = new Date()) {
     .sort((a, b) => pvpTiming(a).registrationStart - pvpTiming(b).registrationStart);
   const signature = events.map(({ id }) => id).join('|');
   if (sidebarSignatures.get(root) !== signature) {
-    root.innerHTML = events.map((event) => `<article class="pvp-sidebar-event" data-pvp-occurrence="${event.id}">
-      <div class="pvp-sidebar-main"><span class="pvp-sidebar-icon" aria-hidden="true">${PVP_ICONS[event.pvpId] ?? '✦'}</span><div><h3>${event.name}</h3><p class="pvp-sidebar-date" data-pvp-date></p><p class="pvp-sidebar-ranges"><span>Rejestracja <b data-pvp-registration></b></span><span>Event <b data-pvp-event></b></span></p></div></div>
+    root.innerHTML = events.map((event, index) => `<article class="pvp-sidebar-event${index === 0 ? ' pvp-next' : ''}" data-pvp-occurrence="${event.id}">
+      <div class="pvp-sidebar-main"><span class="pvp-sidebar-icon" aria-hidden="true">${PVP_ICONS[event.pvpId] ?? '✦'}</span><div class="pvp-sidebar-details"><div class="pvp-sidebar-title"><h3>${event.name}</h3>${index === 0 ? '<span class="pvp-next-badge">NEXT</span>' : ''}</div><p class="pvp-sidebar-date" data-pvp-date></p><p class="pvp-sidebar-ranges"><span>Rejestracja <b data-pvp-registration></b></span><span>Event <b data-pvp-event></b></span></p></div></div>
       <div class="pvp-sidebar-meta"><p class="pvp-sidebar-status" data-pvp-status></p><p class="pvp-sidebar-countdown" data-pvp-countdown></p></div>
     </article>`).join('');
     sidebarSignatures.set(root, signature);
@@ -93,3 +93,4 @@ export function renderPvpSidebar(root, now = new Date()) {
 if (typeof window !== 'undefined') {
   setTimeout(() => import('./publicCalendarSignups.js').catch((error) => console.warn('Signup viewer disabled', error)), 1800);
 }
+
