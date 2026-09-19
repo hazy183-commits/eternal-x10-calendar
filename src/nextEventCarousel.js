@@ -23,7 +23,7 @@ function installMobileHeaderMenu() {
       <a href="#top" data-mobile-menu-link>⌂ <span>Strona główna</span></a>
       <a href="#calendar" data-mobile-menu-link>▣ <span>Kalendarz</span></a>
       <a href="#guides" data-mobile-menu-link>♜ <span>Poradniki / Bossowie</span></a>
-      <a href="#community" data-mobile-menu-link>◆ <span>Community</span></a>
+      <button type="button" data-mobile-action="craft">⚒ <span>Craft kalkulator</span></button>
       <button type="button" data-mobile-action="clan">♛ <span>Strefa klanu</span></button>
       <button type="button" data-mobile-action="admin">✦ <span>Panel administratora</span></button>
       <a href="https://discord.gg/HtTrJpp7K" target="_blank" rel="noopener noreferrer">◉ <span>Discord</span></a>
@@ -77,6 +77,7 @@ function installMobileHeaderMenu() {
     close();
     if (action === 'admin') document.querySelector('#adminTrigger')?.click();
     if (action === 'clan') document.querySelector('.member-auth-entry:not(.logout)')?.click();
+    if (action === 'craft') document.querySelector('.main-nav .craft-home-open')?.click();
     if (action === 'logout') document.querySelector('.member-auth-entry.logout')?.click();
   });
   document.addEventListener('keydown', (event) => { if (event.key === 'Escape') close(); });

@@ -195,16 +195,6 @@ function ensureUiShell() {
   const main = layer?.querySelector('.member-zone-main');
   if (!layer || !side || !main) return null;
 
-  if (!side.querySelector('[data-zone-view="craft"]')) {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'zone-nav';
-    button.dataset.zoneView = 'craft';
-    button.innerHTML = '⚒ <span>Craft</span>';
-    const spacer = side.querySelector('.zone-side-spacer');
-    side.insertBefore(button, spacer || null);
-  }
-
   let panel = main.querySelector('[data-zone-panel="craft"]');
   if (!panel) {
     panel = document.createElement('section');
@@ -315,12 +305,6 @@ export function installCraftPlannerUi(supabase) {
       loading = false;
     }
   };
-
-  ui.side.addEventListener('click', event => {
-    const button = event.target.closest('[data-zone-view="craft"]');
-    if (!button) return;
-    setTimeout(() => refresh(), 0);
-  });
 
   window.addEventListener('orzel:craft-workspace-opened', () => refresh());
 
