@@ -104,3 +104,20 @@ test('buff cards use locally stored Lineage 2 skill icons', async () => {
     assert.match(js, new RegExp(`['"]${buff}['"]:['"]\\d+['"]`));
   }
 });
+
+test('legacy inventory checkbox grid is removed in favor of full setup editor', async () => {
+  const html = await readFile(new URL('../public/pvp-advisor.html', import.meta.url), 'utf8');
+  const js = await readFile(new URL('../public/pvp-advisor.js', import.meta.url), 'utf8');
+  assert.doesNotMatch(html, /id="inventoryGrid"/);
+  assert.doesNotMatch(js, /data-item=/);
+});
+
+test('member profile supports multiple loadouts and shareable buff presets', async () => {
+  const js = await readFile(new URL('../src/memberBuildProfiles.js', import.meta.url), 'utf8');
+  const sql = await readFile(new URL('../supabase/migrations/20260919120000_player_loadouts_and_buff_presets.sql', import.meta.url), 'utf8');
+  assert.match(js, /DODAJ SUBCLASSĘ/);
+  assert.match(js, /fullEpic/);
+  assert.match(js, /SETUPY SPOŁECZNOŚCI/);
+  assert.match(sql, /enable row level security/);
+  assert.match(sql, /auth\.uid\(\)\) = user_id or is_shared/);
+});
