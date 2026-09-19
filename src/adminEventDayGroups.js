@@ -53,6 +53,7 @@ export function installAdminEventDayGroups(supabase){
   document.head.appendChild(style);
 
   let busy=false;
+  let renderedSignature='';
   function refresh(){
     const list=document.querySelector('#adminEventList');
     if(!list||busy)return;
@@ -66,6 +67,11 @@ export function installAdminEventDayGroups(supabase){
       else if(sort==='name')rows=[...rows].sort((a,b)=>String(a.name||'').localeCompare(String(b.name||''),'pl'));
       else rows=[...rows].sort((a,b)=>new Date(a.startAt||`${eventDate(a)}T${eventTime(a)}:00`)-new Date(b.startAt||`${eventDate(b)}T${eventTime(b)}:00`));
 
+      const nextSignature=rows.map((e)=>[
+        e.id,e.name,e.boss,e.type,eventDate(e),eventTime(e),e.location
+      ].map((value)=>String(value??'')).join('\u0001')).join('\u0002');
+      if(nextSignature===renderedSignature)return;
+
       const groups=new Map();
       for(const e of rows){const date=eventDate(e);if(!groups.has(date))groups.set(date,[]);groups.get(date).push(e)}
       const fragment=document.createDocumentFragment();
@@ -76,6 +82,7 @@ export function installAdminEventDayGroups(supabase){
         fragment.appendChild(section);
       }
       list.replaceChildren(fragment);
+      renderedSignature=nextSignature;
       refreshBossArtwork(list);
       const count=document.querySelector('#adminCount');if(count)count.textContent=rows.length;
     }finally{busy=false}
