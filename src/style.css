@@ -355,3 +355,13 @@ body:before { content:""; position:fixed; z-index:-1; inset:0; background:radial
 .next-start-time{display:flex;align-items:center;gap:11px;width:max-content;max-width:100%;margin:13px 0 0;padding:7px 11px 7px 10px;border-left:2px solid #b98a3c;background:linear-gradient(90deg,#241a0eaa,transparent);color:#b9ad98;font-size:9px;font-weight:900;letter-spacing:.12em;white-space:nowrap}
 .next-start-time[hidden]{display:none}
 .next-start-time b{color:#f0c96f;font:700 18px Cinzel,Georgia,serif;letter-spacing:.04em;font-variant-numeric:tabular-nums;text-shadow:0 0 10px #d4a64d38}
+
+.header-actions > .admin-trigger {
+  height:38px;
+  min-height:38px;
+  box-sizing:border-box;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding-block:0;
+}
