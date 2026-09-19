@@ -1,0 +1,49 @@
+/* Compact opening view: normal document flow, independent event content. */
+#top > .hero { position:relative; display:grid!important; grid-template-columns:minmax(0,1fr) auto; align-content:center; align-items:center!important; gap:6px 24px; min-height:118px!important; padding:20px 0!important; margin-bottom:16px; text-align:left!important; }
+#top > .hero h1 { width:auto!important; max-width:100%; margin:0!important; font-size:clamp(28px,3vw,44px)!important; line-height:1.15!important; text-align:left!important; }
+#top > .hero h1 span { display:inline!important; width:auto!important; margin:0!important; font-size:1em!important; letter-spacing:.04em; }
+#top > .hero .hero-subtitle { grid-column:1; width:auto!important; margin:0!important; padding:0; font-size:11px!important; letter-spacing:.24em; text-align:left!important; }
+#top > .hero .hero-tagline { grid-column:2; grid-row:1 / span 2; width:280px!important; margin:0!important; font-size:10px!important; text-align:right!important; }
+#top > .focus-section { display:grid!important; grid-template-columns:minmax(360px,420px) minmax(0,1fr); grid-template-rows:auto minmax(0,1fr); grid-template-areas:'pvp heading' 'pvp card'; gap:10px 20px; margin-top:0!important; padding:0!important; align-items:stretch; }
+#top .pvp-hero-panel { width:100%!important; min-height:0; margin:0!important; padding:15px; align-self:stretch; }
+#top .pvp-hero-heading { margin-bottom:8px; padding-bottom:10px; }
+#top #pvpSidebarEvents { gap:4px; }
+#top .pvp-sidebar-event { padding:9px 8px!important; gap:8px; grid-template-columns:minmax(0,1fr) 88px; }
+#top .pvp-sidebar-event h3 { font-size:.8125rem; }
+#top .pvp-sidebar-ranges { margin-top:5px; gap:2px; }
+#top .pvp-sidebar-main { gap:7px; }
+#top .pvp-sidebar-countdown { font-size:.9375rem; }
+#top .focus-section > .section-heading { position:static; margin:0!important; align-self:center; }
+#top .next-event-card { display:grid!important; grid-template-columns:40% minmax(0,1fr); grid-template-rows:1fr auto; min-height:350px; align-self:stretch; }
+#top .next-event-card .event-art-large { position:absolute!important; inset:0 58% 0 0!important; width:auto!important; height:100%!important; min-height:0!important; background-size:cover!important; background-position:center!important; }
+#top .next-event-card .event-art-large:after { background:linear-gradient(90deg,transparent 65%,#080d0e),linear-gradient(0deg,#080d0e66,transparent 55%); }
+#top .next-event-card .next-event-content { grid-column:2; padding:22px 22px 10px!important; align-self:center; min-width:0; }
+#top .next-event-card .next-event-content h3 { font-size:clamp(24px,2.4vw,34px)!important; line-height:1.2; margin:9px 0; overflow-wrap:anywhere; }
+#top .next-event-card .next-event-content p { font-size:13px; line-height:1.5; }
+#top .next-event-card .next-description { margin-top:10px; }
+#top .next-start-time { flex-wrap:wrap; white-space:normal; gap:5px 10px; margin-top:10px; }
+#top .next-event-card .countdown-block { grid-column:2; min-width:0!important; padding:10px 22px 62px!important; border:0; text-align:left; }
+#top .countdown { justify-content:flex-start; font-size:clamp(24px,2.8vw,38px)!important; gap:5px; }
+#top .countdown-block small { max-width:260px; }
+@media(max-width:1100px) and (min-width:901px) {
+  #top > .focus-section { grid-template-columns:370px minmax(0,1fr); gap:10px 14px; }
+  #top .next-event-card { grid-template-columns:30% minmax(0,1fr); }
+  #top .next-event-card .event-art-large { right:68%!important; }
+}
+@media(max-width:900px) {
+  #top > .hero { grid-template-columns:1fr; min-height:100px!important; padding:14px 0!important; gap:5px; margin-bottom:10px; }
+  #top > .hero .hero-tagline { grid-column:1; grid-row:auto; width:auto!important; text-align:left!important; font-size:8px!important; }
+  #top > .focus-section { grid-template-columns:minmax(0,1fr); grid-template-rows:auto auto auto; grid-template-areas:'heading' 'card' 'pvp'; gap:10px; }
+  #top .next-event-card { min-height:300px; }
+  #top .next-event-card .next-event-content { padding:18px 14px 8px!important; }
+  #top .next-event-card .countdown-block { padding:8px 14px 60px!important; }
+  #top .countdown { font-size:24px!important; gap:3px; }
+  #top .pvp-hero-panel { padding:12px; }
+}
+@media(max-width:440px) {
+  #top .next-event-card { grid-template-columns:28% minmax(0,1fr); }
+  #top .next-event-card .event-art-large { right:70%!important; }
+  #top .next-event-card .next-event-content h3 { font-size:24px!important; }
+  #top .pvp-sidebar-event { grid-template-columns:minmax(0,1fr); }
+}
+#top > .hero h1, #top > .hero .hero-subtitle, #top > .hero .hero-tagline { transform:none!important; }
