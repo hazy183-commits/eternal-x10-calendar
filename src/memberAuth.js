@@ -224,7 +224,7 @@ export function installMemberAuth(supabase) {
     const secret = password.value;
     const isEmailIdentifier = identifier.includes('@');
     const isValidNickname = /^[A-Za-z0-9_-]{2,24}$/.test(identifier);
-    const isValidEmail = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(identifier);
+    const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(identifier);
 
     if (mode === 'register' && !isValidNickname) {
       feedback.textContent = 'Przy rejestracji użyj nicku: 2–24 znaki, litery/cyfry oraz _ lub -.';
