@@ -265,7 +265,8 @@ export function installClanPolls(supabase) {
           return;
         }
         const endsValue = editor.querySelector('#obPollEndsAt').value;
-        const endsAt = endsValue ? new Date(endsValue).toISOString() : null;
+        const parsedEndsAt = endsValue ? new Date(endsValue) : null;
+        const endsAt = parsedEndsAt && Number.isFinite(parsedEndsAt.getTime()) ? parsedEndsAt.toISOString() : null;
         if (endsValue && !endsAt) {
           adminFeedback('Podaj poprawną datę zakończenia.');
           return;
