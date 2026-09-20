@@ -1,3 +1,4 @@
+import { createCalendarNavigation } from './calendarNavigation.js';
 import './persistentHeader.js';
 import { publishClanEventSources } from './clanEventFeed.js';
 import { SupabaseEventRepository } from './supabaseEvents.js';
@@ -109,12 +110,21 @@ function calendarEventsFor(day) {
   return sorted(withPvpEvents(withOlympiadEvents(events, new Date(), dateKey(day)), new Date(), dateKey(day))
     .filter(event => !event.isPvpSchedule && event.date === dateKey(day)));
 }
+let calendarNavigation = null;
+let calendarRangeStart = null;
+let calendarRangeLength = 29;
 function renderCalendarWeek() {
-  const start = new Date(selectedDay);
-  start.setDate(start.getDate() - ((start.getDay() + 6) % 7));
-  $('#calendarWeek').innerHTML = Array.from({ length: 7 }, (_, index) => {
-    const day = new Date(start);
-    day.setDate(start.getDate() + index);
+  const previous = calendarNavigation?.beforeRender();
+  const end = calendarRangeStart && new Date(calendarRangeStart);
+  if (end) end.setDate(end.getDate() + calendarRangeLength - 1);
+  if (!calendarRangeStart || dateKey(selectedDay) < dateKey(calendarRangeStart) || dateKey(selectedDay) > dateKey(end)) {
+    calendarRangeStart = new Date(selectedDay);
+    calendarRangeStart.setDate(calendarRangeStart.getDate() - 14);
+    calendarRangeLength = 29;
+  }
+  $('#calendarWeek').innerHTML = Array.from({ length: calendarRangeLength }, (_, index) => {
+    const day = new Date(calendarRangeStart);
+    day.setDate(calendarRangeStart.getDate() + index);
     const key = dateKey(day);
     const count = calendarEventsFor(day).length;
     const isToday = key === dateKey(new Date());
@@ -122,6 +132,7 @@ function renderCalendarWeek() {
     const word = count === 1 ? 'wydarzenie' : count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 12 || count % 100 > 14) ? 'wydarzenia' : 'wydarzeń';
     return `<button type="button" class="calendar-day${selected ? ' selected' : ''}${isToday ? ' today' : ''}" data-calendar-day="${key}" aria-pressed="${selected}" aria-label="${formatDate(day)}, ${count} ${word}"><span>${isToday ? 'Dzisiaj' : formatDate(day, { weekday: 'short' })}</span><b>${formatDate(day, { day: 'numeric', month: 'short' })}</b><small>${count} ${word}</small></button>`;
   }).join('');
+  calendarNavigation?.afterRender(previous, dateKey(selectedDay));
 }
 let calendarClockSignature = '';
 function calendarClockKey() {
@@ -693,15 +704,21 @@ async function initializeApp() {
       if (formMode === 'new') automaticDuration = false;
     });
     $('#filters')?.addEventListener('click', (event) => { if (!event.target.dataset.filter) return; filter = event.target.dataset.filter; renderFilters(); renderCalendar(); });
+    calendarNavigation = createCalendarNavigation($('#calendarWeek'), direction => {
+      if (direction < 0) calendarRangeStart.setDate(calendarRangeStart.getDate() - 7);
+      calendarRangeLength += 7;
+      renderCalendarWeek();
+    });
+    renderCalendar();
     $('#calendarWeek').addEventListener('click', (event) => {
       const button = event.target.closest('[data-calendar-day]');
       if (!button) return;
       selectedDay = new Date(button.dataset.calendarDay + 'T12:00:00');
       renderCalendar();
     });
-    $('#previousDay').addEventListener('click', () => { selectedDay.setDate(selectedDay.getDate() - 1); renderCalendar(); });
-    $('#nextDay').addEventListener('click', () => { selectedDay.setDate(selectedDay.getDate() + 1); renderCalendar(); });
-    $('#todayButton').addEventListener('click', () => { selectedDay = new Date(); renderCalendar(); });
+    $('#previousDay').addEventListener('click', () => { calendarNavigation.scroll(-1); });
+    $('#nextDay').addEventListener('click', () => { calendarNavigation.scroll(1); });
+    $('#todayButton').addEventListener('click', () => { selectedDay = new Date(); renderCalendar(); calendarNavigation.centerDay(dateKey(selectedDay), true); });
     $('#adminTrigger').addEventListener('click', openAdmin);
     $('#adminAdd').addEventListener('click', openNewEvent);
     $('#quickAdd')?.addEventListener('click', openNewEvent);

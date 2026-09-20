@@ -2,12 +2,12 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { app } from './publicAppHarness.js';
 
-test('week spans month boundary, counts all events and respects selected-day filters', t => {
+test('day strip spans month boundary, counts all events and respects selected-day filters', t => {
   const { run, element } = app(t, '2026-09-30T10:00:00Z');
   run(`events = [{id:'raid',name:'Raid',type:'RB',date:'2026-10-01',time:'18:00',duration:60}];
     selectedDay = new Date('2026-10-01T12:00:00'); filter = 'RB'; renderCalendar();`);
   const week = element('#calendarWeek').innerHTML;
-  assert.equal((week.match(/data-calendar-day=/g) || []).length, 7);
+  assert.equal((week.match(/data-calendar-day=/g) || []).length, 29);
   assert.match(week, /data-calendar-day="2026-09-28"/);
   assert.match(week, /data-calendar-day="2026-10-04"/);
   assert.match(week, /data-calendar-day="2026-10-01" aria-pressed="true" aria-label="[^"]*2 wydarzenia"/);
