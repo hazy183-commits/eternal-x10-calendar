@@ -385,3 +385,13 @@ body:before { content:""; position:fixed; z-index:-1; inset:0; background:radial
   .pvp-hero-panel { margin-top:160px; }
 }
 
+
+/* Compact desktop header: keep the brand, navigation and actions visually connected. */
+@media (min-width:1200px) {
+  .topbar-inner {
+    width: min(1260px, calc(100% - 48px));
+    gap: 20px;
+  }
+  .main-nav { gap: 22px; }
+  .header-actions { gap: 12px; }
+}
