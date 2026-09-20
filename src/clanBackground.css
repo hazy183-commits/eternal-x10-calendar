@@ -1,0 +1,36 @@
+/* Isolated artwork layer: remove this stylesheet to restore the previous theme. */
+:root {
+  --clan-background: linear-gradient(rgba(3, 6, 7, .25), rgba(3, 6, 7, .55)),
+    url('/images/clan-background-v1.jpg');
+}
+
+body::before {
+  background-image: var(--clan-background);
+  background-position: center top;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.page-glow {
+  background: linear-gradient(90deg, transparent, rgba(3, 6, 7, .22) 35%, rgba(3, 6, 7, .22) 65%, transparent);
+}
+
+/* The login and member areas have their own full-screen backdrops. */
+html body #memberAuthLayer,
+html body #memberZoneLayer {
+  background: var(--clan-background) center top / cover no-repeat !important;
+  backdrop-filter: none !important;
+}
+
+@media (max-width: 700px) {
+  :root {
+    --clan-background: linear-gradient(rgba(3, 6, 7, .55), rgba(3, 6, 7, .75)),
+      url('/images/clan-background-v1.jpg');
+  }
+
+  body::before,
+  html body #memberAuthLayer,
+  html body #memberZoneLayer {
+    background-position: 24% top;
+  }
+}
