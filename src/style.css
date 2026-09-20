@@ -395,3 +395,17 @@ body:before { content:""; position:fixed; z-index:-1; inset:0; background:radial
   .main-nav { gap: 22px; }
   .header-actions { gap: 12px; }
 }
+
+/* Stronger desktop header grouping: remove the large gaps between header groups. */
+@media (min-width:1200px) {
+  .topbar-inner {
+    width: min(1180px, calc(100% - 48px));
+    gap: 0;
+    justify-content: space-between;
+  }
+  .main-nav {
+    margin: 0;
+    gap: 24px;
+  }
+  .header-actions { gap: 12px; }
+}
