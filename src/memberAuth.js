@@ -25,7 +25,7 @@ export function installMemberAuth(supabase) {
         <button type="button" data-member-tab="register">Zarejestruj się</button>
       </div>
       <form id="memberAuthForm" autocomplete="off">
-        <label>Nick w grze / login<input id="memberNick" autocomplete="username" maxlength="120" required placeholder="np. KiRY lub adres e-mail"></label>
+        <label>Nick w grze / login<input id="memberNick" autocomplete="username" maxlength="120" required placeholder="np. KiRY"></label>
         <label>Hasło<input id="memberPassword" type="password" autocomplete="current-password" minlength="6" required placeholder="Minimum 6 znaków"></label>
         <button class="member-submit" type="submit">ZALOGUJ SIĘ</button>
         <p id="memberAuthFeedback"></p>
@@ -231,7 +231,7 @@ export function installMemberAuth(supabase) {
       return;
     }
     if (mode === 'login' && !isValidNickname && !(isEmailIdentifier && isValidEmail)) {
-      feedback.textContent = 'Wpisz nick w grze albo poprawny adres e-mail administratora.';
+      feedback.textContent = 'Wpisz poprawny nick w grze lub login.';
       return;
     }
 
@@ -277,7 +277,7 @@ export function installMemberAuth(supabase) {
       }, 350);
     } catch (err) {
       const msg = String(err?.message || '');
-      feedback.textContent = msg.includes('Invalid login') ? 'Nieprawidłowy nick/e-mail lub hasło.' : msg.includes('already registered') ? 'Ten nick jest już zajęty.' : 'Nie udało się wykonać operacji.';
+      feedback.textContent = msg.includes('Invalid login') ? 'Nieprawidłowy login lub hasło.' : msg.includes('already registered') ? 'Ten nick jest już zajęty.' : 'Nie udało się wykonać operacji.';
     } finally {
       submit.disabled = false;
     }
