@@ -53,7 +53,7 @@ export function bossArtworkUrl(name = '') {
   const clanHallUrl = clanHallArtwork.get(key) ?? [...clanHallArtwork.entries()].find(([hall]) => key.includes(hall))?.[1];
   if (clanHallUrl) return clanHallUrl;
   const castleSlug = [...castleArtwork.entries()].find(([castle]) => key.includes(castle))?.[1];
-  if (castleSlug) return `${import.meta.env.BASE_URL}images/castles/${castleSlug}.jpg`;
+  if (castleSlug) return `${import.meta.env.BASE_URL}images/castles/${castleSlug}.jpg?v=20260920`;
   return eventArtwork[key] ?? '';
 }
 
