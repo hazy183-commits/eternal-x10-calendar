@@ -26,6 +26,64 @@ const isOpen = (poll, now = Date.now()) => {
   return poll.is_active && startsAt <= now && (endsAt === null || endsAt > now);
 };
 
+
+const MENU_GROUPS = [
+  { key: 'planning', label: 'PLANOWANIE', views: ['events', 'signups', 'polls'], icon: '◈', open: true },
+  { key: 'clan', label: 'KLAN', views: ['announcements', 'profile', 'members', 'recruitment', 'attendance'], icon: '♜', open: false },
+  { key: 'tools', label: 'NARZĘDZIA', views: ['needed-rb', 'craft'], icon: '⚒', open: false },
+  { key: 'admin', label: 'ADMINISTRACJA', views: ['content-editor'], icon: '✦', open: false },
+];
+
+function organizeClanMenu(zone, side) {
+  const viewToGroup = new Map(MENU_GROUPS.flatMap(group => group.views.map(view => [view, group.key])));
+  const groups = new Map();
+
+  for (const definition of MENU_GROUPS) {
+    let wrapper = side.querySelector('[data-ob-menu-group="' + definition.key + '"]');
+    if (!wrapper) {
+      wrapper = document.createElement('div');
+      wrapper.className = 'ob-menu-group';
+      wrapper.dataset.obMenuGroup = definition.key;
+      wrapper.innerHTML = '<button type="button" class="ob-menu-group-trigger" aria-expanded="' + String(definition.open) + '"><i class="ob-menu-group-icon" aria-hidden="true">' + definition.icon + '</i><span>' + definition.label + '</span><b aria-hidden="true">⌄</b></button><div class="ob-menu-group-items"></div>';
+      wrapper.querySelector('.ob-menu-group-trigger').addEventListener('click', () => {
+        const open = wrapper.classList.toggle('is-open');
+        wrapper.querySelector('.ob-menu-group-trigger')?.setAttribute('aria-expanded', String(open));
+      });
+      wrapper.classList.toggle('is-open', definition.open);
+      groups.set(definition.key, wrapper);
+      const anchor = side.querySelector('.zone-side-spacer') || side.querySelector('.zone-logout');
+      side.insertBefore(wrapper, anchor || null);
+    } else {
+      groups.set(definition.key, wrapper);
+    }
+  }
+
+  const directNavs = [...side.children].filter(child => child.matches?.('.zone-nav'));
+  for (const nav of directNavs) {
+    const groupKey = viewToGroup.get(nav.dataset.zoneView);
+    if (!groupKey) continue;
+    groups.get(groupKey)?.querySelector('.ob-menu-group-items')?.appendChild(nav);
+  }
+
+  for (const definition of MENU_GROUPS) {
+    const wrapper = groups.get(definition.key);
+    const items = wrapper?.querySelector('.ob-menu-group-items');
+    if (!wrapper || !items) continue;
+    const visible = [...items.children].some(item => !item.hidden);
+    wrapper.hidden = !visible;
+  }
+
+  const activePanel = zone.querySelector('.zone-view.active[data-zone-panel]');
+  const activeGroup = viewToGroup.get(activePanel?.dataset.zonePanel);
+  if (activeGroup) {
+    const wrapper = groups.get(activeGroup);
+    if (wrapper && !wrapper.classList.contains('is-open')) {
+      wrapper.classList.add('is-open');
+      wrapper.querySelector('.ob-menu-group-trigger')?.setAttribute('aria-expanded', 'true');
+    }
+  }
+}
+
 export function installClanPolls(supabase) {
   if (!supabase || window.__obClanPollsInstalled) return;
   window.__obClanPollsInstalled = true;
@@ -58,6 +116,17 @@ export function installClanPolls(supabase) {
 
     const style = document.createElement('style');
     style.textContent = [
+      '.ob-menu-group{display:grid;gap:3px;margin:3px 0}',
+      '.ob-menu-group-trigger{display:flex;align-items:center;gap:9px;width:100%;padding:9px 11px;border:1px solid #3d3220;background:linear-gradient(90deg,#17140e,#0d1010);color:#d8b05e;text-align:left;font-size:10px;font-weight:900;letter-spacing:.08em;cursor:pointer}',
+      '.ob-menu-group-trigger:hover,.ob-menu-group.is-open>.ob-menu-group-trigger{border-color:#80612d;background:linear-gradient(90deg,#3a2812,#17140d);color:#f0cf7e}',
+      '.ob-menu-group-icon{display:grid;place-items:center;flex:0 0 24px;width:24px;height:24px;border:1px solid currentColor;border-radius:4px;color:inherit;font-size:13px;line-height:1}',
+      '.ob-menu-group-trigger b{margin-left:auto;color:#8c7446;font-size:14px;transition:transform .18s ease}',
+      '.ob-menu-group.is-open>.ob-menu-group-trigger b{transform:rotate(180deg)}',
+      '.ob-menu-group-items{display:none;gap:2px;padding-left:8px}',
+      '.ob-menu-group.is-open>.ob-menu-group-items{display:grid}',
+      '.ob-menu-group-items .zone-nav{margin:0;padding-left:9px;font-size:10px}',
+      '.ob-menu-group[hidden]{display:none!important}',
+      '@media(max-width:900px){#memberZoneLayer .member-zone-side{display:grid!important;grid-template-columns:1fr 1fr!important;gap:4px!important;align-content:start!important;overflow:visible!important;padding:8px!important}#memberZoneLayer .member-zone-side>.zone-nav[data-zone-view="home"]{grid-column:1/-1!important;justify-content:center!important}#memberZoneLayer .member-zone-side>.zone-side-spacer{display:none!important}#memberZoneLayer .ob-menu-group{min-width:0;margin:0}#memberZoneLayer .ob-menu-group-trigger{min-height:42px;padding:6px 8px;font-size:8px;letter-spacing:.04em}#memberZoneLayer .ob-menu-group-icon{flex-basis:22px;width:22px;height:22px;font-size:11px}#memberZoneLayer .ob-menu-group-items{padding:4px 0 0;gap:3px}#memberZoneLayer .ob-menu-group-items .zone-nav{min-width:0;padding:7px 6px;font-size:9px}}',
       '.ob-polls-panel{max-width:940px}',
       '.ob-polls-list{display:grid;gap:12px}',
       '.ob-poll-card{padding:18px;border:1px solid #3d3222;background:#0a0e0e}',
@@ -111,6 +180,19 @@ export function installClanPolls(supabase) {
       '<div id="obPollsList" class="ob-polls-list"><div class="ob-poll-empty">Ładowanie ankiet…</div></div>',
     ].join('');
     main.appendChild(panel);
+
+    const organizeMenuSafely = () => {
+      try {
+        organizeClanMenu(zone, side);
+      } catch (error) {
+        console.error('CLAN MENU ORGANIZER FAILED', error);
+      }
+    };
+    [400, 1000, 1800].forEach(delay => window.setTimeout(organizeMenuSafely, delay));
+    zone.addEventListener('click', event => {
+      const view = event.target.closest('[data-zone-view]')?.dataset.zoneView || event.target.closest('[data-zone-go]')?.dataset.zoneGo;
+      if (view) window.setTimeout(organizeMenuSafely, 0);
+    });
 
     let polls = [];
     let ownVotes = new Map();
