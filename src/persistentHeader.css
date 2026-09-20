@@ -71,3 +71,21 @@ body > .topbar { position:fixed!important; inset:0 0 auto!important; width:100%!
 body > .topbar { z-index:13000!important; }
 #mobileHeaderMenu { z-index:13001!important; }
 #adminModal.ob-owner-admin-open > .admin-panel { max-height:100%!important; }
+
+/* Final compact desktop header override: this file loads after style.css. */
+@media(min-width:1201px) {
+  body > .topbar .topbar-inner {
+    width:min(1180px,calc(100% - 48px))!important;
+    max-width:1180px!important;
+    gap:0!important;
+    justify-content:space-between!important;
+  }
+  body > .topbar .main-nav {
+    margin:0!important;
+    gap:24px!important;
+  }
+  body > .topbar .header-actions {
+    margin-left:0!important;
+    gap:12px!important;
+  }
+}
