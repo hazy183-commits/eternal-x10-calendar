@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { access, readFile } from 'node:fs/promises';
 
 test('member profile supports multiple loadouts and shareable buff presets', async () => {
-  const js = await readFile(new URL('../src/memberBuildProfiles.js', import.meta.url), 'utf8');
+  const js = await readFile(new URL('../src/memberBuildProfiles.js', import.meta.url), 'utf8') + await readFile(new URL('../src/buffCatalog.js', import.meta.url), 'utf8');
   const sql = await readFile(new URL('../supabase/migrations/20260919120000_player_loadouts_and_buff_presets.sql', import.meta.url), 'utf8');
   assert.match(js, /DODAJ SUBCLASSĘ/);
   assert.match(js, /fullEpic/);
@@ -13,7 +13,7 @@ test('member profile supports multiple loadouts and shareable buff presets', asy
 });
 
 test('subclass editor uses visual equipment and buff pickers', async () => {
-  const js = await readFile(new URL('../src/memberBuildProfiles.js', import.meta.url), 'utf8');
+  const js = await readFile(new URL('../src/memberBuildProfiles.js', import.meta.url), 'utf8') + await readFile(new URL('../src/buffCatalog.js', import.meta.url), 'utf8');
   assert.doesNotMatch(js, /Nazwa postaci<input/);
   assert.match(await readFile(new URL('../src/loadoutEquipment.js', import.meta.url), 'utf8'), /class="item-tile/);
   assert.match(js, /class="buff-choice/);
