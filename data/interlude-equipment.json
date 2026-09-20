@@ -1,0 +1,4106 @@
+{
+  "sources": [
+    "https://l2api.dev/api/interlude/items/{id}",
+    "https://github.com/Hl4p3x/L2JServer_C6_Interlude/blob/master/dist/game/data/stats/augmentation/augmentation_skillmap.xml"
+  ],
+  "weapons": [
+    {
+      "id": 8680,
+      "name": "Barakiel's Axe",
+      "grade": "A",
+      "type": "BLUNT",
+      "icon": "weapon_barakiel_axe_i00.png",
+      "sa": [
+        {
+          "id": 8794,
+          "name": "Health"
+        },
+        {
+          "id": 8795,
+          "name": "Haste"
+        },
+        {
+          "id": 8796,
+          "name": "Focus"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 8681,
+      "name": "Behemoth's Tuning Fork",
+      "grade": "A",
+      "type": "BIGBLUNT",
+      "icon": "weapon_tuning_fork_of_behemoth_i00.png",
+      "sa": [
+        {
+          "id": 8797,
+          "name": "Focus"
+        },
+        {
+          "id": 8798,
+          "name": "Health"
+        },
+        {
+          "id": 8799,
+          "name": "Anger"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 269,
+      "name": "Blood Tornado",
+      "grade": "A",
+      "type": "DUALFIST",
+      "icon": "weapon_blood_tornado_i00.png",
+      "sa": [
+        {
+          "id": 5620,
+          "name": "Haste"
+        },
+        {
+          "id": 5621,
+          "name": "Focus"
+        },
+        {
+          "id": 5622,
+          "name": "Anger"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 235,
+      "name": "Bloody Orchid",
+      "grade": "A",
+      "type": "DAGGER",
+      "icon": "weapon_bloody_orchid_i00.png",
+      "sa": [
+        {
+          "id": 5614,
+          "name": "Focus"
+        },
+        {
+          "id": 5615,
+          "name": "Back Blow"
+        },
+        {
+          "id": 5616,
+          "name": "Critical Bleed"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 213,
+      "name": "Branch of The Mother Tree",
+      "grade": "A",
+      "type": "BIGBLUNT",
+      "icon": "weapon_worldtrees_branch_i00.png",
+      "sa": [
+        {
+          "id": 5605,
+          "name": "Conversion"
+        },
+        {
+          "id": 5606,
+          "name": "Magic Damage"
+        },
+        {
+          "id": 5607,
+          "name": "Acumen"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 8687,
+      "name": "Cabrio's Hand",
+      "grade": "A",
+      "type": "BLUNT",
+      "icon": "weapon_hand_of_cabrio_i00.png",
+      "sa": [
+        {
+          "id": 8815,
+          "name": "Conversion"
+        },
+        {
+          "id": 8816,
+          "name": "Mana Up"
+        },
+        {
+          "id": 8817,
+          "name": "Magic Silence"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 288,
+      "name": "Carnage Bow",
+      "grade": "A",
+      "type": "BOW",
+      "icon": "weapon_carnium_bow_i00.png",
+      "sa": [
+        {
+          "id": 5609,
+          "name": "Critical Bleed"
+        },
+        {
+          "id": 5610,
+          "name": "Mana Up"
+        },
+        {
+          "id": 5608,
+          "name": "Light"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 8688,
+      "name": "Daimon Crystal",
+      "grade": "A",
+      "type": "BIGBLUNT",
+      "icon": "weapon_crystal_of_deamon_i00.png",
+      "sa": [
+        {
+          "id": 8818,
+          "name": "Mana Up"
+        },
+        {
+          "id": 8819,
+          "name": "Acumen"
+        },
+        {
+          "id": 8820,
+          "name": "Magic Mental Shield"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 2500,
+      "name": "Dark Legion's Edge",
+      "grade": "A",
+      "type": "SWORD",
+      "icon": "weapon_dark_legions_edge_i00.png",
+      "sa": [
+        {
+          "id": 5647,
+          "name": "Critical Damage"
+        },
+        {
+          "id": 5648,
+          "name": "Health"
+        },
+        {
+          "id": 5649,
+          "name": "Rsk. Focus"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 212,
+      "name": "Dasparion's Staff",
+      "grade": "A",
+      "type": "BIGBLUNT",
+      "icon": "weapon_dasparions_staff_i00.png",
+      "sa": [
+        {
+          "id": 5596,
+          "name": "Mana Up"
+        },
+        {
+          "id": 5597,
+          "name": "Conversion"
+        },
+        {
+          "id": 5598,
+          "name": "Acumen"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 7899,
+      "name": "Destroyer Hammer",
+      "grade": "A",
+      "type": "BIGBLUNT",
+      "icon": "weapon_hammer_of_destroyer_i00.png",
+      "sa": [
+        {
+          "id": 8126,
+          "name": "Health"
+        },
+        {
+          "id": 8127,
+          "name": "Haste"
+        },
+        {
+          "id": 8128,
+          "name": "Critical Drain"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 7902,
+      "name": "Doom Crusher",
+      "grade": "A",
+      "type": "BIGBLUNT",
+      "icon": "weapon_doom_crusher_i00.png",
+      "sa": [
+        {
+          "id": 8135,
+          "name": "Health"
+        },
+        {
+          "id": 8136,
+          "name": "Anger"
+        },
+        {
+          "id": 8137,
+          "name": "Rsk. Haste"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 270,
+      "name": "Dragon Grinder",
+      "grade": "A",
+      "type": "DUALFIST",
+      "icon": "weapon_dragon_grinder_i00.png",
+      "sa": [
+        {
+          "id": 5623,
+          "name": "Rsk. Evasion"
+        },
+        {
+          "id": 5624,
+          "name": "Guidance"
+        },
+        {
+          "id": 5625,
+          "name": "Health"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 81,
+      "name": "Dragon Slayer",
+      "grade": "A",
+      "type": "BIGSWORD",
+      "icon": "weapon_dragon_slayer_i00.png",
+      "sa": [
+        {
+          "id": 5644,
+          "name": "Health"
+        },
+        {
+          "id": 5645,
+          "name": "Critical Bleed"
+        },
+        {
+          "id": 5646,
+          "name": "Critical Drain"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 150,
+      "name": "Elemental Sword",
+      "grade": "A",
+      "type": "SWORD",
+      "icon": "weapon_elemental_sword_i00.png",
+      "sa": [
+        {
+          "id": 5638,
+          "name": "Magic Power"
+        },
+        {
+          "id": 5639,
+          "name": "Magic Paralyze"
+        },
+        {
+          "id": 5640,
+          "name": "Empower"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 164,
+      "name": "Elysian",
+      "grade": "A",
+      "type": "BLUNT",
+      "icon": "weapon_elysian_i00.png",
+      "sa": [
+        {
+          "id": 5602,
+          "name": "Health"
+        },
+        {
+          "id": 5603,
+          "name": "Anger"
+        },
+        {
+          "id": 5604,
+          "name": "Critical Drain"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 7895,
+      "name": "Flaming Dragon Skull",
+      "grade": "A",
+      "type": "BLUNT",
+      "icon": "weapon_dragon_flame_head_i00.png",
+      "sa": [
+        {
+          "id": 8150,
+          "name": "Acumen"
+        },
+        {
+          "id": 8151,
+          "name": "Magic Power"
+        },
+        {
+          "id": 8152,
+          "name": "Magic Silence"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 98,
+      "name": "Halberd",
+      "grade": "A",
+      "type": "POLE",
+      "icon": "weapon_halbard_i00.png",
+      "sa": [
+        {
+          "id": 5627,
+          "name": "Critical Stun"
+        },
+        {
+          "id": 5628,
+          "name": "Wide Blow"
+        },
+        {
+          "id": 5626,
+          "name": "Haste"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 7884,
+      "name": "Infernal Master",
+      "grade": "A",
+      "type": "BIGSWORD",
+      "icon": "weapon_inferno_master_i00.png",
+      "sa": [
+        {
+          "id": 8108,
+          "name": "Haste"
+        },
+        {
+          "id": 8109,
+          "name": "Critical Damage"
+        },
+        {
+          "id": 8110,
+          "name": "Focus"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 2504,
+      "name": "Meteor Shower",
+      "grade": "A",
+      "type": "BLUNT",
+      "icon": "weapon_meteor_shower_i00.png",
+      "sa": [
+        {
+          "id": 5599,
+          "name": "Focus"
+        },
+        {
+          "id": 5600,
+          "name": "Critical Bleed"
+        },
+        {
+          "id": 5601,
+          "name": "Rsk. Haste"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 8682,
+      "name": "Naga Storm",
+      "grade": "A",
+      "type": "DAGGER",
+      "icon": "weapon_naga_storm_i00.png",
+      "sa": [
+        {
+          "id": 8800,
+          "name": "Focus"
+        },
+        {
+          "id": 8801,
+          "name": "Critical Damage"
+        },
+        {
+          "id": 8802,
+          "name": "Back Blow"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 8684,
+      "name": "Shyeed's Bow",
+      "grade": "A",
+      "type": "BOW",
+      "icon": "weapon_shyid_bow_i00.png",
+      "sa": [
+        {
+          "id": 8806,
+          "name": "Cheap Shot"
+        },
+        {
+          "id": 8807,
+          "name": "Focus"
+        },
+        {
+          "id": 8808,
+          "name": "Quick Recovery"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 8678,
+      "name": "Sirra's Blade",
+      "grade": "A",
+      "type": "SWORD",
+      "icon": "weapon_sirr_blade_i00.png",
+      "sa": [
+        {
+          "id": 8788,
+          "name": "Haste"
+        },
+        {
+          "id": 8789,
+          "name": "Health"
+        },
+        {
+          "id": 8790,
+          "name": "Critical Poison"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 8685,
+      "name": "Sobekk's Hurricane",
+      "grade": "A",
+      "type": "DUALFIST",
+      "icon": "weapon_sobekk_hurricane_i00.png",
+      "sa": [
+        {
+          "id": 8809,
+          "name": "Rsk. Haste"
+        },
+        {
+          "id": 8810,
+          "name": "Haste"
+        },
+        {
+          "id": 8811,
+          "name": "Critical Drain"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 289,
+      "name": "Soul Bow",
+      "grade": "A",
+      "type": "BOW",
+      "icon": "weapon_soul_bow_i00.png",
+      "sa": [
+        {
+          "id": 5611,
+          "name": "Cheap Shot"
+        },
+        {
+          "id": 5612,
+          "name": "Quick Recovery"
+        },
+        {
+          "id": 5613,
+          "name": "Critical Poison"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 236,
+      "name": "Soul Separator",
+      "grade": "A",
+      "type": "DAGGER",
+      "icon": "weapon_soul_separator_i00.png",
+      "sa": [
+        {
+          "id": 5617,
+          "name": "Guidance"
+        },
+        {
+          "id": 5618,
+          "name": "Critical Damage"
+        },
+        {
+          "id": 5619,
+          "name": "Rsk. Haste"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 7894,
+      "name": "Spiritual Eye",
+      "grade": "A",
+      "type": "BLUNT",
+      "icon": "weapon_eye_of_soul_i00.png",
+      "sa": [
+        {
+          "id": 8147,
+          "name": "Mana Up"
+        },
+        {
+          "id": 8148,
+          "name": "Magic Poison"
+        },
+        {
+          "id": 8149,
+          "name": "Acumen"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 8679,
+      "name": "Sword of Ipos",
+      "grade": "A",
+      "type": "BIGSWORD",
+      "icon": "weapon_sword_of_ipos_i00.png",
+      "sa": [
+        {
+          "id": 8791,
+          "name": "Focus"
+        },
+        {
+          "id": 8792,
+          "name": "Haste"
+        },
+        {
+          "id": 8793,
+          "name": "Health"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 151,
+      "name": "Sword of Miracles",
+      "grade": "A",
+      "type": "SWORD",
+      "icon": "weapon_sword_of_miracle_i00.png",
+      "sa": [
+        {
+          "id": 5641,
+          "name": "Magic Power"
+        },
+        {
+          "id": 5642,
+          "name": "Magic Silence"
+        },
+        {
+          "id": 5643,
+          "name": "Acumen"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 80,
+      "name": "Tallum Blade",
+      "grade": "A",
+      "type": "SWORD",
+      "icon": "weapon_tallum_blade_i00.png",
+      "sa": [
+        {
+          "id": 5635,
+          "name": "Critical Poison"
+        },
+        {
+          "id": 5636,
+          "name": "Haste"
+        },
+        {
+          "id": 5637,
+          "name": "Anger"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 305,
+      "name": "Tallum Glaive",
+      "grade": "A",
+      "type": "POLE",
+      "icon": "weapon_tallum_glaive_i00.png",
+      "sa": [
+        {
+          "id": 5632,
+          "name": "Guidance"
+        },
+        {
+          "id": 5633,
+          "name": "Health"
+        },
+        {
+          "id": 5634,
+          "name": "Wide Blow"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 8686,
+      "name": "Themis' Tongue",
+      "grade": "A",
+      "type": "SWORD",
+      "icon": "weapon_tongue_of_themis_i00.png",
+      "sa": [
+        {
+          "id": 8812,
+          "name": "Mana Up"
+        },
+        {
+          "id": 8813,
+          "name": "Magic Mental Shield"
+        },
+        {
+          "id": 8814,
+          "name": "Magic Focus"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 8683,
+      "name": "Tiphon's Spear",
+      "grade": "A",
+      "type": "POLE",
+      "icon": "weapon_tiphon_spear_i00.png",
+      "sa": [
+        {
+          "id": 8803,
+          "name": "Critical Stun"
+        },
+        {
+          "id": 8804,
+          "name": "Towering Blow"
+        },
+        {
+          "id": 8805,
+          "name": "Wild Blow"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 6367,
+      "name": "Angel Slayer",
+      "grade": "S",
+      "type": "DAGGER",
+      "icon": "weapon_angel_slayer_i00.png",
+      "sa": [
+        {
+          "id": 6590,
+          "name": "Critical Damage"
+        },
+        {
+          "id": 6591,
+          "name": "HP Drain"
+        },
+        {
+          "id": 6592,
+          "name": "Haste"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 6579,
+      "name": "Arcana Mace",
+      "grade": "S",
+      "type": "BLUNT",
+      "icon": "weapon_arcana_mace_i00.png",
+      "sa": [
+        {
+          "id": 6608,
+          "name": "Acumen"
+        },
+        {
+          "id": 6609,
+          "name": "MP Regeneration"
+        },
+        {
+          "id": 6610,
+          "name": "Mana Up"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 6365,
+      "name": "Basalt Battlehammer",
+      "grade": "S",
+      "type": "BLUNT",
+      "icon": "weapon_basalt_battlehammer_i00.png",
+      "sa": [
+        {
+          "id": 6584,
+          "name": "HP Drain"
+        },
+        {
+          "id": 6585,
+          "name": "Health"
+        },
+        {
+          "id": 6586,
+          "name": "HP Regeneration"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 6371,
+      "name": "Demon Splinter",
+      "grade": "S",
+      "type": "DUALFIST",
+      "icon": "weapon_demon_splinter_i00.png",
+      "sa": [
+        {
+          "id": 6602,
+          "name": "Focus"
+        },
+        {
+          "id": 6603,
+          "name": "Health"
+        },
+        {
+          "id": 6604,
+          "name": "Critical Stun"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 7575,
+      "name": "Draconic Bow",
+      "grade": "S",
+      "type": "BOW",
+      "icon": "weapon_draconic_bow_i00.png",
+      "sa": [
+        {
+          "id": 7576,
+          "name": "Cheap Shot"
+        },
+        {
+          "id": 7577,
+          "name": "Focus"
+        },
+        {
+          "id": 7578,
+          "name": "Critical Slow"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 6369,
+      "name": "Dragon Hunter Axe",
+      "grade": "S",
+      "type": "BIGBLUNT",
+      "icon": "weapon_dragon_hunter_axe_i00.png",
+      "sa": [
+        {
+          "id": 6596,
+          "name": "HP Regeneration"
+        },
+        {
+          "id": 6597,
+          "name": "Health"
+        },
+        {
+          "id": 6598,
+          "name": "HP Drain"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 6364,
+      "name": "Forgotten Blade",
+      "grade": "S",
+      "type": "SWORD",
+      "icon": "weapon_forgotten_blade_i00.png",
+      "sa": [
+        {
+          "id": 6581,
+          "name": "Haste"
+        },
+        {
+          "id": 6582,
+          "name": "Health"
+        },
+        {
+          "id": 6583,
+          "name": "Focus"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 6372,
+      "name": "Heaven's Divider",
+      "grade": "S",
+      "type": "BIGSWORD",
+      "icon": "weapon_heavens_divider_i00.png",
+      "sa": [
+        {
+          "id": 6605,
+          "name": "Haste"
+        },
+        {
+          "id": 6606,
+          "name": "Health"
+        },
+        {
+          "id": 6607,
+          "name": "Focus"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 6366,
+      "name": "Imperial Staff",
+      "grade": "S",
+      "type": "BIGBLUNT",
+      "icon": "weapon_imperial_staff_i00.png",
+      "sa": [
+        {
+          "id": 6587,
+          "name": "Empower"
+        },
+        {
+          "id": 6588,
+          "name": "MP Regeneration"
+        },
+        {
+          "id": 6589,
+          "name": "Magic Hold"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 6370,
+      "name": "Saint Spear",
+      "grade": "S",
+      "type": "POLE",
+      "icon": "weapon_saint_spear_i00.png",
+      "sa": [
+        {
+          "id": 6599,
+          "name": "Health"
+        },
+        {
+          "id": 6600,
+          "name": "Guidance"
+        },
+        {
+          "id": 6601,
+          "name": "Haste"
+        }
+      ],
+      "dual": false
+    },
+    {
+      "id": 5704,
+      "name": "Keshanberk + Keshanberk",
+      "grade": "A",
+      "type": "DUAL",
+      "icon": "weapon_dual_sword_i00.png",
+      "sa": [],
+      "dual": true
+    },
+    {
+      "id": 5705,
+      "name": "Keshanberk + Damascus",
+      "grade": "A",
+      "type": "DUAL",
+      "icon": "weapon_dual_sword_i00.png",
+      "sa": [],
+      "dual": true
+    },
+    {
+      "id": 5706,
+      "name": "Damascus + Damascus",
+      "grade": "A",
+      "type": "DUAL",
+      "icon": "weapon_dual_sword_i00.png",
+      "sa": [],
+      "dual": true
+    },
+    {
+      "id": 8938,
+      "name": "Damascus + Tallum Blade",
+      "grade": "A",
+      "type": "DUAL",
+      "icon": "weapon_dual_sword_i00.png",
+      "sa": [],
+      "dual": true
+    },
+    {
+      "id": 6580,
+      "name": "Tallum Blade + Dark Legion's Edge",
+      "grade": "S",
+      "type": "DUAL",
+      "icon": "weapon_dual_sword_i00.png",
+      "sa": [],
+      "dual": true
+    }
+  ],
+  "armors": [
+    {
+      "id": 365,
+      "name": "Dark Crystal Heavy",
+      "grade": "A",
+      "icon": "armor_t74_u_i00.png"
+    },
+    {
+      "id": 374,
+      "name": "Nightmare Heavy",
+      "grade": "A",
+      "icon": "armor_t80_ul_i00.png"
+    },
+    {
+      "id": 2382,
+      "name": "Tallum Heavy",
+      "grade": "A",
+      "icon": "armor_t77_ul_i00.png"
+    },
+    {
+      "id": 2383,
+      "name": "Majestic Heavy",
+      "grade": "A",
+      "icon": "armor_t83_ul_i00.png"
+    },
+    {
+      "id": 2385,
+      "name": "Dark Crystal Light",
+      "grade": "A",
+      "icon": "armor_t75_u_i00.png"
+    },
+    {
+      "id": 2391,
+      "name": "Blue Wolf Light",
+      "grade": "B",
+      "icon": "armor_t69_ul_i00.png"
+    },
+    {
+      "id": 2393,
+      "name": "Tallum Light",
+      "grade": "A",
+      "icon": "armor_t78_ul_i00.png"
+    },
+    {
+      "id": 2394,
+      "name": "Nightmare Light",
+      "grade": "A",
+      "icon": "armor_t81_ul_i00.png"
+    },
+    {
+      "id": 2395,
+      "name": "Majestic Light",
+      "grade": "A",
+      "icon": "armor_t84_ul_i00.png"
+    },
+    {
+      "id": 2400,
+      "name": "Tallum Robe",
+      "grade": "A",
+      "icon": "armor_t79_u_i00.png"
+    },
+    {
+      "id": 2407,
+      "name": "Dark Crystal Robe",
+      "grade": "A",
+      "icon": "armor_t76_ul_i00.png"
+    },
+    {
+      "id": 2408,
+      "name": "Nightmare Robe",
+      "grade": "A",
+      "icon": "armor_t82_ul_i00.png"
+    },
+    {
+      "id": 2409,
+      "name": "Majestic Robe",
+      "grade": "A",
+      "icon": "armor_t85_ul_i00.png"
+    },
+    {
+      "id": 6373,
+      "name": "Imperial Crusader",
+      "grade": "S",
+      "icon": "armor_t88_u_i00.png"
+    },
+    {
+      "id": 6379,
+      "name": "Draconic Leather",
+      "grade": "S",
+      "icon": "armor_t89_ul_i00.png"
+    },
+    {
+      "id": 6383,
+      "name": "Major Arcana",
+      "grade": "S",
+      "icon": "armor_t90_ul_i00.png"
+    }
+  ],
+  "jewels": [
+    {
+      "id": 858,
+      "name": "Tateossian Earring",
+      "slot": "earring",
+      "epic": false,
+      "icon": "Accessory_tateossian_earring_i00.png"
+    },
+    {
+      "id": 889,
+      "name": "Tateossian Ring",
+      "slot": "ring",
+      "epic": false,
+      "icon": "Accessory_tateossian_ring_i00.png"
+    },
+    {
+      "id": 920,
+      "name": "Tateossian Necklace",
+      "slot": "necklace",
+      "epic": false,
+      "icon": "Accessory_tateossian_necklace_i00.png"
+    },
+    {
+      "id": 6656,
+      "name": "Earring of Antharas",
+      "slot": "earring",
+      "epic": true,
+      "icon": "accessory_earring_of_antaras_i00.png"
+    },
+    {
+      "id": 6657,
+      "name": "Necklace of Valakas",
+      "slot": "necklace",
+      "epic": true,
+      "icon": "accessory_necklace_of_valakas_i00.png"
+    },
+    {
+      "id": 6658,
+      "name": "Ring of Baium",
+      "slot": "ring",
+      "epic": true,
+      "icon": "accessory_ring_of_baium_i00.png"
+    },
+    {
+      "id": 6659,
+      "name": "Zaken's Earring",
+      "slot": "earring",
+      "epic": true,
+      "icon": "accessory_earring_of_zaken_i00.png"
+    },
+    {
+      "id": 6660,
+      "name": "Ring of Queen Ant",
+      "slot": "ring",
+      "epic": true,
+      "icon": "accessory_ring_of_queen_ant_i00.png"
+    },
+    {
+      "id": 6661,
+      "name": "Earring of Orfen",
+      "slot": "earring",
+      "epic": true,
+      "icon": "accessory_earring_of_orfen_i00.png"
+    },
+    {
+      "id": 6662,
+      "name": "Ring of Core",
+      "slot": "ring",
+      "epic": true,
+      "icon": "accessory_ring_of_core_i00.png"
+    },
+    {
+      "id": 8191,
+      "name": "Frintezza's Necklace",
+      "slot": "necklace",
+      "epic": true,
+      "icon": "accessory_necklace_of_frintessa_i00.png"
+    }
+  ],
+  "augmentations": [
+    {
+      "id": 3080,
+      "name": "Aggression",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Provokes a target to attack during an ordinary physical attack. Power 438."
+    },
+    {
+      "id": 3081,
+      "name": "Charm",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Decreases a target's urge to attack during a general physical attack. Power 219."
+    },
+    {
+      "id": 3082,
+      "name": "Mana Burn",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Burns up a target's MP during an ordinary physical attack. Power 49."
+    },
+    {
+      "id": 3083,
+      "name": "Slow",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily decreases a target's speed during an ordinary physical attack. Effect 3."
+    },
+    {
+      "id": 3084,
+      "name": "Winter",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily decreases a target's Atk. Spd. during an ordinary physical attack. Effect 3."
+    },
+    {
+      "id": 3085,
+      "name": "Stun",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a state of shock during an ordinary physical attack."
+    },
+    {
+      "id": 3086,
+      "name": "Hold",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a state of hold during an ordinary physical attack. The target cannot be affected by any additional hold attacks while the effect lasts."
+    },
+    {
+      "id": 3087,
+      "name": "Sleep",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a state of sleep during a general physical attack. The target cannot be affected by any additional sleep attacks while the effect lasts."
+    },
+    {
+      "id": 3088,
+      "name": "Paralyze",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a state of paralysis during an ordinary physical attack."
+    },
+    {
+      "id": 3089,
+      "name": "Medusa",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a petrified state during a general physical attack."
+    },
+    {
+      "id": 3090,
+      "name": "Fear",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a state of fear and causes him to flee during a general physical attack."
+    },
+    {
+      "id": 3091,
+      "name": "Poison",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a poisoned state during a general physical attack. Effect 5."
+    },
+    {
+      "id": 3092,
+      "name": "Bleed",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a bleeding state during a general physical attack. Effect 5."
+    },
+    {
+      "id": 3093,
+      "name": "Silence",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily blocks the target's magic skill during a general physical attack."
+    },
+    {
+      "id": 3094,
+      "name": "Doom",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily blocks all of the target's physical and magic skills during a general physical attack."
+    },
+    {
+      "id": 3095,
+      "name": "Mana Burn",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Burns up a target's MP during magic use. Power 49."
+    },
+    {
+      "id": 3096,
+      "name": "Slow",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily decreases the target's speed during magic use. Effect 3."
+    },
+    {
+      "id": 3097,
+      "name": "Winter",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily decreases the target's Atk. Spd. during magic use. Effect 3."
+    },
+    {
+      "id": 3098,
+      "name": "Stun",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a state of shock during magic use."
+    },
+    {
+      "id": 3099,
+      "name": "Hold",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a state of hold during magic use. The target cannot be affected by any additional hold attacks while the effect lasts."
+    },
+    {
+      "id": 3100,
+      "name": "Sleep",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a state of sleep during magic use. The target cannot be affected by any additional sleep attacks while the effect lasts."
+    },
+    {
+      "id": 3101,
+      "name": "Paralyze",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a state of paralysis during magic use."
+    },
+    {
+      "id": 3102,
+      "name": "Medusa",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a petrified state during magic use."
+    },
+    {
+      "id": 3103,
+      "name": "Fear",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a state of fear and causes him to flee during magic use."
+    },
+    {
+      "id": 3104,
+      "name": "Poison",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a poisoned state during magic use. Effect 5."
+    },
+    {
+      "id": 3105,
+      "name": "Bleed",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a bleeding state during magic use. Effect 5."
+    },
+    {
+      "id": 3106,
+      "name": "Silence",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily blocks the target's magic skill during magic use."
+    },
+    {
+      "id": 3107,
+      "name": "Doom",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily blocks all of the target's physical and magic skills during magic use."
+    },
+    {
+      "id": 3108,
+      "name": "Aggression Up",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases a target's urge to attack during a critical attack. Power 438."
+    },
+    {
+      "id": 3109,
+      "name": "Aggression Down",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Decreases a target's urge to attack during a critical attack. Power 219."
+    },
+    {
+      "id": 3110,
+      "name": "Mana Burn",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Burns up a target's MP during a critical attack. Power 49."
+    },
+    {
+      "id": 3111,
+      "name": "Slow",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily decreases the target's speed during a critical attack. Effect 3."
+    },
+    {
+      "id": 3112,
+      "name": "Winter",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily decreases the target's Atk. Spd. during a critical attack. Effect 3."
+    },
+    {
+      "id": 3113,
+      "name": "Stun",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a state of shock during a critical attack."
+    },
+    {
+      "id": 3114,
+      "name": "Hold",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a state of hold during a critical attack. The target cannot be affected by any additional hold attacks while the effect lasts."
+    },
+    {
+      "id": 3115,
+      "name": "Sleep",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a state of sleep during a critical attack. The target cannot be affected by any additional sleep attacks while the effect lasts."
+    },
+    {
+      "id": 3116,
+      "name": "Paralyze",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a state of paralysis during a critical attack."
+    },
+    {
+      "id": 3117,
+      "name": "Medusa",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a petrified state during a critical attack."
+    },
+    {
+      "id": 3118,
+      "name": "Fear",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a state of fear and causes him to flee during a critical attack."
+    },
+    {
+      "id": 3119,
+      "name": "Poison",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a poisoned state during a critical attack. Effect 5."
+    },
+    {
+      "id": 3120,
+      "name": "Bleed",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a bleeding state during a critical attack. Effect 5."
+    },
+    {
+      "id": 3121,
+      "name": "Silence",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily blocks the target's magic skill during a critical attack."
+    },
+    {
+      "id": 3122,
+      "name": "Doom",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily blocks all of the target's physical and magic skills during a critical attack."
+    },
+    {
+      "id": 3123,
+      "name": "Heal",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Immediately recovers your HP. Power 308."
+    },
+    {
+      "id": 3124,
+      "name": "Blessed Body",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases the maximum HP by 30 temporarily."
+    },
+    {
+      "id": 3125,
+      "name": "Battle Roar",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases the maximum HP temporarily and restores HP by the increased amount."
+    },
+    {
+      "id": 3126,
+      "name": "Prayer",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases the effectiveness of HP recovery magic temporarily."
+    },
+    {
+      "id": 3127,
+      "name": "Recharge",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Regenerates MP. Power 41."
+    },
+    {
+      "id": 3128,
+      "name": "Blessed Soul",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases the maximum MP by 20 temporarily."
+    },
+    {
+      "id": 3129,
+      "name": "Mana Gain",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases the recharge recover rate of MP."
+    },
+    {
+      "id": 3130,
+      "name": "Ritual",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Regenerates CP. Power 264."
+    },
+    {
+      "id": 3131,
+      "name": "Cheer",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases the maximum CP by 30 temporarily."
+    },
+    {
+      "id": 3132,
+      "name": "Might",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases P. Atk. temporarily."
+    },
+    {
+      "id": 3133,
+      "name": "Empower",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases M. Atk. temporarily."
+    },
+    {
+      "id": 3134,
+      "name": "Duel Might",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases PVP P. Atk. temporarily."
+    },
+    {
+      "id": 3135,
+      "name": "Shield",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases P. Def. temporarily."
+    },
+    {
+      "id": 3136,
+      "name": "Magic Barrier",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases M. Def. temporarily."
+    },
+    {
+      "id": 3137,
+      "name": "Duel Weakness",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Decreases the opponent's PVP P. Atk. temporarily."
+    },
+    {
+      "id": 3138,
+      "name": "Heal Empower",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases the power of HP recovery magic temporarily."
+    },
+    {
+      "id": 3139,
+      "name": "Agility",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases Dodge temporarily."
+    },
+    {
+      "id": 3140,
+      "name": "Guidance",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases Accuracy temporarily."
+    },
+    {
+      "id": 3141,
+      "name": "Focus",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases the chance of a critical attack temporarily."
+    },
+    {
+      "id": 3142,
+      "name": "Wild Magic",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases the critical attack rate of magic attacks temporarily."
+    },
+    {
+      "id": 3143,
+      "name": "Kiss of Eva",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases Lung Capacity temporarily."
+    },
+    {
+      "id": 3144,
+      "name": "Acrobatics",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases the height from which you can jump without sustaining damage temporarily."
+    },
+    {
+      "id": 3145,
+      "name": "Iron Body",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Raises resistance to damage from falling."
+    },
+    {
+      "id": 3146,
+      "name": "Recall",
+      "kind": "active",
+      "levels": [
+        1
+      ],
+      "description": "Teleports the caster to a village. Cannot be used in special areas, such as the GM Consultation Room."
+    },
+    {
+      "id": 3147,
+      "name": "Recall",
+      "kind": "active",
+      "levels": [
+        1
+      ],
+      "description": "Teleports the caster to a village. Cannot be used in special areas, such as the GM Consultation Room."
+    },
+    {
+      "id": 3148,
+      "name": "Vampiric Rage",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases the ability to restore some HP from the damage inflicted on an enemy temporarily. Excludes damage by skill or long-range attacks."
+    },
+    {
+      "id": 3149,
+      "name": "Aggression",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases the target's urge to attack. Power 438."
+    },
+    {
+      "id": 3150,
+      "name": "Charm",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Decreases a target's urge to attack. Power 219."
+    },
+    {
+      "id": 3152,
+      "name": "Trick",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Cancels the target's status."
+    },
+    {
+      "id": 3153,
+      "name": "Vampiric Touch",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Absorbs HP. Power 49."
+    },
+    {
+      "id": 3154,
+      "name": "Mana Burn",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Burns up the enemy's MP. Power 68."
+    },
+    {
+      "id": 3155,
+      "name": "Unlock",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Opens level 1 doors with 100% probability, level 2 doors with 30% probability, and chests below level 36 with 90% probability. Requires 4 Keys of a Thief."
+    },
+    {
+      "id": 3156,
+      "name": "Firework",
+      "kind": "active",
+      "levels": [
+        1
+      ],
+      "description": "Ignites a Firework."
+    },
+    {
+      "id": 3157,
+      "name": "Large Firework",
+      "kind": "active",
+      "levels": [
+        1
+      ],
+      "description": "Ignites a Large Firework."
+    },
+    {
+      "id": 3158,
+      "name": "Lesser Celestial Shield",
+      "kind": "active",
+      "levels": [
+        1
+      ],
+      "description": "Bestows temporary invincibility."
+    },
+    {
+      "id": 3159,
+      "name": "Stealth",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3
+      ],
+      "description": "Temporarily blocks a monster's pre-emptive attack. Fighting ability significantly decreases while in effect."
+    },
+    {
+      "id": 3160,
+      "name": "Resurrection",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "description": "Resurrects a corpse."
+    },
+    {
+      "id": 3161,
+      "name": "Skill Clarity",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3
+      ],
+      "description": "Temporarily decreases the MP consumption rate for physical skills."
+    },
+    {
+      "id": 3162,
+      "name": "Spell Clarity",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3
+      ],
+      "description": "Temporarily decreases the MP consumption rate for magical skills."
+    },
+    {
+      "id": 3163,
+      "name": "Music Clarity",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3
+      ],
+      "description": "Temporarily decreases the MP consumption rate for song/dance skills."
+    },
+    {
+      "id": 3164,
+      "name": "Clarity",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3
+      ],
+      "description": "Temporarily decreases the MP consumption rates for all skills."
+    },
+    {
+      "id": 3165,
+      "name": "Prominence",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Detonates a fireball by compressing the air around the caster. Power 61."
+    },
+    {
+      "id": 3167,
+      "name": "Hydro Blast",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Unleashes a spray of highly pressurized water. Power 61."
+    },
+    {
+      "id": 3168,
+      "name": "Hurricane",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Creates a whirlwind of destruction. Power 61."
+    },
+    {
+      "id": 3169,
+      "name": "Stone",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Attacks the target with a stone boulder. Power 61."
+    },
+    {
+      "id": 3170,
+      "name": "Solar Flare",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Unleashes a sacred attack. Power 61."
+    },
+    {
+      "id": 3171,
+      "name": "Shadow Flare",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Unleashes a dark attack. Power 61."
+    },
+    {
+      "id": 3172,
+      "name": "Aura Flare",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Unleashes an elemental attack. Power 61."
+    },
+    {
+      "id": 3173,
+      "name": "Prominence",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Unleashes a flaming attack against the enemies near a target. Power 31."
+    },
+    {
+      "id": 3179,
+      "name": "Aura Flare",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Unleashes an elemental attack against the enemies near a target. Power 31."
+    },
+    {
+      "id": 3180,
+      "name": "Prominence",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Unleashes a flaming attack against nearby enemies. Power 31."
+    },
+    {
+      "id": 3181,
+      "name": "Hydro Blast",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Unleashes a powerful liquidy attack against nearby enemies. Power 31."
+    },
+    {
+      "id": 3182,
+      "name": "Hurricane",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Unleashes a powerful gusting attack against nearby enemies. Power 31."
+    },
+    {
+      "id": 3183,
+      "name": "Stone",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Unleashes an earthen attack against nearby enemies. Power 31."
+    },
+    {
+      "id": 3184,
+      "name": "Solar Flare",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Unleashes a sacred attack against nearby enemies. Power 31."
+    },
+    {
+      "id": 3185,
+      "name": "Shadow Flare",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Unleashes a dark attack against nearby enemies. Power 31."
+    },
+    {
+      "id": 3186,
+      "name": "Aura Flare",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Unleashes an elemental attack against nearby enemies. Power 31."
+    },
+    {
+      "id": 3187,
+      "name": "Slow",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Temporarily decreases a target's speed."
+    },
+    {
+      "id": 3188,
+      "name": "Winter",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Temporarily decreases a target's Atk. Spd."
+    },
+    {
+      "id": 3189,
+      "name": "Stun",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Temporarily throws the target into a state of shock."
+    },
+    {
+      "id": 3190,
+      "name": "Hold",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Temporarily throws the target into a state of hold. The target cannot be affected by any additional hold attacks while the effect lasts."
+    },
+    {
+      "id": 3191,
+      "name": "Sleep",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Temporarily throws the target into a state of sleep. The target cannot be affected by any additional sleep attacks while the effect lasts."
+    },
+    {
+      "id": 3192,
+      "name": "Paralyze",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Temporarily throws the target into a state of paralysis."
+    },
+    {
+      "id": 3193,
+      "name": "Medusa",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Temporarily throws the target into a petrified state."
+    },
+    {
+      "id": 3194,
+      "name": "Fear",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a state of fear and causes him to flee."
+    },
+    {
+      "id": 3195,
+      "name": "Poison",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Temporarily throws the target into a poisoned state. Effect 5."
+    },
+    {
+      "id": 3196,
+      "name": "Bleed",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Temporarily causes a target to bleed heavily. Effect 5."
+    },
+    {
+      "id": 3197,
+      "name": "Silence",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Temporarily blocks the target's magic skills."
+    },
+    {
+      "id": 3198,
+      "name": "Doom",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Temporarily blocks all of the target's physical/magic skills."
+    },
+    {
+      "id": 3199,
+      "name": "Skill Refresh",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3
+      ],
+      "description": "Temporarily decreases the re-use time for physical skills."
+    },
+    {
+      "id": 3200,
+      "name": "Spell Refresh",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3
+      ],
+      "description": "Temporarily decreases the re-use time for magic skills."
+    },
+    {
+      "id": 3201,
+      "name": "Music Refresh",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3
+      ],
+      "description": "Temporarily decreases the re-use time for song/dance skills."
+    },
+    {
+      "id": 3202,
+      "name": "Refresh",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3
+      ],
+      "description": "Temporarily decreases the re-use times for all skills."
+    },
+    {
+      "id": 3203,
+      "name": "Mystery Skill",
+      "kind": "active",
+      "levels": [
+        1
+      ],
+      "description": "Increases your head size."
+    },
+    {
+      "id": 3204,
+      "name": "Reflect Damage",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3
+      ],
+      "description": "Allows you to reflect some of the damage you incurred back to the enemy for a certain amount of time. Excludes damage from skill or remote attacks."
+    },
+    {
+      "id": 3205,
+      "name": "Party Recall",
+      "kind": "active",
+      "levels": [
+        1,
+        2
+      ],
+      "description": "Teleports party members to a village. Cannot be used in a specially designated place such as the GM Consultation Service."
+    },
+    {
+      "id": 3206,
+      "name": "Music",
+      "kind": "active",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Plays music."
+    },
+    {
+      "id": 3207,
+      "name": "Heal",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Restores your HP by using attack rate."
+    },
+    {
+      "id": 3208,
+      "name": "Blessed Body",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases maximum HP by using attack rate for a certain amount of time."
+    },
+    {
+      "id": 3209,
+      "name": "Prayer",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases the effect of HP recovery magic by using attack rate for a certain amount of time."
+    },
+    {
+      "id": 3210,
+      "name": "Recharge",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Restores your MP by using attack rate."
+    },
+    {
+      "id": 3211,
+      "name": "Blessed Soul",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases maximum MP when under attack for a certain amount of time."
+    },
+    {
+      "id": 3212,
+      "name": "Mana Gain",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases the recharge recovery rate of MP when under attack."
+    },
+    {
+      "id": 3213,
+      "name": "Ritual",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Restores CP when under attack."
+    },
+    {
+      "id": 3214,
+      "name": "Cheer",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases maximum CP when under attack for a certain amount of time."
+    },
+    {
+      "id": 3215,
+      "name": "Might",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases P. Atk. when under attack temporarily."
+    },
+    {
+      "id": 3216,
+      "name": "Empower",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases M. Atk. when under attack temporarily."
+    },
+    {
+      "id": 3217,
+      "name": "Duel Might",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases PVP P. Atk. when under attack temporarily."
+    },
+    {
+      "id": 3218,
+      "name": "Shield",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases P. Def. when under attack temporarily."
+    },
+    {
+      "id": 3219,
+      "name": "Magic Barrier",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases M. Def. when under attack temporarily."
+    },
+    {
+      "id": 3220,
+      "name": "Duel Weakness",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Decreases the opponent's PVP P. Atk. when you are under attack temporarily."
+    },
+    {
+      "id": 3221,
+      "name": "Agility",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases Evasion when under attack temporarily."
+    },
+    {
+      "id": 3222,
+      "name": "Guidance",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases Accuracy when under attack temporarily."
+    },
+    {
+      "id": 3223,
+      "name": "Focus",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases the critical attack rate when under attack temporarily."
+    },
+    {
+      "id": 3224,
+      "name": "Wild Magic",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases the critical attack rate of magic attacks when under attack temporarily."
+    },
+    {
+      "id": 3225,
+      "name": "Charm",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Decreases the enemy's urge to attack when you are under attack."
+    },
+    {
+      "id": 3226,
+      "name": "Slow",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily decreases a target's speed when you are under attack."
+    },
+    {
+      "id": 3227,
+      "name": "Winter",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily decreases a target's Atk. Spd. when you are under attack."
+    },
+    {
+      "id": 3228,
+      "name": "Stun",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a state of shock when you are under attack."
+    },
+    {
+      "id": 3229,
+      "name": "Hold",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a state of hold when you are under attack. The target cannot be affected by any additional hold attacks while the effect lasts."
+    },
+    {
+      "id": 3230,
+      "name": "Sleep",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a state of sleep when you are under attack. The target cannot be affected by any additional sleep attacks while the effect lasts."
+    },
+    {
+      "id": 3231,
+      "name": "Paralyze",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a state of paralysis when you are under attack."
+    },
+    {
+      "id": 3232,
+      "name": "Medusa",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a petrified state when you are under attack."
+    },
+    {
+      "id": 3233,
+      "name": "Fear",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a state of fear and causes him to flee when you are under attack."
+    },
+    {
+      "id": 3234,
+      "name": "Poison",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a poisoned state when you are under attack. Effect 5."
+    },
+    {
+      "id": 3235,
+      "name": "Bleed",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily throws the target into a bleeding state when you are under attack. Effect 5."
+    },
+    {
+      "id": 3236,
+      "name": "Silence",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily blocks the target's magic skill when you are under attack."
+    },
+    {
+      "id": 3237,
+      "name": "Doom",
+      "kind": "chance",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Momentarily blocks all of the target's physical and magic skills when you are under attack."
+    },
+    {
+      "id": 3238,
+      "name": "Prayer",
+      "kind": "passive",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases the effect of HP recovery magic when equipped."
+    },
+    {
+      "id": 3239,
+      "name": "Mana Gain",
+      "kind": "passive",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases the recharge recovery rate of MP when equipped."
+    },
+    {
+      "id": 3240,
+      "name": "Might",
+      "kind": "passive",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases P. Atk. when equipped"
+    },
+    {
+      "id": 3241,
+      "name": "Empower",
+      "kind": "passive",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases M. Atk. when equipped."
+    },
+    {
+      "id": 3243,
+      "name": "Duel Might",
+      "kind": "passive",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases PVP P. Atk. when equipped."
+    },
+    {
+      "id": 3244,
+      "name": "Shield",
+      "kind": "passive",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases P. Def. when equipped."
+    },
+    {
+      "id": 3245,
+      "name": "Magic Barrier",
+      "kind": "passive",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases M. Def. when equipped."
+    },
+    {
+      "id": 3246,
+      "name": "Heal Empower",
+      "kind": "passive",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases the power of HP recovery magic when equipped."
+    },
+    {
+      "id": 3247,
+      "name": "Agility",
+      "kind": "passive",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases evasion when equipped."
+    },
+    {
+      "id": 3248,
+      "name": "Guidance",
+      "kind": "passive",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases accuracy when equipped."
+    },
+    {
+      "id": 3249,
+      "name": "Focus",
+      "kind": "passive",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases critical attack rate when equipped."
+    },
+    {
+      "id": 3250,
+      "name": "Wild Magic",
+      "kind": "passive",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases the critical attack rate of magic attacks when equipped."
+    },
+    {
+      "id": 3251,
+      "name": "Weight Limit",
+      "kind": "passive",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases the weapon weight limit by 2 times when equipped."
+    },
+    {
+      "id": 3252,
+      "name": "Kiss of Eva",
+      "kind": "passive",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases lung capacity when equipped."
+    },
+    {
+      "id": 3253,
+      "name": "Acrobatics",
+      "kind": "passive",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Increases the height from which you can jump without sustaining damage when equipped."
+    },
+    {
+      "id": 3254,
+      "name": "Iron Body",
+      "kind": "passive",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "description": "Raises resistance to damage from falling when equipped."
+    },
+    {
+      "id": 3255,
+      "name": "Skill Clarity",
+      "kind": "passive",
+      "levels": [
+        1,
+        2,
+        3
+      ],
+      "description": "Decreases the MP consumption rate for physical skills when equipped."
+    },
+    {
+      "id": 3256,
+      "name": "Spell Clarity",
+      "kind": "passive",
+      "levels": [
+        1,
+        2,
+        3
+      ],
+      "description": "Decreases the MP consumption rate for magic skills when equipped."
+    },
+    {
+      "id": 3257,
+      "name": "Music Clarity",
+      "kind": "passive",
+      "levels": [
+        1,
+        2,
+        3
+      ],
+      "description": "Decreases the MP consumption rate for song/dance skills when equipped."
+    },
+    {
+      "id": 3258,
+      "name": "Clarity",
+      "kind": "passive",
+      "levels": [
+        1,
+        2,
+        3
+      ],
+      "description": "Decreases the MP consumption rate for all skills when equipped."
+    },
+    {
+      "id": 3259,
+      "name": "Reflect Damage",
+      "kind": "passive",
+      "levels": [
+        1,
+        2,
+        3
+      ],
+      "description": "Increases the ability to reflect some of the damage you incur back to the enemy when equipped. Excludes damage by skill or long-range attacks."
+    }
+  ]
+}
