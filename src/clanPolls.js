@@ -90,7 +90,9 @@ export function installClanPolls(supabase) {
       '.ob-poll-form .ob-poll-option-inputs label{font-size:8px}',
       '.ob-poll-admin-card{margin-top:10px}',
       '@media(max-width:700px){.ob-poll-form .ob-poll-option-inputs{grid-template-columns:1fr}.ob-poll-card{padding:14px}.ob-poll-option{font-size:11px}}',
-      '.zone-nav[data-zone-view="polls"] .zone-nav-icon{background-position:100% 100%}',
+      '.zone-nav[data-zone-view="polls"] .zone-nav-icon{position:relative;background-image:none!important;background-position:initial!important;filter:none!important;color:#cfa753}',
+      '.zone-nav[data-zone-view="polls"] .zone-nav-icon::before{content:"";position:absolute;inset:5px 4px;border:2px solid currentColor;border-radius:3px}',
+      '.zone-nav[data-zone-view="polls"] .zone-nav-icon::after{content:"";position:absolute;left:9px;top:9px;width:10px;height:2px;background:currentColor;box-shadow:0 6px currentColor}',
     ].join('');
     document.head.appendChild(style);
 
@@ -154,7 +156,7 @@ export function installClanPolls(supabase) {
           '<div class="ob-poll-options">',
           poll.options.map((option, index) => {
             const selected = ownVote === index;
-            const disabled = !open || hasVoted || lastAccess?.canManage;
+            const disabled = !open || hasVoted;
             return '<button type="button" class="ob-poll-option' + (selected ? ' is-selected' : '') + '" data-poll-vote="' + poll.id + '" data-poll-option="' + index + '"' + (disabled ? ' disabled' : '') + '><span>' + esc(option) + '</span>' + (selected ? '<b>✓</b>' : '') + '</button>';
           }).join(''),
           '</div>',
