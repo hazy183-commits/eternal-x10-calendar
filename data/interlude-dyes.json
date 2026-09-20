@@ -1,0 +1,1050 @@
+{
+  "source": "https://github.com/Hl4p3x/L2JServer_C6_Interlude/blob/master/dist/game/data/Hennas.xml",
+  "sourceBlob": "93ce58314e27b7d58e21e0c6f5cfb18a4bd33fff",
+  "dyes": [
+    {
+      "label": "+1 STR / -1 CON",
+      "stat": "STR",
+      "itemIds": [
+        4469,
+        4553
+      ]
+    },
+    {
+      "label": "+1 STR / -1 DEX",
+      "stat": "STR",
+      "itemIds": [
+        4470,
+        4554
+      ]
+    },
+    {
+      "label": "+1 STR / -2 CON",
+      "stat": "STR",
+      "itemIds": [
+        4457,
+        4493
+      ]
+    },
+    {
+      "label": "+1 STR / -2 DEX",
+      "stat": "STR",
+      "itemIds": [
+        4458,
+        4494
+      ]
+    },
+    {
+      "label": "+1 STR / -3 CON",
+      "stat": "STR",
+      "itemIds": [
+        4445,
+        4481
+      ]
+    },
+    {
+      "label": "+1 STR / -3 DEX",
+      "stat": "STR",
+      "itemIds": [
+        4446,
+        4482
+      ]
+    },
+    {
+      "label": "+2 STR / -2 CON",
+      "stat": "STR",
+      "itemIds": [
+        4589
+      ]
+    },
+    {
+      "label": "+2 STR / -2 DEX",
+      "stat": "STR",
+      "itemIds": [
+        4590
+      ]
+    },
+    {
+      "label": "+2 STR / -3 CON",
+      "stat": "STR",
+      "itemIds": [
+        4517
+      ]
+    },
+    {
+      "label": "+2 STR / -3 DEX",
+      "stat": "STR",
+      "itemIds": [
+        4518
+      ]
+    },
+    {
+      "label": "+2 STR / -4 CON",
+      "stat": "STR",
+      "itemIds": [
+        4505
+      ]
+    },
+    {
+      "label": "+2 STR / -4 DEX",
+      "stat": "STR",
+      "itemIds": [
+        4506
+      ]
+    },
+    {
+      "label": "+3 STR / -3 CON",
+      "stat": "STR",
+      "itemIds": [
+        4601
+      ]
+    },
+    {
+      "label": "+3 STR / -3 DEX",
+      "stat": "STR",
+      "itemIds": [
+        4602
+      ]
+    },
+    {
+      "label": "+3 STR / -4 CON",
+      "stat": "STR",
+      "itemIds": [
+        4541
+      ]
+    },
+    {
+      "label": "+3 STR / -4 DEX",
+      "stat": "STR",
+      "itemIds": [
+        4542
+      ]
+    },
+    {
+      "label": "+3 STR / -5 CON",
+      "stat": "STR",
+      "itemIds": [
+        4529
+      ]
+    },
+    {
+      "label": "+3 STR / -5 DEX",
+      "stat": "STR",
+      "itemIds": [
+        4530
+      ]
+    },
+    {
+      "label": "+4 STR / -4 CON",
+      "stat": "STR",
+      "itemIds": [
+        4613
+      ]
+    },
+    {
+      "label": "+4 STR / -4 DEX",
+      "stat": "STR",
+      "itemIds": [
+        4614
+      ]
+    },
+    {
+      "label": "+4 STR / -5 CON",
+      "stat": "STR",
+      "itemIds": [
+        4577
+      ]
+    },
+    {
+      "label": "+4 STR / -5 DEX",
+      "stat": "STR",
+      "itemIds": [
+        4578
+      ]
+    },
+    {
+      "label": "+4 STR / -6 CON",
+      "stat": "STR",
+      "itemIds": [
+        4565
+      ]
+    },
+    {
+      "label": "+4 STR / -6 DEX",
+      "stat": "STR",
+      "itemIds": [
+        4566
+      ]
+    },
+    {
+      "label": "+1 DEX / -1 CON",
+      "stat": "DEX",
+      "itemIds": [
+        4474,
+        4558
+      ]
+    },
+    {
+      "label": "+1 DEX / -1 STR",
+      "stat": "DEX",
+      "itemIds": [
+        4473,
+        4557
+      ]
+    },
+    {
+      "label": "+1 DEX / -2 CON",
+      "stat": "DEX",
+      "itemIds": [
+        4462,
+        4498
+      ]
+    },
+    {
+      "label": "+1 DEX / -2 STR",
+      "stat": "DEX",
+      "itemIds": [
+        4461,
+        4497
+      ]
+    },
+    {
+      "label": "+1 DEX / -3 CON",
+      "stat": "DEX",
+      "itemIds": [
+        4450,
+        4486
+      ]
+    },
+    {
+      "label": "+1 DEX / -3 STR",
+      "stat": "DEX",
+      "itemIds": [
+        4449,
+        4485
+      ]
+    },
+    {
+      "label": "+2 DEX / -2 CON",
+      "stat": "DEX",
+      "itemIds": [
+        4594
+      ]
+    },
+    {
+      "label": "+2 DEX / -2 STR",
+      "stat": "DEX",
+      "itemIds": [
+        4593
+      ]
+    },
+    {
+      "label": "+2 DEX / -3 CON",
+      "stat": "DEX",
+      "itemIds": [
+        4522
+      ]
+    },
+    {
+      "label": "+2 DEX / -3 STR",
+      "stat": "DEX",
+      "itemIds": [
+        4521
+      ]
+    },
+    {
+      "label": "+2 DEX / -4 CON",
+      "stat": "DEX",
+      "itemIds": [
+        4510
+      ]
+    },
+    {
+      "label": "+2 DEX / -4 STR",
+      "stat": "DEX",
+      "itemIds": [
+        4509
+      ]
+    },
+    {
+      "label": "+3 DEX / -3 CON",
+      "stat": "DEX",
+      "itemIds": [
+        4606
+      ]
+    },
+    {
+      "label": "+3 DEX / -3 STR",
+      "stat": "DEX",
+      "itemIds": [
+        4605
+      ]
+    },
+    {
+      "label": "+3 DEX / -4 CON",
+      "stat": "DEX",
+      "itemIds": [
+        4546
+      ]
+    },
+    {
+      "label": "+3 DEX / -4 STR",
+      "stat": "DEX",
+      "itemIds": [
+        4545
+      ]
+    },
+    {
+      "label": "+3 DEX / -5 CON",
+      "stat": "DEX",
+      "itemIds": [
+        4534
+      ]
+    },
+    {
+      "label": "+3 DEX / -5 STR",
+      "stat": "DEX",
+      "itemIds": [
+        4533
+      ]
+    },
+    {
+      "label": "+4 DEX / -4 CON",
+      "stat": "DEX",
+      "itemIds": [
+        4618
+      ]
+    },
+    {
+      "label": "+4 DEX / -4 STR",
+      "stat": "DEX",
+      "itemIds": [
+        4617
+      ]
+    },
+    {
+      "label": "+4 DEX / -5 CON",
+      "stat": "DEX",
+      "itemIds": [
+        4582
+      ]
+    },
+    {
+      "label": "+4 DEX / -5 STR",
+      "stat": "DEX",
+      "itemIds": [
+        4581
+      ]
+    },
+    {
+      "label": "+4 DEX / -6 CON",
+      "stat": "DEX",
+      "itemIds": [
+        4570
+      ]
+    },
+    {
+      "label": "+4 DEX / -6 STR",
+      "stat": "DEX",
+      "itemIds": [
+        4569
+      ]
+    },
+    {
+      "label": "+1 CON / -1 DEX",
+      "stat": "CON",
+      "itemIds": [
+        4472,
+        4556
+      ]
+    },
+    {
+      "label": "+1 CON / -1 STR",
+      "stat": "CON",
+      "itemIds": [
+        4471,
+        4555
+      ]
+    },
+    {
+      "label": "+1 CON / -2 DEX",
+      "stat": "CON",
+      "itemIds": [
+        4460,
+        4496
+      ]
+    },
+    {
+      "label": "+1 CON / -2 STR",
+      "stat": "CON",
+      "itemIds": [
+        4459,
+        4495
+      ]
+    },
+    {
+      "label": "+1 CON / -3 DEX",
+      "stat": "CON",
+      "itemIds": [
+        4448,
+        4484
+      ]
+    },
+    {
+      "label": "+1 CON / -3 STR",
+      "stat": "CON",
+      "itemIds": [
+        4447,
+        4483
+      ]
+    },
+    {
+      "label": "+2 CON / -2 DEX",
+      "stat": "CON",
+      "itemIds": [
+        4592
+      ]
+    },
+    {
+      "label": "+2 CON / -2 STR",
+      "stat": "CON",
+      "itemIds": [
+        4591
+      ]
+    },
+    {
+      "label": "+2 CON / -3 DEX",
+      "stat": "CON",
+      "itemIds": [
+        4520
+      ]
+    },
+    {
+      "label": "+2 CON / -3 STR",
+      "stat": "CON",
+      "itemIds": [
+        4519
+      ]
+    },
+    {
+      "label": "+2 CON / -4 DEX",
+      "stat": "CON",
+      "itemIds": [
+        4508
+      ]
+    },
+    {
+      "label": "+2 CON / -4 STR",
+      "stat": "CON",
+      "itemIds": [
+        4507
+      ]
+    },
+    {
+      "label": "+3 CON / -3 DEX",
+      "stat": "CON",
+      "itemIds": [
+        4604
+      ]
+    },
+    {
+      "label": "+3 CON / -3 STR",
+      "stat": "CON",
+      "itemIds": [
+        4603
+      ]
+    },
+    {
+      "label": "+3 CON / -4 DEX",
+      "stat": "CON",
+      "itemIds": [
+        4544
+      ]
+    },
+    {
+      "label": "+3 CON / -4 STR",
+      "stat": "CON",
+      "itemIds": [
+        4543
+      ]
+    },
+    {
+      "label": "+3 CON / -5 DEX",
+      "stat": "CON",
+      "itemIds": [
+        4532
+      ]
+    },
+    {
+      "label": "+3 CON / -5 STR",
+      "stat": "CON",
+      "itemIds": [
+        4531
+      ]
+    },
+    {
+      "label": "+4 CON / -4 DEX",
+      "stat": "CON",
+      "itemIds": [
+        4616
+      ]
+    },
+    {
+      "label": "+4 CON / -4 STR",
+      "stat": "CON",
+      "itemIds": [
+        4615
+      ]
+    },
+    {
+      "label": "+4 CON / -5 DEX",
+      "stat": "CON",
+      "itemIds": [
+        4580
+      ]
+    },
+    {
+      "label": "+4 CON / -5 STR",
+      "stat": "CON",
+      "itemIds": [
+        4579
+      ]
+    },
+    {
+      "label": "+4 CON / -6 DEX",
+      "stat": "CON",
+      "itemIds": [
+        4568
+      ]
+    },
+    {
+      "label": "+4 CON / -6 STR",
+      "stat": "CON",
+      "itemIds": [
+        4567
+      ]
+    },
+    {
+      "label": "+1 INT / -1 MEN",
+      "stat": "INT",
+      "itemIds": [
+        4475,
+        4559
+      ]
+    },
+    {
+      "label": "+1 INT / -1 WIT",
+      "stat": "INT",
+      "itemIds": [
+        4476,
+        4560
+      ]
+    },
+    {
+      "label": "+1 INT / -2 MEN",
+      "stat": "INT",
+      "itemIds": [
+        4463,
+        4499
+      ]
+    },
+    {
+      "label": "+1 INT / -2 WIT",
+      "stat": "INT",
+      "itemIds": [
+        4464,
+        4500
+      ]
+    },
+    {
+      "label": "+1 INT / -3 MEN",
+      "stat": "INT",
+      "itemIds": [
+        4451,
+        4487
+      ]
+    },
+    {
+      "label": "+1 INT / -3 WIT",
+      "stat": "INT",
+      "itemIds": [
+        4452,
+        4488
+      ]
+    },
+    {
+      "label": "+2 INT / -2 MEN",
+      "stat": "INT",
+      "itemIds": [
+        4595
+      ]
+    },
+    {
+      "label": "+2 INT / -2 WIT",
+      "stat": "INT",
+      "itemIds": [
+        4596
+      ]
+    },
+    {
+      "label": "+2 INT / -3 MEN",
+      "stat": "INT",
+      "itemIds": [
+        4523
+      ]
+    },
+    {
+      "label": "+2 INT / -3 WIT",
+      "stat": "INT",
+      "itemIds": [
+        4524
+      ]
+    },
+    {
+      "label": "+2 INT / -4 MEN",
+      "stat": "INT",
+      "itemIds": [
+        4511
+      ]
+    },
+    {
+      "label": "+2 INT / -4 WIT",
+      "stat": "INT",
+      "itemIds": [
+        4512
+      ]
+    },
+    {
+      "label": "+3 INT / -3 MEN",
+      "stat": "INT",
+      "itemIds": [
+        4607
+      ]
+    },
+    {
+      "label": "+3 INT / -3 WIT",
+      "stat": "INT",
+      "itemIds": [
+        4608
+      ]
+    },
+    {
+      "label": "+3 INT / -4 MEN",
+      "stat": "INT",
+      "itemIds": [
+        4547
+      ]
+    },
+    {
+      "label": "+3 INT / -4 WIT",
+      "stat": "INT",
+      "itemIds": [
+        4548
+      ]
+    },
+    {
+      "label": "+3 INT / -5 MEN",
+      "stat": "INT",
+      "itemIds": [
+        4535
+      ]
+    },
+    {
+      "label": "+3 INT / -5 WIT",
+      "stat": "INT",
+      "itemIds": [
+        4536
+      ]
+    },
+    {
+      "label": "+4 INT / -4 MEN",
+      "stat": "INT",
+      "itemIds": [
+        4619
+      ]
+    },
+    {
+      "label": "+4 INT / -4 WIT",
+      "stat": "INT",
+      "itemIds": [
+        4620
+      ]
+    },
+    {
+      "label": "+4 INT / -5 MEN",
+      "stat": "INT",
+      "itemIds": [
+        4583
+      ]
+    },
+    {
+      "label": "+4 INT / -5 WIT",
+      "stat": "INT",
+      "itemIds": [
+        4584
+      ]
+    },
+    {
+      "label": "+4 INT / -6 MEN",
+      "stat": "INT",
+      "itemIds": [
+        4571
+      ]
+    },
+    {
+      "label": "+4 INT / -6 WIT",
+      "stat": "INT",
+      "itemIds": [
+        4572
+      ]
+    },
+    {
+      "label": "+1 WIT / -1 INT",
+      "stat": "WIT",
+      "itemIds": [
+        4479,
+        4563
+      ]
+    },
+    {
+      "label": "+1 WIT / -1 MEN",
+      "stat": "WIT",
+      "itemIds": [
+        4480,
+        4564
+      ]
+    },
+    {
+      "label": "+1 WIT / -2 INT",
+      "stat": "WIT",
+      "itemIds": [
+        4467,
+        4503
+      ]
+    },
+    {
+      "label": "+1 WIT / -2 MEN",
+      "stat": "WIT",
+      "itemIds": [
+        4468,
+        4504
+      ]
+    },
+    {
+      "label": "+1 WIT / -3 INT",
+      "stat": "WIT",
+      "itemIds": [
+        4455,
+        4491
+      ]
+    },
+    {
+      "label": "+1 WIT / -3 MEN",
+      "stat": "WIT",
+      "itemIds": [
+        4456,
+        4492
+      ]
+    },
+    {
+      "label": "+2 WIT / -2 INT",
+      "stat": "WIT",
+      "itemIds": [
+        4599
+      ]
+    },
+    {
+      "label": "+2 WIT / -2 MEN",
+      "stat": "WIT",
+      "itemIds": [
+        4600
+      ]
+    },
+    {
+      "label": "+2 WIT / -3 INT",
+      "stat": "WIT",
+      "itemIds": [
+        4527
+      ]
+    },
+    {
+      "label": "+2 WIT / -3 MEN",
+      "stat": "WIT",
+      "itemIds": [
+        4528
+      ]
+    },
+    {
+      "label": "+2 WIT / -4 INT",
+      "stat": "WIT",
+      "itemIds": [
+        4515
+      ]
+    },
+    {
+      "label": "+2 WIT / -4 MEN",
+      "stat": "WIT",
+      "itemIds": [
+        4516
+      ]
+    },
+    {
+      "label": "+3 WIT / -3 INT",
+      "stat": "WIT",
+      "itemIds": [
+        4611
+      ]
+    },
+    {
+      "label": "+3 WIT / -3 MEN",
+      "stat": "WIT",
+      "itemIds": [
+        4612
+      ]
+    },
+    {
+      "label": "+3 WIT / -4 INT",
+      "stat": "WIT",
+      "itemIds": [
+        4551
+      ]
+    },
+    {
+      "label": "+3 WIT / -4 MEN",
+      "stat": "WIT",
+      "itemIds": [
+        4552
+      ]
+    },
+    {
+      "label": "+3 WIT / -5 INT",
+      "stat": "WIT",
+      "itemIds": [
+        4539
+      ]
+    },
+    {
+      "label": "+3 WIT / -5 MEN",
+      "stat": "WIT",
+      "itemIds": [
+        4540
+      ]
+    },
+    {
+      "label": "+4 WIT / -4 INT",
+      "stat": "WIT",
+      "itemIds": [
+        4623
+      ]
+    },
+    {
+      "label": "+4 WIT / -4 MEN",
+      "stat": "WIT",
+      "itemIds": [
+        4624
+      ]
+    },
+    {
+      "label": "+4 WIT / -5 INT",
+      "stat": "WIT",
+      "itemIds": [
+        4587
+      ]
+    },
+    {
+      "label": "+4 WIT / -5 MEN",
+      "stat": "WIT",
+      "itemIds": [
+        4588
+      ]
+    },
+    {
+      "label": "+4 WIT / -6 INT",
+      "stat": "WIT",
+      "itemIds": [
+        4575
+      ]
+    },
+    {
+      "label": "+4 WIT / -6 MEN",
+      "stat": "WIT",
+      "itemIds": [
+        4576
+      ]
+    },
+    {
+      "label": "+1 MEN / -1 INT",
+      "stat": "MEN",
+      "itemIds": [
+        4477,
+        4561
+      ]
+    },
+    {
+      "label": "+1 MEN / -1 WIT",
+      "stat": "MEN",
+      "itemIds": [
+        4478,
+        4562
+      ]
+    },
+    {
+      "label": "+1 MEN / -2 INT",
+      "stat": "MEN",
+      "itemIds": [
+        4465,
+        4501
+      ]
+    },
+    {
+      "label": "+1 MEN / -2 WIT",
+      "stat": "MEN",
+      "itemIds": [
+        4466,
+        4502
+      ]
+    },
+    {
+      "label": "+1 MEN / -3 INT",
+      "stat": "MEN",
+      "itemIds": [
+        4453,
+        4489
+      ]
+    },
+    {
+      "label": "+1 MEN / -3 WIT",
+      "stat": "MEN",
+      "itemIds": [
+        4454,
+        4490
+      ]
+    },
+    {
+      "label": "+2 MEN / -2 INT",
+      "stat": "MEN",
+      "itemIds": [
+        4597
+      ]
+    },
+    {
+      "label": "+2 MEN / -2 WIT",
+      "stat": "MEN",
+      "itemIds": [
+        4598
+      ]
+    },
+    {
+      "label": "+2 MEN / -3 INT",
+      "stat": "MEN",
+      "itemIds": [
+        4525
+      ]
+    },
+    {
+      "label": "+2 MEN / -3 WIT",
+      "stat": "MEN",
+      "itemIds": [
+        4526
+      ]
+    },
+    {
+      "label": "+2 MEN / -4 INT",
+      "stat": "MEN",
+      "itemIds": [
+        4513
+      ]
+    },
+    {
+      "label": "+2 MEN / -4 WIT",
+      "stat": "MEN",
+      "itemIds": [
+        4514
+      ]
+    },
+    {
+      "label": "+3 MEN / -3 INT",
+      "stat": "MEN",
+      "itemIds": [
+        4609
+      ]
+    },
+    {
+      "label": "+3 MEN / -3 WIT",
+      "stat": "MEN",
+      "itemIds": [
+        4610
+      ]
+    },
+    {
+      "label": "+3 MEN / -4 INT",
+      "stat": "MEN",
+      "itemIds": [
+        4549
+      ]
+    },
+    {
+      "label": "+3 MEN / -4 WIT",
+      "stat": "MEN",
+      "itemIds": [
+        4550
+      ]
+    },
+    {
+      "label": "+3 MEN / -5 INT",
+      "stat": "MEN",
+      "itemIds": [
+        4537
+      ]
+    },
+    {
+      "label": "+3 MEN / -5 WIT",
+      "stat": "MEN",
+      "itemIds": [
+        4538
+      ]
+    },
+    {
+      "label": "+4 MEN / -4 INT",
+      "stat": "MEN",
+      "itemIds": [
+        4621
+      ]
+    },
+    {
+      "label": "+4 MEN / -4 WIT",
+      "stat": "MEN",
+      "itemIds": [
+        4622
+      ]
+    },
+    {
+      "label": "+4 MEN / -5 INT",
+      "stat": "MEN",
+      "itemIds": [
+        4585
+      ]
+    },
+    {
+      "label": "+4 MEN / -5 WIT",
+      "stat": "MEN",
+      "itemIds": [
+        4586
+      ]
+    },
+    {
+      "label": "+4 MEN / -6 INT",
+      "stat": "MEN",
+      "itemIds": [
+        4573
+      ]
+    },
+    {
+      "label": "+4 MEN / -6 WIT",
+      "stat": "MEN",
+      "itemIds": [
+        4574
+      ]
+    }
+  ]
+}
