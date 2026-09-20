@@ -1,3 +1,4 @@
+import { avatarMarkup, hydrateAvatars } from './memberAvatars.js';
 import { armors, jewels, jewelrySlots, resolveWeapon } from './loadoutEquipment.js';
 import { BUFFS } from './buffCatalog.js';
 
@@ -30,7 +31,7 @@ export function openMemberBuildViewer(supabase, member, opener) {
   const dialog = document.createElement('dialog');
   dialog.className = 'member-build-dialog';
   dialog.setAttribute('aria-label', 'Profil gracza ' + (member.nickname || 'Członek'));
-  dialog.innerHTML = `<header><div><small>PROFIL KLANOWY</small><h2>${esc(member.nickname || 'Członek')}</h2><p>Podgląd subclass, wyposażenia i setupów buffów</p></div><button type="button" data-close-member aria-label="Zamknij profil gracza">✕</button></header><div class="member-build-content" aria-live="polite"></div>`;
+  dialog.innerHTML = `<header><div class="member-profile-heading">${avatarMarkup(member)}<div><small>PROFIL KLANOWY</small><h2>${esc(member.nickname || 'Członek')}</h2><p>Podgląd subclass, wyposażenia i setupów buffów</p></div></div><button type="button" data-close-member aria-label="Zamknij profil gracza">✕</button></header><div class="member-build-content" aria-live="polite"></div>`;
   const body = dialog.querySelector('.member-build-content');
   let request = 0, closed = false;
   const load = async () => {
@@ -38,7 +39,7 @@ export function openMemberBuildViewer(supabase, member, opener) {
     body.innerHTML = '<p class="member-build-empty">Ładowanie profilu…</p>';
     try {
       const [p, l, b] = await Promise.all([
-        supabase.from('profiles').select('id,nickname,character_class,character_level,subclass,party_role').eq('id',member.id).eq('status','approved').is('removed_at',null).maybeSingle(),
+        supabase.from('profiles').select('id,nickname,character_class,character_level,subclass,party_role,avatar_path').eq('id',member.id).eq('status','approved').is('removed_at',null).maybeSingle(),
         supabase.from('player_loadouts').select('id,class_name,character_kind,equipment,sort_order').eq('user_id',member.id).order('sort_order').order('created_at'),
         supabase.from('buff_presets').select('id,title,class_name,buffs,symbols').eq('user_id',member.id).order('updated_at',{ascending:false})
       ]);
@@ -46,6 +47,7 @@ export function openMemberBuildViewer(supabase, member, opener) {
       if (p.error || l.error || b.error) throw new Error('Nie udało się pobrać profilu.');
       if (!p.data) { body.innerHTML = '<p class="member-build-empty">Ten profil nie jest już dostępny w klanie.</p>'; return; }
       dialog.querySelector('h2').textContent = p.data.nickname || 'Członek';
+      dialog.querySelector('.member-avatar').outerHTML=avatarMarkup(p.data);hydrateAvatars(supabase,dialog);
       body.innerHTML = memberBuildContent(p.data,l.data || [],b.data || []);
     } catch {
       if (!closed && current === request) body.innerHTML = '<p class="member-build-empty">Nie udało się pobrać profilu.</p><button type="button" data-retry-member>Spróbuj ponownie</button>';
