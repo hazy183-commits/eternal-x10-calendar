@@ -10,7 +10,7 @@ export function createCalendarNavigation(strip, extendRange) {
     return strip.scrollLeft + box.left + box.width / 2 - viewport.left - strip.clientLeft - strip.clientWidth / 2;
   };
   const remember = () => {
-    if (strip.clientWidth !== width) return;
+    if (!strip.clientWidth || strip.clientWidth !== width) return;
     const nearest = cards().reduce((best, card) => !best || Math.abs(center(card) - strip.scrollLeft) < Math.abs(center(best) - strip.scrollLeft) ? card : best, null);
     if (nearest) anchorKey = nearest.dataset.calendarDay;
   };
