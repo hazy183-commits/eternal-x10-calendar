@@ -10,7 +10,7 @@ export function mountProfileStudio(root, { supabase, demo = false } = {}) {
   let activeTab = 'ornament', busy = false, ready = false, dirty = false, revision = 0, disposed = false;
   let avatarUrl = null, avatarPath = null;
   root.classList.add('profile-studio');
-  root.innerHTML = `<header class="ps-heading"><div><span class="ps-eyebrow">ATELIER KLANOWE / ORZEŁ BIAŁY</span><h2>Twój profil.<br><em>Twoja legenda.</em></h2><p>Łącz ozdoby, barwy i symbole. Stwórz zestaw, który jest Twój.</p></div><span class="ps-heading-mark" aria-hidden="true">✦</span></header>
+  root.innerHTML = `<details class="ps-editor-panel"><summary><span>WYGLĄD PROFILU</span><span class="ps-expand-label">ROZWIŃ ▼</span><span class="ps-collapse-label">ZWIŃ ▲</span></summary><div class="ps-editor-body"><header class="ps-heading"><div><span class="ps-eyebrow">ATELIER KLANOWE / ORZEŁ BIAŁY</span><h2>Twój profil.<br><em>Twoja legenda.</em></h2><p>Łącz ozdoby, barwy i symbole. Stwórz zestaw, który jest Twój.</p></div><span class="ps-heading-mark" aria-hidden="true">✦</span></header>
     ${demo ? '<p class="ps-demo-note">Podgląd kreatora · zmiany w tej wersji są zapisywane tylko w tej przeglądarce.</p>' : ''}
     <div class="ps-workspace"><section class="ps-controls" aria-label="Dostosuj wygląd">
       <div class="ps-tabs" role="tablist" aria-label="Kategorie wyglądu">${tabs.map(([id, label], i) => `<button type="button" role="tab" id="ps-tab-${id}" aria-controls="ps-options" aria-selected="${i === 0}" tabindex="${i === 0 ? 0 : -1}" data-ps-tab="${id}">${label}</button>`).join('')}</div>
@@ -20,7 +20,7 @@ export function mountProfileStudio(root, { supabase, demo = false } = {}) {
       ${demo ? '' : '<button type="button" class="ps-avatar-link" data-ps-avatar-editor>Zmień miniaturę profilu →</button>'}
       <div class="ps-actions"><button type="button" class="ps-save" data-ps-save>Zapisz wygląd</button><button type="button" data-ps-random>Losuj zestaw</button></div><div class="ps-secondary"><button type="button" data-ps-cancel>Cofnij zmiany</button><button type="button" data-ps-default>Przywróć domyślne</button></div>
       <p class="ps-feedback" data-ps-message role="status" aria-live="polite"></p><button type="button" data-ps-retry hidden>Spróbuj ponownie</button>
-    </aside></div>`;
+    </aside></div></div></details>`;
   const q = selector => root.querySelector(selector);
   const message = text => { q('[data-ps-message]').textContent = text; };
   const isDirty = () => JSON.stringify(draft) !== JSON.stringify(saved);
