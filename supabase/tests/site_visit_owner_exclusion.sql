@@ -1,0 +1,26 @@
+begin;
+select set_config('request.jwt.claim.sub','',true);select set_config('request.jwt.claims','{}',true);
+create temp table visits_test_users(kind text,id uuid default gen_random_uuid());
+insert into visits_test_users(kind) values('owner'),('admin'),('member');
+grant select on visits_test_users to authenticated;
+insert into auth.users(id,raw_user_meta_data) select id,jsonb_build_object('nickname','visittest_'||replace(id::text,'-','')) from visits_test_users;
+update public.profiles p set role=t.kind,status='approved' from visits_test_users t where p.id=t.id;
+create temp table visits_before as select coalesce(sum(visits),0) v,coalesce(sum(pageviews),0) p from private.site_visit_totals;
+set local role anon;
+select public.record_site_view(true);select public.record_site_view(false);
+do $$begin
+begin perform public.get_site_visit_stats();raise exception 'Anonymous stats leaked';exception when insufficient_privilege then null;end;
+begin perform 1 from private.site_visit_totals;raise exception 'Anonymous table leaked';exception when insufficient_privilege then null;end;
+end $$;
+set local role authenticated;
+select set_config('request.jwt.claim.sub',(select id::text from visits_test_users where kind='admin'),true);
+do $$begin begin perform public.get_site_visit_stats();raise exception 'Admin stats leaked';exception when insufficient_privilege then null;end;end $$;
+select set_config('request.jwt.claim.sub',(select id::text from visits_test_users where kind='member'),true);
+do $$begin begin perform public.get_site_visit_stats();raise exception 'Member stats leaked';exception when insufficient_privilege then null;end;end $$;
+select set_config('request.jwt.claim.sub',(select id::text from visits_test_users where kind='owner'),true);
+do $$begin if public.get_site_visit_stats() is null then raise exception 'Owner has no stats';end if;end $$;
+select public.record_site_view(true);select public.record_site_view(false);
+reset role;
+do $$begin if (select sum(visits) from private.site_visit_totals)<>(select v+1 from visits_before) or (select sum(pageviews) from private.site_visit_totals)<>(select p+2 from visits_before) then raise exception 'Counts wrong';end if;end $$;
+rollback;
+select 'PASS: anonymous recording, exactly 1 visit / 2 pageviews, owner-only stats, owner visits and pageviews excluded, table denied, fixtures rolled back' as result;
