@@ -68,6 +68,77 @@ body > .topbar { position:fixed!important; inset:0 0 auto!important; width:100%!
   body > .topbar .main-nav { gap:12px!important; }
   body > .topbar .header-actions .admin-trigger { padding-inline:9px!important; }
 }
+
+/* Mobile clan zone: keep navigation and content in separate, bounded areas. */
+@media(max-width:900px){
+  #memberZoneLayer .member-zone-box{
+    display:flex!important;
+    flex-direction:column!important;
+    grid-template-columns:none!important;
+    grid-template-rows:none!important;
+    height:100%!important;
+    min-height:0!important;
+    overflow:hidden!important;
+  }
+  #memberZoneLayer .member-zone-side,
+  #memberZoneLayer .member-zone-side.ob-recruit-ready{
+    flex:0 0 min(320px,38dvh)!important;
+    width:100%!important;
+    height:min(320px,38dvh)!important;
+    max-height:min(320px,38dvh)!important;
+    min-height:0!important;
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    grid-auto-rows:max-content!important;
+    align-content:start!important;
+    align-items:start!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    overscroll-behavior:contain!important;
+    box-sizing:border-box!important;
+    position:relative!important;
+    z-index:2!important;
+  }
+  #memberZoneLayer .member-zone-side>*{
+    align-self:start!important;
+    min-height:0!important;
+  }
+  #memberZoneLayer .member-zone-side>.zone-nav[data-zone-view="home"]{
+    grid-column:1/-1!important;
+    width:100%!important;
+  }
+  #memberZoneLayer .member-zone-side>.zone-side-spacer{
+    display:none!important;
+  }
+  #memberZoneLayer .ob-menu-group{
+    align-self:start!important;
+    height:max-content!important;
+    min-height:0!important;
+    width:100%!important;
+  }
+  #memberZoneLayer .ob-menu-group-items{
+    min-height:0!important;
+    height:max-content!important;
+  }
+  #memberZoneLayer .zone-logout{
+    grid-column:1/-1!important;
+    position:static!important;
+    width:100%!important;
+    box-sizing:border-box!important;
+    margin-top:4px!important;
+  }
+  #memberZoneLayer .member-zone-main{
+    flex:1 1 auto!important;
+    width:100%!important;
+    height:auto!important;
+    min-width:0!important;
+    min-height:0!important;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+    position:relative!important;
+    z-index:1!important;
+  }
+}
 body > .topbar { z-index:13000!important; }
 #mobileHeaderMenu { z-index:13001!important; }
 #adminModal.ob-owner-admin-open > .admin-panel { max-height:100%!important; }
