@@ -4,6 +4,13 @@
   const root = document.querySelector('#studio');
   const q = selector => root.querySelector(selector);
   const click = selector => { const button = q(selector); assert(button && !button.disabled, `Unavailable: ${selector}`); button.click(); };
+  click('[data-ps-default]');
+  click('[data-ps-tab="ornament"]');
+  click('[data-ps-field="ornament"][data-ps-value="ice"]');
+  click('[data-ps-tab="badges"]');
+  click('[data-ps-field="badges"][data-ps-value="pvp"]');
+  click('[data-ps-field="badges"][data-ps-value="raid"]');
+  if (!q('[data-ps-save]').disabled) click('[data-ps-save]');
   click('[data-ps-tab="badges"]');
   const initial = q('[data-ps-badge-count]').textContent;
   click('[data-ps-field="badges"][data-ps-value="support"]');
