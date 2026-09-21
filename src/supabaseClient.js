@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import './pageTitle.js';
+import { recordSiteVisit } from './siteVisitStats.js';
 import { installMemberAuth } from './memberAuth.js';
 
 const url = import.meta.env.VITE_SUPABASE_URL;
@@ -13,6 +14,7 @@ export const supabase = url?.startsWith('https://') && key?.startsWith('sb_publi
   : null;
 
 if (typeof document !== 'undefined') {
+  recordSiteVisit(supabase);
   const startMemberFeatures = async () => {
     installMemberAuth(supabase);
     document.documentElement.classList.remove('access-checking');

@@ -1,4 +1,5 @@
 import { adminClanIcon } from './adminClanIcons.js';
+import { refreshVisitStats, hideVisitStats } from './siteVisitStats.js';
 import './adminDashboardHome.css';
 import './adminWorkspace.css';
 import './adminEventDayGroups.js';
@@ -83,10 +84,12 @@ export function installAdminHomeScreen(supabaseClient){
     }
 
     async function refreshHome(){
+      hideVisitStats(home);
       const {session,profile}=await readProfile();
       if(!session)return;
       const role=String(profile?.role||'').toLowerCase();
       const owner=profile?.status==='approved'&&role==='owner';
+      void refreshVisitStats(supabaseClient,home,owner);
       const admin=profile?.status==='approved'&&role==='admin';
       const legacy=!profile;
       const limited=admin&&!owner;
@@ -130,7 +133,7 @@ export function installAdminHomeScreen(supabaseClient){
     });
     observer.observe(modal,{attributes:true,attributeFilter:['class']});
 
-    supabaseClient.auth.onAuthStateChange(()=>setTimeout(()=>{if(modal.classList.contains('open'))refreshHome();},0));
+    supabaseClient.auth.onAuthStateChange(()=>{hideVisitStats(home);setTimeout(()=>{if(modal.classList.contains('open'))refreshHome();},0);});
   };
 
   waitForDashboard();
