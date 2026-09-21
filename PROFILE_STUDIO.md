@@ -4,7 +4,7 @@ Kreator jest częścią „Strefa klanu → Mój profil”. Każdy aktywny czło
 
 ## Możliwości
 
-- 8 teł, 6 ramek i 6 graficznych ozdób oraz możliwość wyłączenia ozdoby.
+- 12 teł, 6 ramek i 12 graficznych ozdób oraz możliwość wyłączenia ozdoby.
 - 10 odznak; gracz wybiera maksymalnie 3. Są kosmetyczne, nie nadają rang ani osiągnięć.
 - 6 kolorów, 4 efekty i regulacja intensywności.
 - Podgląd na żywo, losowanie, cofnięcie niezapisanych zmian i ustawienia domyślne.
@@ -39,3 +39,6 @@ To jawnie oznaczony podgląd bez logowania: zapisuje wyłącznie swój demonstra
 Nowe arkusze `public/images/profile-studio/ornaments.webp` i `badges.webp` powstały w wbudowanym ImageGen. Są używane jako atlasy z pozycjonowaniem i maską CSS. Awatar jest osobną warstwą, a ramka pozostaje niezależna od ozdoby. Grafiki skompresowano do WebP, łącznie około 1 MB. Herb i tła pochodzą z istniejącego projektu.
 
 Prompty końcowe: arkusz 3×2 — smocze skrzydła, korona ognia, rogi z czaszkami, lodowe kryształy, ametystowy krąg, miecze z laurem; arkusz 4×2 — miecze PvP, tarcza oblężeń, smocza czaszka, trofeum Olimpiady, laska wsparcia, klepsydra weterana, polski orzeł, kryształ. Styl metalowych ozdób fantasy inspirowany Interlude, bez tekstu i bez portretów, jednakowe komórki do nakładania na miniaturę gracza. Próba wygenerowania kanału alpha nie dała przezroczystości; interfejs świadomie używa masek CSS zamiast deklarować przezroczyste pliki.
+
+## Rozszerzenie kolekcji
+Dodano Twierdzę Orła, Noc oblężenia, Polską duszę i Magię Interlude oraz sześć ozdób z orłem, szarfami, herbem, husarią, zamkami i soulshotami. Rozszerzenie katalogu w bazie ma wersję 20260921053123. Plik CLAN_ART_PROMPTS.md przy grafikach zawiera prompty ImageGen. Poprzednie zestawy zachowują swoje identyfikatory.

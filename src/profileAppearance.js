@@ -4,6 +4,10 @@ export const CLAN_CREST = '/images/logo-orzel-bialy.webp';
 export const APPEARANCE_TABLE = 'member_profile_appearance';
 export const APPEARANCE_FIELDS = 'background,frame,ornament,badges,accent,effect,intensity';
 export const backgrounds = [
+  { id: 'eagle-citadel', label: 'Twierdza Orła', image: '/images/profile-studio/eagle-citadel.webp', fresh: true },
+  { id: 'siege-night', label: 'Noc oblężenia', image: '/images/profile-studio/siege-night.webp', fresh: true },
+  { id: 'polish-forest', label: 'Polska dusza', image: '/images/profile-studio/polish-forest.webp', fresh: true },
+  { id: 'interlude-magic', label: 'Magia Interlude', image: '/images/profile-studio/interlude-magic.webp', fresh: true },
   { id: 'aden', label: 'Aden', image: '/images/castles/aden.jpg' },
   { id: 'giran', label: 'Giran', image: '/images/castles/giran.jpg' },
   { id: 'polska', label: 'Biało-czerwoni', image: '/images/clan-background-v1.jpg' },
@@ -19,6 +23,12 @@ export const frames = [
   { id: 'rune', label: 'Runiczna' }, { id: 'none', label: 'Bez ramki' },
 ];
 export const ornaments = [
+  { id: 'eagle', label: 'Skrzydła Orła', x: 0, y: 0, clan: true },
+  { id: 'ribbons', label: 'Barwy Polski', x: 50, y: 0, clan: true },
+  { id: 'clan-crest', label: 'Herb Orła Białego', x: 100, y: 0, clan: true },
+  { id: 'hussar', label: 'Husarska chwała', x: 0, y: 100, clan: true },
+  { id: 'aden-guard', label: 'Obrońca Aden', x: 50, y: 100, clan: true },
+  { id: 'soulshot', label: 'Moc Soulshotów', x: 100, y: 100, clan: true },
   { id: 'dragon', label: 'Smocze skrzydła', x: 0, y: 0 },
   { id: 'fire', label: 'Korona ognia', x: 50, y: 0 },
   { id: 'horns', label: 'Mroczne rogi', x: 100, y: 0 },
@@ -76,7 +86,7 @@ export function randomAppearance(random = Math.random) {
   const pool = [...badges];
   const selected = [];
   for (let i = 0; i < 3; i++) selected.push(pool.splice(Math.min(pool.length - 1, Math.floor(random() * pool.length)), 1)[0].id);
-  return normalizeAppearance({ background: pick(backgrounds), frame: pick(frames), ornament: pick(ornaments.slice(0, 6)), badges: selected, accent: pick(accents), effect: pick(effects), intensity: 50 });
+  return normalizeAppearance({ background: pick(backgrounds), frame: pick(frames), ornament: pick(ornaments.filter(item => item.id !== 'none')), badges: selected, accent: pick(accents), effect: pick(effects), intensity: 50 });
 }
 export function toggleBadge(current, id) {
   const selected = normalizeAppearance({ badges: current }).badges;
@@ -94,9 +104,10 @@ export function badgeMarkup(id) {
 export function decoratedAvatar(profile, input) {
   const look = normalizeAppearance(input);
   const ornament = ornaments.find(item => item.id === look.ornament);
-  return `<span class="ps-avatar ps-frame-${look.frame} ${look.ornament === 'none' ? 'ps-unadorned' : ''}" data-ornament="${look.ornament}">
-    ${look.ornament !== 'none' ? `<span class="ps-ornament" aria-hidden="true" style="--ox:${ornament.x}%;--oy:${ornament.y}%"></span>` : ''}
+  return `<span class="ps-avatar ps-frame-${look.frame} ${look.ornament === 'none' ? 'ps-unadorned' : ''} ${ornament.clan ? 'ps-clan-ornament' : ''}" data-ornament="${look.ornament}">
+    ${look.ornament !== 'none' ? `<span class="ps-ornament ${ornament.clan ? 'ps-ornament-clan-art' : ''}" aria-hidden="true" style="--ox:${ornament.x}%;--oy:${ornament.y}%"></span>` : ''}
     <span class="ps-face">${avatarMarkup(profile)}</span>
+    ${look.ornament === 'clan-crest' ? `<img class="ps-ornament-crest" src="${CLAN_CREST}" alt="Herb Orła Białego">` : ''}
   </span>`;
 }
 export function profileCardMarkup(profile = {}, input, compact = false) {

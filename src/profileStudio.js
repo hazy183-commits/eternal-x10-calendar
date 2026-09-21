@@ -75,7 +75,7 @@ export function mountProfileStudio(root, { supabase, demo = false } = {}) {
         if (activeTab === 'frame') visual = decoratedAvatar(profile, { ...draft, ornament: 'none', frame: item.id });
         if (activeTab === 'badges') visual = badgeMarkup(item.id);
         if (activeTab === 'background') visual = item.image ? `<img src="${item.image}" alt="" loading="lazy" class="ps-background-thumbnail">` : '<span class="ps-empty-art" aria-hidden="true">◇</span>';
-        return `<button type="button" class="ps-choice ${activeTab === 'ornament' && item.id === 'none' ? 'ps-no-ornament' : ''}" data-ps-field="${activeTab}" data-ps-value="${item.id}" aria-pressed="${selected}"><span class="ps-choice-art">${visual}</span><span class="ps-choice-name">${item.label}</span><span class="ps-check" aria-hidden="true">✓</span></button>`;
+        return `<button type="button" class="ps-choice ${activeTab === 'ornament' && item.id === 'none' ? 'ps-no-ornament' : ''}" data-ps-field="${activeTab}" data-ps-value="${item.id}" aria-pressed="${selected}"><span class="ps-choice-art">${visual}</span><span class="ps-choice-name">${item.label}</span>${item.clan || item.fresh ? '<span class="ps-new-art">NOWE</span>' : ''}<span class="ps-check" aria-hidden="true">✓</span></button>`;
       }).join('')}</div>`;
     }
     q('#ps-options').innerHTML = html;
@@ -153,7 +153,7 @@ export function mountProfileStudio(root, { supabase, demo = false } = {}) {
       if (demo) {
         profile = { nickname: 'Twój nick', character_class: 'Duelist', character_level: 80 };
         try { look = JSON.parse(localStorage.getItem('ob-profile-studio-demo-v1') || 'null'); } catch { look = null; }
-        look ||= { ...DEFAULT_APPEARANCE, ornament: 'dragon', frame: 'polish', badges: ['pvp', 'raid', 'poland'], effect: 'glow' };
+        look ||= { ...DEFAULT_APPEARANCE, background: 'eagle-citadel', ornament: 'eagle', frame: 'polish', badges: ['pvp', 'raid', 'poland'], effect: 'glow' };
       } else {
         const { data: { user }, error } = await supabase.auth.getUser();
         if (disposed || version !== revision) return;

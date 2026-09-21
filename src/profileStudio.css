@@ -27,6 +27,8 @@
 .ps-choice-name{display:flex;align-items:center;justify-content:center;min-height:34px;padding:6px 5px;border-top:1px solid #65533444;color:#e2d4b9;background:#0e1011d9;font-size:10px;line-height:1.4;text-align:center}
 .ps-check{position:absolute;right:6px;top:6px;display:none;place-items:center;width:20px;height:20px;border:1px solid #e9c781;border-radius:3px;color:#ffe3a5;background:#2f2311;font-size:12px;z-index:4}
 .ps-choice[aria-pressed=true] .ps-check{display:grid}
+.ps-new-art{position:absolute;left:6px;top:6px;border:1px solid #927547;background:#151710d9;padding:3px 5px;color:#dfc18a;font:600 7px/1.2 Inter,Arial,sans-serif;letter-spacing:.1em;pointer-events:none}
+.ps-choice-ornament{max-height:630px;overflow-y:auto;scrollbar-color:#826939 #111518;padding:2px 5px 2px 2px}
 .ps-no-ornament{grid-column:1/-1;min-height:44px;justify-content:center}
 .ps-no-ornament .ps-choice-art{display:none}
 .ps-no-ornament .ps-choice-name{border:0;background:none;font-size:11px}
@@ -59,6 +61,11 @@
 .ps-avatar{position:relative;display:inline-block;width:100%;aspect-ratio:1;vertical-align:middle;isolation:isolate}
 .ps-ornament{position:absolute;inset:0;background-image:url('/images/profile-studio/ornaments.webp');background-size:300% 200%;background-position:var(--ox) var(--oy);mask-image:radial-gradient(ellipse at center,#000 39%,#000b 60%,transparent 75%);-webkit-mask-image:radial-gradient(ellipse at center,#000 39%,#000b 60%,transparent 75%)}
 .ps-face{position:absolute;left:50%;top:53.5%;transform:translate(-50%,-50%);width:48%;aspect-ratio:1;padding:3px;border-radius:50%;background:linear-gradient(140deg,#e3e7e9,#4a525c 50%,#cdd6dc);box-shadow:0 0 0 1px #111,0 3px 12px #000;overflow:hidden;z-index:1}
+.ps-ornament-clan-art{background-image:url('/images/profile-studio/clan-ornaments.webp')}
+.ps-clan-ornament .ps-face{top:50%;width:46%}
+.ps-ornament-crest{position:absolute;left:50%;top:72%;transform:translateX(-50%);width:27%;height:18%;object-fit:contain;z-index:2;filter:drop-shadow(0 2px 3px #000)}
+.ps-cover-eagle-citadel,.ps-cover-siege-night,.ps-cover-polish-forest,.ps-cover-interlude-magic{opacity:.95;background-position:center 25%}
+.ps-cover-eagle-citadel::after,.ps-cover-siege-night::after,.ps-cover-polish-forest::after,.ps-cover-interlude-magic::after{background:linear-gradient(180deg,#080d1210,#090d1220 38%,#090d12b8 72%,#090d12f5)}
 .ps-face>.member-avatar{display:grid;place-items:center;width:100%!important;height:100%!important;max-width:none;border:0!important;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 35% 20%,#494335,#14191d 75%);font:500 clamp(20px,4vw,48px)/1 Georgia,serif;color:#dcc397}
 .ps-face .member-avatar img{width:100%;height:100%;object-fit:cover}
 .ps-live .ps-face>.member-avatar,.ps-member-appearance .ps-face>.member-avatar{font-size:48px}
