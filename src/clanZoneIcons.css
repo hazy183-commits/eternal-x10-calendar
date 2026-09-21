@@ -7,3 +7,7 @@
 #memberZoneLayer .member-zone-side i[data-clan-icon]{position:relative;isolation:isolate}
 #memberZoneLayer .member-zone-side i[data-clan-icon]::after{content:'';position:absolute;right:-5px;bottom:3px;width:22px;height:6px;transform:rotate(-40deg);background:linear-gradient(to bottom,#f5eee2 0 50%,#be2038 50% 100%);border-top:1px solid #e0bf74;border-bottom:1px solid #e0bf74;box-shadow:0 1px 3px #000b;pointer-events:none}
 #memberZoneLayer .member-zone-side i[data-clan-icon="home"]::after{display:none}
+/* The Polish colours now form the enamel crest itself. */
+#memberZoneLayer .member-zone-side i[data-clan-icon]::after{display:none}
+#memberZoneLayer .member-zone-side i[data-clan-icon]{border:0;border-radius:0;background:none;box-shadow:none}
+.admin-clan-icon:has(>svg){border:0;border-radius:0;background:none}
