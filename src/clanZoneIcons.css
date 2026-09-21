@@ -3,3 +3,7 @@
 #memberZoneLayer .member-zone-side i[data-clan-icon]>img[src*="logo-orzel"]{object-fit:contain}
 #memberZoneLayer .member-zone-side i[data-clan-icon]>.admin-clan-sprite{display:block;width:100%;height:100%;background-image:url('/images/profile-studio/badges.webp');background-size:400% 200%;background-position:var(--icon-x) var(--icon-y)}
 #memberZoneLayer .zone-nav:hover i[data-clan-icon],#memberZoneLayer .zone-nav.active i[data-clan-icon],#memberZoneLayer .is-open>.ob-menu-group-trigger i[data-clan-icon]{border-color:#c29a4e;color:#f2d392;box-shadow:0 0 7px #b9913929}
+/* Biało-czerwona szarfa łączy osobne symbole każdej sekcji. */
+#memberZoneLayer .member-zone-side i[data-clan-icon]{position:relative;isolation:isolate}
+#memberZoneLayer .member-zone-side i[data-clan-icon]::after{content:'';position:absolute;right:-5px;bottom:3px;width:22px;height:6px;transform:rotate(-40deg);background:linear-gradient(to bottom,#f5eee2 0 50%,#be2038 50% 100%);border-top:1px solid #e0bf74;border-bottom:1px solid #e0bf74;box-shadow:0 1px 3px #000b;pointer-events:none}
+#memberZoneLayer .member-zone-side i[data-clan-icon="home"]::after{display:none}
