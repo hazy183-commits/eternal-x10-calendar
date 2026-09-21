@@ -127,7 +127,7 @@ export function installClanPolls(supabase) {
       '.ob-menu-group.is-open>.ob-menu-group-items{display:grid}',
       '.ob-menu-group-items .zone-nav{margin:0;padding-left:9px;font-size:10px}',
       '.ob-menu-group[hidden]{display:none!important}',
-      '@media(max-width:900px){#memberZoneLayer .member-zone-side{display:grid!important;grid-template-columns:1fr 1fr!important;gap:4px!important;align-content:start!important;overflow-y:auto!important;overflow-x:hidden!important;padding:8px!important;overscroll-behavior:contain!important}#memberZoneLayer .member-zone-side>.zone-nav[data-zone-view="home"]{grid-column:1/-1!important;justify-content:center!important}#memberZoneLayer .member-zone-side>.zone-side-spacer{display:none!important}#memberZoneLayer .ob-menu-group{min-width:0;margin:0}#memberZoneLayer .ob-menu-group-trigger{min-height:42px;padding:6px 8px;font-size:8px;letter-spacing:.04em}#memberZoneLayer .ob-menu-group-icon{flex-basis:22px;width:22px;height:22px;font-size:11px}#memberZoneLayer .ob-menu-group-items{padding:4px 0 0;gap:3px}#memberZoneLayer .ob-menu-group-items .zone-nav{min-width:0;padding:7px 6px;font-size:9px}}',
+      '@media(max-width:900px){#memberZoneLayer .member-zone-box{display:flex!important;flex-direction:column!important;grid-template-columns:none!important;grid-template-rows:none!important;height:100%!important;min-height:0!important;overflow:hidden!important}#memberZoneLayer .member-zone-side{flex:0 0 min(320px,38dvh)!important;width:100%!important;height:min(320px,38dvh)!important;max-height:min(320px,38dvh)!important;min-height:0!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-auto-rows:max-content!important;align-content:start!important;align-items:start!important;overflow-y:auto!important;overflow-x:hidden!important;padding:8px!important;overscroll-behavior:contain!important;box-sizing:border-box!important;position:relative!important;z-index:2!important}#memberZoneLayer .member-zone-side>*{align-self:start!important;min-height:0!important}#memberZoneLayer .member-zone-side>.zone-nav[data-zone-view="home"]{grid-column:1/-1!important;justify-content:center!important;width:100%!important}#memberZoneLayer .member-zone-side>.zone-side-spacer{display:none!important}#memberZoneLayer .ob-menu-group{min-width:0;width:100%!important;height:max-content!important;min-height:0!important;margin:0;align-self:start!important}#memberZoneLayer .ob-menu-group-items{min-height:0!important;height:max-content!important;padding:4px 0 0;gap:3px}#memberZoneLayer .ob-menu-group-trigger{min-height:42px;padding:6px 8px;font-size:8px;letter-spacing:.04em}#memberZoneLayer .ob-menu-group-icon{flex-basis:22px;width:22px;height:22px;font-size:11px}#memberZoneLayer .ob-menu-group-items .zone-nav{min-width:0;padding:7px 6px;font-size:9px}#memberZoneLayer .zone-logout{grid-column:1/-1!important;position:static!important;width:100%!important;box-sizing:border-box!important;margin-top:4px!important}#memberZoneLayer .member-zone-main{flex:1 1 auto!important;width:100%!important;height:auto!important;min-width:0!important;min-height:0!important;overflow-x:hidden!important;overflow-y:auto!important;position:relative!important;z-index:1!important}}',
       '.ob-polls-panel{max-width:940px}',
       '.ob-polls-list{display:grid;gap:12px}',
       '.ob-poll-card{padding:18px;border:1px solid #3d3222;background:#0a0e0e}',
@@ -418,71 +418,3 @@ export function installClanPolls(supabase) {
     };
 
     const syncAdminCard = async () => {
-      const access = await currentAccess();
-      const card = zone.querySelector('[data-ob-poll-admin-card]');
-      if (card) card.hidden = !access.canManage;
-      installAdminCard();
-      const inserted = zone.querySelector('[data-ob-poll-admin-card]');
-      if (inserted) inserted.hidden = !access.canManage;
-    };
-
-    const pollAdminCardWait = () => {
-      if (!installAdminCard()) setTimeout(pollAdminCardWait, 250);
-    };
-
-    panel.addEventListener('click', async (event) => {
-      const remove = event.target.closest('[data-poll-delete]');
-      if (remove && !remove.disabled) {
-        const id = remove.dataset.pollDelete;
-        if (pendingPolls.has(id)) return;
-        const poll = polls.find(item => String(item.id) === id);
-        if (!poll || !confirm('Usunąć ankietę „' + poll.question + '” razem ze wszystkimi głosami? Tej operacji nie można cofnąć.')) return;
-        pendingPolls.add(id); renderPolls();
-        try {
-          if (!(await currentAccess()).canManage) throw new Error('Brak uprawnień.');
-          await deletePoll(supabase, id);
-          await loadPolls();
-          panel.querySelector('#obPollActionStatus').textContent = '✓ Ankieta usunięta.';
-        } catch { panel.querySelector('#obPollActionStatus').textContent = 'Nie udało się usunąć ankiety. Odśwież listę i spróbuj ponownie.'; }
-        finally { pendingPolls.delete(id); renderPolls(); }
-        return;
-      }
-      const button = event.target.closest('[data-poll-vote]');
-      if (!button || button.disabled) return;
-      const id = button.dataset.pollVote;
-      if (pendingPolls.has(id)) return;
-      pendingPolls.add(id);
-      try {
-      const access = await currentAccess();
-      const poll = polls.find((item) => String(item.id) === String(button.dataset.pollVote));
-      const optionIndex = Number(button.dataset.pollOption);
-      if (!access.session || !access.profile?.id || !poll || !isOpen(poll) || !Number.isInteger(optionIndex)) return;
-      if (optionIndex >= poll.options.length) return;
-      renderPolls();
-      await savePollVote(supabase, {pollId:poll.id,userId:access.profile.id,optionIndex,previousVote:ownVotes.get(id)});
-      await loadPolls();
-      panel.querySelector('#obPollActionStatus').textContent = '✓ Głos zapisany.';
-      } catch {
-        panel.querySelector('#obPollActionStatus').textContent = 'Nie udało się zapisać głosu. Odśwież ankietę i spróbuj ponownie.';
-      } finally { pendingPolls.delete(id); renderPolls(); }
-    });
-
-    zone.addEventListener('click', (event) => {
-      if (event.target.closest('[data-zone-view="polls"]')) setTimeout(loadPolls, 0);
-      if (event.target.closest('[data-zone-view="content-editor"]')) setTimeout(syncAdminCard, 0);
-    });
-
-    supabase.auth.onAuthStateChange(() => {
-      setTimeout(async () => {
-        await loadPolls();
-        await syncAdminCard();
-      }, 0);
-    });
-
-    await loadPolls();
-    pollAdminCardWait();
-    await syncAdminCard();
-  }
-
-  waitForZone();
-}
