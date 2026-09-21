@@ -1,3 +1,4 @@
+import { adminClanIcon } from './adminClanIcons.js';
 import './adminDashboardHome.css';
 import './adminWorkspace.css';
 import './adminEventDayGroups.js';
@@ -19,7 +20,7 @@ export function installAdminHomeScreen(supabaseClient){
     homeTab.setAttribute('role','tab');
     homeTab.setAttribute('aria-selected','false');
     homeTab.dataset.adminTab='home';
-    homeTab.innerHTML='<i>⌂</i><span>Start</span><small>Podsumowanie</small>';
+    homeTab.innerHTML=adminClanIcon('home')+'<span>Start</span><small>Podsumowanie</small>';
     tabs.prepend(homeTab);
 
     const home=document.createElement('section');
@@ -39,22 +40,22 @@ export function installAdminHomeScreen(supabaseClient){
       </div>
       <div class="admin-home-grid">
         <button class="admin-home-card" type="button" data-home-target="events">
-          <span class="admin-home-icon">✦</span><small>KALENDARZ KLANU</small><h4>Wydarzenia</h4><p>Dodawaj, edytuj i porządkuj wydarzenia klanowe.</p><em>OTWÓRZ →</em>
+          <span class="admin-home-icon">${adminClanIcon('events')}</span><small>KALENDARZ KLANU</small><h4>Wydarzenia</h4><p>Dodawaj, edytuj i porządkuj wydarzenia klanowe.</p><em>OTWÓRZ →</em>
         </button>
         <button class="admin-home-card owner-only" type="button" data-home-target="bosses">
-          <span class="admin-home-icon">☠</span><small>EPIC RAID BOSS</small><h4>Epic Bossy</h4><p>Kontroluj ręczne okna, respawny i najważniejsze bossy.</p><em>OTWÓRZ →</em>
+          <span class="admin-home-icon">${adminClanIcon('bosses')}</span><small>EPIC RAID BOSS</small><h4>Epic Bossy</h4><p>Kontroluj ręczne okna, respawny i najważniejsze bossy.</p><em>OTWÓRZ →</em>
         </button>
         <button class="admin-home-card owner-only" type="button" data-home-target="siege">
-          <span class="admin-home-icon">⚔</span><small>CASTLE CONTROL</small><h4>Castle Siege</h4><p>Zarządzaj terminami siege dla wszystkich zamków.</p><em>OTWÓRZ →</em>
+          <span class="admin-home-icon">${adminClanIcon('siege')}</span><small>CASTLE CONTROL</small><h4>Castle Siege</h4><p>Zarządzaj terminami siege dla wszystkich zamków.</p><em>OTWÓRZ →</em>
         </button>
         <button class="admin-home-card owner-only" type="button" data-home-target="schedule">
-          <span class="admin-home-icon">◷</span><small>STAŁY PLAN</small><h4>Harmonogram</h4><p>Olympiad, Auto PvP i stałe terminy serwerowe.</p><em>OTWÓRZ →</em>
+          <span class="admin-home-icon">${adminClanIcon('schedule')}</span><small>STAŁY PLAN</small><h4>Harmonogram</h4><p>Olympiad, Auto PvP i stałe terminy serwerowe.</p><em>OTWÓRZ →</em>
         </button>
         <button class="admin-home-card owner-only" type="button" data-home-target="content">
-          <span class="admin-home-icon">✎</span><small>EDYTOR STRONY</small><h4>Treści i ogłoszenia</h4><p>Zmieniaj nagłówki, opisy, linki oraz komunikaty bez edycji kodu.</p><em>EDYTUJ →</em>
+          <span class="admin-home-icon">${adminClanIcon('content')}</span><small>EDYTOR STRONY</small><h4>Treści i ogłoszenia</h4><p>Zmieniaj nagłówki, opisy, linki oraz komunikaty bez edycji kodu.</p><em>EDYTUJ →</em>
         </button>
         <button class="admin-home-card users owner-only" type="button" data-home-target="users">
-          <span class="admin-home-icon">♟</span><small>STREFA KLANU</small><h4>Użytkownicy i role</h4><p>Akceptuj nowych członków oraz nadaj rangę Członek, Lider lub Administrator.</p><em>ZARZĄDZAJ →</em>
+          <span class="admin-home-icon">${adminClanIcon('users')}</span><small>STREFA KLANU</small><h4>Użytkownicy i role</h4><p>Akceptuj nowych członków oraz nadaj rangę Członek, Lider lub Administrator.</p><em>ZARZĄDZAJ →</em>
         </button>
       </div>`;
 
@@ -138,3 +139,4 @@ export function installAdminHomeScreen(supabaseClient){
 // Wait until the module graph has initialized the shared Supabase client.
 // Member features also import artwork, which imports this screen.
 queueMicrotask(() => installAdminHomeScreen(supabase));
+

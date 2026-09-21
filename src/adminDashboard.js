@@ -1,3 +1,4 @@
+import { adminClanIcon } from './adminClanIcons.js';
 import { removeMember } from './memberRemoval.js';
 import { hasAdminPermission, loadAdminPermissionContext } from './adminPermissions.js';
 
@@ -21,7 +22,7 @@ export function installAdminDashboard(supabase) {
   tabs.className='admin-dashboard-tabs';
   tabs.setAttribute('role','tablist');
   tabs.setAttribute('aria-label','Sekcje panelu administratora');
-  tabs.innerHTML=`<button class="active" type="button" role="tab" aria-selected="true" data-admin-tab="events"><i>✦</i><span>Wydarzenia</span><small>Kalendarz klanu</small></button><button type="button" role="tab" aria-selected="false" data-admin-tab="bosses"><i>☠</i><span>Epic Bossy</span><small>Okna i respawny</small></button><button type="button" role="tab" aria-selected="false" data-admin-tab="siege"><i>⚔</i><span>Castle Siege</span><small>Terminy zamków</small></button><button type="button" role="tab" aria-selected="false" data-admin-tab="schedule"><i>◷</i><span>Harmonogram</span><small>Stałe wydarzenia</small></button><button type="button" role="tab" aria-selected="false" data-admin-tab="content"><i>✎</i><span>Treści strony</span><small>Napisy, linki i ogłoszenia</small></button><button type="button" role="tab" aria-selected="false" data-admin-tab="users"><i>♟</i><span>Użytkownicy</span><small>Dostęp i role</small><b id="pendingUsersBadge" hidden>0</b></button>`;
+  tabs.innerHTML=`<button class="active" type="button" role="tab" aria-selected="true" data-admin-tab="events">${adminClanIcon('events')}<span>Wydarzenia</span><small>Kalendarz klanu</small></button><button type="button" role="tab" aria-selected="false" data-admin-tab="bosses">${adminClanIcon('bosses')}<span>Epic Bossy</span><small>Okna i respawny</small></button><button type="button" role="tab" aria-selected="false" data-admin-tab="siege">${adminClanIcon('siege')}<span>Castle Siege</span><small>Terminy zamków</small></button><button type="button" role="tab" aria-selected="false" data-admin-tab="schedule">${adminClanIcon('schedule')}<span>Harmonogram</span><small>Stałe wydarzenia</small></button><button type="button" role="tab" aria-selected="false" data-admin-tab="content">${adminClanIcon('content')}<span>Treści strony</span><small>Napisy, linki i ogłoszenia</small></button><button type="button" role="tab" aria-selected="false" data-admin-tab="users">${adminClanIcon('users')}<span>Użytkownicy</span><small>Dostęp i role</small><b id="pendingUsersBadge" hidden>0</b></button>`;
 
   const users = document.createElement('section');
   users.id='ownerUsersPanel';
@@ -121,3 +122,4 @@ export function installAdminDashboard(supabase) {
   resolveProfile();
   showTab('events');
 }
+
