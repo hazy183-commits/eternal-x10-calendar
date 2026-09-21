@@ -1,0 +1,8 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {savePollVote,deletePoll} from '../src/clanPollActions.js';
+function fake(result){const calls=[];const query={};for(const method of ['from','insert','update','delete','eq','select'])query[method]=(...args)=>{calls.push([method,...args]);return query;};query.single=async()=>result;return {query,calls};}
+test('a replacement updates the existing own vote instead of adding another',async()=>{const {query,calls}=fake({data:{poll_id:5,option_index:1},error:null});await savePollVote(query,{pollId:5,userId:'me',optionIndex:1,previousVote:0});assert.ok(calls.some(x=>x[0]==='update'));assert.ok(!calls.some(x=>x[0]==='insert'));assert.deepEqual(calls.filter(x=>x[0]==='eq'),[['eq','poll_id',5],['eq','user_id','me']]);});
+test('first vote inserts one answer with the owner id',async()=>{const {query,calls}=fake({data:{poll_id:5,option_index:0}});await savePollVote(query,{pollId:5,userId:'me',optionIndex:0});assert.deepEqual(calls.find(x=>x[0]==='insert'),['insert',{poll_id:5,user_id:'me',option_index:0}]);});
+test('failed and denied writes never report success',async()=>{for(const result of [{data:null,error:new Error('denied')},{data:null,error:null}]){const {query}=fake(result);await assert.rejects(savePollVote(query,{pollId:5,userId:'me',optionIndex:0,previousVote:1}));await assert.rejects(deletePoll(query,5));}});
+test('delete targets only the selected poll and requires a returned row',async()=>{const {query,calls}=fake({data:{id:5}});await deletePoll(query,5);assert.deepEqual(calls.filter(x=>x[0]==='eq'),[['eq','id',5]]);});

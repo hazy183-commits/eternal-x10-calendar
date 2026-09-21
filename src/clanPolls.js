@@ -1,4 +1,5 @@
 import { loadAdminPermissionContext, hasAdminPermission } from './adminPermissions.js';
+import { savePollVote, deletePoll } from './clanPollActions.js';
 
 const esc = (value = '') => String(value).replace(/[&<>"']/g, (char) => ({
   '&': '&amp;',
@@ -175,7 +176,7 @@ export function installClanPolls(supabase) {
     panel.dataset.zonePanel = 'polls';
     panel.innerHTML = [
       '<div class="zone-section-head"><small>GŁOSOWANIE KLANU</small><h3>ANKIETY</h3><p>Oddaj jeden głos w każdej aktywnej ankiecie.</p></div>',
-      '<div id="obPollsList" class="ob-polls-list"><div class="ob-poll-empty">Ładowanie ankiet…</div></div>',
+      '<p id="obPollActionStatus" class="ob-poll-note" role="status"></p><div id="obPollsList" class="ob-polls-list"><div class="ob-poll-empty">Ładowanie ankiet…</div></div>',
     ].join('');
     main.appendChild(panel);
 
@@ -196,6 +197,7 @@ export function installClanPolls(supabase) {
     let ownVotes = new Map();
     let results = new Map();
     let lastAccess = null;
+    const pendingPolls = new Set();
 
     const feedback = () => document.querySelector('#memberZoneLayer #obEditorFeedback');
 
@@ -236,12 +238,13 @@ export function installClanPolls(supabase) {
           '<div class="ob-poll-options">',
           poll.options.map((option, index) => {
             const selected = ownVote === index;
-            const disabled = !open || hasVoted;
+            const disabled = !open || selected || pendingPolls.has(String(poll.id));
             return '<button type="button" class="ob-poll-option' + (selected ? ' is-selected' : '') + '" data-poll-vote="' + poll.id + '" data-poll-option="' + index + '"' + (disabled ? ' disabled' : '') + '><span>' + esc(option) + '</span>' + (selected ? '<b>✓</b>' : '') + '</button>';
           }).join(''),
           '</div>',
-          showResults ? renderResults(poll) : '<p class="ob-poll-note">Wybierz jedną odpowiedź. Głos można oddać tylko raz.</p>',
-          hasVoted ? '<p class="ob-poll-note">Twój głos został zapisany.</p>' : '',
+          showResults ? renderResults(poll) : '<p class="ob-poll-note">Wybierz jedną odpowiedź. Możesz ją zmienić, dopóki ankieta jest otwarta.</p>',
+          hasVoted ? '<p class="ob-poll-note">Twój głos został zapisany.' + (open ? ' Aby zmienić głos, kliknij inną odpowiedź.' : '') + '</p>' : '',
+          lastAccess?.canManage ? '<button type="button" class="ob-editor-btn" data-poll-delete="' + poll.id + '"' + (pendingPolls.has(String(poll.id)) ? ' disabled' : '') + '>USUŃ ANKIETĘ</button>' : '',
           '</article>',
         ].join('');
       }).join('');
@@ -387,12 +390,14 @@ export function installClanPolls(supabase) {
         button.onclick = async () => {
           if (!confirm('Usunąć tę ankietę razem z głosami?')) return;
           if (!await currentAccess().then((access) => access.canManage)) return;
-          const { error } = await supabase.from('clan_polls').delete().eq('id', button.dataset.pollDelete);
-          adminFeedback(error ? 'Nie udało się usunąć ankiety.' : '✓ Ankieta usunięta.');
-          if (!error) {
+          button.disabled = true;
+          try {
+            await deletePoll(supabase, button.dataset.pollDelete);
+            adminFeedback('✓ Ankieta usunięta.');
             await loadPolls();
             await showAdminEditor();
-          }
+          } catch { adminFeedback('Nie udało się usunąć ankiety.'); }
+          finally { button.disabled = false; }
         };
       });
     };
@@ -426,24 +431,40 @@ export function installClanPolls(supabase) {
     };
 
     panel.addEventListener('click', async (event) => {
+      const remove = event.target.closest('[data-poll-delete]');
+      if (remove && !remove.disabled) {
+        const id = remove.dataset.pollDelete;
+        if (pendingPolls.has(id)) return;
+        const poll = polls.find(item => String(item.id) === id);
+        if (!poll || !confirm('Usunąć ankietę „' + poll.question + '” razem ze wszystkimi głosami? Tej operacji nie można cofnąć.')) return;
+        pendingPolls.add(id); renderPolls();
+        try {
+          if (!(await currentAccess()).canManage) throw new Error('Brak uprawnień.');
+          await deletePoll(supabase, id);
+          await loadPolls();
+          panel.querySelector('#obPollActionStatus').textContent = '✓ Ankieta usunięta.';
+        } catch { panel.querySelector('#obPollActionStatus').textContent = 'Nie udało się usunąć ankiety. Odśwież listę i spróbuj ponownie.'; }
+        finally { pendingPolls.delete(id); renderPolls(); }
+        return;
+      }
       const button = event.target.closest('[data-poll-vote]');
       if (!button || button.disabled) return;
+      const id = button.dataset.pollVote;
+      if (pendingPolls.has(id)) return;
+      pendingPolls.add(id);
+      try {
       const access = await currentAccess();
       const poll = polls.find((item) => String(item.id) === String(button.dataset.pollVote));
       const optionIndex = Number(button.dataset.pollOption);
       if (!access.session || !access.profile?.id || !poll || !isOpen(poll) || !Number.isInteger(optionIndex)) return;
-      button.disabled = true;
-      const { error } = await supabase.from('clan_poll_votes').insert({
-        poll_id: poll.id,
-        user_id: access.profile.id,
-        option_index: optionIndex,
-      });
-      if (error) {
-        console.error('POLL VOTE FAILED', error);
-        panel.querySelector('#obPollsList').insertAdjacentHTML('afterbegin', '<p class="ob-poll-note">Nie udało się zapisać głosu. Być może głos został już oddany.</p>');
-        return;
-      }
+      if (optionIndex >= poll.options.length) return;
+      renderPolls();
+      await savePollVote(supabase, {pollId:poll.id,userId:access.profile.id,optionIndex,previousVote:ownVotes.get(id)});
       await loadPolls();
+      panel.querySelector('#obPollActionStatus').textContent = '✓ Głos zapisany.';
+      } catch {
+        panel.querySelector('#obPollActionStatus').textContent = 'Nie udało się zapisać głosu. Odśwież ankietę i spróbuj ponownie.';
+      } finally { pendingPolls.delete(id); renderPolls(); }
     });
 
     zone.addEventListener('click', (event) => {
