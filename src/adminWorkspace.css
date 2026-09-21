@@ -24,3 +24,14 @@ html.ob-limited-admin .admin-dashboard-tabs [data-admin-tab]:not([data-admin-tab
 .admin-dashboard-tabs button .admin-clan-sprite{grid-column:auto;margin:0!important}
 .admin-home-icon>.admin-clan-icon{width:40px;height:40px}
 .admin-dashboard-tabs button{column-gap:7px!important}@media(max-width:900px){.admin-dashboard-tabs button i.admin-clan-icon{width:25px;height:25px}}
+/* Allocate the remaining modal height after the real header and note sizes. */
+#adminModal .admin-panel{display:flex;flex-direction:column;box-sizing:border-box;height:min(900px,95dvh)!important;max-height:95dvh!important}
+#adminModal .admin-panel>.modal-header,#adminModal .admin-panel>.admin-note{flex:0 0 auto;box-sizing:border-box}
+#adminModal .admin-workspace{flex:1 1 0;height:auto;min-height:0;grid-template-rows:minmax(0,1fr);overflow:hidden}
+#adminModal .admin-workspace-sidebar{min-height:0;overflow-y:auto;box-sizing:border-box}
+#adminModal .admin-workspace-content{min-height:0;box-sizing:border-box;overflow:auto;overscroll-behavior:contain;scrollbar-gutter:stable;padding-bottom:40px;scroll-padding-top:115px}
+#adminModal .owner-user-row{min-width:0}
+#adminModal .owner-user-name{min-width:0;overflow-wrap:anywhere}
+#adminModal .owner-user-actions{min-width:0;flex-wrap:wrap}
+@media(max-width:1200px){#adminModal .owner-user-row{grid-template-columns:minmax(0,1fr) auto auto}#adminModal .owner-user-actions{grid-column:1/-1;justify-content:flex-start}}
+@media(max-width:900px){#adminModal .admin-panel{height:96dvh!important;max-height:96dvh!important}#adminModal .admin-workspace{grid-template-rows:auto minmax(0,1fr)}#adminModal .admin-workspace-sidebar{max-height:25dvh}#adminModal .owner-user-row{grid-template-columns:minmax(0,1fr) auto}#adminModal .owner-user-status{grid-column:2}#adminModal .admin-workspace-content{scroll-padding-top:125px}}
