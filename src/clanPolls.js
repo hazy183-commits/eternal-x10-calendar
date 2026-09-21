@@ -418,3 +418,71 @@ export function installClanPolls(supabase) {
     };
 
     const syncAdminCard = async () => {
+      const access = await currentAccess();
+      const card = zone.querySelector('[data-ob-poll-admin-card]');
+      if (card) card.hidden = !access.canManage;
+      installAdminCard();
+      const inserted = zone.querySelector('[data-ob-poll-admin-card]');
+      if (inserted) inserted.hidden = !access.canManage;
+    };
+
+    const pollAdminCardWait = () => {
+      if (!installAdminCard()) setTimeout(pollAdminCardWait, 250);
+    };
+
+    panel.addEventListener('click', async (event) => {
+      const remove = event.target.closest('[data-poll-delete]');
+      if (remove && !remove.disabled) {
+        const id = remove.dataset.pollDelete;
+        if (pendingPolls.has(id)) return;
+        const poll = polls.find(item => String(item.id) === id);
+        if (!poll || !confirm('Usunąć ankietę „' + poll.question + '” razem ze wszystkimi głosami? Tej operacji nie można cofnąć.')) return;
+        pendingPolls.add(id); renderPolls();
+        try {
+          if (!(await currentAccess()).canManage) throw new Error('Brak uprawnień.');
+          await deletePoll(supabase, id);
+          await loadPolls();
+          panel.querySelector('#obPollActionStatus').textContent = '✓ Ankieta usunięta.';
+        } catch { panel.querySelector('#obPollActionStatus').textContent = 'Nie udało się usunąć ankiety. Odśwież listę i spróbuj ponownie.'; }
+        finally { pendingPolls.delete(id); renderPolls(); }
+        return;
+      }
+      const button = event.target.closest('[data-poll-vote]');
+      if (!button || button.disabled) return;
+      const id = button.dataset.pollVote;
+      if (pendingPolls.has(id)) return;
+      pendingPolls.add(id);
+      try {
+      const access = await currentAccess();
+      const poll = polls.find((item) => String(item.id) === String(button.dataset.pollVote));
+      const optionIndex = Number(button.dataset.pollOption);
+      if (!access.session || !access.profile?.id || !poll || !isOpen(poll) || !Number.isInteger(optionIndex)) return;
+      if (optionIndex >= poll.options.length) return;
+      renderPolls();
+      await savePollVote(supabase, {pollId:poll.id,userId:access.profile.id,optionIndex,previousVote:ownVotes.get(id)});
+      await loadPolls();
+      panel.querySelector('#obPollActionStatus').textContent = '✓ Głos zapisany.';
+      } catch {
+        panel.querySelector('#obPollActionStatus').textContent = 'Nie udało się zapisać głosu. Odśwież ankietę i spróbuj ponownie.';
+      } finally { pendingPolls.delete(id); renderPolls(); }
+    });
+
+    zone.addEventListener('click', (event) => {
+      if (event.target.closest('[data-zone-view="polls"]')) setTimeout(loadPolls, 0);
+      if (event.target.closest('[data-zone-view="content-editor"]')) setTimeout(syncAdminCard, 0);
+    });
+
+    supabase.auth.onAuthStateChange(() => {
+      setTimeout(async () => {
+        await loadPolls();
+        await syncAdminCard();
+      }, 0);
+    });
+
+    await loadPolls();
+    pollAdminCardWait();
+    await syncAdminCard();
+  }
+
+  waitForZone();
+}
