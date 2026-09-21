@@ -42,6 +42,7 @@ if (typeof document !== 'undefined') {
       { installPermissionManager },
       { installMemberBuildProfiles },
       { installClanPolls },
+      { installProfileStudio },
     ] = await Promise.all([
       import('./memberZoneReliability.js'),
       import('./memberEventSignups.js'),
@@ -68,6 +69,7 @@ if (typeof document !== 'undefined') {
       import('./permissionManager.js'),
       import('./memberBuildProfiles.js'),
       import('./clanPolls.js'),
+      import('./profileStudio.js'),
       import('./craftWeaponSelectEnhancer.js'),
       import('./neededRaidBossRefreshBridge.js'),
       import('./interludeClassSelects.js'),
@@ -97,6 +99,7 @@ if (typeof document !== 'undefined') {
     installPermissionManager(supabase);
     installMemberBuildProfiles(supabase);
     installClanPolls(supabase);
+    installProfileStudio(supabase);
   };
   const boot = () => startMemberFeatures().catch(error => console.error('MEMBER FEATURES BOOT FAILED', error));
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });

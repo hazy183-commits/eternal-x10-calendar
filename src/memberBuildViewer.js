@@ -1,4 +1,5 @@
 import { avatarMarkup, hydrateAvatars } from './memberAvatars.js';
+import { loadAppearance, profileCardMarkup } from './profileAppearance.js';
 import { armors, jewels, jewelrySlots, resolveWeapon } from './loadoutEquipment.js';
 import { BUFFS } from './buffCatalog.js';
 
@@ -49,6 +50,13 @@ export function openMemberBuildViewer(supabase, member, opener) {
       dialog.querySelector('h2').textContent = p.data.nickname || 'Członek';
       dialog.querySelector('.member-avatar').outerHTML=avatarMarkup(p.data);hydrateAvatars(supabase,dialog);
       body.innerHTML = memberBuildContent(p.data,l.data || [],b.data || []);
+      // A cosmetic read failure must never hide the existing equipment/profile view.
+      try {
+        const appearance = await loadAppearance(supabase, member.id);
+        if (closed || current !== request) return;
+        body.insertAdjacentHTML('afterbegin', `<section class="ps-member-appearance" aria-label="Wygląd profilu">${profileCardMarkup(p.data, appearance, true)}</section>`);
+        hydrateAvatars(supabase, body);
+      } catch { /* Keep the character profile available while cosmetics are offline. */ }
     } catch {
       if (!closed && current === request) body.innerHTML = '<p class="member-build-empty">Nie udało się pobrać profilu.</p><button type="button" data-retry-member>Spróbuj ponownie</button>';
     }
@@ -59,10 +67,13 @@ export function openMemberBuildViewer(supabase, member, opener) {
   const observer = zone ? new MutationObserver(() => { if (!zone.classList.contains('open')) close(); }) : null;
   observer?.observe(zone,{attributes:true,attributeFilter:['class']});
   window.addEventListener('orzel:member-removed',close);
+  const refreshAppearance = event => { if (event.detail?.userId === member.id) load(); };
+  window.addEventListener('orzel:appearance-updated',refreshAppearance);
   dialog.addEventListener('close',() => {
     closed = true; ++request;
     auth?.data?.subscription?.unsubscribe(); observer?.disconnect();
     window.removeEventListener('orzel:member-removed',close);
+    window.removeEventListener('orzel:appearance-updated',refreshAppearance);
     dialog.remove(); if(opener?.isConnected)opener.focus({preventScroll:true});
   },{once:true});
   dialog.addEventListener('click',event => {
