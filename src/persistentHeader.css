@@ -22,7 +22,7 @@ body > .topbar { position:fixed!important; inset:0 0 auto!important; width:100%!
 @media(max-width:900px) {
   body > main { padding-top:0!important; }
   #memberZoneLayer { padding:4px!important; }
-  #memberZoneLayer .member-zone-box { grid-template-columns:minmax(0,1fr)!important; grid-template-rows:minmax(0,auto) minmax(0,1fr)!important; }
+  #memberZoneLayer .member-zone-box { grid-template-columns:minmax(0,1fr)!important; grid-template-rows:minmax(0,32dvh) minmax(0,1fr)!important; }
   #memberZoneLayer .member-zone-side { max-height:32dvh; overflow-y:auto!important; }
   #memberZoneLayer .zone-logout { position:static; padding:8px; font-size:10px; }
   #memberZoneLayer .member-zone-main { padding-top:14px!important; }
