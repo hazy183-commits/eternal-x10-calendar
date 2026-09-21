@@ -5,7 +5,7 @@ for (const role of ['member', 'owner', 'admin', 'leader', 'unknown']) {
   for (const status of ['approved', 'pending', 'blocked']) {
     test(`${role}/${status}: restricted views`, () => {
       const p = {role, status};
-      assert.equal(canAccessClanView(p,'content-editor'), status==='approved' && role==='owner');
+      assert.equal(canAccessClanView(p,'content-editor'), status==='approved' && ['owner','admin'].includes(role));
       assert.equal(canAccessClanView(p,'recruitment'), status==='approved' && ['owner','admin','leader'].includes(role));
       assert.equal(canAccessClanView(p,'events'),true);
     });
