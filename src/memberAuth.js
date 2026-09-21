@@ -1,4 +1,6 @@
 import { switchClanView } from './clanViewAccess.js';
+import { clanZoneIcon } from './adminClanIcons.js';
+import './clanZoneIcons.css';
 import { installAdminDashboard } from './adminDashboard.js';
 import { installMemberEventSignups } from './memberEventSignups.js';
 
@@ -74,6 +76,19 @@ export function installMemberAuth(supabase) {
         icon.className = 'zone-nav-icon';
         icon.setAttribute('aria-hidden', 'true');
         button.prepend(icon);
+      }
+      const icon = button.querySelector(':scope > .zone-nav-icon');
+      if (icon.dataset.clanIcon !== button.dataset.zoneView) {
+        icon.dataset.clanIcon = button.dataset.zoneView;
+        icon.innerHTML = clanZoneIcon(button.dataset.zoneView);
+      }
+    }
+    for (const icon of zone.querySelectorAll('.ob-menu-group-icon')) {
+      const group = icon.closest('.ob-menu-group');
+      const key = group?.dataset.obMenuGroup || group?.dataset.menuGroup;
+      if (key && icon.dataset.clanIcon !== key) {
+        icon.dataset.clanIcon = key;
+        icon.innerHTML = clanZoneIcon(key);
       }
     }
   };
