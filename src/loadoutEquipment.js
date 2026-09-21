@@ -21,16 +21,31 @@ function jewelryFields(e) {
     return `<div class="jewel-slot" data-jewel="${slot}"><div class="jewel-icon">${image(item)}</div><label>${label}<select data-jewel-item>${option('', 'Brak', item?.id || '')}${jewels.filter(x => x.slot === type).map(x => option(x.id, x.name, item?.id)).join('')}</select></label>${enchant('data-jewel-enchant', saved.enchant, 'Enchant')}</div>`;
   }).join('');
 }
+export function savedAugmentations(e = {}) {
+  if (Array.isArray(e.augmentations)) return e.augmentations;
+  return e.augmentationId || e.augmentation ? [{ id: e.augmentationId, level: e.augmentationLevel, legacy: e.augmentation }] : [];
+}
+export function validateAugmentations(rows) {
+  return rows.map(row => {
+    if (!row.id && row.legacy) return { legacy: String(row.legacy) };
+    const a = augmentations.find(x => x.id === Number(row.id)), level = Number(row.level);
+    if (!a || !a.levels.includes(level)) throw new Error('Wybierz poprawną augmentację i jej poziom.');
+    return { id: a.id, level };
+  });
+}
 function augmentationFields(id, level, legacy = '') {
   const a = augmentations.find(x => x.id === Number(id));
   return `<button type="button" class="augmentation-tile" data-open-augmentation aria-haspopup="dialog"><span aria-hidden="true">✧</span><b>Augmentacja</b><small>${esc(a ? a.name + ' · ' + kinds[a.kind] : legacy || 'Wybierz efekt')}</small></button><input type="hidden" data-augmentation-id value="${a?.id || ''}"><label ${a ? '' : 'hidden'}>Poziom augmentacji<select data-augmentation-level>${a ? a.levels.map(n => option(n, 'Poziom ' + n, level || a.levels.at(-1))).join('') : ''}</select></label>`;
+}
+function augmentationRow(row = {}) {
+  return `<div data-augmentation-row data-legacy="${esc(row.legacy || '')}"><div class="augmentation-controls">${augmentationFields(row.id, row.level, row.legacy)}</div><button type="button" data-remove-augmentation>Usuń augmentację</button></div>`;
 }
 export function equipmentFields(e = {}) {
   const w = resolveWeapon(e), sa = e.weaponSaId || w?.sa.find(x => norm(x.name) === norm(String(e.weapon || '').split(' · ')[1]))?.id || '';
   return `<section class="picker-field equipment-section"><h5>Broń · A / S grade</h5><div class="weapon-controls"><div class="weapon-preview">${image(w)}</div><label>Broń<select data-weapon-id>${option('', e.weapon && !w ? 'Zapisano: ' + e.weapon : 'Wybierz broń', w?.id || '')}${['S', 'A'].map(grade => `<optgroup label="${grade} grade">${weapons.filter(x => x.grade === grade).map(x => option(x.id, x.name, w?.id)).join('')}</optgroup>`).join('')}</select></label><label>Special Ability (SA)<select data-weapon-sa ${!w || w.dual ? 'disabled' : ''}>${saOptions(w, sa)}</select></label>${enchant('data-equipment="weaponEnchant"', e.weaponEnchant, 'Enchant broni')}</div></section>
   <section class="picker-field equipment-section"><h5>Set armoru · odsealowany</h5><div class="item-picker" data-picker="armor">${armors.map(x => `<button type="button" class="item-tile ${x.name === e.armor ? 'selected' : ''}" data-value="${esc(x.name)}" aria-pressed="${x.name === e.armor}">${image(x)}<span>${esc(x.name)}<small>${x.grade} grade</small></span></button>`).join('')}</div><input type="hidden" data-equipment="armor" value="${esc(e.armor || '')}">${enchant('data-equipment="armorEnchant"', e.armorEnchant, 'Enchant armoru')}</section>
   <section class="picker-field equipment-section"><h5>Biżuteria · 5 slotów</h5><div class="jewelry-presets"><button type="button" data-jewelry-set="s">Komplet Tateossian · S grade</button><button type="button" data-jewelry-set="epic">Komplet epików</button></div><p class="equipment-hint">Każdy element wybierzesz i enchantujesz oddzielnie. Komplet epików: Valakas, Antharas, Zaken, Baium i Queen Ant — możesz zmienić dowolny element.</p>${!e.jewelry && (e.fullEpic || e.jewels) ? `<p class="equipment-hint" data-legacy-jewels>Poprzedni zapis: ${esc(e.fullEpic ? 'Full Epic' : e.jewels)}${e.jewelsEnchant ? ' +' + esc(e.jewelsEnchant) : ''}. Wybierz komplet lub uzupełnij sloty, aby zapisać konkretne przedmioty.</p>` : ''}<div class="jewelry-grid">${jewelryFields(e)}</div></section>
-  <section class="picker-field equipment-section"><h5>Augmentacja broni</h5><div class="augmentation-controls">${augmentationFields(e.augmentationId, e.augmentationLevel, e.augmentation)}</div></section>`;
+  <section class="picker-field equipment-section"><h5>Augmentacje</h5><p class="equipment-hint">Dodaj posiadane augmentacje dla tej klasy. Każda może mieć osobny efekt i poziom.</p><div data-augmentation-rows>${savedAugmentations(e).map(augmentationRow).join('')}</div><button type="button" data-add-augmentation>+ Dodaj augmentację</button></section>`;
 }
 export function checkedEnchant(value) {
   const n = Number(value);
@@ -62,13 +77,15 @@ export function readEquipment(card, previous = {}) {
     e.fullEpic = selected.length === 5 && selected.every(x => jewels.find(j => j.id === x.itemId).epic);
     delete e.jewelsEnchant;
   }
-  const augmentationId = Number(card.querySelector('[data-augmentation-id]').value);
-  if (augmentationId) {
-    const a = augmentations.find(x => x.id === augmentationId), level = Number(card.querySelector('[data-augmentation-level]').value);
-    if (!a || !a.levels.includes(level)) throw new Error('Wybierz poprawną augmentację i jej poziom.');
-    Object.assign(e, { augmentationId, augmentationLevel: level, augmentation: `${a.name} · ${kinds[a.kind]} · Lv. ${level}` });
-  } else if (card.dataset.augmentationDirty) {
-    Object.assign(e, { augmentationId: null, augmentationLevel: null, augmentation: '' });
+  const rows = [...card.querySelectorAll('[data-augmentation-row]')];
+  if (rows.length || card.dataset.augmentationDirty || Array.isArray(previous.augmentations)) {
+    e.augmentations = validateAugmentations(rows.map(row => ({ id: row.querySelector('[data-augmentation-id]').value, level: row.querySelector('[data-augmentation-level]').value, legacy: row.dataset.legacy })).filter(row => row.id || row.legacy));
+    e.augmentation = e.augmentations.map(row => {
+      const a = augmentations.find(x => x.id === row.id);
+      return a ? `${a.name} · ${kinds[a.kind]} · Lv. ${row.level}` : row.legacy;
+    }).join('; ');
+    e.augmentationId = e.augmentations[0]?.id || null;
+    e.augmentationLevel = e.augmentations[0]?.level || null;
   }
   return e;
 }
@@ -89,10 +106,17 @@ export function bindEquipment(root) {
   });
 }
 export function equipmentClick(event) {
-  const button = event.target.closest('[data-jewelry-set], [data-open-augmentation]');
+  const button = event.target.closest('[data-jewelry-set], [data-open-augmentation], [data-add-augmentation], [data-remove-augmentation]');
   if (!button) return false;
   const card = button.closest('[data-loadout]');
-  if (button.hasAttribute('data-jewelry-set')) {
+  if (button.hasAttribute('data-add-augmentation')) {
+    card.querySelector('[data-augmentation-rows]').insertAdjacentHTML('beforeend', augmentationRow());
+    openAugmentations(card, card.querySelector('[data-augmentation-rows]').lastElementChild.querySelector('[data-open-augmentation]'));
+  } else if (button.hasAttribute('data-remove-augmentation')) {
+    button.closest('[data-augmentation-row]').remove();
+    card.dataset.augmentationDirty = 'true';
+    card.querySelector('[data-add-augmentation]').focus();
+  } else if (button.hasAttribute('data-jewelry-set')) {
     const ids = button.dataset.jewelrySet === 's' ? [920, 858, 858, 889, 889] : [6657, 6656, 6659, 6658, 6660];
     jewelrySlots.forEach(([slot], i) => { const field = card.querySelector(`[data-jewel="${slot}"] [data-jewel-item]`); field.value = ids[i]; field.dispatchEvent(new Event('change', { bubbles: true })); });
   } else openAugmentations(card, button);
@@ -115,10 +139,13 @@ function openAugmentations(card, opener) {
     const choice = event.target.closest('[data-augment], [data-clear]');
     if (choice) {
       card.dataset.augmentationDirty = 'true';
-      card.querySelector('.augmentation-controls').innerHTML = augmentationFields(choice.dataset.augment);
+      const row = opener.closest('[data-augmentation-row]');
+      row.dataset.legacy = '';
+      row.querySelector('.augmentation-controls').innerHTML = augmentationFields(choice.dataset.augment);
       dialog.close();
     }
   };
-  dialog.addEventListener('close', () => { dialog.remove(); (opener.isConnected ? opener : card.querySelector('[data-open-augmentation]'))?.focus({ preventScroll: true }); }, { once: true });
+  const targetRow = opener.closest('[data-augmentation-row]');
+  dialog.addEventListener('close', () => { dialog.remove(); (targetRow.querySelector('[data-open-augmentation]') || card.querySelector('[data-add-augmentation]'))?.focus({ preventScroll: true }); }, { once: true });
   document.body.appendChild(dialog); render(); dialog.showModal();
 }

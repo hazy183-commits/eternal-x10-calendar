@@ -15,7 +15,7 @@ export function loadoutPreview(loadout, index) {
     const saved = e.jewelry[slot], item = jewels.find(x => x.id === Number(saved?.itemId));
     return gear(item,label,item ? item.name + enchant(saved.enchant) : 'Brak');
   }).join('') : gear(null,'Biżuteria', (e.fullEpic ? 'Full Epic' : e.jewels || 'Nie podano') + (e.fullEpic || e.jewels ? enchant(e.jewelsEnchant) : ''));
-  return `<details class="member-build-card" open><summary>${loadout.character_kind === 'main' ? 'Klasa główna' : 'Subclassa #' + (index + 1)} · ${esc(loadout.class_name)}</summary><div class="member-gear-grid">${gear(weapon,'Broń',e.weapon ? e.weapon + enchant(e.weaponEnchant) : '')}${gear(armor,'Armor',e.armor ? e.armor + enchant(e.armorEnchant) : '')}${jewelry}${gear(null,'Augmentacja',e.augmentation)}</div></details>`;
+  return `<details class="member-build-card" open><summary>${loadout.character_kind === 'main' ? 'Klasa główna' : 'Subclassa #' + (index + 1)} · ${esc(loadout.class_name)}</summary><div class="member-gear-grid">${gear(weapon,'Broń',e.weapon ? e.weapon + enchant(e.weaponEnchant) : '')}${gear(armor,'Armor',e.armor ? e.armor + enchant(e.armorEnchant) : '')}${jewelry}${gear(null,'Augmentacje',e.augmentation)}</div></details>`;
 }
 export function buffPreview(preset) {
   return `<article class="member-build-card"><h4>${esc(preset.title)}</h4><p class="member-build-meta">${esc(preset.class_name || 'Dowolna klasa')} · ${(preset.buffs || []).length} buffów</p><div class="member-build-symbols"><b>Symbole / Dyes</b><span>${esc(preset.symbols || 'Nie podano symboli')}</span></div><ol class="member-buff-list">${(preset.buffs || []).map(name => {
@@ -82,3 +82,4 @@ export function openMemberBuildViewer(supabase, member, opener) {
   });
   document.body.appendChild(dialog);dialog.showModal();load();
 }
+

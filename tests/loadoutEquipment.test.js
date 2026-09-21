@@ -48,3 +48,25 @@ test('editing legacy equipment preserves unsupported labels and old jewelry unti
   card.dataset.augmentationDirty='true';
   assert.equal(readEquipment(card,previous).augmentation,'');
 });
+
+test('multiple augmentations retain levels and legacy text through save and reload', async () => {
+  const {savedAugmentations, validateAugmentations, equipmentFields}=await import('../src/loadoutEquipment.js');
+  const a=augmentations[0],b=augmentations[1];
+  const values=[{id:a.id,level:a.levels[0]},{id:b.id,level:b.levels.at(-1)},{legacy:'stary efekt'}];
+  const previous={weapon:'Angel Slayer',armor:'Tallum Robe',augmentation:'stary efekt'};
+  const rows=values.map(v=>({dataset:{legacy:v.legacy||''},querySelector:s=>({value:s==='[data-augmentation-id]'?v.id||'':v.level||''})}));
+  const card={dataset:{augmentationDirty:'true'},querySelectorAll:s=>s==='[data-augmentation-row]'?rows:[],querySelector:()=>({value:''})};
+  const saved=JSON.parse(JSON.stringify(readEquipment(card,previous)));
+  assert.deepEqual(saved.augmentations,values);
+  assert.deepEqual(savedAugmentations(saved),values);
+  assert.equal((equipmentFields(saved).match(/data-augmentation-row /g)||[]).length,3);
+  assert.match(saved.augmentation,/stary efekt/);
+  assert.deepEqual(savedAugmentations(previous),[{id:undefined,level:undefined,legacy:'stary efekt'}]);
+  assert.throws(()=>validateAugmentations([{id:a.id,level:999}]));
+  assert.throws(()=>validateAugmentations([{id:-1,level:1}]));
+  rows.splice(0,rows.length);
+  const cleared=readEquipment(card,saved);
+  assert.deepEqual(cleared.augmentations,[]);
+  assert.equal(cleared.augmentation,'');
+  assert.deepEqual(savedAugmentations(cleared),[]);
+});
