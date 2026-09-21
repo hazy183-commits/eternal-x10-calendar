@@ -40,7 +40,7 @@ export function installAdminDashboard(supabase) {
   workspace.className='admin-workspace';
   const sidebar=document.createElement('aside');
   sidebar.className='admin-workspace-sidebar';
-  sidebar.innerHTML=`<div class="admin-workspace-brand"><span>OB</span><div><small>CENTRUM ZARZĄDZANIA</small><b>ORZEŁ BIAŁY</b></div></div>`;
+  sidebar.innerHTML=`<div class="admin-workspace-brand"><img class="admin-workspace-logo" src="/images/logo-orzel-bialy.webp" alt="Herb klanu Orzeł Biały" width="54" height="37"><div><small>CENTRUM ZARZĄDZANIA</small><b>ORZEŁ BIAŁY</b></div></div>`;
   const sidebarHelp=document.createElement('div');
   sidebarHelp.className='admin-workspace-help';
   sidebarHelp.innerHTML='<small>WSKAZÓWKA</small><p>Wybierz sekcję. Wszystkie zapisane zmiany są od razu widoczne dla klanu.</p>';
