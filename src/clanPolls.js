@@ -298,16 +298,27 @@ export function installClanPolls(supabase) {
     };
 
     const adminArea = () => document.querySelector('#memberZoneLayer [data-zone-panel="content-editor"] #obEditorArea');
+    const waitForAdminArea = async () => {
+      for (let attempt = 0; attempt < 20; attempt += 1) {
+        const editor = adminArea();
+        if (editor) return editor;
+        await new Promise((resolve) => setTimeout(resolve, 50));
+      }
+      return null;
+    };
     const adminFeedback = (message) => {
-      const node = feedback();
-      if (node) node.textContent = message;
+      const nodes = [feedback(), panel.querySelector('[data-poll-form-feedback]')].filter(Boolean);
+      [...new Set(nodes)].forEach((node) => { node.textContent = message; });
     };
 
     const showAdminEditor = async () => {
       const access = await currentAccess();
       if (!access.canManage) return;
-      const editor = adminArea();
-      if (!editor) return;
+      const editor = await waitForAdminArea();
+      if (!editor) {
+        adminFeedback('Nie udało się otworzyć edytora ankiety. Odśwież strefę klanu i spróbuj ponownie.');
+        return;
+      }
       const optionInputs = [1, 2, 3, 4].map((index) => [
         '<label>Odpowiedź ', index, '<input data-poll-option-input maxlength="120" ', index <= 2 ? 'required' : '', '></label>',
       ].join('')).join('');
@@ -330,6 +341,7 @@ export function installClanPolls(supabase) {
         '<label>Opis (opcjonalnie)<textarea id="obPollDescription" maxlength="1000" placeholder="Dodatkowe informacje dla członków"></textarea></label>',
         '<div class="ob-poll-option-inputs">', optionInputs, '</div>',
         '<label>Koniec ankiety (opcjonalnie)<input id="obPollEndsAt" type="datetime-local"></label>',
+        '<p class="ob-poll-note" data-poll-form-feedback role="status"></p>',
         '<div class="ob-poll-admin-actions"><button type="submit" class="ob-editor-btn">UTWÓRZ ANKIETĘ</button><button type="button" class="ob-editor-btn" id="obPollCancel">ANULUJ</button></div>',
         '</form>',
         '<div class="ob-poll-admin-list">', activeRows || '<p class="zone-muted">Nie ma jeszcze żadnych ankiet.</p>', '</div>',
@@ -338,42 +350,60 @@ export function installClanPolls(supabase) {
       editor.querySelector('#obPollCancel').onclick = () => { editor.innerHTML = ''; };
       editor.querySelector('#obPollForm').onsubmit = async (event) => {
         event.preventDefault();
-        const current = await currentAccess();
-        if (!current.canManage || !current.profile?.id) return;
-        const question = editor.querySelector('#obPollQuestion').value.trim();
-        const description = editor.querySelector('#obPollDescription').value.trim() || null;
-        const options = [...editor.querySelectorAll('[data-poll-option-input]')]
-          .map((input) => input.value.trim())
-          .filter(Boolean);
-        if (options.length < 2 || new Set(options.map((value) => value.toLowerCase())).size !== options.length) {
-          adminFeedback('Dodaj minimum dwie różne odpowiedzi.');
-          return;
-        }
-        const endsValue = editor.querySelector('#obPollEndsAt').value;
-        const parsedEndsAt = endsValue ? new Date(endsValue) : null;
-        const endsAt = parsedEndsAt && Number.isFinite(parsedEndsAt.getTime()) ? parsedEndsAt.toISOString() : null;
-        if (endsValue && !endsAt) {
-          adminFeedback('Podaj poprawną datę zakończenia.');
-          return;
-        }
-        adminFeedback('Zapisywanie ankiety…');
-        const { error } = await supabase.from('clan_polls').insert({
-          question,
-          description,
-          options,
-          starts_at: new Date().toISOString(),
-          ends_at: endsAt,
-          is_active: true,
-          created_by: current.profile.id,
-        });
-        if (error) {
+        const submitButton = editor.querySelector('button[type="submit"]');
+        if (submitButton?.disabled) return;
+        if (submitButton) submitButton.disabled = true;
+        try {
+          const current = await currentAccess();
+          if (!current.canManage || !current.profile?.id || !current.session?.user?.id) {
+            adminFeedback('Brak uprawnień do tworzenia ankiet.');
+            return;
+          }
+          const question = editor.querySelector('#obPollQuestion').value.trim();
+          if (question.length < 3) {
+            adminFeedback('Pytanie musi mieć co najmniej 3 znaki.');
+            return;
+          }
+          const description = editor.querySelector('#obPollDescription').value.trim() || null;
+          const options = [...editor.querySelectorAll('[data-poll-option-input]')]
+            .map((input) => input.value.trim())
+            .filter(Boolean);
+          if (options.length < 2 || options.length > 8 || new Set(options.map((value) => value.toLowerCase())).size !== options.length) {
+            adminFeedback('Dodaj od 2 do 8 różnych odpowiedzi.');
+            return;
+          }
+          const startsAt = new Date();
+          const endsValue = editor.querySelector('#obPollEndsAt').value;
+          const parsedEndsAt = endsValue ? new Date(endsValue) : null;
+          const endsAt = parsedEndsAt && Number.isFinite(parsedEndsAt.getTime()) ? parsedEndsAt.toISOString() : null;
+          if (endsValue && (!endsAt || parsedEndsAt.getTime() <= startsAt.getTime())) {
+            adminFeedback('Data zakończenia musi być późniejsza niż teraz.');
+            return;
+          }
+          adminFeedback('Zapisywanie ankiety…');
+          const { error } = await supabase.from('clan_polls').insert({
+            question,
+            description,
+            options,
+            starts_at: startsAt.toISOString(),
+            ends_at: endsAt,
+            is_active: true,
+            created_by: current.session.user.id,
+          });
+          if (error) {
+            console.error('POLL CREATE FAILED', error);
+            adminFeedback('Nie udało się utworzyć ankiety: ' + (error.message || 'błąd zapisu.'));
+            return;
+          }
+          await loadPolls();
+          await showAdminEditor();
+          adminFeedback('✓ Ankieta utworzona.');
+        } catch (error) {
           console.error('POLL CREATE FAILED', error);
-          adminFeedback('Nie udało się utworzyć ankiety.');
-          return;
+          adminFeedback('Nie udało się utworzyć ankiety: ' + (error?.message || 'błąd zapisu.'));
+        } finally {
+          if (submitButton && editor.contains(submitButton)) submitButton.disabled = false;
         }
-        adminFeedback('✓ Ankieta utworzona.');
-        await loadPolls();
-        await showAdminEditor();
       };
       editor.querySelectorAll('[data-poll-close]').forEach((button) => {
         button.onclick = async () => {
