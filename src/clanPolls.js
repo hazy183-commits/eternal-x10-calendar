@@ -152,6 +152,9 @@ export function installClanPolls(supabase) {
       '.ob-poll-admin-row strong{display:block;color:#ddd3bd;font-size:12px}',
       '.ob-poll-admin-row small{display:block;margin-top:5px;color:#827b6d;font-size:9px}',
       '.ob-poll-admin-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}',
+      '.ob-poll-admin-entry{display:flex;justify-content:flex-end;margin:14px 0 0}',
+      '.ob-poll-admin-entry[hidden]{display:none!important}',
+      '.ob-poll-inline-editor{margin-top:10px}',
       '.ob-poll-form{display:grid;gap:9px;padding:14px;border:1px solid #49391f;background:#0b0e0e;margin:12px 0}',
       '.ob-poll-form label{display:grid;gap:5px;color:#b1a58f;font-size:9px;font-weight:800}',
       '.ob-poll-form input,.ob-poll-form textarea{box-sizing:border-box;width:100%;padding:10px;border:1px solid #443824;background:#080b0b;color:#eee}',
@@ -176,6 +179,8 @@ export function installClanPolls(supabase) {
     panel.dataset.zonePanel = 'polls';
     panel.innerHTML = [
       '<div class="zone-section-head"><small>GŁOSOWANIE KLANU</small><h3>ANKIETY</h3><p>Oddaj jeden głos w każdej aktywnej ankiecie.</p></div>',
+      '<div class="ob-poll-admin-entry" data-poll-admin-entry hidden><button type="button" class="ob-editor-btn" data-poll-create>+ UTWÓRZ ANKIETĘ</button></div>',
+      '<div class="ob-poll-inline-editor" data-poll-inline-editor></div>',
       '<p id="obPollActionStatus" class="ob-poll-note" role="status"></p><div id="obPollsList" class="ob-polls-list"><div class="ob-poll-empty">Ładowanie ankiet…</div></div>',
     ].join('');
     main.appendChild(panel);
@@ -200,6 +205,10 @@ export function installClanPolls(supabase) {
     const pendingPolls = new Set();
 
     const feedback = () => document.querySelector('#memberZoneLayer #obEditorFeedback');
+    const syncInlineAdmin = () => {
+      const entry = panel.querySelector('[data-poll-admin-entry]');
+      if (entry) entry.hidden = !lastAccess?.canManage;
+    };
 
     const renderResults = (poll) => {
       const counts = results.get(String(poll.id)) || new Map();
@@ -265,6 +274,7 @@ export function installClanPolls(supabase) {
     const loadPolls = async () => {
       const access = await currentAccess();
       lastAccess = access;
+      syncInlineAdmin();
       if (!access.session) {
         polls = [];
         ownVotes = new Map();
@@ -298,9 +308,10 @@ export function installClanPolls(supabase) {
     };
 
     const adminArea = () => document.querySelector('#memberZoneLayer [data-zone-panel="content-editor"] #obEditorArea');
-    const waitForAdminArea = async () => {
+    const inlineAdminArea = () => panel.querySelector('[data-poll-inline-editor]');
+    const waitForAdminArea = async (target = 'inline') => {
       for (let attempt = 0; attempt < 20; attempt += 1) {
-        const editor = adminArea();
+        const editor = target === 'content' ? adminArea() : inlineAdminArea();
         if (editor) return editor;
         await new Promise((resolve) => setTimeout(resolve, 50));
       }
@@ -311,10 +322,10 @@ export function installClanPolls(supabase) {
       [...new Set(nodes)].forEach((node) => { node.textContent = message; });
     };
 
-    const showAdminEditor = async () => {
+    const showAdminEditor = async (target = 'inline') => {
       const access = await currentAccess();
       if (!access.canManage) return;
-      const editor = await waitForAdminArea();
+      const editor = await waitForAdminArea(target);
       if (!editor) {
         adminFeedback('Nie udało się otworzyć edytora ankiety. Odśwież strefę klanu i spróbuj ponownie.');
         return;
@@ -396,7 +407,7 @@ export function installClanPolls(supabase) {
             return;
           }
           await loadPolls();
-          await showAdminEditor();
+          await showAdminEditor(target);
           adminFeedback('✓ Ankieta utworzona.');
         } catch (error) {
           console.error('POLL CREATE FAILED', error);
@@ -412,7 +423,7 @@ export function installClanPolls(supabase) {
           adminFeedback(error ? 'Nie udało się zakończyć ankiety.' : '✓ Ankieta zakończona.');
           if (!error) {
             await loadPolls();
-            await showAdminEditor();
+            await showAdminEditor(target);
           }
         };
       });
@@ -425,7 +436,7 @@ export function installClanPolls(supabase) {
             await deletePoll(supabase, button.dataset.pollDelete);
             adminFeedback('✓ Ankieta usunięta.');
             await loadPolls();
-            await showAdminEditor();
+            await showAdminEditor(target);
           } catch { adminFeedback('Nie udało się usunąć ankiety.'); }
           finally { button.disabled = false; }
         };
@@ -441,7 +452,7 @@ export function installClanPolls(supabase) {
       card.innerHTML = '<h4>Ankiety</h4><p class="zone-muted">Twórz ankiety i zarządzaj głosowaniami członków.</p><button type="button" class="ob-editor-btn">ZARZĄDZAJ ANKIETAMI</button>';
       card.querySelector('button').onclick = async () => {
         zone.querySelector('[data-zone-view="content-editor"]')?.click();
-        setTimeout(showAdminEditor, 0);
+        setTimeout(() => showAdminEditor('content'), 0);
       };
       grid.appendChild(card);
       return true;
@@ -496,6 +507,8 @@ export function installClanPolls(supabase) {
         panel.querySelector('#obPollActionStatus').textContent = 'Nie udało się zapisać głosu. Odśwież ankietę i spróbuj ponownie.';
       } finally { pendingPolls.delete(id); renderPolls(); }
     });
+
+    panel.querySelector('[data-poll-create]').onclick = () => showAdminEditor('inline');
 
     zone.addEventListener('click', (event) => {
       if (event.target.closest('[data-zone-view="polls"]')) setTimeout(loadPolls, 0);
