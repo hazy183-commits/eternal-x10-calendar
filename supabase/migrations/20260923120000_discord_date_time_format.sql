@@ -213,7 +213,7 @@ begin
 
   return sent;
 end;
-$function$
+$function$;
 
 
 CREATE OR REPLACE FUNCTION public.process_discord_daily_digest()
@@ -367,7 +367,7 @@ begin
 
   return 1;
 end;
-$function$
+$function$;
 
 
 CREATE OR REPLACE FUNCTION private.preview_discord_notification()
@@ -467,7 +467,7 @@ begin
     'site_url', site_url
   );
 end;
-$function$
+$function$;
 
 
 commit;
