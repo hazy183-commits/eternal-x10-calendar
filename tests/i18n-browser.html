@@ -1,0 +1,40 @@
+<!doctype html><html lang="pl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Language regression checks</title>
+<style>body{font:16px Arial;padding:20px;background:#101413;color:#eee}li{margin:8px}button,input,select,textarea{padding:8px;margin:4px}#results{white-space:pre-wrap} .header-actions{display:flex}</style>
+<div class="header-actions"></div><h1>Language regression checks</h1><pre id="results" translate="no">Running…</pre><section id="fixture">
+<button id="save" data-action="save">Zapisz</button><p id="feedback">Ładowanie…</p>
+<input id="draft" name="name" value="Wydarzenia" placeholder="Hasło"><textarea id="body" name="body">Ankiety</textarea>
+<select id="implicit" name="implicit"><option>Wszystkie</option><option selected>Broń</option></select>
+<select id="explicit" name="role"><option value="member">Członek</option><option selected value="leader">Lider</option></select>
+<div class="ob-poll-card"><h3>Zapisz</h3><p class="ob-poll-description">Ankiety</p><button class="ob-poll-option" data-poll-option="1"><span>Wydarzenia</span></button><p class="ob-poll-note">Twój głos został zapisany.</p></div>
+<article class="ob-ann-item"><h4>Wydarzenia</h4><p>Zapisz</p><button>Edytuj</button></article>
+<div class="ob-role-user"><b>Lider</b></div><div class="event-info"><h3>Zapisz</h3></div>
+<p data-no-i18n>Ankiety</p><p id="date">czwartek, 24 września 2026</p>
+</section><script type="module">
+import {changeLanguage} from '../src/i18n.js';
+import {getLanguage} from '../src/i18nCore.js';
+const before=getLanguage();
+const output=document.querySelector('#results'),lines=[];
+const check=(name,condition)=>{lines.push(`${condition?'PASS':'FAIL'} ${name}`);output.textContent=lines.join('\n');if(!condition)throw Error(name)};
+const settle=()=>new Promise(resolve=>setTimeout(resolve,25));
+const $=s=>document.querySelector(s);let clicks=0;const originalButton=$('#save');originalButton.onclick=()=>clicks++;
+try{
+changeLanguage('en');await settle();
+check('English labels and document language',$('#save').textContent==='Save'&&document.documentElement.lang==='en');
+check('Drafts and textarea content retained',$('#draft').value==='Wydarzenia'&&$('#body').value==='Ankiety');
+check('Implicit select keeps original value',$('#implicit').value==='Broń'&&$('#implicit').selectedOptions[0].textContent==='Weapon');
+check('Explicit select keeps role identifier',$('#explicit').value==='leader'&&$('#explicit').selectedOptions[0].textContent==='Leader');
+check('Poll question, description and answers unchanged',$('.ob-poll-card h3').textContent==='Zapisz'&&$('.ob-poll-description').textContent==='Ankiety'&&$('.ob-poll-option span').textContent==='Wydarzenia');
+check('Announcement title and body unchanged',$('.ob-ann-item h4').textContent==='Wydarzenia'&&$('.ob-ann-item p').textContent==='Zapisz');
+check('Player and event names unchanged',$('.ob-role-user b').textContent==='Lider'&&$('.event-info h3').textContent==='Zapisz');
+check('Authored custom text unchanged',$('[data-no-i18n]').textContent==='Ankiety');
+check('Poll feedback and announcement actions translated',$('.ob-poll-note').textContent==='Your vote has been saved.'&&$('.ob-ann-item button').textContent==='Edit');
+check('Placeholders translated',$('#draft').placeholder==='Password');
+originalButton.click();check('Existing button and handler retained',originalButton===$('#save')&&clicks===1&&originalButton.dataset.action==='save');
+$('#feedback').textContent='Zapisano.';await settle();check('Async feedback translated',$('#feedback').textContent==='Saved.');
+$('#fixture').insertAdjacentHTML('beforeend','<button id="late">Usuń ankietę</button>');await settle();check('Newly rendered panel translated',$('#late').textContent==='Delete poll');
+changeLanguage('pl');await settle();check('Polish restored including latest async state',$('#save').textContent==='Zapisz'&&$('#feedback').textContent==='Zapisano.'&&$('#late').textContent==='Usuń ankietę');
+check('Polish dates restored',$('#date').textContent==='czwartek, 24 września 2026');
+for(let i=0;i<10;i++){changeLanguage('en');changeLanguage('pl')};await settle();check('Repeated switching does not corrupt form or option data',$('#implicit').value==='Broń'&&$('#implicit').selectedOptions[0].textContent==='Broń'&&$('#draft').value==='Wydarzenia');
+changeLanguage(before);await settle();output.textContent+='\nAll 16 browser checks passed.';
+}catch(error){output.textContent+='\n'+error.stack;}
+</script></html>

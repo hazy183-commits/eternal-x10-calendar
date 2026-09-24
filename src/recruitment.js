@@ -1,3 +1,4 @@
+import { confirmLocalized } from './i18nCore.js';
 import { canAccessClanView, switchClanView } from './clanViewAccess.js';
 const esc = (value = '') => String(value).replace(/[&<>"']/g, (char) => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
@@ -239,7 +240,7 @@ export function installRecruitment(supabase) {
       if (remove.disabled || !await isStaff()) return;
       const card = remove.closest('[data-recruit-id]');
       const id = Number(card?.dataset.recruitId);
-      if (!id || !window.confirm(`Usunąć zgłoszenie „${card.querySelector('h4').textContent}”? Tej operacji nie można cofnąć.`)) return;
+      if (!id || !confirmLocalized(`Usunąć zgłoszenie „${card.querySelector('h4').textContent}”? Tej operacji nie można cofnąć.`)) return;
       remove.disabled = true;
       card.querySelector('.ob-recruit-delete-error')?.remove();
       try {

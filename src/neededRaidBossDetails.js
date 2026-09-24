@@ -1,3 +1,4 @@
+import { confirmLocalized } from './i18nCore.js';
 import { raidBossImageCandidates, raidBossWikiUrl } from './raidBossArtworkEnhancer.js';
 
 const esc = (v = '') => String(v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -166,7 +167,7 @@ export function installNeededRaidBossDetails(supabase) {
   }
 
   async function markKilled() {
-    if (!activeId || !window.confirm('Oznaczyć tego Raid Bossa jako zabitego?')) return;
+    if (!activeId || !confirmLocalized('Oznaczyć tego Raid Bossa jako zabitego?')) return;
     const message = body().querySelector('.rb-detail-message');
     if (message) message.textContent = 'Zapisywanie…';
     const { error } = await supabase.from('raid_boss_requests').update({ status: 'closed' }).eq('id', activeId);

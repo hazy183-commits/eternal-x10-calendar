@@ -1,3 +1,4 @@
+import { confirmLocalized } from './i18nCore.js';
 import { warsawLocalToIso } from './neededRaidBossWindow.js';
 const RAID_BOSSES = [
   { level: 60, name: 'Ancient Weird Drake' },
@@ -200,7 +201,7 @@ export function installNeededRaidBosses(supabase) {
     }
 
     async function removeRequest(id) {
-      if (!window.confirm('Usunąć to zgłoszenie RB?')) return;
+      if (!confirmLocalized('Usunąć to zgłoszenie RB?')) return;
       const { error } = await supabase.from('raid_boss_requests').delete().eq('id', Number(id));
       if (!error) await load();
     }

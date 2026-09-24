@@ -1,3 +1,5 @@
+import { confirmLocalized } from './i18nCore.js';
+import './i18n.js';
 import { createCalendarNavigation } from './calendarNavigation.js';
 import './persistentHeader.js';
 import { publishClanEventSources } from './clanEventFeed.js';
@@ -177,6 +179,8 @@ function renderNext() {
   if (!changed && featuredRenderSignature === nextSignature) return;
   featuredRenderSignature = nextSignature;
   applyBossArtwork($('.event-art-large'), artworkName(event));
+  $('#nextName').toggleAttribute('data-no-i18n', Boolean(event));
+  $('#nextDescription').toggleAttribute('data-no-i18n', Boolean(event));
   if (!event) {
     $('#nextName').textContent = 'BRAK NADCHODZĄCYCH WYDARZEŃ';
     $('#nextType').textContent = 'KALENDARZ KLANU';
@@ -843,7 +847,7 @@ async function initializeApp() {
             setAdminFeedback(`Pominięto ${skippedCount} duplikat${skippedCount === 1 ? '' : 'y'}. Wydarzenia już istnieją.`, true);
             return;
           }
-          if (recurrenceMode === 'recurring' && !window.confirm(`Zostanie utworzonych ${fresh.length} wydarzeń. Czy kontynuować?`)) return;
+          if (recurrenceMode === 'recurring' && !confirmLocalized(`Zostanie utworzonych ${fresh.length} wydarzeń. Czy kontynuować?`)) return;
           for (const candidate of fresh) {
             await repository.save(candidate);
             createdCount += 1;

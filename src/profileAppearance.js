@@ -118,7 +118,7 @@ export function profileCardMarkup(profile = {}, input, compact = false) {
     <div class="ps-cover ps-cover-${look.background}" aria-hidden="true"></div>
     <div class="ps-profile-content"><span class="ps-profile-kicker">ORZEŁ BIAŁY · INTERLUDE</span>
       <div class="ps-avatar-stage">${decoratedAvatar(profile, look)}<span class="ps-sparks" aria-hidden="true">✦ · ✧ · ✦</span></div>
-      <h3>${escapeHtml(profile.nickname || 'Twój nick')}</h3>
+      <h3 data-no-i18n>${escapeHtml(profile.nickname || 'Twój nick')}</h3>
       <p class="ps-character">${escapeHtml(profile.character_class || 'Członek klanu')}${profile.character_level ? ` · Lv. ${escapeHtml(profile.character_level)}` : ''}</p>
       <img class="ps-crest" src="${CLAN_CREST}" alt="Herb klanu Orzeł Biały" width="80" height="54">
       <div class="ps-profile-badges" aria-label="Wybrane ozdoby profilu">${look.badges.map(id => `<span title="${badges.find(item => item.id === id).label}">${badgeMarkup(id)}</span>`).join('')}</div>

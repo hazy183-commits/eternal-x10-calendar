@@ -20,6 +20,8 @@ export function app(t, iso) {
   const element = (selector) => {
     if (!elements.has(selector)) elements.set(selector, {
       textContent: '', innerHTML: '', className: '', classList: { toggle() {} }, querySelector: element,
+      attributes: new Set(),
+      toggleAttribute(name, force) { if (force) this.attributes.add(name); else this.attributes.delete(name); return Boolean(force); },
     });
     return elements.get(selector);
   };

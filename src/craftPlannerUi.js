@@ -1,3 +1,4 @@
+import { confirmLocalized } from './i18nCore.js';
 import {
   createCraftProject,
   deleteCraftProject,
@@ -384,7 +385,7 @@ export function installCraftPlannerUi(supabase) {
     const projectId = action.dataset.id;
     try {
       if (action.dataset.craftAction === 'delete') {
-        if (!window.confirm('Usunąć ten projekt craftu?')) return;
+        if (!confirmLocalized('Usunąć ten projekt craftu?')) return;
         await deleteCraftProject(supabase, projectId);
       } else if (action.dataset.craftAction === 'pause') {
         await updateCraftProject(supabase, projectId, { status: 'paused' });

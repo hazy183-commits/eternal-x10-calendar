@@ -15,7 +15,7 @@ export const SITE_SETTING_FIELDS = [
 ];
 
 const cleanUrl=(value,fallback='')=>{try{const url=new URL(String(value||fallback));return ['http:','https:'].includes(url.protocol)?url.href:fallback}catch{return fallback}};
-const setText=(selector,value)=>{const node=document.querySelector(selector);if(node&&value)node.textContent=value};
+const setText=(selector,value)=>{const node=document.querySelector(selector);if(node&&value){const defaults=SITE_SETTING_FIELDS.map(x=>x.fallback);node.toggleAttribute('data-no-i18n',!defaults.includes(value)&&!defaults.includes(value.replace(/^„|”$/g,'')));node.textContent=value}};
 
 export function applySiteSettings(settings={}){
   const value=(key)=>String(settings[key]||SITE_SETTING_FIELDS.find(x=>x.key===key)?.fallback||'').trim();

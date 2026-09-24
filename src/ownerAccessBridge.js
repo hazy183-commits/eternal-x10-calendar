@@ -1,12 +1,14 @@
 import { hasAdminPermission, loadAdminPermissionContext } from './adminPermissions.js';
+import { translateText } from './i18nCore.js';
 
 export function normalizeClanHeader(root=document){
   const entry=[...root.querySelectorAll('.member-auth-entry')].find((button)=>!button.classList.contains('logout'));
   if(!entry)return;
   // This runs inside a subtree observer. Replacing even identical text
   // creates another mutation and can starve app startup and all timers.
-  if(entry.textContent!=='♟ STREFA KLANU')entry.textContent='♟ STREFA KLANU';
-  if(entry.getAttribute('aria-label')!=='Otwórz Strefę Klanu')entry.setAttribute('aria-label','Otwórz Strefę Klanu');
+  const label=translateText('♟ STREFA KLANU'),accessibleLabel=translateText('Otwórz Strefę Klanu');
+  if(entry.textContent!==label)entry.textContent=label;
+  if(entry.getAttribute('aria-label')!==accessibleLabel)entry.setAttribute('aria-label',accessibleLabel);
 }
 
 export function installOwnerAccessBridge(supabase){
@@ -149,6 +151,7 @@ export function installOwnerAccessBridge(supabase){
   });
   const header=document.querySelector('.header-actions');
   if(header)headerObserver.observe(header,{childList:true,subtree:true,characterData:true});
+  window.addEventListener('orzel:language-changed',()=>normalizeClanHeader());
 
   supabase.auth.onAuthStateChange(()=>setTimeout(sync,120));
   setTimeout(sync,250);

@@ -1,3 +1,4 @@
+import { confirmLocalized } from './i18nCore.js';
 import { loadAdminPermissionContext, hasAdminPermission } from './adminPermissions.js';
 import { savePollVote, deletePoll } from './clanPollActions.js';
 
@@ -429,7 +430,7 @@ export function installClanPolls(supabase) {
       });
       editor.querySelectorAll('[data-poll-delete]').forEach((button) => {
         button.onclick = async () => {
-          if (!confirm('Usunąć tę ankietę razem z głosami?')) return;
+          if (!confirmLocalized('Usunąć tę ankietę razem z głosami?')) return;
           if (!await currentAccess().then((access) => access.canManage)) return;
           button.disabled = true;
           try {
@@ -477,7 +478,7 @@ export function installClanPolls(supabase) {
         const id = remove.dataset.pollDelete;
         if (pendingPolls.has(id)) return;
         const poll = polls.find(item => String(item.id) === id);
-        if (!poll || !confirm('Usunąć ankietę „' + poll.question + '” razem ze wszystkimi głosami? Tej operacji nie można cofnąć.')) return;
+        if (!poll || !confirmLocalized('Usunąć ankietę „' + poll.question + '” razem ze wszystkimi głosami? Tej operacji nie można cofnąć.')) return;
         pendingPolls.add(id); renderPolls();
         try {
           if (!(await currentAccess()).canManage) throw new Error('Brak uprawnień.');

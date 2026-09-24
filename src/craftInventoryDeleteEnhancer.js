@@ -1,3 +1,4 @@
+import { confirmLocalized } from './i18nCore.js';
 import { setCraftInventoryQuantity } from './craftWorkspace.js';
 
 function ensureStyles() {
@@ -50,7 +51,7 @@ export function installCraftInventoryDeleteEnhancer(supabase) {
 
     const row = button.closest('.craft-inventory-row');
     const name = row?.querySelector('b')?.textContent?.trim() || 'ten materiał';
-    if (!window.confirm(`Usunąć ${name} z magazynu?`)) return;
+    if (!confirmLocalized(`Usunąć ${name} z magazynu?`)) return;
 
     button.disabled = true;
     try {
