@@ -12,14 +12,18 @@
 </section><script type="module">
 import {changeLanguage} from '../src/i18n.js';
 import {getLanguage} from '../src/i18nCore.js';
+import {normalizeActiveStatus} from '../src/activeEventStatus.js';
 const before=getLanguage();
 const output=document.querySelector('#results'),lines=[];
 const check=(name,condition)=>{lines.push(`${condition?'PASS':'FAIL'} ${name}`);output.textContent=lines.join('\n');if(!condition)throw Error(name)};
 const settle=()=>new Promise(resolve=>setTimeout(resolve,25));
 const $=s=>document.querySelector(s);let clicks=0;const originalButton=$('#save');originalButton.onclick=()=>clicks++;
+const active=document.createElement('p');active.className='respawn-window-active';active.textContent='TRWA';$('#fixture').append(active);
+const activeObserver=new MutationObserver(()=>normalizeActiveStatus(active));activeObserver.observe(active,{childList:true,characterData:true,subtree:true});
 try{
 changeLanguage('en');await settle();
 check('English labels and document language',$('#save').textContent==='Save'&&document.documentElement.lang==='en');
+check('Active event observer settles without blocking timers',active.textContent==='IN PROGRESS');
 check('Drafts and textarea content retained',$('#draft').value==='Wydarzenia'&&$('#body').value==='Ankiety');
 check('Implicit select keeps original value',$('#implicit').value==='Broń'&&$('#implicit').selectedOptions[0].textContent==='Weapon');
 check('Explicit select keeps role identifier',$('#explicit').value==='leader'&&$('#explicit').selectedOptions[0].textContent==='Leader');
@@ -35,6 +39,6 @@ $('#fixture').insertAdjacentHTML('beforeend','<button id="late">Usuń ankietę</
 changeLanguage('pl');await settle();check('Polish restored including latest async state',$('#save').textContent==='Zapisz'&&$('#feedback').textContent==='Zapisano.'&&$('#late').textContent==='Usuń ankietę');
 check('Polish dates restored',$('#date').textContent==='czwartek, 24 września 2026');
 for(let i=0;i<10;i++){changeLanguage('en');changeLanguage('pl')};await settle();check('Repeated switching does not corrupt form or option data',$('#implicit').value==='Broń'&&$('#implicit').selectedOptions[0].textContent==='Broń'&&$('#draft').value==='Wydarzenia');
-changeLanguage(before);await settle();output.textContent+='\nAll 16 browser checks passed.';
+changeLanguage(before);await settle();activeObserver.disconnect();output.textContent+='\nAll 17 browser checks passed.';
 }catch(error){output.textContent+='\n'+error.stack;}
 </script></html>

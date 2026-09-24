@@ -1,4 +1,5 @@
 import { applyBossArtwork } from './bossArtwork.js';
+import { normalizeActiveStatus } from './activeEventStatus.js';
 
 function installMobileHeaderMenu() {
   if (document.querySelector('#mobileHeaderMenuButton')) return;
@@ -92,16 +93,13 @@ function installActiveStatusLabel() {
   const sync = () => {
     if (syncing) return;
     syncing = true;
-    const active = status.classList.contains('trwa') ||
-      status.classList.contains('respawn-window-active') ||
-      status.classList.contains('siege-active') ||
-      status.classList.contains('olympiad-active');
-    if (active && status.textContent !== 'TRWA') status.textContent = 'TRWA';
+    normalizeActiveStatus(status);
     syncing = false;
   };
 
   new MutationObserver(sync).observe(status, { attributes: true, childList: true, characterData: true, subtree: true });
   window.setInterval(sync, 1000);
+  window.addEventListener('orzel:language-changed', sync);
   sync();
 }
 
