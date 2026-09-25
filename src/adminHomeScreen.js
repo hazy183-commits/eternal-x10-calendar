@@ -1,3 +1,4 @@
+import { updatePreviewShortcut } from './ownerPreviewShortcut.js';
 import { adminClanIcon } from './adminClanIcons.js';
 import { refreshVisitStats, hideVisitStats } from './siteVisitStats.js';
 import './adminDashboardHome.css';
@@ -79,14 +80,18 @@ export function installAdminHomeScreen(supabaseClient){
     async function readProfile(){
       const {data:{session}}=await supabaseClient.auth.getSession();
       if(!session)return {session:null,profile:null};
-      const {data:profile}=await supabaseClient.from('profiles').select('nickname,role,status').eq('id',session.user.id).maybeSingle();
+      const {data:profile}=await supabaseClient.from('profiles').select('nickname,role,status,removed_at').eq('id',session.user.id).maybeSingle();
       return {session,profile:profile||null};
     }
 
+    let homeRevision=0;
     async function refreshHome(){
+      const revision=++homeRevision;
+      updatePreviewShortcut(home,null);
       hideVisitStats(home);
       const {session,profile}=await readProfile();
-      if(!session)return;
+      if(revision!==homeRevision||!session)return;
+      updatePreviewShortcut(home,profile);
       const role=String(profile?.role||'').toLowerCase();
       const owner=profile?.status==='approved'&&role==='owner';
       void refreshVisitStats(supabaseClient,home,owner);
@@ -133,7 +138,7 @@ export function installAdminHomeScreen(supabaseClient){
     });
     observer.observe(modal,{attributes:true,attributeFilter:['class']});
 
-    supabaseClient.auth.onAuthStateChange(()=>{hideVisitStats(home);setTimeout(()=>{if(modal.classList.contains('open'))refreshHome();},0);});
+    supabaseClient.auth.onAuthStateChange(()=>{homeRevision++;updatePreviewShortcut(home,null);hideVisitStats(home);setTimeout(()=>{if(modal.classList.contains('open'))refreshHome();},0);});
   };
 
   waitForDashboard();
@@ -142,4 +147,3 @@ export function installAdminHomeScreen(supabaseClient){
 // Wait until the module graph has initialized the shared Supabase client.
 // Member features also import artwork, which imports this screen.
 queueMicrotask(() => installAdminHomeScreen(supabase));
-
