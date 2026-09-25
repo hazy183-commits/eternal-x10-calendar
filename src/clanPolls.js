@@ -32,7 +32,7 @@ const isOpen = (poll, now = Date.now()) => {
 const MENU_GROUPS = [
   { key: 'planning', label: 'PLANOWANIE', views: ['events', 'signups', 'polls'], icon: '◈', open: true },
   { key: 'clan', label: 'KLAN', views: ['announcements', 'profile', 'members', 'recruitment', 'attendance'], icon: '♜', open: false },
-  { key: 'tools', label: 'NARZĘDZIA', views: ['needed-rb', 'craft'], icon: '⚒', open: false },
+  { key: 'tools', label: 'NARZĘDZIA', views: ['needed-rb', 'craft', 'group-craft'], icon: '⚒', open: false },
   { key: 'admin', label: 'ADMINISTRACJA', views: ['content-editor'], icon: '✦', open: false },
 ];
 

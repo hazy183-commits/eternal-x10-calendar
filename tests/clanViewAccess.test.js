@@ -26,3 +26,25 @@ test('manual switch cannot activate restricted panels, including after owner los
     }
   }
 });
+
+test('group-craft navigation keeps the Craft panel active while selecting the group entry', () => {
+  const nav = ['craft', 'group-craft', 'home'].map(view => ({
+    dataset: { zoneView: view },
+    active: false,
+    classList: { toggle(_name, active) { this.element.active = active; } },
+  }));
+  const panels = ['craft', 'home'].map(view => ({
+    dataset: { zonePanel: view },
+    active: false,
+    classList: { toggle(_name, active) { this.element.active = active; } },
+  }));
+  [...nav, ...panels].forEach(element => { element.classList.element = element; });
+  const zone = {
+    querySelectorAll(selector) { return selector === '.zone-nav' ? nav : panels; },
+    querySelector() { return { scrollTop: 50 }; },
+  };
+
+  assert.equal(switchClanView(zone, { role: 'owner', status: 'approved' }, 'group-craft'), 'group-craft');
+  assert.deepEqual(nav.filter(item => item.active).map(item => item.dataset.zoneView), ['group-craft']);
+  assert.deepEqual(panels.filter(item => item.active).map(item => item.dataset.zonePanel), ['craft']);
+});

@@ -1,7 +1,7 @@
 const GROUPS = [
   { key: 'planning', label: 'PLANOWANIE', views: ['events', 'signups', 'polls'] },
   { key: 'clan', label: 'KLAN', views: ['announcements', 'profile', 'members', 'recruitment', 'attendance'] },
-  { key: 'tools', label: 'NARZĘDZIA', views: ['needed-rb', 'craft'] },
+  { key: 'tools', label: 'NARZĘDZIA', views: ['needed-rb', 'craft', 'group-craft'] },
   { key: 'admin', label: 'ADMINISTRACJA', views: ['content-editor'] },
 ];
 

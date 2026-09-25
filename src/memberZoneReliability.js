@@ -114,8 +114,12 @@ export function installMemberZoneReliability(supabase) {
       displayProfile(session, profile);
       zone.classList.add('open');
       switchClanView(zone, profile, initialView);
-      if (initialView === 'craft') {
-        window.dispatchEvent(new CustomEvent('orzel:craft-workspace-opened'));
+      if (['craft', 'group-craft'].includes(initialView)) {
+        window.dispatchEvent(new CustomEvent('orzel:craft-workspace-opened', {
+          detail: {
+            focus: initialView === 'group-craft' ? 'project' : '',
+          },
+        }));
       }
     } catch (error) {
       console.error('[member-zone] Nie udało się otworzyć Strefy Klanu.', error);
