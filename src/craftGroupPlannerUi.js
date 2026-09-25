@@ -82,7 +82,7 @@ function renderEmpty(section, workspace, feedback = '') {
     <div class="craft-group-create-box">
       <div><b>Utwórz grupowy projekt</b><p>Właściciel zarządza projektem, a zaproszone osoby mogą uzupełniać wspólny magazyn.</p></div>
       <form id="craftGroupCreateForm" class="craft-group-form">
-        <label><span>Nazwa projektu</span><input name="name" maxlength="80" required placeholder="Np. Wspólne S grade dla CP"></label>
+        <label><span>Nazwa projektu grupowego</span><input name="name" maxlength="80" required placeholder="Np. Draco Bow dla CP"></label>
         <label><span>Przedmiot</span><select name="targetItemKey" required>${targetOptions(workspace)}</select></label>
         <label><span>Ilość</span><input name="targetQuantity" type="number" min="1" step="1" value="1" required></label>
         <button type="submit">UTWÓRZ PROJEKT</button>
