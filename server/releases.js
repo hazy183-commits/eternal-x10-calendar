@@ -25,7 +25,12 @@ export function createReleaseService(env = process.env, fetcher = fetch, candida
   async function vercel(path, method = 'GET') {
     if (!configured) throw new ReleaseError(503,'Publikowanie wymaga połączenia z hostingiem.');
     const response = await fetcher(`https://api.vercel.com${path}${path.includes('?')?'&':'?'}teamId=${encodeURIComponent(teamId)}`, {method,headers:{Authorization:`Bearer ${env.RELEASE_VERCEL_TOKEN}`},signal:AbortSignal.timeout(15000)});
-    if (!response.ok) throw new ReleaseError(response.status === 409 ? 409 : 502,'Hosting nie potwierdził operacji. Odśwież stan przed ponowną próbą.');
+    if (!response.ok) {
+      let failure; try { failure = await response.json(); } catch {}
+      const code = String(failure?.error?.code || 'unknown').replace(/[^a-zA-Z0-9_-]/g,'').slice(0,80);
+      console.error('[release-hosting]', JSON.stringify({method,status:response.status,code,operation:path.includes('/promote/')?'promote':path.includes('/rollback/')?'rollback':'read'}));
+      throw new ReleaseError(response.status === 409 ? 409 : 502,`Hosting nie potwierdził operacji (${response.status}: ${code}). Odśwież stan przed ponowną próbą.`);
+    }
     const body = await response.text();
     return body ? JSON.parse(body) : {};
   }
