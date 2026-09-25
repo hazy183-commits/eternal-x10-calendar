@@ -153,6 +153,48 @@ function collapseFlatRecipe(components, recipeBook) {
   return collapsed.length ? collapsed : components;
 }
 
+export function getMainMissingRows(project, workspace) {
+  const recipeBook = buildRecipeBook(workspace);
+  const itemIndex = buildItemIndex(workspace);
+  const targetRecipe = recipeBook.get(project?.targetItemKey);
+  if (!targetRecipe?.components?.length) {
+    return (project?.missing || []).map(row => ({
+      itemKey: row.itemKey,
+      name: row.name || itemIndex.get(row.itemKey)?.name || row.itemKey,
+      quantity: Number(row.quantity || 0),
+      covered: 0,
+      missing: Number(row.quantity || 0),
+    })).filter(row => !String(row.itemKey).startsWith('recipe_'));
+  }
+
+  const mainComponents = collapseFlatRecipe(targetRecipe.components, recipeBook)
+    .filter(component => !String(component.itemKey).startsWith('recipe_'));
+  const crafts = Math.ceil(Number(project.targetQuantity || 0) / Math.max(1, Number(targetRecipe.outputQuantity || 1)));
+  const maps = projectMaps(project);
+
+  return sortComponentsByRequiredQuantity(mainComponents, crafts, itemIndex)
+    .map(component => {
+      const required = Number(component.quantity || 0) * crafts;
+      const covered = Math.min(
+        required,
+        (maps.owned.get(component.itemKey) || 0) + (maps.surplus.get(component.itemKey) || 0),
+      );
+      return {
+        itemKey: component.itemKey,
+        name: itemIndex.get(component.itemKey)?.name || component.itemKey,
+        quantity: required,
+        covered,
+        missing: Math.max(0, required - covered),
+      };
+    })
+    .filter(row => row.missing > 0);
+}
+
+export function summarizeMainMissing(project, workspace) {
+  return getMainMissingRows(project, workspace)
+    .reduce((sum, row) => sum + Number(row.missing || 0), 0);
+}
+
 function nodeStatus(itemKey, quantity, recipeBook, maps) {
   const owned = Math.min(quantity, maps.owned.get(itemKey) || 0);
   const virtual = Math.min(Math.max(0, quantity - owned), maps.surplus.get(itemKey) || 0);
