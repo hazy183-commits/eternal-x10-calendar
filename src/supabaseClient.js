@@ -35,6 +35,7 @@ if (typeof document !== 'undefined') {
       { installTerritoryOwnershipScreenshotImport },
       { installTodayClanDashboard },
       { installCraftPlannerUi },
+      { installCraftGroupPlannerUi },
       { installCraftHierarchyEnhancer },
       { installCraftInventoryDeleteEnhancer },
       { installCraftHomeSummary },
@@ -62,6 +63,7 @@ if (typeof document !== 'undefined') {
       import('./territoryOwnershipScreenshotImport.js'),
       import('./todayClanDashboard.js'),
       import('./craftPlannerUi.js'),
+      import('./craftGroupPlannerUi.js'),
       import('./craftHierarchyEnhancer.js'),
       import('./craftInventoryDeleteEnhancer.js'),
       import('./craftHomeSummary.js'),
@@ -92,6 +94,7 @@ if (typeof document !== 'undefined') {
     installTerritoryOwnershipScreenshotImport(supabase);
     installTodayClanDashboard(supabase);
     installCraftPlannerUi(supabase);
+    installCraftGroupPlannerUi(supabase);
     installCraftHierarchyEnhancer(supabase);
     installCraftInventoryDeleteEnhancer(supabase);
     installCraftHomeSummary(supabase);
