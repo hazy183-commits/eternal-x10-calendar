@@ -8,7 +8,7 @@
 <div class="ob-poll-card"><h3>Zapisz</h3><p class="ob-poll-description">Ankiety</p><button class="ob-poll-option" data-poll-option="1"><span>Wydarzenia</span></button><p class="ob-poll-note">Twój głos został zapisany.</p></div>
 <article class="ob-ann-item"><h4>Wydarzenia</h4><p>Zapisz</p><button>Edytuj</button></article>
 <div class="ob-role-user"><b>Lider</b></div><div class="event-info"><h3>Zapisz</h3></div>
-<p data-no-i18n>Ankiety</p><p id="date">czwartek, 24 września 2026</p>
+<p id="generated-description">Dokładne 30-minutowe okno respawnu z gry.</p><p data-no-i18n>Ankiety</p><p id="date">czwartek, 24 września 2026</p>
 </section><script type="module">
 import {changeLanguage} from '../src/i18n.js';
 import {getLanguage} from '../src/i18nCore.js';
@@ -23,6 +23,7 @@ const activeObserver=new MutationObserver(()=>normalizeActiveStatus(active));act
 try{
 changeLanguage('en');await settle();
 check('English labels and document language',$('#save').textContent==='Save'&&document.documentElement.lang==='en');
+check('Generated respawn description translated',$('#generated-description').textContent==='Exact 30-minute in-game respawn window.');
 check('Active event observer settles without blocking timers',active.textContent==='IN PROGRESS');
 check('Drafts and textarea content retained',$('#draft').value==='Wydarzenia'&&$('#body').value==='Ankiety');
 check('Implicit select keeps original value',$('#implicit').value==='Broń'&&$('#implicit').selectedOptions[0].textContent==='Weapon');
@@ -37,8 +38,9 @@ originalButton.click();check('Existing button and handler retained',originalButt
 $('#feedback').textContent='Zapisano.';await settle();check('Async feedback translated',$('#feedback').textContent==='Saved.');
 $('#fixture').insertAdjacentHTML('beforeend','<button id="late">Usuń ankietę</button>');await settle();check('Newly rendered panel translated',$('#late').textContent==='Delete poll');
 changeLanguage('pl');await settle();check('Polish restored including latest async state',$('#save').textContent==='Zapisz'&&$('#feedback').textContent==='Zapisano.'&&$('#late').textContent==='Usuń ankietę');
+check('Generated respawn description restored',$('#generated-description').textContent==='Dokładne 30-minutowe okno respawnu z gry.');
 check('Polish dates restored',$('#date').textContent==='czwartek, 24 września 2026');
 for(let i=0;i<10;i++){changeLanguage('en');changeLanguage('pl')};await settle();check('Repeated switching does not corrupt form or option data',$('#implicit').value==='Broń'&&$('#implicit').selectedOptions[0].textContent==='Broń'&&$('#draft').value==='Wydarzenia');
-changeLanguage(before);await settle();activeObserver.disconnect();output.textContent+='\nAll 17 browser checks passed.';
+changeLanguage(before);await settle();activeObserver.disconnect();output.textContent+='\nAll 19 browser checks passed.';
 }catch(error){output.textContent+='\n'+error.stack;}
 </script></html>

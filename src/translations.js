@@ -1,6 +1,8 @@
 import { gameCopy } from './translationsGame.js';
 // UI copy only. Player names, authored content and game item names are not translated.
 const pairs = ` 
+Poniedziałek–piątek. Server time: 20:30–21:30 UTC. Cykl tygodniowy.|Monday–Friday. Server time: 20:30–21:30 UTC. Weekly cycle.
+Trwa budowanie wersji publicznej. Poczekaj około minuty, a następnie odśwież stan.|The public version is being built. Wait about a minute, then refresh the status. 
 Wersja testowa|Test version
 Sprawdź nowe zmiany przed publikacją. Otwiera się w nowej karcie.|Review new changes before publishing. Opens in a new tab.
 Strona główna|Home

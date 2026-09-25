@@ -34,3 +34,8 @@ test('confirmation messages preserve embedded poll titles and nicknames verbatim
 test('unknown text, game names, HTML and storage identifiers never get fragment replacement', () => {
   for (const value of ['Draconic Bow','Orzeł Biały','clan_polls','manage_users','To moja ankieta o klasie: Klasa','<script>alert(1)</script>','Mój nick to Środa']) assert.equal(translateText(value,'en'),value);
 });
+
+test('generated event descriptions translate while preserving source text for Polish',()=>{
+ const cases=[['Dokładne 30-minutowe okno respawnu z gry.','Exact 30-minute in-game respawn window.'],['Stałe okno respawnu.','Fixed respawn window.'],['Miesięczne oblężenie zamku.','Monthly castle siege.'],['Poniedziałek–piątek. Server time: 20:30–21:30 UTC. Cykl tygodniowy.','Monday–Friday. Server time: 20:30–21:30 UTC. Weekly cycle.']];
+ for(const [pl,en] of cases){assert.equal(translateText(pl,'en'),en);assert.equal(translateText(pl,'pl'),pl);}
+});
