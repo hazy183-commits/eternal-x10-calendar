@@ -180,7 +180,7 @@ function renderNext() {
   featuredRenderSignature = nextSignature;
   applyBossArtwork($('.event-art-large'), artworkName(event));
   $('#nextName').toggleAttribute('data-no-i18n', Boolean(event));
-  $('#nextDescription').toggleAttribute('data-no-i18n', Boolean(event));
+  $('#nextDescription').toggleAttribute('data-no-i18n', Boolean(event && !(event.isBossRespawn || event.isSiegeSchedule || event.isOlympiadSchedule || event.isPvpSchedule)));
   if (!event) {
     $('#nextName').textContent = 'BRAK NADCHODZĄCYCH WYDARZEŃ';
     $('#nextType').textContent = 'KALENDARZ KLANU';
