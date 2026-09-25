@@ -1,6 +1,8 @@
 import { gameCopy } from './translationsGame.js';
 // UI copy only. Player names, authored content and game item names are not translated.
-const pairs = `
+const pairs = ` 
+Wersja testowa|Test version
+Sprawdź nowe zmiany przed publikacją. Otwiera się w nowej karcie.|Review new changes before publishing. Opens in a new tab.
 Strona główna|Home
 Poradniki|Guides
 Poradniki / Bossowie|Guides / Bosses
