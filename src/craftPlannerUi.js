@@ -8,6 +8,7 @@ import {
 } from './craftWorkspace.js';
 import { craftItemIconMarkup, craftItemIconPath } from './craftItemIcons.js';
 import { summarizeCraftProject } from './craftHomeSummary.js';
+import { summarizeMainMissing } from './craftHierarchyEnhancer.js';
 
 const escapeHtml = (value = '') => String(value)
   .replaceAll('&', '&amp;')
@@ -60,7 +61,7 @@ function renderRequirementRows(project, workspace) {
 }
 
 function renderProjectCard(project, workspace) {
-  const missingTotal = project.missing.reduce((sum, row) => sum + Number(row.quantity || 0), 0);
+  const missingTotal = summarizeMainMissing(project, workspace);
   const targetItem = findItem(workspace, project.targetItemKey);
   const progress = summarizeCraftProject(project);
   const collapsed = collapsedProjectIds.has(String(project.id));
