@@ -29,6 +29,16 @@ test('keeps one decimal place so partial progress never appears stuck at zero', 
   assert.equal(summary.percent, 9.3);
 });
 
+test('counts generated craft surplus as covered progress', () => {
+  const summary = summarizeCraftProject({
+    complete: false,
+    requirements: [
+      { quantity: 10, ownedAllocated: 0, generatedSurplusUsed: 4, missing: 6 },
+    ],
+  });
+  assert.deepEqual(summary, { have: 4, missing: 6, total: 10, percent: 40 });
+});
+
 test('project navigation wraps in both directions', () => {
   assert.equal(wrapProjectIndex(2, 2), 0);
   assert.equal(wrapProjectIndex(-1, 2), 1);
