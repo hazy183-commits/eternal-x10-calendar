@@ -9,6 +9,7 @@ import {
 } from './craftGroupWorkspace.js';
 import { craftItemIconMarkup } from './craftItemIcons.js';
 import { summarizeMainMissing } from './craftHierarchyEnhancer.js';
+import { summarizeCraftProject } from './craftHomeSummary.js';
 
 const escapeHtml = (value = '') => String(value)
   .replaceAll('&', '&amp;')
@@ -101,7 +102,7 @@ function renderGroup(section, workspace, selectedIndex = 0, feedback = '') {
   const userId = workspace.user.id;
   const owner = String(group.project.owner_id) === String(userId);
   const canEditInventory = owner || (group.members || []).some(member => String(member.user_id) === String(userId) && member.role === 'editor');
-  const progress = group.plan ? Math.round((group.plan.complete ? 100 : ((group.plan.ownedAllocated || []).reduce((sum, row) => sum + Number(row.quantity || 0), 0) / Math.max(1, (group.plan.requirements || []).reduce((sum, row) => sum + Number(row.quantity || 0), 0))) * 100) * 10) / 10 : 0;
+  const progress = group.plan ? summarizeCraftProject(group.plan).percent : 0;
   const missing = group.plan ? summarizeMainMissing(group.plan, workspace) : 0;
   const candidates = renderCandidates(workspace, group);
 
