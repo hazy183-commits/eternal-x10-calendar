@@ -1,5 +1,5 @@
 import { next } from '@vercel/functions';
-import { requireOwner, PUBLIC_HOSTS, PREVIEW_COOKIE, previewToken } from './server/releaseAccess.js';
+import { requireOwner, ReleaseError, PUBLIC_HOSTS, PREVIEW_COOKIE, previewToken } from './server/releaseAccess.js';
 
 export const config = { matcher: '/:path*' };
 
@@ -30,7 +30,11 @@ export function makePreviewMiddleware(env = process.env, fetcher = fetch) {
         await requireOwner(session.access_token, env, fetcher);
         if (!/^[A-Za-z0-9_.-]+$/.test(session.access_token)) return loginPage('Nieprawidłowa sesja.');
         return new Response(null, { status: 303, headers: { Location: '/', 'Cache-Control': 'no-store', 'Set-Cookie': `${PREVIEW_COOKIE}=${session.access_token}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=${Math.min(Number(session.expires_in)||3600,3600)}` } });
-      } catch { return loginPage('Dostęp wymaga aktywnego konta właściciela. Spróbuj ponownie.'); }
+      } catch (error) {
+        const known = error instanceof ReleaseError;
+        console.error('[preview-login]', JSON.stringify({status:known?error.status:503,reason:known?error.message:(error?.name==='TimeoutError'?'timeout':'unexpected')}));
+        return loginPage(known?error.message:'Nie udało się połączyć z usługą logowania. Spróbuj ponownie.');
+      }
     }
     if (url.pathname === '/__preview-logout' && request.method === 'POST') {
       if (request.headers.get('origin') !== url.origin) return new Response('Forbidden', { status: 403 });
