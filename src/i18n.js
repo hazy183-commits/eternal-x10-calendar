@@ -70,7 +70,7 @@ function switchMarkup() {
   control.className = 'language-switch';
   control.setAttribute('role', 'group');
   control.setAttribute('aria-label', 'Język / Language');
-  control.innerHTML = '<button type="button" data-language="pl" lang="pl" title="Polski">PL</button><button type="button" data-language="en" lang="en" title="English">EN</button>';
+  control.innerHTML = '<button type="button" data-language="pl" lang="pl" title="Polski" aria-label="Polski"><svg class="language-flag" viewBox="0 0 30 20" aria-hidden="true"><path fill="#fff" d="M0 0h30v10H0z"/><path fill="#dc143c" d="M0 10h30v10H0z"/></svg><span>PL</span></button><button type="button" data-language="en" lang="en" title="English" aria-label="English"><svg class="language-flag" viewBox="0 0 60 40" aria-hidden="true"><path fill="#012169" d="M0 0h60v40H0z"/><path stroke="#fff" stroke-width="8" d="m0 0 60 40m0-40L0 40"/><path stroke="#c8102e" stroke-width="3" d="m0 0 60 40m0-40L0 40"/><path stroke="#fff" stroke-width="13" d="M30 0v40M0 20h60"/><path stroke="#c8102e" stroke-width="7" d="M30 0v40M0 20h60"/></svg><span>EN</span></button>';
   control.addEventListener('click', event => {
     const button = event.target.closest('[data-language]');
     if (button) changeLanguage(button.dataset.language);

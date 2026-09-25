@@ -9,3 +9,5 @@
 #adminModal .language-switch{margin-right:8px}
 @media(max-width:900px){.member-zone-side>.language-switch{grid-column:1/-1;margin:0 0 4px auto}.language-switch button{min-height:36px}.ob-gate-header{flex-wrap:wrap}.ob-gate-header>.language-switch{margin-left:auto}.header-actions>.language-switch{margin-left:auto}}
 @media(max-width:480px){.header-actions>.language-switch button{min-width:30px;padding:5px}.ob-gate-header>.language-switch{margin-top:8px}#adminModal .language-switch{margin-right:2px}.modal-header-actions{flex-wrap:wrap}}
+.language-switch button{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:58px}
+.language-flag{display:block;width:22px;height:15px;flex:0 0 22px;border-radius:2px;box-shadow:0 0 0 1px #ffffff35;overflow:hidden}

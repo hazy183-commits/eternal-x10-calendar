@@ -160,3 +160,18 @@ body > .topbar { z-index:13000!important; }
     gap:12px!important;
   }
 }
+/* Keep navigation groups separated when account actions and languages are visible. */
+@media(min-width:901px){
+ body > .topbar .topbar-inner{width:calc(100% - 48px)!important;max-width:1600px!important;gap:24px!important;flex-wrap:wrap!important;padding-block:10px!important;justify-content:space-between!important}
+ body > .topbar .main-nav{flex:0 0 auto!important;gap:22px!important;margin:0!important}
+ body > .topbar .header-actions{gap:14px!important;flex-wrap:wrap!important;margin-left:auto!important}
+ body > .topbar .main-nav a{padding-block:18px!important}
+}
+@media(min-width:901px) and (max-width:1400px){
+ body > .topbar .header-actions{flex-basis:100%!important;justify-content:flex-end!important;padding-top:8px;border-top:1px solid #69502c55}
+ body > .topbar .topbar-inner{row-gap:8px!important}
+}
+@media(max-width:600px){
+ body > .topbar .topbar-inner{flex-wrap:wrap!important;gap:10px!important}
+ body > .topbar .header-actions{flex-wrap:wrap!important;gap:8px!important}
+}
