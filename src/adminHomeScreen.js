@@ -1,5 +1,6 @@
 import { adminClanIcon } from './adminClanIcons.js';
 import { refreshVisitStats, hideVisitStats } from './siteVisitStats.js';
+import { refreshReleases, hideReleases, installPreviewNotice } from './releaseManager.js';
 import './adminDashboardHome.css';
 import './adminWorkspace.css';
 import './adminEventDayGroups.js';
@@ -8,6 +9,7 @@ import { supabase } from './supabaseClient.js';
 export function installAdminHomeScreen(supabaseClient){
   if(!supabaseClient||window.__obAdminHomeInstalled)return;
   window.__obAdminHomeInstalled=true;
+  installPreviewNotice();
 
   const waitForDashboard=()=>{
     const panel=document.querySelector('#adminModal .admin-panel');
@@ -79,17 +81,19 @@ export function installAdminHomeScreen(supabaseClient){
     async function readProfile(){
       const {data:{session}}=await supabaseClient.auth.getSession();
       if(!session)return {session:null,profile:null};
-      const {data:profile}=await supabaseClient.from('profiles').select('nickname,role,status').eq('id',session.user.id).maybeSingle();
+      const {data:profile}=await supabaseClient.from('profiles').select('nickname,role,status,removed_at').eq('id',session.user.id).maybeSingle();
       return {session,profile:profile||null};
     }
 
     async function refreshHome(){
       hideVisitStats(home);
+      hideReleases(home);
       const {session,profile}=await readProfile();
       if(!session)return;
       const role=String(profile?.role||'').toLowerCase();
-      const owner=profile?.status==='approved'&&role==='owner';
+      const owner=profile?.status==='approved'&&role==='owner'&&!profile?.removed_at;
       void refreshVisitStats(supabaseClient,home,owner);
+      void refreshReleases(supabaseClient,home,owner);
       const admin=profile?.status==='approved'&&role==='admin';
       const legacy=!profile;
       const limited=admin&&!owner;
@@ -133,7 +137,7 @@ export function installAdminHomeScreen(supabaseClient){
     });
     observer.observe(modal,{attributes:true,attributeFilter:['class']});
 
-    supabaseClient.auth.onAuthStateChange(()=>{hideVisitStats(home);setTimeout(()=>{if(modal.classList.contains('open'))refreshHome();},0);});
+    supabaseClient.auth.onAuthStateChange(()=>{hideVisitStats(home);hideReleases(home);setTimeout(()=>{if(modal.classList.contains('open'))refreshHome();},0);});
   };
 
   waitForDashboard();

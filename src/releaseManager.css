@@ -1,0 +1,9 @@
+.owner-releases{margin:20px 0;padding:22px;border:1px solid #76602e;background:linear-gradient(120deg,#1b1b11,#0a1210);color:#dfd6c3}
+.owner-releases>small,.release-card small{font-size:10px;letter-spacing:1.2px;color:#dcb357;font-weight:800}
+.owner-releases h4{font:700 23px Georgia,serif;color:#f3d18a;margin:8px 0 12px}
+.owner-releases p{font-size:13px;line-height:1.6;margin:8px 0;color:#c0b698}
+.release-current code{overflow-wrap:anywhere;font-size:11px}
+.release-card{display:grid;grid-template-columns:1fr auto;gap:12px 20px;align-items:center;padding:18px;margin-top:14px;border:1px solid #584927;background:#0b1110}
+.release-card h5{font-size:16px;margin:6px 0;color:#f1dec0}.release-card label{display:flex;gap:8px;align-items:center;font-size:12px;line-height:1.5}.release-card input{width:18px;height:18px;flex:none;accent-color:#d6ad50}.release-card .build-btn{text-align:center;text-decoration:none}.release-card button:disabled{opacity:.45;cursor:not-allowed}
+.private-preview-notice{position:relative;z-index:100000;display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding:12px 20px;background:#332912;color:#ffe0a0;border-bottom:1px solid #ba9242;font:12px system-ui}.private-preview-notice a{color:#fff0bf}.private-preview-notice form{margin:0}.private-preview-notice button{border:1px solid #ba9242;background:#17180e;color:#ffe0a0;padding:5px 10px;cursor:pointer}
+@media(max-width:650px){.owner-releases{padding:15px}.release-card{grid-template-columns:1fr;padding:13px}.release-card .build-btn{width:100%}.owner-releases h4{font-size:20px}}

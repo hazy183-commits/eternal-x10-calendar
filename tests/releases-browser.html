@@ -1,0 +1,20 @@
+<!doctype html><html lang="pl"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Podgląd panelu publikacji — dane przykładowe</title><style>body{margin:0;padding:24px;background:#080e0d;color:#e9dcc3;font:14px system-ui}main{max-width:1050px;margin:auto}h1{font:28px Georgia}.build-btn{display:inline-block;background:#211e13;color:#edc66e;border:1px solid #806631;padding:11px 15px;cursor:pointer;font-weight:700;box-sizing:border-box}button:disabled{opacity:.4}.demo-controls{display:flex;gap:8px;flex-wrap:wrap}.demo-notice{color:#c8af76}</style><main><div class="header-actions"></div><h1>Panel administratora</h1><p class="demo-notice">PODGLĄD LOKALNY · przykładowe dane · przyciski nie zmieniają prawdziwej strony</p><div class="demo-controls"><button class="build-btn" id="owner">Widok właściciela</button><button class="build-btn" id="member">Widok członka</button><button class="build-btn" id="failure">Błąd hostingu</button></div><div class="admin-home-status"></div><output id="result"></output></main><script type="module">
+import {refreshReleases,hideReleases} from '../src/releaseManager.js';
+import '../src/i18n.js';
+const root=document.querySelector('main');
+const client={auth:{async getSession(){return {data:{session:{access_token:'LOCAL-TEST-ONLY'}}};}}};
+// This fixture exercises the accepted branch without opening a browser-native dialog.
+// Production code continues to use the normal confirmation dialog.
+window.confirm=()=>true;
+let current='dpl_public',fail=false,posts=0;
+const originalFetch=window.fetch;
+window.fetch=async(url,init)=>{
+ if(url!=='/api/releases')return originalFetch(url,init);
+ if(init.method==='POST'){posts++;if(fail)return new Response(JSON.stringify({error:'Hosting nie potwierdził operacji. Odśwież stan przed ponowną próbą.'}),{status:502,headers:{'Content-Type':'application/json'}});current=JSON.parse(init.body).id;document.querySelector('#result').textContent='Symulowane publikacje: '+posts;return new Response('{"accepted":true}',{status:202,headers:{'Content-Type':'application/json'}});}
+ return new Response(JSON.stringify({configured:true,current,releases:current==='dpl_public'?[{id:'dpl_example',title:'Prywatny podgląd i ręczna publikacja',notes:'Nowy panel właściciela, ochrona wersji testowej i publikacja dopiero po sprawdzeniu zmian.',action:'publish',url:'https://example.vercel.app'}]:[]}),{headers:{'Content-Type':'application/json'}});
+};
+document.querySelector('#owner').onclick=()=>{current='dpl_public';fail=false;refreshReleases(client,root,true);};
+document.querySelector('#member').onclick=()=>hideReleases(root);
+document.querySelector('#failure').onclick=()=>{current='dpl_public';fail=true;refreshReleases(client,root,true);};
+await refreshReleases(client,root,true);
+</script></html>
