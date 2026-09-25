@@ -175,3 +175,8 @@ body > .topbar { z-index:13000!important; }
  body > .topbar .topbar-inner{flex-wrap:wrap!important;gap:10px!important}
  body > .topbar .header-actions{flex-wrap:wrap!important;gap:8px!important}
 }
+/* Bring the crest and navigation closer to the language controls on wide screens. */
+@media(min-width:1401px){
+ body > .topbar .topbar-inner{justify-content:flex-end!important}
+ body > .topbar .header-actions{margin-left:12px!important}
+}
