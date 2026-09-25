@@ -114,3 +114,15 @@ test('preview login requires same origin and issues secure private short-lived c
   const denied=await makePreviewMiddleware(env,fixture({role:'member'}).fetcher)(login('https://preview.vercel.app'));
   assert.equal(denied.status,401);assert.equal(denied.headers.get('set-cookie'),null);
 });
+
+test('preview accepts the same email login as the main site without converting it to a nickname',async()=>{
+  for (const [identifier,expected] of [['  Owner.Example+Clan@Example.com  ','owner.example+clan@example.com'],[' KiRY ','kiry@members.orzelbialy.local']]) {
+    const f=fixture();
+    const request=new Request('https://preview.vercel.app/__preview-login',{method:'POST',headers:{origin:'https://preview.vercel.app'},body:new URLSearchParams({nickname:identifier,password:' password kept exactly '})});
+    const response=await makePreviewMiddleware(env,f.fetcher)(request);
+    assert.equal(response.status,303);
+    const payload=JSON.parse(f.calls.find(call=>call.url.includes('/auth/v1/token')).init.body);
+    assert.equal(payload.email,expected);
+    assert.equal(payload.password,' password kept exactly ');
+  }
+});
