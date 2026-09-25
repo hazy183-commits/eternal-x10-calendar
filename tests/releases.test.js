@@ -23,8 +23,9 @@ function fixture(options={}) {
     if(url.includes('/auth/v1/token'))return json({access_token:'owner.jwt.token',expires_in:3600});
     if(url.endsWith('/auth/v1/user'))return json({id:'user-id'},options.authStatus||200);
     if(url.includes('/rest/v1/profiles'))return json([{role:options.role||'owner',status:options.status||'approved',removed_at:options.removedAt||null}],options.profileStatus||200);
-    if(url.includes('/v9/projects/'))return json({targets:{production:{id:options.current||'dpl_current'}}});
-    if(url.includes('/v13/deployments/'))return json({projectId:options.project||'prj_test',readyState:options.state||'READY',url:'orzel-preview.vercel.app'});
+    if(url.includes('/v9/projects/'))return json({name:'orzel-test',targets:{production:{id:options.current||'dpl_current',meta:{releaseSource:options.publishedSource}}}});
+    if(url.includes('/v13/deployments/'))return json({target:options.target||'production',projectId:options.project||'prj_test',readyState:options.state||'READY',url:'orzel-preview.vercel.app'});
+    if(url.includes('/v13/deployments?') && init.method==='POST')return json({id:'dpl_built'},options.promoteStatus||200);
     if(init.method==='POST')return new Response(null,{status:options.promoteStatus||202});
     throw new Error(`Unexpected request ${url}`);
   };
@@ -125,4 +126,20 @@ test('preview accepts the same email login as the main site without converting i
     assert.equal(payload.email,expected);
     assert.equal(payload.password,' password kept exactly ');
   }
+});
+
+test('preview publication rebuilds the exact reviewed deployment for production',async()=>{
+ const f=fixture({target:'preview'});
+ const result=await createReleaseService(env,f.fetcher).publish({id:'dpl_candidate',action:'publish',tested:true,expectedCurrent:'dpl_current'});
+ assert.equal(result.building,true); assert.equal(result.deploymentId,'dpl_built');
+ const post=f.calls.find(c=>c.init.method==='POST');
+ assert.equal(post.url,'https://api.vercel.com/v13/deployments?teamId=team_test');
+ assert.equal(post.init.headers['Content-Type'],'application/json');
+ assert.deepEqual(JSON.parse(post.init.body),{deploymentId:'dpl_candidate',name:'orzel-test',target:'production',meta:{action:'promote',releaseSource:'dpl_candidate'}});
+});
+test('published preview source is no longer offered or rebuilt',async()=>{
+ const f=fixture({publishedSource:'dpl_candidate'}),service=createReleaseService(env,f.fetcher);
+ assert.equal((await service.list()).releases.length,0);
+ assert.equal((await service.publish({id:'dpl_candidate',action:'publish',tested:true})).alreadyCurrent,true);
+ assert.equal(f.calls.filter(c=>c.init.method==='POST').length,0);
 });

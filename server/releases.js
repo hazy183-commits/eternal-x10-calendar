@@ -22,9 +22,10 @@ export function createReleaseService(env = process.env, fetcher = fetch, candida
   const projectId = env.RELEASE_PROJECT_ID;
   const teamId = env.RELEASE_TEAM_ID;
   const configured = Boolean(env.RELEASE_VERCEL_TOKEN && projectId && teamId);
-  async function vercel(path, method = 'GET') {
+  let projectName, publishedSource;
+  async function vercel(path, method = 'GET', payload = {}) {
     if (!configured) throw new ReleaseError(503,'Publikowanie wymaga połączenia z hostingiem.');
-    const response = await fetcher(`https://api.vercel.com${path}${path.includes('?')?'&':'?'}teamId=${encodeURIComponent(teamId)}`, {method,headers:{Authorization:`Bearer ${env.RELEASE_VERCEL_TOKEN}`},signal:AbortSignal.timeout(15000)});
+    const response = await fetcher(`https://api.vercel.com${path}${path.includes('?')?'&':'?'}teamId=${encodeURIComponent(teamId)}`, {method,headers:{Authorization:`Bearer ${env.RELEASE_VERCEL_TOKEN}`,...(method!=='GET'?{'Content-Type':'application/json'}:{})},...(method!=='GET'?{body:JSON.stringify(payload)}:{}),signal:AbortSignal.timeout(15000)});
     if (!response.ok) {
       let failure; try { failure = await response.json(); } catch {}
       const code = String(failure?.error?.code || 'unknown').replace(/[^a-zA-Z0-9_-]/g,'').slice(0,80);
@@ -36,6 +37,8 @@ export function createReleaseService(env = process.env, fetcher = fetch, candida
   }
   async function current() {
     const project = await vercel(`/v9/projects/${encodeURIComponent(projectId)}`);
+    projectName = project.name;
+    publishedSource = project.targets?.production?.meta?.releaseSource;
     const id = project.targets?.production?.id;
     if (!id) throw new ReleaseError(503,'Nie udało się ustalić obecnej wersji strony.');
     return id;
@@ -43,13 +46,13 @@ export function createReleaseService(env = process.env, fetcher = fetch, candida
   async function verified(row) {
     const deployment = await vercel(`/v13/deployments/${encodeURIComponent(row.id)}`);
     if (deployment.projectId !== projectId || deployment.readyState !== 'READY' || !/^[a-zA-Z0-9-]+\.vercel\.app$/.test(deployment.url || '')) throw new ReleaseError(409,'Wersja nie jest gotowa do publikacji w tym projekcie.');
-    return {id:row.id,title:row.title,notes:String(row.notes || ''),action:row.action,url:`https://${deployment.url}`};
+    return {id:row.id,title:row.title,notes:String(row.notes || ''),action:row.action,target:deployment.target,url:`https://${deployment.url}`};
   }
   return {
     async list() {
       if (!configured) return {configured:false,current:null,releases:[]};
       const id = await current();
-      const releases = await Promise.all((await candidates()).filter(row=>row.id!==id).map(verified));
+      const releases = await Promise.all((await candidates()).filter(row=>row.id!==id && row.id!==publishedSource).map(verified));
       return {configured:true,current:id,releases};
     },
     async publish(body) {
@@ -57,9 +60,15 @@ export function createReleaseService(env = process.env, fetcher = fetch, candida
       const row = (await candidates()).find(item=>item.id===body.id && item.action===body.action);
       if (!row) throw new ReleaseError(403,'Ta wersja nie została przygotowana do publikacji.');
       const id = await current();
-      if (id === row.id) return {accepted:true,alreadyCurrent:true};
+      if (id === row.id || publishedSource === row.id) return {accepted:true,alreadyCurrent:true};
       if (id !== body.expectedCurrent) throw new ReleaseError(409,'Wersja publiczna zmieniła się. Odśwież panel i sprawdź ją ponownie.');
-      await verified(row);
+      const deployment = await verified(row);
+      if (row.action === 'publish' && deployment.target !== 'production') {
+        if (!projectName) throw new ReleaseError(503,'Nie udało się ustalić projektu publikacji.');
+        const created = await vercel('/v13/deployments','POST',{deploymentId:row.id,name:projectName,target:'production',meta:{action:'promote',releaseSource:row.id}});
+        if (!/^dpl_[a-zA-Z0-9]+$/.test(created.id || '')) throw new ReleaseError(502,'Hosting nie potwierdził utworzenia wersji produkcyjnej. Odśwież stan.');
+        return {accepted:true,alreadyCurrent:false,building:true,deploymentId:created.id};
+      }
       await vercel(`/${row.action==='rollback'?'v1':'v10'}/projects/${encodeURIComponent(projectId)}/${row.action==='rollback'?'rollback':'promote'}/${encodeURIComponent(row.id)}`,'POST');
       return {accepted:true,alreadyCurrent:false};
     },

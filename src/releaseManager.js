@@ -61,9 +61,9 @@ export async function refreshReleases(client, root, isOwner) {
         const status=box.querySelector('[data-release-status]');
         status.textContent=translateText('Wysyłanie zlecenia do hostingu…');
         try {
-          await api({id:release.id,action:release.action,expectedCurrent:data.current,tested:true});
+          const result = await api({id:release.id,action:release.action,expectedCurrent:data.current,tested:true});
           if (version!==revision) return;
-          status.textContent=translateText('Hosting przyjął zlecenie. Odśwież stan, aby potwierdzić aktywną wersję.');
+          status.textContent=translateText(result.building?'Trwa budowanie wersji publicznej. Poczekaj około minuty, a następnie odśwież stan.':'Hosting przyjął zlecenie. Odśwież stan, aby potwierdzić aktywną wersję.');
         } catch(error) { if (version===revision) status.textContent=error.message; }
         finally { if (version===revision) box.querySelector('[data-release-refresh]').disabled=false; }
       });
