@@ -197,6 +197,19 @@ function ensureUiShell() {
   const main = layer?.querySelector('.member-zone-main');
   if (!layer || !side || !main) return null;
 
+  // The original member-zone shell does not contain a Craft button. Add it
+  // before the menu organizer groups the navigation entries, so Craft is
+  // always reachable from Narzędzia on desktop and mobile.
+  if (!side.querySelector('[data-zone-view="craft"]')) {
+    const nav = document.createElement('button');
+    nav.type = 'button';
+    nav.className = 'zone-nav';
+    nav.dataset.zoneView = 'craft';
+    nav.innerHTML = '<span>Craft</span>';
+    const spacer = side.querySelector('.zone-side-spacer');
+    side.insertBefore(nav, spacer || null);
+  }
+
   let panel = main.querySelector('[data-zone-panel="craft"]');
   if (!panel) {
     panel = document.createElement('section');
