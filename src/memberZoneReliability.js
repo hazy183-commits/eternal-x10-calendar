@@ -117,6 +117,7 @@ export function installMemberZoneReliability(supabase) {
       if (['craft', 'group-craft'].includes(initialView)) {
         window.dispatchEvent(new CustomEvent('orzel:craft-workspace-opened', {
           detail: {
+            view: initialView,
             focus: initialView === 'group-craft' ? 'project' : '',
           },
         }));

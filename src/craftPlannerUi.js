@@ -221,7 +221,8 @@ function ensureUiShell() {
         <h3>CRAFT WORKSPACE</h3>
         <p>Twój magazyn, wiele projektów i automatyczne liczenie braków.</p>
       </div>
-      <div id="craftWorkspaceRoot" class="craft-workspace"><p class="craft-muted">Otwórz zakładkę Craft, aby wczytać dane.</p></div>`;
+      <div id="craftWorkspaceRoot" class="craft-workspace"><p class="craft-muted">Otwórz zakładkę Craft, aby wczytać dane.</p></div>
+      <div id="craftGroupWorkspaceRoot" class="craft-group-workspace" hidden></div>`;
     main.appendChild(panel);
   }
 
@@ -321,7 +322,12 @@ export function installCraftPlannerUi(supabase) {
     }
   };
 
-  window.addEventListener('orzel:craft-workspace-opened', () => refresh());
+  window.addEventListener('orzel:craft-workspace-opened', event => {
+    const groupActive = event.detail?.view === 'group-craft' || event.detail?.focus === 'project';
+    ui.root.hidden = groupActive;
+    document.querySelector('#craftGroupWorkspaceRoot')?.toggleAttribute('hidden', !groupActive);
+    if (!groupActive) refresh();
+  });
 
   ui.root.addEventListener('submit', async event => {
     if (!(event.target instanceof HTMLFormElement)) return;
