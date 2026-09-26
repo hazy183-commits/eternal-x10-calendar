@@ -22,13 +22,6 @@ const escapeHtml = (value = '') => String(value)
 const fmt = value => Number(value || 0).toLocaleString('pl-PL');
 const collapsedGroupProjectIds = new Set();
 
-const PICKER_GROUPS = [
-  ['weapon', 'BRONIE'],
-  ['armor', 'ARMORY'],
-  ['material', 'MATERIAŁY'],
-  ['component', 'CZĘŚCI'],
-  ['recipe', 'RECEPTURY'],
-];
 const GROUP_INVENTORY_CATEGORIES = ['material', 'recipe'];
 
 const pickerItems = (workspace, craftableOnly = false, categories = null) => {
@@ -39,47 +32,98 @@ const pickerItems = (workspace, craftableOnly = false, categories = null) => {
   ));
 };
 
-const pickerGroups = items => {
-  const known = new Set(PICKER_GROUPS.map(([category]) => category));
-  const groups = PICKER_GROUPS.map(([category, label]) => ({
+const pickerGrade = item => {
+  const grade = String(item?.grade || '').trim().toUpperCase();
+  if (grade.startsWith('S')) return 'S';
+  if (grade.startsWith('A')) return 'A';
+  return '';
+};
+
+const sortPickerItems = items => [...items].sort((left, right) => String(left.name || '').localeCompare(String(right.name || ''), 'pl'));
+
+const pickerGroups = (items, mode = 'target') => {
+  if (mode === 'inventory') {
+    return [
+      ['material', '★ Materiały craftowane'],
+      ['recipe', '★ Receptury'],
+    ].map(([category, label]) => ({
+      category,
+      label,
+      items: sortPickerItems(items.filter(item => item.category === category)),
+    })).filter(group => group.items.length);
+  }
+
+  if (mode === 'target') {
+    const definitions = [
+      ['weapon-s', '⚒ S Grade — Broń 60%', item => item.category === 'weapon' && pickerGrade(item) === 'S'],
+      ['weapon-a', '⚒ A Grade — Broń 60%', item => item.category === 'weapon' && pickerGrade(item) === 'A'],
+      ['armor-s', '⚒ S Grade — Armor 60%', item => item.category === 'armor' && pickerGrade(item) === 'S'],
+      ['armor-a', '⚒ A Grade — Armor 60%', item => item.category === 'armor' && pickerGrade(item) === 'A'],
+      ['weapon-other', '⚒ Pozostałe bronie', item => item.category === 'weapon'],
+      ['armor-other', '⚒ Pozostały armor', item => item.category === 'armor'],
+    ];
+    const grouped = definitions.map(([category, label, matches]) => ({
+      category,
+      label,
+      items: sortPickerItems(items.filter(matches)),
+    })).filter(group => group.items.length);
+    const known = new Set(grouped.flatMap(group => group.items.map(item => item.item_key)));
+    const otherItems = sortPickerItems(items.filter(item => !known.has(item.item_key)));
+    if (otherItems.length) grouped.push({ category: 'other', label: '⚒ Pozostałe przedmioty', items: otherItems });
+    return grouped;
+  }
+
+  const definitions = [
+    ['weapon', 'BRONIE', item => item.category === 'weapon'],
+    ['armor', 'ARMORY', item => item.category === 'armor'],
+    ['material', 'MATERIAŁY', item => item.category === 'material'],
+    ['component', 'CZĘŚCI', item => item.category === 'component'],
+    ['recipe', 'RECEPTURY', item => item.category === 'recipe'],
+  ];
+  const groups = definitions.map(([category, label, matches]) => ({
     category,
     label,
-    items: items.filter(item => item.category === category),
+    items: sortPickerItems(items.filter(matches)),
   })).filter(group => group.items.length);
-  const otherItems = items.filter(item => !known.has(item.category));
+  const known = new Set(groups.flatMap(group => group.items.map(item => item.item_key)));
+  const otherItems = sortPickerItems(items.filter(item => !known.has(item.item_key)));
   if (otherItems.length) groups.push({ category: 'other', label: 'POZOSTAŁE', items: otherItems });
   return groups;
 };
 
-const pickerOptions = (items, selectedItemKey = '') => pickerGroups(items).map(group => `
+const pickerOptions = (items, selectedItemKey = '', mode = 'target', placeholder = 'Wybierz przedmiot…') => `${selectedItemKey ? '' : `<option value="" selected disabled>${escapeHtml(placeholder)}</option>`}${pickerGroups(items, mode).map(group => `
   <optgroup label="${group.label}">
     ${group.items.map(item => `<option value="${escapeHtml(item.item_key)}"${item.item_key === selectedItemKey ? ' selected' : ''}>${escapeHtml(item.name)}</option>`).join('')}
-  </optgroup>`).join('');
+  </optgroup>`).join('')}`;
 
-const renderItemPicker = (workspace, { name, craftableOnly = false, categories = null, selectedItemKey = '', compact = false, openFirstCategory = true } = {}) => {
+const renderItemPicker = (workspace, { name, craftableOnly = false, categories = null, selectedItemKey = '', compact = false, mode = 'target', placeholder = 'Wybierz przedmiot…', openFirstCategory = false } = {}) => {
   const items = pickerItems(workspace, craftableOnly, categories);
-  const selected = items.find(item => item.item_key === selectedItemKey) || items[0];
-  const groups = pickerGroups(items);
+  const selected = selectedItemKey ? (items.find(item => item.item_key === selectedItemKey) || (mode === 'inventory' ? null : items[0])) : (mode === 'inventory' ? null : items[0]);
+  const groups = pickerGroups(items, mode);
   const selectedKey = selected?.item_key || '';
+  const currentLabel = selected?.name || (items.length ? placeholder : 'Brak dostępnych przedmiotów');
   return `<div class="craft-group-picker${compact ? ' is-compact' : ''}" data-group-picker>
     <select class="craft-group-picker-select" name="${escapeHtml(name)}" required aria-label="Wybierz przedmiot">
-      ${pickerOptions(items, selectedKey)}
+      ${pickerOptions(items, selectedKey, mode, placeholder)}
     </select>
-    <div class="craft-group-picker-current" data-group-picker-current>
+    <details class="craft-group-picker-dropdown">
+      <summary class="craft-group-picker-current" data-group-picker-current>
       ${selected ? craftItemIconMarkup(selected, 'craft-group-picker-current-icon') : '<span class="craft-group-picker-current-icon is-placeholder" aria-hidden="true">⚒</span>'}
-      <span data-group-picker-current-name>${escapeHtml(selected?.name || 'Brak dostępnych przedmiotów')}</span>
-    </div>
-    <div class="craft-group-picker-groups" aria-label="Przedmioty pogrupowane kategoriami">
+      <span data-group-picker-current-name>${escapeHtml(currentLabel)}</span>
+      <span class="craft-group-picker-current-arrow" aria-hidden="true">⌄</span>
+      </summary>
+      <div class="craft-group-picker-groups" aria-label="Przedmioty pogrupowane kategoriami">
       ${groups.map((group, index) => `<details class="craft-group-picker-category"${openFirstCategory && index === 0 ? ' open' : ''}>
         <summary>${escapeHtml(group.label)} <small>${group.items.length}</small></summary>
         <div class="craft-group-picker-items">
           ${group.items.map(item => `<button type="button" class="craft-group-picker-item${item.item_key === selectedKey ? ' is-selected' : ''}" data-group-picker-item="${escapeHtml(item.item_key)}" data-group-picker-name="${escapeHtml(item.name)}" aria-pressed="${item.item_key === selectedKey ? 'true' : 'false'}">
-            <span data-group-picker-icon>${craftItemIconMarkup(item, 'craft-group-picker-item-icon')}</span><span>${escapeHtml(item.name)}</span>
+            <span>${escapeHtml(item.name)}</span>
           </button>`).join('')}
         </div>
       </details>`).join('')}
       ${groups.length ? '' : '<div class="craft-group-picker-empty">Brak dostępnych przedmiotów.</div>'}
-    </div>
+      </div>
+    </details>
   </div>`;
 };
 
@@ -190,7 +234,7 @@ const renderGroupInventoryWindow = (group, workspace, userId, canEditInventory, 
         <header><span></span><h4 id="craftGroupInventoryTitle">Wspólny magazyn</h4><div><small>(${count}/250)</small><button type="button" data-group-close-inventory aria-label="Zamknij">×</button></div></header>
         <div class="craft-inventory-toolbar"><button type="button" class="is-active">All</button><span>Materiały i recepty</span><input class="craft-search" id="craftGroupInventorySearch" type="search" placeholder="Szukaj…" aria-label="Szukaj materiału lub recepty"></div>
         <div class="craft-inventory-list craft-group-inventory-list">${renderGroupInventoryRows(group, workspace, userId, canEditInventory)}</div>
-        ${canEditInventory ? `<form id="craftGroupInventoryForm" class="craft-group-form"><label><span>Dodaj materiał lub receptę</span>${renderItemPicker(workspace, { name: 'itemKey', categories: GROUP_INVENTORY_CATEGORIES, compact: true, openFirstCategory: false })}</label><label><span>Ilość, którą dodajesz</span><input name="quantity" type="number" min="0" step="1" value="0" required></label><button type="submit">DODAJ DO MAGAZYNU</button></form><p class="craft-group-form-hint">Kliknij kategorię „Materiały” albo „Recepty”, aby wybrać pozycję. Łączny stan widzą wszyscy uczestnicy.</p>` : '<p class="craft-group-note">Masz podgląd tego magazynu. Właściciel nie nadał Ci uprawnień do jego edycji.</p>'}
+        ${canEditInventory ? `<form id="craftGroupInventoryForm" class="craft-group-form"><label><span>Dodaj materiał lub receptę</span>${renderItemPicker(workspace, { name: 'itemKey', categories: GROUP_INVENTORY_CATEGORIES, compact: true, mode: 'inventory', placeholder: 'Wybierz materiał lub receptę…' })}</label><label><span>Ilość, którą dodajesz</span><input name="quantity" type="number" min="0" step="1" value="0" required></label><button type="submit">DODAJ DO MAGAZYNU</button></form><p class="craft-group-form-hint">Kliknij pole wyboru, aby rozwinąć listę. Materiały i receptury są pogrupowane jak w magazynie indywidualnym.</p>` : '<p class="craft-group-note">Masz podgląd tego magazynu. Właściciel nie nadał Ci uprawnień do jego edycji.</p>'}
         <footer><span>Kliknij ikonę, aby zmienić swój wkład.</span><span><i></i> łącznie <i></i> Twój wkład</span></footer>
       </section>
     </div>`;
@@ -278,7 +322,7 @@ const renderAdditionalGroupProjectForm = workspace => `
       <p>Każdy projekt ma osobny wspólny magazyn, uczestników i postęp.</p>
       <form id="craftGroupCreateForm" class="craft-form project craft-group-create-form">
         <label class="craft-control"><span>Nazwa projektu grupowego</span><input name="name" maxlength="80" required placeholder="Np. Draco Bow dla CP"></label>
-        <label class="craft-control craft-group-target-control"><span>Przedmiot</span>${renderItemPicker(workspace, { name: 'targetItemKey', craftableOnly: true })}</label>
+        <label class="craft-control craft-group-target-control"><span>Broń lub armor</span>${renderItemPicker(workspace, { name: 'targetItemKey', craftableOnly: true, categories: ['weapon', 'armor'], mode: 'target', placeholder: 'Wybierz broń lub armor…' })}</label>
         <label class="craft-control"><span>Ilość</span><input name="targetQuantity" type="number" min="1" step="1" value="1" required></label>
         <button type="submit">UTWÓRZ PROJEKT</button>
       </form>
@@ -296,7 +340,7 @@ function renderEmpty(section, workspace, feedback = '') {
         <p>Właściciel zarządza projektem, a zaproszone osoby mogą uzupełniać wspólny magazyn.</p>
         <form id="craftGroupCreateForm" class="craft-form project craft-group-create-form">
           <label class="craft-control"><span>Nazwa projektu grupowego</span><input name="name" maxlength="80" required placeholder="Np. Draco Bow dla CP"></label>
-          <label class="craft-control craft-group-target-control"><span>Przedmiot</span>${renderItemPicker(workspace, { name: 'targetItemKey', craftableOnly: true })}</label>
+          <label class="craft-control craft-group-target-control"><span>Broń lub armor</span>${renderItemPicker(workspace, { name: 'targetItemKey', craftableOnly: true, categories: ['weapon', 'armor'], mode: 'target', placeholder: 'Wybierz broń lub armor…' })}</label>
           <label class="craft-control"><span>Ilość</span><input name="targetQuantity" type="number" min="1" step="1" value="1" required></label>
           <button type="submit">UTWÓRZ PROJEKT</button>
         </form>
@@ -485,13 +529,17 @@ export function installCraftGroupPlannerUi(supabase) {
         item.classList.toggle('is-selected', selected);
         item.setAttribute('aria-pressed', String(selected));
       });
-      const currentIcon = picker.querySelector('[data-group-picker-current] .craft-group-picker-current-icon');
+      const pickedItem = workspace?.items?.find(item => item.item_key === pickerItem.dataset.groupPickerItem);
+      const current = picker.querySelector('[data-group-picker-current]');
       const currentName = picker.querySelector('[data-group-picker-current-name]');
-      const pickedIcon = pickerItem.querySelector('[data-group-picker-icon]');
-      const pickedIconImage = pickedIcon?.querySelector('.craft-group-picker-item-icon');
-      if (currentIcon && pickedIconImage) currentIcon.innerHTML = pickedIconImage.innerHTML;
+      if (current && pickedItem) {
+        const currentIcon = current.querySelector('.craft-group-picker-current-icon');
+        if (currentIcon) currentIcon.outerHTML = craftItemIconMarkup(pickedItem, 'craft-group-picker-current-icon');
+      }
       if (currentName) currentName.textContent = pickerItem.dataset.groupPickerName || '';
       select.dispatchEvent(new Event('change', { bubbles: true }));
+      const dropdown = picker.querySelector('.craft-group-picker-dropdown');
+      if (dropdown) dropdown.open = false;
       return;
     }
     const step = event.target.closest?.('[data-group-project-step]');
@@ -540,6 +588,8 @@ export function installCraftGroupPlannerUi(supabase) {
     .craft-group-requirements{padding:14px}.craft-group-requirement-list{display:grid}.craft-group-requirement-node{border-top:1px solid #292319}.craft-group-requirement-node>summary{position:relative;list-style:none;cursor:pointer;padding-left:28px}.craft-group-requirement-node>summary::-webkit-details-marker{display:none}.craft-group-requirement-node>summary:before{content:'›';position:absolute;left:3px;top:50%;display:grid;place-items:center;width:18px;height:18px;border:1px solid #614a28;color:#d3a64f;font-size:16px;line-height:1;transform:translateY(-50%);transition:transform .15s ease}.craft-group-requirement-node[open]>summary:before{transform:translateY(-50%) rotate(90deg)}.craft-group-requirement-row{display:grid;grid-template-columns:minmax(190px,1.6fr) repeat(3,minmax(72px,.7fr));gap:8px;align-items:center;padding:9px 0}.craft-group-requirement-row>span{display:grid;gap:2px}.craft-group-requirement-row em{color:#6f6a62;font-size:8px;font-style:normal;text-transform:uppercase}.craft-group-requirement-row strong{color:#c9c2b5;font-size:12px}.craft-group-requirement-row .craft-missing strong{color:#dd8a58}.craft-group-requirement-row .craft-ok strong{color:#6fc184}.craft-group-requirement-summary .craft-group-stock-name{display:flex;align-items:center;gap:8px}.craft-group-expand-hint strong{color:#d5ab59;font-size:10px;text-transform:uppercase}.craft-group-requirement-children{display:grid;margin-left:25px;border-left:1px solid #4a3b23;padding-left:10px}.craft-group-requirement-children .craft-group-requirement-row{background:rgba(17,19,15,.42);padding-left:8px}.craft-group-requirement-children .craft-group-requirement-node{border-top:1px solid #292319}.craft-group-inventory-launch{margin-top:12px}.craft-group-inventory-modal .craft-group-form{margin:10px 14px 0}.craft-group-inventory-row .craft-inventory-slot.is-readonly{cursor:default}.craft-group-inventory-row .craft-inventory-slot.is-readonly:hover{border-color:#4f4636!important;background:linear-gradient(135deg,#24211b,#0c0d0c)!important}
     @media(max-width:760px){.craft-group-heading{align-items:flex-start}.craft-group-heading h4{font-size:19px}.craft-group-mark{width:40px;height:40px;font-size:19px}.craft-group-create-box,.craft-group-project-card{padding:14px}.craft-group-form,.craft-group-box .craft-group-form{grid-template-columns:1fr}.craft-group-form button{grid-column:1/-1}.craft-group-project-head,.craft-group-actions{display:grid}.craft-group-actions{grid-template-columns:1fr 1fr}.craft-group-badge{justify-self:start}.craft-group-grid{grid-template-columns:1fr}.craft-group-stock-row{grid-template-columns:1fr auto}.craft-group-stock-row>span{grid-column:1/-1;margin-left:36px}.craft-group-stock-name{min-width:0}.craft-group-requirement-row{grid-template-columns:1fr 1fr 1fr}.craft-group-requirement-row>.craft-group-stock-name{grid-column:1/-1}.craft-group-requirement-summary:before{grid-row:1 / span 1}.craft-group-requirement-summary{grid-template-columns:1fr 1fr 1fr}.craft-group-requirement-summary>.craft-group-stock-name{grid-column:1/-1}.craft-group-expand-hint strong{font-size:9px}.craft-group-requirement-children{margin-left:12px;padding-left:6px}.craft-group-picker-groups{max-height:220px}.craft-group-picker-item{font-size:9px;padding:5px}}
     @media(max-width:420px){.craft-group-picker-items{grid-template-columns:1fr}}
+    .craft-group-picker-dropdown{min-width:0}.craft-group-picker-dropdown>summary{list-style:none}.craft-group-picker-dropdown>summary::-webkit-details-marker{display:none}.craft-group-picker-current{position:relative;padding-right:31px;cursor:pointer}.craft-group-picker-dropdown[open]>summary{border-color:#b78a3b;background:#17140f}.craft-group-picker-current-arrow{position:absolute;right:10px;color:#d5ab59;font-size:15px;line-height:1}.craft-group-picker-dropdown[open] .craft-group-picker-current-arrow{transform:rotate(180deg)}.craft-group-picker-groups{display:grid;grid-template-columns:1fr;gap:0;max-height:250px;overflow:auto;margin-top:3px;padding:5px 6px 6px;border:1px solid #5a4a2e;background:#070b0b;overscroll-behavior:contain}.craft-group-picker-category{border:0;background:transparent}.craft-group-picker-category summary{padding:7px 10px}.craft-group-picker-items{display:grid;grid-template-columns:1fr;padding:0 0 4px}.craft-group-picker-item{display:block;width:100%;min-width:0;padding:6px 10px 6px 24px;border:0;border-bottom:1px solid #17201c;background:transparent;color:#d5d0c6;text-align:left;font-size:10px;font-weight:700;line-height:1.2;cursor:pointer}.craft-group-picker-item:hover,.craft-group-picker-item.is-selected{background:#1d68c5;color:#fff;border-color:#1d68c5}.craft-group-picker-item>span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.craft-group-picker.is-compact .craft-group-picker-groups{max-height:210px}.craft-group-picker.is-compact .craft-group-picker-item{padding-top:5px;padding-bottom:5px}
+    @media(max-width:760px){.craft-group-picker-groups{max-height:220px}.craft-group-picker-item{font-size:9px;padding:5px 9px 5px 19px}}
   `;
   document.head.appendChild(style);
 }
