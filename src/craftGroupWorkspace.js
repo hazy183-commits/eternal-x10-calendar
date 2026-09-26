@@ -143,7 +143,7 @@ export async function loadCraftGroupWorkspace(supabase) {
 }
 
 export async function createCraftGroupProject(supabase, { name, targetItemKey, targetQuantity = 1 } = {}) {
-  const user = await getUser(supabase);
+  await getUser(supabase);
   const cleanName = String(name || '').trim();
   const quantity = Number(targetQuantity);
   if (!cleanName || cleanName.length > 80) throw new Error('Nazwa projektu musi mieć od 1 do 80 znaków.');
@@ -151,15 +151,13 @@ export async function createCraftGroupProject(supabase, { name, targetItemKey, t
   if (!Number.isSafeInteger(quantity) || quantity <= 0 || quantity > 1000000) {
     throw new Error('Liczba sztuk musi być dodatnią liczbą całkowitą.');
   }
-  const { data, error } = await supabase.from('craft_group_projects').insert({
-    owner_id: user.id,
-    name: cleanName,
-    target_item_key: targetItemKey,
-    target_quantity: quantity,
-    status: 'active',
-  }).select('*').single();
+  const { data, error } = await supabase.rpc('create_craft_group_project', {
+    p_project_name: cleanName,
+    p_target_item_key: targetItemKey,
+    p_target_quantity: quantity,
+  });
   throwIfError(error);
-  return data;
+  return Array.isArray(data) ? data[0] : data;
 }
 
 export async function inviteCraftGroupMember(supabase, groupProjectId, userId, role = 'editor') {
