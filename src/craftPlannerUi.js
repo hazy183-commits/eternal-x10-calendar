@@ -9,7 +9,7 @@ import {
 import { craftItemIconMarkup, craftItemIconPath } from './craftItemIcons.js';
 import { renderInventorySelect, renderItemPicker } from './craftGroupPlannerUi.js';
 import { summarizeCraftProject } from './craftHomeSummary.js';
-import { summarizeMainMissing } from './craftHierarchyEnhancer.js';
+import { summarizeMainMissing, summarizeMainProgress } from './craftHierarchyEnhancer.js';
 
 const escapeHtml = (value = '') => String(value)
   .replaceAll('&', '&amp;')
@@ -64,7 +64,7 @@ function renderRequirementRows(project, workspace) {
 function renderProjectCard(project, workspace) {
   const missingTotal = summarizeMainMissing(project, workspace);
   const targetItem = findItem(workspace, project.targetItemKey);
-  const progress = summarizeCraftProject(project);
+  const progress = summarizeMainProgress(project, workspace);
   const collapsed = collapsedProjectIds.has(String(project.id));
   return `
     <article class="craft-project-card ${project.status === 'active' ? 'is-active' : 'is-paused'}${collapsed ? ' is-collapsed' : ''}" data-craft-project="${escapeHtml(project.id)}">

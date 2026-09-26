@@ -8,7 +8,7 @@ import {
   updateCraftGroupProject,
 } from './craftGroupWorkspace.js';
 import { craftItemIconMarkup, craftItemIconPath } from './craftItemIcons.js';
-import { renderMainRecipe, summarizeMainMissing } from './craftHierarchyEnhancer.js';
+import { renderMainRecipe, summarizeMainMissing, summarizeMainProgress } from './craftHierarchyEnhancer.js';
 import { summarizeCraftProject } from './craftHomeSummary.js';
 import { buildRecipeBook } from './craftPlannerEngine.js';
 
@@ -377,7 +377,7 @@ function renderGroup(section, workspace, selectedIndex = 0, feedback = '', inven
   const userId = workspace.user.id;
   const owner = String(group.project.owner_id) === String(userId);
   const canEditInventory = owner || (group.members || []).some(member => String(member.user_id) === String(userId) && member.role === 'editor');
-  const progress = group.plan ? summarizeCraftProject(group.plan).percent : 0;
+  const progress = group.plan ? summarizeMainProgress(group.plan, workspace).percent : 0;
   const missing = group.plan ? summarizeMainMissing(group.plan, workspace) : 0;
   const candidates = renderCandidates(workspace, group);
   const projectCollapsed = collapsedGroupProjectIds.has(String(group.project.id));

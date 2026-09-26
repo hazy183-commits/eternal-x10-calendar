@@ -153,7 +153,7 @@ function collapseFlatRecipe(components, recipeBook) {
   return collapsed.length ? collapsed : components;
 }
 
-export function getMainMissingRows(project, workspace) {
+export function getMainRequirementRows(project, workspace) {
   const recipeBook = buildRecipeBook(workspace);
   const itemIndex = buildItemIndex(workspace);
   const targetRecipe = recipeBook.get(project?.targetItemKey);
@@ -186,13 +186,26 @@ export function getMainMissingRows(project, workspace) {
         covered,
         missing: Math.max(0, required - covered),
       };
-    })
-    .filter(row => row.missing > 0);
+    });
+}
+
+export function getMainMissingRows(project, workspace) {
+  return getMainRequirementRows(project, workspace).filter(row => row.missing > 0);
 }
 
 export function summarizeMainMissing(project, workspace) {
   return getMainMissingRows(project, workspace)
     .reduce((sum, row) => sum + Number(row.missing || 0), 0);
+}
+
+export function summarizeMainProgress(project, workspace) {
+  const rows = getMainRequirementRows(project, workspace);
+  const have = rows.reduce((sum, row) => sum + Number(row.covered || 0), 0);
+  const missing = rows.reduce((sum, row) => sum + Number(row.missing || 0), 0);
+  const total = have + missing;
+  const rawPercent = total > 0 ? (have / total) * 100 : 0;
+  const percent = project?.complete ? 100 : Math.max(0, Math.min(100, Math.round(rawPercent * 10) / 10));
+  return { have, missing, total, percent };
 }
 
 function nodeStatus(itemKey, quantity, recipeBook, maps) {

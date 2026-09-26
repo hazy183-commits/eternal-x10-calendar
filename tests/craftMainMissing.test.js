@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { getMainMissingRows, summarizeMainMissing } from '../src/craftHierarchyEnhancer.js';
+import { getMainMissingRows, summarizeMainMissing, summarizeMainProgress } from '../src/craftHierarchyEnhancer.js';
 
 const workspace = {
   items: [
@@ -49,4 +49,22 @@ test('main missing total uses the remaining quantity of a direct material', () =
   };
 
   assert.equal(summarizeMainMissing(project, workspace), 6);
+});
+
+test('main progress ignores expanded submaterials below the main recipe', () => {
+  const project = {
+    complete: false,
+    targetItemKey: 'weapon',
+    targetQuantity: 1,
+    ownedAllocated: [{ itemKey: 'main_mat', quantity: 4 }],
+    generatedSurplusUsed: [],
+    missing: [{ itemKey: 'raw_mat', name: 'Raw Material', quantity: 12 }],
+  };
+
+  assert.deepEqual(summarizeMainProgress(project, workspace), {
+    have: 4,
+    missing: 6,
+    total: 10,
+    percent: 40,
+  });
 });

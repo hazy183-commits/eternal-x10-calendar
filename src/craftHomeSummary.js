@@ -1,5 +1,6 @@
 import { loadCraftWorkspace } from './craftWorkspace.js';
 import { craftItemIconMarkup } from './craftItemIcons.js';
+import { summarizeMainProgress } from './craftHierarchyEnhancer.js';
 
 const escapeHtml = (value = '') => String(value)
   .replaceAll('&', '&amp;')
@@ -60,7 +61,7 @@ function renderWorkspace(root, workspace, requestedIndex = 0) {
   const project = projects[projectIndex];
   if (!project) return renderEmpty(root);
 
-  const summary = summarizeCraftProject(project);
+  const summary = summarizeMainProgress(project, workspace);
   const item = targetItem(workspace, project);
   root.classList.toggle('is-complete', summary.percent === 100);
   root.innerHTML = `
