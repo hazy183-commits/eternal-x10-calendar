@@ -74,7 +74,8 @@ export function clanActivityForDate(date, now = new Date()) {
 
 export function withClanActivityEvents(events, now = new Date(), calendarDate = null) {
   const today = localDateKey(now);
-  const dates = new Set([today, addDays(today, 1), calendarDate].filter(validDateKey));
+  const upcomingDates = Array.from({ length: 15 }, (_, offset) => addDays(today, offset));
+  const dates = new Set([...upcomingDates, calendarDate].filter(validDateKey));
   const schedule = Array.from(dates).flatMap((date) => clanActivityForDate(date, now));
   const scheduleByIdentity = new Map(schedule.map((event) => [identity(event), event]));
 

@@ -33,7 +33,7 @@ test('schedule is available for the next day and a selected calendar date withou
   const manual = [{ id: 'manual', name: 'Klanowe PVP', type: 'Event', date: '2026-09-29', time: '20:20' }];
   const merged = withClanActivityEvents(manual, now, '2026-10-01');
 
-  assert.equal(merged.filter((event) => event.isClanActivitySchedule).length, 2);
+  assert.ok(merged.filter((event) => event.isClanActivitySchedule).length > 2);
   assert.equal(merged.filter((event) => event.date === '2026-09-29').length, 1);
   assert.equal(merged.find((event) => event.date === '2026-10-01').name, 'Klanowe PVP');
 });
