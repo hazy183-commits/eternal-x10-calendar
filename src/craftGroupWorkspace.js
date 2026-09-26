@@ -181,6 +181,15 @@ export async function setCraftGroupContribution(supabase, groupProjectId, itemKe
   if (!Number.isSafeInteger(normalized) || normalized < 0) {
     throw new Error('Stan materiału musi być liczbą całkowitą równą 0 lub większą.');
   }
+  const { data: item, error: itemError } = await supabase
+    .from('craft_items')
+    .select('category')
+    .eq('item_key', itemKey)
+    .maybeSingle();
+  throwIfError(itemError);
+  if (!item || !['material', 'recipe'].includes(item.category)) {
+    throw new Error('Wspólny magazyn przyjmuje tylko materiały i recepty.');
+  }
   if (normalized === 0) {
     const { error } = await supabase.from('craft_group_inventory')
       .delete().eq('group_project_id', groupProjectId).eq('user_id', user.id).eq('item_key', itemKey);
