@@ -8,7 +8,7 @@ import {
   updateCraftGroupProject,
 } from './craftGroupWorkspace.js';
 import { craftItemIconMarkup, craftItemIconPath } from './craftItemIcons.js';
-import { summarizeMainMissing } from './craftHierarchyEnhancer.js';
+import { renderMainRecipe, summarizeMainMissing } from './craftHierarchyEnhancer.js';
 import { summarizeCraftProject } from './craftHomeSummary.js';
 import { buildRecipeBook } from './craftPlannerEngine.js';
 
@@ -195,10 +195,19 @@ const renderMembers = (group, userId, owner) => {
 
 const groupInventoryRows = (group, workspace) => {
   const allowed = new Set(GROUP_INVENTORY_CATEGORIES);
-  return (group.plan?.inventory || []).filter(row => {
-    const item = workspace.items.find(candidate => candidate.item_key === row.itemKey);
-    return allowed.has(item?.category);
-  });
+  const totals = new Map();
+  for (const contribution of group.contributions || []) {
+    const itemKey = String(contribution.item_key || '');
+    const item = workspace.items.find(candidate => candidate.item_key === itemKey);
+    if (!itemKey || !allowed.has(item?.category)) continue;
+    totals.set(itemKey, (totals.get(itemKey) || 0) + Number(contribution.quantity || 0));
+  }
+  return [...totals.entries()]
+    .map(([itemKey, quantity]) => {
+      const item = workspace.items.find(candidate => candidate.item_key === itemKey) || { item_key: itemKey, name: itemKey };
+      return { itemKey, name: item.name || itemKey, quantity };
+    })
+    .sort((left, right) => left.name.localeCompare(right.name, 'pl'));
 };
 
 const renderGroupInventoryRows = (group, workspace, userId, canEditInventory) => {
@@ -243,7 +252,7 @@ const renderGroupInventoryWindow = (group, workspace, userId, canEditInventory, 
         <header><span></span><h4 id="craftGroupInventoryTitle">Wspólny magazyn</h4><div><small>(${count}/250)</small><button type="button" data-group-close-inventory aria-label="Zamknij">×</button></div></header>
         <div class="craft-inventory-toolbar"><button type="button" class="is-active">All</button><span>Materiały i recepty</span><input class="craft-search" id="craftGroupInventorySearch" type="search" placeholder="Szukaj…" aria-label="Szukaj materiału lub recepty"></div>
         <div class="craft-inventory-list craft-group-inventory-list">${renderGroupInventoryRows(group, workspace, userId, canEditInventory)}</div>
-        ${canEditInventory ? `<form id="craftGroupInventoryForm" class="craft-group-form"><label><span>Dodaj materiał lub receptę</span>${renderInventorySelect(workspace, { name: 'itemKey' })}</label><label><span>Ilość, którą dodajesz</span><input name="quantity" type="number" min="0" step="1" value="0" required></label><button type="submit">DODAJ DO MAGAZYNU</button></form><p class="craft-group-form-hint">Lista zawiera materiały craftowe i receptury. Możesz wpisać początek nazwy, aby szybko przejść do pozycji.</p>` : '<p class="craft-group-note">Masz podgląd tego magazynu. Właściciel nie nadał Ci uprawnień do jego edycji.</p>'}
+        ${canEditInventory ? `<form id="craftGroupInventoryForm" class="craft-group-form"><label><span>Dodaj materiał lub receptę</span>${renderInventorySelect(workspace, { name: 'itemKey' })}</label><label><span>Ilość, którą dodajesz</span><input name="quantity" type="number" min="0" step="1" value="0" required></label><button type="submit">DODAJ DO MAGAZYNU</button></form><p class="craft-group-form-hint">Lista zawiera materiały craftowe i receptury. Możesz wpisać początek nazwy, aby szybko przejść do pozycji.</p>${feedback ? `<p class="craft-group-form-feedback" role="status">${escapeHtml(feedback)}</p>` : ''}` : '<p class="craft-group-note">Masz podgląd tego magazynu. Właściciel nie nadał Ci uprawnień do jego edycji.</p>'}
         <footer><span>Kliknij ikonę, aby zmienić swój wkład.</span><span><i></i> łącznie <i></i> Twój wkład</span></footer>
       </section>
     </div>`;
@@ -310,10 +319,9 @@ const renderGroupRequirementNode = (node, requirements, workspace, depth = 0) =>
 };
 
 const renderGroupRequirements = (group, workspace) => {
-  const tree = groupRequirementTree(group, workspace);
-  if (!tree.length) return '<div class="craft-group-empty">Brak składników do pokazania.</div>';
-  const requirements = new Map((group.plan?.requirements || []).map(row => [row.itemKey, row]));
-  return tree.map(node => renderGroupRequirementNode(node, requirements, workspace)).join('');
+  if (!group.plan) return '<div class="craft-group-empty">Brak składników do pokazania.</div>';
+  const html = renderMainRecipe(group.plan, workspace);
+  return html || '<div class="craft-group-empty">Brak składników do pokazania.</div>';
 };
 
 const renderCandidates = (workspace, group) => {
@@ -372,7 +380,6 @@ function renderGroup(section, workspace, selectedIndex = 0, feedback = '', inven
   const progress = group.plan ? summarizeCraftProject(group.plan).percent : 0;
   const missing = group.plan ? summarizeMainMissing(group.plan, workspace) : 0;
   const candidates = renderCandidates(workspace, group);
-  const mainRequirementCount = groupRequirementTree(group, workspace).length;
   const projectCollapsed = collapsedGroupProjectIds.has(String(group.project.id));
   const targetItem = workspace.items.find(item => item.item_key === group.project.target_item_key) || {
     item_key: group.project.target_item_key,
@@ -388,14 +395,14 @@ function renderGroup(section, workspace, selectedIndex = 0, feedback = '', inven
       <div class="craft-group-project-head"><div class="craft-group-project-identity"><button class="craft-group-project-toggle" type="button" data-group-toggle-project aria-expanded="${projectCollapsed ? 'false' : 'true'}" aria-label="${projectCollapsed ? 'Rozwiń' : 'Zwiń'} projekt"><span aria-hidden="true">${projectCollapsed ? '›' : '⌄'}</span></button><div><small>${escapeHtml(statusLabel(group.project.status))} · WŁAŚCICIEL: ${escapeHtml(group.project.ownerNickname)}</small><h4>${escapeHtml(group.project.name)}</h4><div class="craft-group-project-target">${craftItemIconMarkup({ ...targetItem, name: group.plan?.targetName || targetItem.name }, 'craft-item-icon craft-target-icon')}<span><small>TWORZYMY</small><b>${escapeHtml(group.plan?.targetName || targetItem.name)}</b><p>${fmt(group.project.target_quantity)} szt.</p></span></div></div></div><div class="craft-group-actions">${owner ? `<button type="button" data-group-action="toggle-status">${group.project.status === 'active' ? 'WSTRZYMAJ' : 'WZNÓW'}</button><button type="button" data-group-action="delete-project">USUŃ</button>` : '<span class="craft-group-badge">UDOSTĘPNIONY</span>'}</div></div>
       <div class="craft-group-project-body"${projectCollapsed ? ' hidden' : ''}>
       <div class="craft-group-progress"><div><span>Postęp wspólnego projektu</span><b>${progress}%</b></div><div class="craft-progress-track"><i style="--craft-project-progress:${progress}%"></i></div><small>${missing ? `Brakuje łącznie: ${fmt(missing)}` : 'Materiały pokryte ✓'}</small></div>
-      <section class="craft-group-requirements craft-box"><div class="craft-group-box-head"><b>GŁÓWNE SKŁADNIKI DO WYKONANIA</b><span>${mainRequirementCount} ${mainRequirementCount === 1 ? 'składnik' : 'składniki'}</span></div><div class="craft-group-requirement-list">${renderGroupRequirements(group, workspace)}</div></section>
+      <section class="craft-group-requirements craft-box">${renderGroupRequirements(group, workspace)}</section>
       <div class="craft-group-grid">
-        <section class="craft-group-box"><div class="craft-group-box-head"><b>WSPÓLNY MAGAZYN</b><span>${groupInventoryRows(group, workspace).length} materiałów</span></div>${renderGroupInventoryWindow(group, workspace, userId, canEditInventory, inventoryOpen)}</section>
+        <section class="craft-group-box"><div class="craft-group-box-head"><b>WSPÓLNY MAGAZYN</b><span>${groupInventoryRows(group, workspace).length} pozycji</span></div>${renderGroupInventoryWindow(group, workspace, userId, canEditInventory, inventoryOpen)}</section>
         <section class="craft-group-box"><div class="craft-group-box-head"><b>UCZESTNICY</b><span>${(group.members?.length || 0) + 1} osób</span></div><div class="craft-group-members">${renderMembers(group, userId, owner)}</div>${owner ? `<form id="craftGroupInviteForm" class="craft-group-form"><label><span>Dodaj osobę</span><select name="userId" required><option value="">Wybierz członka klanu</option>${candidates}</select></label><label><span>Dostęp</span><select name="role"><option value="editor">Może uzupełniać magazyn</option><option value="viewer">Tylko podgląd</option></select></label><button type="submit">UDOSTĘPNIJ PROJEKT</button></form>` : ''}</section>
       </div>
       </div>
     </article>
-    <p class="craft-group-feedback">${escapeHtml(feedback)}</p>`;
+    <p class="craft-group-feedback" role="status">${escapeHtml(feedback)}</p>`;
   section.dataset.groupSelectedIndex = String(index);
 }
 
@@ -642,6 +649,7 @@ export function installCraftGroupPlannerUi(supabase) {
     @media(max-width:420px){.craft-group-picker-items{grid-template-columns:1fr}}
     .craft-group-picker-dropdown{min-width:0}.craft-group-picker-dropdown>summary{list-style:none}.craft-group-picker-dropdown>summary::-webkit-details-marker{display:none}.craft-group-picker-current{position:relative;padding-right:31px;cursor:pointer}.craft-group-picker-dropdown[open]>summary{border-color:#b78a3b;background:#17140f}.craft-group-picker-current-arrow{position:absolute;right:10px;color:#d5ab59;font-size:15px;line-height:1}.craft-group-picker-dropdown[open] .craft-group-picker-current-arrow{transform:rotate(180deg)}.craft-group-picker-groups{display:grid;grid-template-columns:1fr;gap:0;max-height:250px;overflow:auto;margin-top:3px;padding:5px 6px 6px;border:1px solid #5a4a2e;background:#070b0b;overscroll-behavior:contain}.craft-group-picker-category{border:0;background:transparent}.craft-group-picker-category summary{padding:7px 10px}.craft-group-picker-items{display:grid;grid-template-columns:1fr;padding:0 0 4px}.craft-group-picker-item{display:block;width:100%;min-width:0;padding:6px 10px 6px 24px;border:0;border-bottom:1px solid #17201c;background:transparent;color:#d5d0c6;text-align:left;font-size:10px;font-weight:700;line-height:1.2;cursor:pointer}.craft-group-picker-item:hover,.craft-group-picker-item.is-selected{background:#1d68c5;color:#fff;border-color:#1d68c5}.craft-group-picker-item>span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.craft-group-picker.is-compact .craft-group-picker-groups{max-height:210px}.craft-group-picker.is-compact .craft-group-picker-item{padding-top:5px;padding-bottom:5px}
     .craft-group-picker-search{display:block;margin:5px 6px 0;padding:0}.craft-group-picker-search input{width:100%;box-sizing:border-box;padding:8px 9px;border:1px solid #4a3c25;background:#11130f;color:#e5d7b5;font-size:10px;outline:none}.craft-group-picker-search input:focus{border-color:#b78a3b;box-shadow:0 0 0 2px rgba(183,138,59,.12)}.craft-group-picker-search input::placeholder{color:#777269}.craft-group-picker-category[hidden]{display:none}.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+    .craft-group-form-feedback{margin:8px 0 0;color:#d9b45e;font-size:11px}
     @media(max-width:760px){.craft-group-picker-groups{max-height:220px}.craft-group-picker-item{font-size:9px;padding:5px 9px 5px 19px}}
   `;
   document.head.appendChild(style);

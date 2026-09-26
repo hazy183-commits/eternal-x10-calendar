@@ -241,7 +241,7 @@ function renderRecipeNode(itemKey, quantity, context, depth = 0, trail = []) {
     </details>`;
 }
 
-function renderMainRecipe(project, workspace) {
+export function renderMainRecipe(project, workspace) {
   const recipeBook = buildRecipeBook(workspace);
   const itemIndex = buildItemIndex(workspace);
   const maps = projectMaps(project);

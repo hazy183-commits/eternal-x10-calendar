@@ -52,16 +52,21 @@ function classifyMaterial(option) {
 function enhanceMaterialSelect(select) {
   if (!select || select.dataset.materialListReady === '1') return;
 
-  const materialOptions = [...select.options].filter(option => option.value.startsWith('mat_'));
-  if (!materialOptions.length) return;
+  const inventoryOptions = [...select.options].filter(option => (
+    option.value.startsWith('mat_') || option.value.startsWith('recipe_')
+  ));
+  if (!inventoryOptions.length) return;
 
   const groups = { crafted: [], key: [], crystals: [], basic: [] };
-  for (const option of materialOptions) groups[classifyMaterial(option)].push(option);
+  const recipes = inventoryOptions.filter(option => option.value.startsWith('recipe_'));
+  for (const option of inventoryOptions.filter(option => option.value.startsWith('mat_'))) {
+    groups[classifyMaterial(option)].push(option);
+  }
 
   select.replaceChildren();
   const placeholder = document.createElement('option');
   placeholder.value = '';
-  placeholder.textContent = 'Wybierz materiał…';
+  placeholder.textContent = 'Wybierz materiał lub receptę…';
   placeholder.disabled = true;
   placeholder.selected = true;
   select.appendChild(placeholder);
@@ -70,6 +75,7 @@ function enhanceMaterialSelect(select) {
   appendGroup(select, '◆ Key mats / części broni i armorów', groups.key);
   appendGroup(select, '✦ Crystale i Gemstones', groups.crystals);
   appendGroup(select, '• Surowce i pozostałe materiały', groups.basic);
+  appendGroup(select, '★ Receptury', recipes);
   select.dataset.materialListReady = '1';
 }
 
@@ -123,10 +129,10 @@ function ensureStyles() {
   style.id = 'craftSelectEnhancerStyles';
   style.textContent = `
     #craftProjectForm.craft-form.project{grid-template-columns:minmax(260px,1.8fr) 95px minmax(150px,.8fr) auto!important}
-    #craftProjectForm select[name="targetItemKey"] optgroup,#craftStockForm select[name="itemKey"] optgroup{font-weight:900;color:#d7b35e;background:#090d0d}
-    #craftProjectForm select[name="targetItemKey"] option,#craftStockForm select[name="itemKey"] option{font-weight:600;color:#e4e0d7;background:#090d0d;padding:4px}
+    #craftProjectForm select[name="targetItemKey"] optgroup,#craftStockForm select[name="itemKey"] optgroup,#craftGroupInventoryForm select[name="itemKey"] optgroup{font-weight:900;color:#d7b35e;background:#090d0d}
+    #craftProjectForm select[name="targetItemKey"] option,#craftStockForm select[name="itemKey"] option,#craftGroupInventoryForm select[name="itemKey"] option{font-weight:600;color:#e4e0d7;background:#090d0d;padding:4px}
     #craftProjectForm select[name="priority"]{font-weight:800;color:#e4c16d}
-    #craftStockForm select[name="itemKey"]{font-weight:700}
+    #craftStockForm select[name="itemKey"],#craftGroupInventoryForm select[name="itemKey"]{font-weight:700}
     @media(max-width:900px){#craftProjectForm.craft-form.project{grid-template-columns:1fr 100px!important}#craftProjectForm .craft-priority-control{grid-column:1/-1}#craftProjectForm button{grid-column:1/-1}}
   `;
   document.head.appendChild(style);
@@ -134,7 +140,7 @@ function ensureStyles() {
 
 function enhanceCraftSelects(root = document) {
   root.querySelectorAll?.('#craftProjectForm select[name="targetItemKey"]').forEach(enhanceTargetSelect);
-  root.querySelectorAll?.('#craftStockForm select[name="itemKey"]').forEach(enhanceMaterialSelect);
+  root.querySelectorAll?.('#craftStockForm select[name="itemKey"], #craftGroupInventoryForm select[name="itemKey"]').forEach(enhanceMaterialSelect);
   root.querySelectorAll?.('#craftProjectForm').forEach(enhanceProjectForm);
 }
 
