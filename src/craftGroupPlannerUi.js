@@ -129,6 +129,13 @@ export const renderItemPicker = (workspace, { name, craftableOnly = false, categ
   </div>`;
 };
 
+export const renderInventorySelect = (workspace, { name = 'itemKey', selectedItemKey = '', placeholder = 'Wybierz materiał lub receptę…' } = {}) => {
+  const items = pickerItems(workspace, false, GROUP_INVENTORY_CATEGORIES);
+  return `<select class="craft-inventory-picker" name="${escapeHtml(name)}" required aria-label="Wybierz materiał lub receptę">
+    ${pickerOptions(items, selectedItemKey, 'inventory', placeholder)}
+  </select>`;
+};
+
 const statusLabel = status => ({ active: 'AKTYWNY', paused: 'WSTRZYMANY', completed: 'ZAKOŃCZONY', archived: 'ARCHIWUM' })[status] || status;
 
 const ensureGroupNavigation = () => {
@@ -236,7 +243,7 @@ const renderGroupInventoryWindow = (group, workspace, userId, canEditInventory, 
         <header><span></span><h4 id="craftGroupInventoryTitle">Wspólny magazyn</h4><div><small>(${count}/250)</small><button type="button" data-group-close-inventory aria-label="Zamknij">×</button></div></header>
         <div class="craft-inventory-toolbar"><button type="button" class="is-active">All</button><span>Materiały i recepty</span><input class="craft-search" id="craftGroupInventorySearch" type="search" placeholder="Szukaj…" aria-label="Szukaj materiału lub recepty"></div>
         <div class="craft-inventory-list craft-group-inventory-list">${renderGroupInventoryRows(group, workspace, userId, canEditInventory)}</div>
-        ${canEditInventory ? `<form id="craftGroupInventoryForm" class="craft-group-form"><label><span>Dodaj materiał lub receptę</span>${renderItemPicker(workspace, { name: 'itemKey', categories: GROUP_INVENTORY_CATEGORIES, compact: true, mode: 'inventory', placeholder: 'Wybierz materiał lub receptę…' })}</label><label><span>Ilość, którą dodajesz</span><input name="quantity" type="number" min="0" step="1" value="0" required></label><button type="submit">DODAJ DO MAGAZYNU</button></form><p class="craft-group-form-hint">Kliknij pole wyboru, aby rozwinąć listę. Materiały i receptury są pogrupowane jak w magazynie indywidualnym.</p>` : '<p class="craft-group-note">Masz podgląd tego magazynu. Właściciel nie nadał Ci uprawnień do jego edycji.</p>'}
+        ${canEditInventory ? `<form id="craftGroupInventoryForm" class="craft-group-form"><label><span>Dodaj materiał lub receptę</span>${renderInventorySelect(workspace, { name: 'itemKey' })}</label><label><span>Ilość, którą dodajesz</span><input name="quantity" type="number" min="0" step="1" value="0" required></label><button type="submit">DODAJ DO MAGAZYNU</button></form><p class="craft-group-form-hint">Lista zawiera materiały craftowe i receptury. Możesz wpisać początek nazwy, aby szybko przejść do pozycji.</p>` : '<p class="craft-group-note">Masz podgląd tego magazynu. Właściciel nie nadał Ci uprawnień do jego edycji.</p>'}
         <footer><span>Kliknij ikonę, aby zmienić swój wkład.</span><span><i></i> łącznie <i></i> Twój wkład</span></footer>
       </section>
     </div>`;

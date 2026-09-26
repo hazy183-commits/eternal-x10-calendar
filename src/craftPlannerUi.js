@@ -7,7 +7,7 @@ import {
   updateCraftProject,
 } from './craftWorkspace.js';
 import { craftItemIconMarkup, craftItemIconPath } from './craftItemIcons.js';
-import { renderItemPicker } from './craftGroupPlannerUi.js';
+import { renderInventorySelect, renderItemPicker } from './craftGroupPlannerUi.js';
 import { summarizeCraftProject } from './craftHomeSummary.js';
 import { summarizeMainMissing } from './craftHierarchyEnhancer.js';
 
@@ -297,7 +297,7 @@ export function installCraftPlannerUi(supabase) {
             <div class="craft-step-head"><span class="craft-step-number">2</span><div><small class="craft-step-kicker">TWÓJ STAN</small><h4>Uzupełnij magazyn</h4></div></div>
             <p>Wpisujesz realny stan. Projekty nie zmieniają go fizycznie — tylko pokazują, ile jest zarezerwowane.</p>
             <form class="craft-form" id="craftStockForm">
-              <label class="craft-control"><span>Materiał lub recepta</span>${renderItemPicker(workspace, { name: 'itemKey', categories: ['material', 'recipe'], compact: true, mode: 'inventory', placeholder: 'Wybierz materiał lub receptę…' })}</label>
+              <label class="craft-control"><span>Materiał lub recepta</span>${renderInventorySelect(workspace, { name: 'itemKey' })}</label>
               <label class="craft-control"><span>Ile masz</span><input name="quantity" type="number" min="0" step="1" value="0" required></label>
               <button type="submit">Zapisz</button>
             </form>
