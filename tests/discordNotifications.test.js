@@ -29,3 +29,13 @@ test('Discord planner covers every calendar family and needed RB windows', async
   assert.match(sql, /Europe\/Warsaw/);
   assert.match(sql, /'\*\/5 \* \* \* \*'/);
 });
+
+test('Discord planner includes the two permanent clan activities', async () => {
+  const sql = await readFile(new URL('supabase/migrations/20260926090000_add_clan_activity_schedule.sql', root), 'utf8');
+  assert.match(sql, /clan_activities/);
+  assert.match(sql, /Klanowe PVP/);
+  assert.match(sql, /Ćwiczenia Colloseum/);
+  assert.match(sql, /time '20:20'/);
+  assert.match(sql, /extract\(isodow from d\) in \(2, 4\)/);
+  assert.match(sql, /extract\(isodow from d\) = 3/);
+});

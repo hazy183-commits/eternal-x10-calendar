@@ -2,6 +2,7 @@ import { publishClanEventSources } from '../src/clanEventFeed.js';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import * as pvp from '../src/pvpEventSchedule.js';
+import * as clanActivities from '../src/clanActivitySchedule.js';
 import { renderPvpEventPanel, renderPvpSidebar, updatePvpRowCountdowns } from '../src/pvpEventPanel.js';
 import * as olympiad from '../src/olympiadSchedule.js';
 import * as bosses from '../src/bossRespawns.js';
@@ -26,7 +27,7 @@ export function app(t, iso) {
     return elements.get(selector);
   };
   const context = vm.createContext({
-    ...olympiad, ...bosses, ...sieges, ...territory, ...pvp, renderOlympiadPanel, renderPvpEventPanel, renderPvpSidebar, updatePvpRowCountdowns,
+    ...olympiad, ...bosses, ...sieges, ...territory, ...pvp, ...clanActivities, renderOlympiadPanel, renderPvpEventPanel, renderPvpSidebar, updatePvpRowCountdowns,
     publishClanEventSources, Date, Intl, console: { log() {} }, supabase: null,
     SupabaseEventRepository: class {}, SupabaseBossRespawnRepository: class {}, SupabaseSiegeScheduleRepository: class {},
     applyBossArtwork() {}, refreshBossArtwork() {},

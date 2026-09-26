@@ -10,7 +10,7 @@ test('day strip spans month boundary, counts all events and respects selected-da
   assert.equal((week.match(/data-calendar-day=/g) || []).length, 29);
   assert.match(week, /data-calendar-day="2026-09-28"/);
   assert.match(week, /data-calendar-day="2026-10-04"/);
-  assert.match(week, /data-calendar-day="2026-10-01" aria-pressed="true" aria-label="[^"]*2 wydarzenia"/);
+  assert.match(week, /data-calendar-day="2026-10-01" aria-pressed="true" aria-label="[^"]*3 wydarzenia"/);
   assert.match(element('#dailyEvents').innerHTML, /Raid/);
   assert.doesNotMatch(element('#dailyEvents').innerHTML, /OLYMPIAD/);
   run(`selectedDay = new Date('2026-10-03T12:00:00'); renderCalendar();`);

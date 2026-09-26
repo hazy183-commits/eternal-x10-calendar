@@ -11,7 +11,12 @@ import './mobileVisualFixes.css';
 
 // Vite serves public/ directly and copies it unchanged into production builds.
 const artworkBase = `${import.meta.env.BASE_URL}images/bosses/`;
-const eventArtwork = { olympiad: '/images/events/olympiad.jpg' };
+const eventArtwork = new Map([
+  ['olympiad', '/images/events/olympiad.jpg'],
+  ['klanowe pvp', '/images/profile-studio/siege-night.webp'],
+  ['ćwiczenia colloseum', '/images/profile-studio/interlude-magic.webp'],
+  ['cwiczenia colloseum', '/images/profile-studio/interlude-magic.webp'],
+]);
 const clanHallArtwork = new Map([
   ['fortress of resistance', '/images/fortress-of-resistance.jpg'],
   ['devastated castle', '/images/devastated-castle.jpg'],
@@ -47,6 +52,7 @@ const artworkObserver = typeof IntersectionObserver === 'undefined' ? null : new
 }, { rootMargin: '400px 0px' });
 
 export function bossArtworkUrl(name = '') {
+  if (typeof name === 'string' && /^\/images\//i.test(name.trim())) return name.trim();
   const key = name.trim().toLowerCase().replace(/\s+/g, ' ');
   const bossSlug = bosses.get(key);
   if (bossSlug) return `${artworkBase}${bossSlug}.webp`;
@@ -54,7 +60,7 @@ export function bossArtworkUrl(name = '') {
   if (clanHallUrl) return clanHallUrl;
   const castleSlug = [...castleArtwork.entries()].find(([castle]) => key.includes(castle))?.[1];
   if (castleSlug) return `${import.meta.env.BASE_URL}images/castles/${castleSlug}.jpg?v=20260920`;
-  return eventArtwork[key] ?? '';
+  return eventArtwork.get(key) ?? '';
 }
 
 function imageLoads(url) {

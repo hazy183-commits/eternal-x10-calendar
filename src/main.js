@@ -17,10 +17,11 @@ import { TerritoryOwnershipRepository, applyTerritoryOwners, ownerFor } from './
 import { withOlympiadEvents, olympiadStatus, olympiadCountdownTarget, olympiadLocalDate, formatOlympiadDate } from './olympiadSchedule.js';
 import { renderOlympiadPanel } from './olympiadPanel.js';
 import { withPvpEvents, pvpEventStatus, pvpCountdownText } from './pvpEventSchedule.js';
+import { withClanActivityEvents } from './clanActivitySchedule.js';
 import { renderPvpEventPanel, renderPvpSidebar, updatePvpRowCountdowns } from './pvpEventPanel.js';
 console.log('APP STARTED');
 
-const artworkName = (event) => event?.boss || event?.name || '';
+const artworkName = (event) => event?.artwork || event?.boss || event?.name || '';
 const TYPES = ['RB', 'Epic RB', 'Clan Hall', 'Siege', 'Olympiad', 'Event'];
 const $ = (selector) => document.querySelector(selector);
 const pad = (value) => String(value).padStart(2, '0');
@@ -109,7 +110,7 @@ function calendarEventState(event) {
   return 'upcoming';
 }
 function calendarEventsFor(day) {
-  return sorted(withPvpEvents(withOlympiadEvents(events, new Date(), dateKey(day)), new Date(), dateKey(day))
+  return sorted(withClanActivityEvents(withPvpEvents(withOlympiadEvents(events, new Date(), dateKey(day)), new Date(), dateKey(day)), new Date(), dateKey(day))
     .filter(event => !event.isPvpSchedule && event.date === dateKey(day)));
 }
 let calendarNavigation = null;
@@ -230,7 +231,7 @@ function mergePublicEvents() {
   const managerKeys = new Set(managerEvents.map(publicEventKey));
   const managerBosses = new Set(BOSS_RESPAWN_BOSSES.map(normalizedBossName));
   const siegeKeys = new Set(siegeEvents.map(siegePublicKey));
-  events = withPvpEvents(withOlympiadEvents([...ownedOrdinaryEvents.filter((event) => {
+  events = withClanActivityEvents(withPvpEvents(withOlympiadEvents([...ownedOrdinaryEvents.filter((event) => {
     const names = [event.boss, event.name]
       .filter(Boolean)
       .map(normalizedBossName);
@@ -240,11 +241,11 @@ function mergePublicEvents() {
       if (castle && siegeKeys.has(siegePublicKey({ castle, date: event.date }))) return false;
     }
     return true;
-  }), ...managerEvents, ...siegeEvents]));
+  }), ...managerEvents, ...siegeEvents])), new Date());
 }
 function refreshDynamicEvents() {
-  const signature = () => events.filter((event) => event.isBossRespawn || event.isSiegeSchedule || event.isOlympiadSchedule || event.isPvpSchedule)
-    .map((event) => `${event.id}:${event.date}:${event.time}:${event.respawnStatus || event.siegeStatus || event.olympiadStatus || event.pvpStatus || eventStatus(event)}`).join('|');
+  const signature = () => events.filter((event) => event.isBossRespawn || event.isSiegeSchedule || event.isOlympiadSchedule || event.isPvpSchedule || event.isClanActivitySchedule)
+    .map((event) => `${event.id}:${event.date}:${event.time}:${event.respawnStatus || event.siegeStatus || event.olympiadStatus || event.pvpStatus || event.clanActivityStatus || eventStatus(event)}`).join('|');
   const before = signature();
   mergePublicEvents();
   const after = signature();
