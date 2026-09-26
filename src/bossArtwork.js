@@ -13,9 +13,9 @@ import './mobileVisualFixes.css';
 const artworkBase = `${import.meta.env.BASE_URL}images/bosses/`;
 const eventArtwork = new Map([
   ['olympiad', '/images/events/olympiad.jpg'],
-  ['klanowe pvp', '/images/profile-studio/siege-night.webp'],
-  ['ćwiczenia colloseum', '/images/profile-studio/interlude-magic.webp'],
-  ['cwiczenia colloseum', '/images/profile-studio/interlude-magic.webp'],
+  ['klanowe pvp', '/images/events/clan-pvp.webp'],
+  ['ćwiczenia colloseum', '/images/events/colloseum-training.webp'],
+  ['cwiczenia colloseum', '/images/events/colloseum-training.webp'],
 ]);
 const clanHallArtwork = new Map([
   ['fortress of resistance', '/images/fortress-of-resistance.jpg'],

@@ -8,13 +8,13 @@ export const CLAN_ACTIVITY_EVENTS = Object.freeze([
     id: 'clan-pvp',
     name: 'Klanowe PVP',
     weekdays: Object.freeze([2, 4]),
-    artwork: '/images/profile-studio/siege-night.webp',
+    artwork: '/images/events/clan-pvp.webp',
   }),
   Object.freeze({
     id: 'colloseum-training',
     name: 'Ćwiczenia Colloseum',
     weekdays: Object.freeze([3]),
-    artwork: '/images/profile-studio/interlude-magic.webp',
+    artwork: '/images/events/colloseum-training.webp',
   }),
 ]);
 

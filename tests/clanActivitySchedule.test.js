@@ -14,7 +14,7 @@ test('Klanowe PVP is generated on Tuesday and Thursday at 20:20 Warsaw time', ()
   assert.equal(thursday.name, 'Klanowe PVP');
   assert.equal(tuesday.time, '20:20');
   assert.equal(tuesday.startAt, '2026-09-29T18:20:00.000Z');
-  assert.equal(tuesday.artwork, '/images/profile-studio/siege-night.webp');
+  assert.equal(tuesday.artwork, '/images/events/clan-pvp.webp');
 });
 
 test('Ćwiczenia Colloseum is generated on Wednesday and keeps the winter Warsaw offset', () => {
@@ -25,7 +25,7 @@ test('Ćwiczenia Colloseum is generated on Wednesday and keeps the winter Warsaw
   assert.equal(event.time, '20:20');
   assert.equal(event.startAt, '2026-09-30T18:20:00.000Z');
   assert.equal(winterEvent.startAt, '2026-12-30T19:20:00.000Z');
-  assert.equal(event.artwork, '/images/profile-studio/interlude-magic.webp');
+  assert.equal(event.artwork, '/images/events/colloseum-training.webp');
 });
 
 test('schedule is available for the next day and a selected calendar date without duplicating manual events', () => {
