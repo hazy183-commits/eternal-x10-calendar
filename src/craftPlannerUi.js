@@ -318,7 +318,7 @@ export function installCraftPlannerUi(supabase) {
   };
 
   window.addEventListener('orzel:craft-workspace-opened', event => {
-    const groupActive = event.detail?.view === 'group-craft' || event.detail?.focus === 'project';
+    const groupActive = event.detail?.view === 'group-craft';
     ui.root.hidden = groupActive;
     document.querySelector('#craftGroupWorkspaceRoot')?.toggleAttribute('hidden', !groupActive);
     if (!groupActive) refresh();

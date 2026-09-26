@@ -236,7 +236,7 @@ const renderGroupInventoryPreview = (group, workspace) => {
   return `${icons}${Array.from({ length: Math.max(0, 6 - rows.length) }, () => '<span class="craft-inventory-preview-empty"></span>').join('')}`;
 };
 
-const renderGroupInventoryWindow = (group, workspace, userId, canEditInventory, isOpen) => {
+const renderGroupInventoryWindow = (group, workspace, userId, canEditInventory, isOpen, feedback = '') => {
   const rows = groupInventoryRows(group, workspace);
   const count = rows.length;
   return `
@@ -397,7 +397,7 @@ function renderGroup(section, workspace, selectedIndex = 0, feedback = '', inven
       <div class="craft-group-progress"><div><span>Postęp wspólnego projektu</span><b>${progress}%</b></div><div class="craft-progress-track"><i style="--craft-project-progress:${progress}%"></i></div><small>${missing ? `Brakuje łącznie: ${fmt(missing)}` : 'Materiały pokryte ✓'}</small></div>
       <section class="craft-group-requirements craft-box">${renderGroupRequirements(group, workspace)}</section>
       <div class="craft-group-grid">
-        <section class="craft-group-box"><div class="craft-group-box-head"><b>WSPÓLNY MAGAZYN</b><span>${groupInventoryRows(group, workspace).length} pozycji</span></div>${renderGroupInventoryWindow(group, workspace, userId, canEditInventory, inventoryOpen)}</section>
+        <section class="craft-group-box"><div class="craft-group-box-head"><b>WSPÓLNY MAGAZYN</b><span>${groupInventoryRows(group, workspace).length} pozycji</span></div>${renderGroupInventoryWindow(group, workspace, userId, canEditInventory, inventoryOpen, feedback)}</section>
         <section class="craft-group-box"><div class="craft-group-box-head"><b>UCZESTNICY</b><span>${(group.members?.length || 0) + 1} osób</span></div><div class="craft-group-members">${renderMembers(group, userId, owner)}</div>${owner ? `<form id="craftGroupInviteForm" class="craft-group-form"><label><span>Dodaj osobę</span><select name="userId" required><option value="">Wybierz członka klanu</option>${candidates}</select></label><label><span>Dostęp</span><select name="role"><option value="editor">Może uzupełniać magazyn</option><option value="viewer">Tylko podgląd</option></select></label><button type="submit">UDOSTĘPNIJ PROJEKT</button></form>` : ''}</section>
       </div>
       </div>
@@ -458,7 +458,7 @@ export function installCraftGroupPlannerUi(supabase) {
 
   setWorkspaceMode(false);
   window.addEventListener('orzel:craft-workspace-opened', event => {
-    const groupActive = event.detail?.view === 'group-craft' || event.detail?.focus === 'project';
+    const groupActive = event.detail?.view === 'group-craft';
     setWorkspaceMode(groupActive);
     if (groupActive) refresh('', { focusProject: true });
   });
