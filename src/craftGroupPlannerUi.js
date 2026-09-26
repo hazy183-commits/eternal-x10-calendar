@@ -7,7 +7,7 @@ import {
   setCraftGroupContribution,
   updateCraftGroupProject,
 } from './craftGroupWorkspace.js';
-import { craftItemIconMarkup } from './craftItemIcons.js';
+import { craftItemIconMarkup, craftItemIconPath } from './craftItemIcons.js';
 import { summarizeMainMissing } from './craftHierarchyEnhancer.js';
 import { summarizeCraftProject } from './craftHomeSummary.js';
 import { buildRecipeBook } from './craftPlannerEngine.js';
@@ -21,6 +21,7 @@ const escapeHtml = (value = '') => String(value)
 
 const fmt = value => Number(value || 0).toLocaleString('pl-PL');
 const collapsedGroupProjectIds = new Set();
+const pickerSearchValue = value => String(value || '').trim().toLocaleLowerCase('pl');
 
 const GROUP_INVENTORY_CATEGORIES = ['material', 'recipe'];
 
@@ -96,7 +97,7 @@ const pickerOptions = (items, selectedItemKey = '', mode = 'target', placeholder
     ${group.items.map(item => `<option value="${escapeHtml(item.item_key)}"${item.item_key === selectedItemKey ? ' selected' : ''}>${escapeHtml(item.name)}</option>`).join('')}
   </optgroup>`).join('')}`;
 
-const renderItemPicker = (workspace, { name, craftableOnly = false, categories = null, selectedItemKey = '', compact = false, mode = 'target', placeholder = 'Wybierz przedmiot…', openFirstCategory = false } = {}) => {
+export const renderItemPicker = (workspace, { name, craftableOnly = false, categories = null, selectedItemKey = '', compact = false, mode = 'target', placeholder = 'Wybierz przedmiot…', openFirstCategory = false } = {}) => {
   const items = pickerItems(workspace, craftableOnly, categories);
   const selected = selectedItemKey ? (items.find(item => item.item_key === selectedItemKey) || (mode === 'inventory' ? null : items[0])) : (mode === 'inventory' ? null : items[0]);
   const groups = pickerGroups(items, mode);
@@ -112,11 +113,12 @@ const renderItemPicker = (workspace, { name, craftableOnly = false, categories =
       <span data-group-picker-current-name>${escapeHtml(currentLabel)}</span>
       <span class="craft-group-picker-current-arrow" aria-hidden="true">⌄</span>
       </summary>
+      <label class="craft-group-picker-search"><span class="sr-only">Szukaj na liście</span><input type="search" data-group-picker-search placeholder="Wpisz nazwę, aby szybko znaleźć…" autocomplete="off"></label>
       <div class="craft-group-picker-groups" aria-label="Przedmioty pogrupowane kategoriami">
-      ${groups.map((group, index) => `<details class="craft-group-picker-category"${openFirstCategory && index === 0 ? ' open' : ''}>
+      ${groups.map((group, index) => `<details class="craft-group-picker-category" data-group-picker-category${openFirstCategory && index === 0 ? ' open' : ''}>
         <summary>${escapeHtml(group.label)} <small>${group.items.length}</small></summary>
         <div class="craft-group-picker-items">
-          ${group.items.map(item => `<button type="button" class="craft-group-picker-item${item.item_key === selectedKey ? ' is-selected' : ''}" data-group-picker-item="${escapeHtml(item.item_key)}" data-group-picker-name="${escapeHtml(item.name)}" aria-pressed="${item.item_key === selectedKey ? 'true' : 'false'}">
+          ${group.items.map(item => `<button type="button" class="craft-group-picker-item${item.item_key === selectedKey ? ' is-selected' : ''}" data-group-picker-item="${escapeHtml(item.item_key)}" data-group-picker-name="${escapeHtml(item.name)}" data-group-picker-icon-src="${escapeHtml(craftItemIconPath(item.item_key, item.game_item_id))}" aria-pressed="${item.item_key === selectedKey ? 'true' : 'false'}">
             <span>${escapeHtml(item.name)}</span>
           </button>`).join('')}
         </div>
@@ -529,15 +531,36 @@ export function installCraftGroupPlannerUi(supabase) {
         item.classList.toggle('is-selected', selected);
         item.setAttribute('aria-pressed', String(selected));
       });
-      const pickedItem = workspace?.items?.find(item => item.item_key === pickerItem.dataset.groupPickerItem);
       const current = picker.querySelector('[data-group-picker-current]');
       const currentName = picker.querySelector('[data-group-picker-current-name]');
-      if (current && pickedItem) {
+      if (current) {
         const currentIcon = current.querySelector('.craft-group-picker-current-icon');
-        if (currentIcon) currentIcon.outerHTML = craftItemIconMarkup(pickedItem, 'craft-group-picker-current-icon');
+        if (currentIcon) {
+          const iconSrc = pickerItem.dataset.groupPickerIconSrc || '';
+          currentIcon.classList.toggle('is-placeholder', !iconSrc);
+          currentIcon.replaceChildren();
+          if (iconSrc) {
+            const image = document.createElement('img');
+            image.src = iconSrc;
+            image.alt = pickerItem.dataset.groupPickerName || '';
+            image.width = 32;
+            image.height = 32;
+            image.loading = 'lazy';
+            image.decoding = 'async';
+            currentIcon.appendChild(image);
+          } else {
+            currentIcon.textContent = '⚒';
+          }
+        }
       }
       if (currentName) currentName.textContent = pickerItem.dataset.groupPickerName || '';
       select.dispatchEvent(new Event('change', { bubbles: true }));
+      const pickerSearch = picker.querySelector('[data-group-picker-search]');
+      if (pickerSearch) {
+        pickerSearch.value = '';
+        picker.querySelectorAll('[data-group-picker-item]').forEach(item => { item.hidden = false; });
+        picker.querySelectorAll('[data-group-picker-category]').forEach(category => { category.hidden = false; });
+      }
       const dropdown = picker.querySelector('.craft-group-picker-dropdown');
       if (dropdown) dropdown.open = false;
       return;
@@ -571,6 +594,28 @@ export function installCraftGroupPlannerUi(supabase) {
   });
 
   document.addEventListener('input', event => {
+    const pickerSearch = event.target.closest?.('[data-group-picker-search]');
+    if (pickerSearch) {
+      const picker = pickerSearch.closest('[data-group-picker]');
+      const query = pickerSearchValue(pickerSearch.value);
+      let firstMatch = null;
+      for (const category of picker?.querySelectorAll('[data-group-picker-category]') || []) {
+        let categoryHasMatch = false;
+        for (const item of category.querySelectorAll('[data-group-picker-item]')) {
+          const haystack = pickerSearchValue(`${item.dataset.groupPickerName || ''} ${item.dataset.groupPickerItem || ''}`);
+          const matches = !query || haystack.includes(query);
+          item.hidden = !matches;
+          if (matches) {
+            categoryHasMatch = true;
+            if (!firstMatch) firstMatch = item;
+          }
+        }
+        category.hidden = Boolean(query) && !categoryHasMatch;
+        if (query && categoryHasMatch) category.open = true;
+      }
+      if (firstMatch && query) firstMatch.scrollIntoView({ block: 'nearest' });
+      return;
+    }
     const search = event.target.closest?.('#craftGroupInventorySearch');
     if (!search) return;
     const query = search.value.trim().toLocaleLowerCase('pl');
@@ -589,6 +634,7 @@ export function installCraftGroupPlannerUi(supabase) {
     @media(max-width:760px){.craft-group-heading{align-items:flex-start}.craft-group-heading h4{font-size:19px}.craft-group-mark{width:40px;height:40px;font-size:19px}.craft-group-create-box,.craft-group-project-card{padding:14px}.craft-group-form,.craft-group-box .craft-group-form{grid-template-columns:1fr}.craft-group-form button{grid-column:1/-1}.craft-group-project-head,.craft-group-actions{display:grid}.craft-group-actions{grid-template-columns:1fr 1fr}.craft-group-badge{justify-self:start}.craft-group-grid{grid-template-columns:1fr}.craft-group-stock-row{grid-template-columns:1fr auto}.craft-group-stock-row>span{grid-column:1/-1;margin-left:36px}.craft-group-stock-name{min-width:0}.craft-group-requirement-row{grid-template-columns:1fr 1fr 1fr}.craft-group-requirement-row>.craft-group-stock-name{grid-column:1/-1}.craft-group-requirement-summary:before{grid-row:1 / span 1}.craft-group-requirement-summary{grid-template-columns:1fr 1fr 1fr}.craft-group-requirement-summary>.craft-group-stock-name{grid-column:1/-1}.craft-group-expand-hint strong{font-size:9px}.craft-group-requirement-children{margin-left:12px;padding-left:6px}.craft-group-picker-groups{max-height:220px}.craft-group-picker-item{font-size:9px;padding:5px}}
     @media(max-width:420px){.craft-group-picker-items{grid-template-columns:1fr}}
     .craft-group-picker-dropdown{min-width:0}.craft-group-picker-dropdown>summary{list-style:none}.craft-group-picker-dropdown>summary::-webkit-details-marker{display:none}.craft-group-picker-current{position:relative;padding-right:31px;cursor:pointer}.craft-group-picker-dropdown[open]>summary{border-color:#b78a3b;background:#17140f}.craft-group-picker-current-arrow{position:absolute;right:10px;color:#d5ab59;font-size:15px;line-height:1}.craft-group-picker-dropdown[open] .craft-group-picker-current-arrow{transform:rotate(180deg)}.craft-group-picker-groups{display:grid;grid-template-columns:1fr;gap:0;max-height:250px;overflow:auto;margin-top:3px;padding:5px 6px 6px;border:1px solid #5a4a2e;background:#070b0b;overscroll-behavior:contain}.craft-group-picker-category{border:0;background:transparent}.craft-group-picker-category summary{padding:7px 10px}.craft-group-picker-items{display:grid;grid-template-columns:1fr;padding:0 0 4px}.craft-group-picker-item{display:block;width:100%;min-width:0;padding:6px 10px 6px 24px;border:0;border-bottom:1px solid #17201c;background:transparent;color:#d5d0c6;text-align:left;font-size:10px;font-weight:700;line-height:1.2;cursor:pointer}.craft-group-picker-item:hover,.craft-group-picker-item.is-selected{background:#1d68c5;color:#fff;border-color:#1d68c5}.craft-group-picker-item>span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.craft-group-picker.is-compact .craft-group-picker-groups{max-height:210px}.craft-group-picker.is-compact .craft-group-picker-item{padding-top:5px;padding-bottom:5px}
+    .craft-group-picker-search{display:block;margin:5px 6px 0;padding:0}.craft-group-picker-search input{width:100%;box-sizing:border-box;padding:8px 9px;border:1px solid #4a3c25;background:#11130f;color:#e5d7b5;font-size:10px;outline:none}.craft-group-picker-search input:focus{border-color:#b78a3b;box-shadow:0 0 0 2px rgba(183,138,59,.12)}.craft-group-picker-search input::placeholder{color:#777269}.craft-group-picker-category[hidden]{display:none}.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
     @media(max-width:760px){.craft-group-picker-groups{max-height:220px}.craft-group-picker-item{font-size:9px;padding:5px 9px 5px 19px}}
   `;
   document.head.appendChild(style);
