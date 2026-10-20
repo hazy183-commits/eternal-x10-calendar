@@ -1,14 +1,15 @@
-import { TIME_ZONE, localDateTimeToDate } from './bossRespawns.js';
+import { TIME_ZONE, localDateTimeToDate, addDays, daysBetween } from './bossRespawns.js';
 
 export const SIEGE_DURATION_MINUTES = 120;
 // Siege times are entered in the UTC game server clock; Poland is +2 hours in summer and +1 hour in winter.
 export const SIEGE_SERVER_TIME_ZONE = 'UTC';
+export const SIEGE_INTERVAL_DAYS = 14;
 export const SIEGE_CASTLES = Object.freeze([
   'Gludio', 'Dion', 'Giran', 'Oren', 'Aden', 'Innadril', 'Goddard', 'Rune', 'Schuttgart',
 ]);
 
-// These are the current known reference points supplied for the server. They are used
-// as a read-only fallback until the optional siege_schedule table is populated.
+// Reference dates are anchors for the recurring 14-day siege cycle.
+// Do not recur by day-of-month: that shifts the weekday from month to month.
 export const SIEGE_REFERENCE_DEFAULTS = Object.freeze([
   Object.freeze({ castle: 'Gludio', reference_date: '2026-10-04', reference_time: '18:00', duration_minutes: SIEGE_DURATION_MINUTES }),
   Object.freeze({ castle: 'Giran', reference_date: '2026-09-20', reference_time: '18:00', duration_minutes: SIEGE_DURATION_MINUTES }),
@@ -26,51 +27,6 @@ function parseDateKey(value) {
   if (!match) return null;
   const date = new Date(Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3]), 12));
   return date.getUTCFullYear() === Number(match[1]) && date.getUTCMonth() === Number(match[2]) - 1 && date.getUTCDate() === Number(match[3]) ? date : null;
-}
-
-function daysInMonth(year, monthIndex) {
-  return new Date(Date.UTC(year, monthIndex + 1, 0, 12)).getUTCDate();
-}
-
-function serverDateTimeToLocal(dateKey, time) {
-  const date = parseDateKey(dateKey);
-  const match = /^(\d{2}):(\d{2})$/.exec(String(time ?? ''));
-  if (!date || !match) return null;
-
-  // The game server clock is UTC. Intl applies Europe/Warsaw DST automatically:
-  // +2 hours in summer and +1 hour in winter.
-  const instant = new Date(Date.UTC(
-    date.getUTCFullYear(),
-    date.getUTCMonth(),
-    date.getUTCDate(),
-    Number(match[1]),
-    Number(match[2]),
-  ));
-  const parts = new Intl.DateTimeFormat('en-CA', {
-    timeZone: TIME_ZONE,
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    hourCycle: 'h23',
-  }).formatToParts(instant).reduce((result, part) => {
-    if (part.type !== 'literal') result[part.type] = part.value;
-    return result;
-  }, {});
-  return {
-    date: `${parts.year}-${parts.month}-${parts.day}`,
-    time: `${parts.hour}:${parts.minute}`,
-  };
-}
-
-export function addMonthsClamped(dateKey, months) {
-  const date = parseDateKey(dateKey);
-  if (!date || !Number.isInteger(months)) return '';
-  const sourceDay = date.getUTCDate();
-  const target = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth() + months, 1, 12));
-  const day = Math.min(sourceDay, daysInMonth(target.getUTCFullYear(), target.getUTCMonth()));
-  return `${target.getUTCFullYear()}-${pad(target.getUTCMonth() + 1)}-${pad(day)}`;
 }
 
 function normalizeTime(value) {
@@ -102,19 +58,47 @@ function localDateKey(now) {
   return `${parts.year}-${parts.month}-${parts.day}`;
 }
 
-function monthDistance(fromDate, toDate) {
-  return (toDate.getUTCFullYear() - fromDate.getUTCFullYear()) * 12 + toDate.getUTCMonth() - fromDate.getUTCMonth();
+function serverDateTimeToLocal(dateKey, time) {
+  const date = parseDateKey(dateKey);
+  const match = /^(\d{2}):(\d{2})$/.exec(String(time ?? ''));
+  if (!date || !match) return null;
+
+  // The game server clock is UTC. Intl applies Europe/Warsaw DST automatically.
+  const instant = new Date(Date.UTC(
+    date.getUTCFullYear(),
+    date.getUTCMonth(),
+    date.getUTCDate(),
+    Number(match[1]),
+    Number(match[2]),
+  ));
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: TIME_ZONE,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hourCycle: 'h23',
+  }).formatToParts(instant).reduce((result, part) => {
+    if (part.type !== 'literal') result[part.type] = part.value;
+    return result;
+  }, {});
+  return {
+    date: `${parts.year}-${pad(parts.month)}-${pad(parts.day)}`,
+    time: `${parts.hour}:${parts.minute}`,
+  };
 }
 
 export function nextMonthlyOccurrence(row, now = new Date()) {
   const normalizedRow = normalizeSiegeRow(row);
   if (!normalizedRow) return null;
-  const referenceDate = parseDateKey(normalizedRow.reference_date);
-  const currentDate = parseDateKey(localDateKey(now));
-  if (!referenceDate || !currentDate) return null;
-  const firstMonth = Math.max(0, monthDistance(referenceDate, currentDate));
-  for (let offset = firstMonth; offset < firstMonth + 2400; offset += 1) {
-    const date = addMonthsClamped(normalizedRow.reference_date, offset);
+  const currentDate = localDateKey(now);
+  const elapsedDays = daysBetween(normalizedRow.reference_date, currentDate);
+  if (!Number.isFinite(elapsedDays)) return null;
+  const firstIndex = Math.max(0, Math.floor(elapsedDays / SIEGE_INTERVAL_DAYS));
+
+  for (let index = firstIndex; index < firstIndex + 2400; index += 1) {
+    const date = addDays(normalizedRow.reference_date, index * SIEGE_INTERVAL_DAYS);
     const localReference = serverDateTimeToLocal(date, normalizedRow.reference_time);
     const start = localReference ? localDateTimeToDate(localReference.date, localReference.time) : null;
     if (!start) continue;
@@ -150,7 +134,7 @@ export function castleFromEvent(event) {
 
 export function siegePublicKey(event) {
   const castle = event?.castle || castleFromEvent(event) || '';
-  return `${normalized(castle)}\u0000${event?.date || ''}`;
+  return `${normalized(castle)}\\u0000${event?.date || ''}`;
 }
 
 function publicEvent(castle, occurrence, now) {
