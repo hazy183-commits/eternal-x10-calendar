@@ -92,6 +92,15 @@ export function installSiegeScreenshotImport(repository, onSaved = async () => {
   let file = null;
   let rows = [];
 
+  window.addEventListener('ob:siege-screenshot-dates-detected', (event) => {
+    const detected = Array.isArray(event.detail?.rows) ? event.detail.rows : [];
+    if (!detected.length) return;
+    rows = detected;
+    renderRows();
+    status.textContent = `Daty Siege odczytano tym samym OCR co właścicieli zamków (${detected.length}/9). Sprawdź podgląd i popraw ewentualne błędy przed zapisem.`;
+    section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+
   const renderRows = () => {
     preview.innerHTML = rows.length ? `<div class="siege-import-table"><div class="siege-import-row siege-import-header"><span>Zamek</span><span>Data</span><span>Godzina serwera</span></div>${rows.map((row) => `<div class="siege-import-row" data-siege-row="${esc(row.castle)}"><b>${esc(row.castle)}</b><input type="date" data-siege-date value="${esc(row.reference_date)}" required><input type="time" data-siege-time value="${esc(row.reference_time)}" required></div>`).join('')}</div>` : '';
     saveButton.disabled = rows.length !== SIEGE_CASTLES.length;
