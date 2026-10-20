@@ -1,4 +1,5 @@
 import { TERRITORY_GROUPS, TerritoryOwnershipRepository, parseTerritoryOwners } from './territoryOwnership.js';
+import { parseSiegeScreenshotText } from './siegeScreenshotImport.js';
 
 const esc = (value = '') => String(value).replace(/[&<>"']/g, (char) => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
@@ -172,6 +173,7 @@ export function installTerritoryOwnershipScreenshotImport(supabase) {
           { image: file, label: 'Pełny screen — kontrola', psm: '6' },
         ];
         const parsed = [];
+        let fullScreenshotText = '';
         for (let index = 0; index < variants.length; index += 1) {
           const variant = variants[index];
           const result = await Tesseract.recognize(variant.image, 'eng', {
@@ -181,11 +183,16 @@ export function installTerritoryOwnershipScreenshotImport(supabase) {
               if (message.status === 'recognizing text') setStatus(`${variant.label}: ${Math.round((message.progress || 0) * 100)}%`, Math.round(8 + (index / variants.length) * 72 + (message.progress || 0) * (70 / variants.length)));
             },
           });
-          parsed.push(parseTerritoryOwners(result?.data?.text || '', type));
+          const recognizedText = result?.data?.text || '';
+          if (variant.label === 'Pełny screen — kontrola') fullScreenshotText = recognizedText;
+          parsed.push(parseTerritoryOwners(recognizedText, type));
         }
         const rows = mergeResults(parsed);
         render(rows);
-        setStatus(rows.length ? `Rozpoznano ${rows.length} pozycji. Sprawdź podgląd i zatwierdź.` : 'Nie znaleziono nazw. Dodaj wiersze ręcznie lub użyj ciaśniejszego screena.', 88, rows.length ? 'success' : 'error');
+        const siegeRows = parseSiegeScreenshotText(fullScreenshotText);
+        if (siegeRows.length) window.dispatchEvent(new CustomEvent('ob:siege-screenshot-dates-detected', { detail: { rows: siegeRows, sourceFile: file?.name || '' } }));
+        const message = rows.length ? `Rozpoznano ${rows.length} pozycji właścicieli${siegeRows.length ? ` oraz ${siegeRows.length} terminów Siege` : ''}. Sprawdź podgląd i zatwierdź.` : 'Nie znaleziono nazw. Dodaj wiersze ręcznie lub użyj ciaśniejszego screena.';
+        setStatus(message, 88, rows.length ? 'success' : 'error');
       } catch (error) {
         setStatus(error?.message || 'Nie udało się odczytać screena.', 0, 'error');
       } finally {
