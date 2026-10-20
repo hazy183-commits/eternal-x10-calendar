@@ -147,7 +147,7 @@ function publicEvent(castle, occurrence, now) {
     time: occurrence.time,
     duration: occurrence.duration,
     location: `${castle} Castle`,
-    description: 'Miesięczne oblężenie zamku.',
+    description: 'Oblężenie zamku w cyklu co 14 dni.',
     isSiegeSchedule: true,
     siegeStatus: siegeStatus(occurrence, now),
     startAt: occurrence.start.toISOString(),
