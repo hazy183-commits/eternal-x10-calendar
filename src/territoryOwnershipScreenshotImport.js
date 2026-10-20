@@ -5,6 +5,18 @@ const esc = (value = '') => String(value).replace(/[&<>"']/g, (char) => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
 }[char]));
 
+function mergeSiegeCandidates(candidateSets) {
+  const merged = new Map();
+  for (const rows of candidateSets) {
+    for (const row of rows || []) {
+      const current = merged.get(row.castle);
+      // Prefer the first valid candidate; the administrator can correct it in preview.
+      if (!current) merged.set(row.castle, row);
+    }
+  }
+  return [...merged.values()];
+}
+
 function loadTesseract(setStatus) {
   if (window.Tesseract?.recognize) return Promise.resolve(window.Tesseract);
   return new Promise((resolve, reject) => {
@@ -173,7 +185,7 @@ export function installTerritoryOwnershipScreenshotImport(supabase) {
           { image: file, label: 'Pełny screen — kontrola', psm: '6' },
         ];
         const parsed = [];
-        let fullScreenshotText = '';
+        const siegeTexts = [];
         for (let index = 0; index < variants.length; index += 1) {
           const variant = variants[index];
           const result = await Tesseract.recognize(variant.image, 'eng', {
@@ -189,7 +201,7 @@ export function installTerritoryOwnershipScreenshotImport(supabase) {
         }
         const rows = mergeResults(parsed);
         render(rows);
-        const siegeRows = parseSiegeScreenshotText(fullScreenshotText);
+        const siegeRows = mergeSiegeCandidates(siegeTexts.map(parseSiegeScreenshotText));
         if (siegeRows.length) window.dispatchEvent(new CustomEvent('ob:siege-screenshot-dates-detected', { detail: { rows: siegeRows, sourceFile: file?.name || '' } }));
         const message = rows.length ? `Rozpoznano ${rows.length} pozycji właścicieli${siegeRows.length ? ` oraz ${siegeRows.length} terminów Siege` : ''}. Sprawdź podgląd i zatwierdź.` : 'Nie znaleziono nazw. Dodaj wiersze ręcznie lub użyj ciaśniejszego screena.';
         setStatus(message, 88, rows.length ? 'success' : 'error');
