@@ -196,7 +196,7 @@ export function installTerritoryOwnershipScreenshotImport(supabase) {
             },
           });
           const recognizedText = result?.data?.text || '';
-          if (variant.label === 'Pełny screen — kontrola') fullScreenshotText = recognizedText;
+          siegeTexts.push(recognizedText);
           parsed.push(parseTerritoryOwners(recognizedText, type));
         }
         const rows = mergeResults(parsed);
