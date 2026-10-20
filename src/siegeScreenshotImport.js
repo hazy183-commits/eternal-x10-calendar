@@ -6,19 +6,47 @@ const normalize = (value) => String(value ?? '').toLocaleLowerCase().replace(/[^
 const esc = (value = '') => String(value).replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
 
 export function parseSiegeScreenshotText(text) {
+  const source = String(text ?? '').replace(/\u00a0/g, ' ');
   const rows = new Map();
-  for (const rawLine of String(text ?? '').split(/\r?\n/)) {
+
+  // Tesseract may read this table row-by-row or column-by-column. First try
+  // line matches; then pair the ordered castle/date/time columns separately.
+  for (const rawLine of source.split(/\r?\n/)) {
     const line = rawLine.replace(/\s+/g, ' ').trim();
     if (!line) continue;
     const castle = SIEGE_CASTLES.find((name) => normalize(line).includes(normalize(name)));
     const dateMatch = DATE_RE.exec(line);
     const timeMatch = TIME_RE.exec(line);
-    if (!castle || !dateMatch || !timeMatch) continue;
-    const [, day, month, year] = dateMatch;
-    const date = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-    const parsed = new Date(`${date}T12:00:00Z`);
-    if (parsed.getUTCFullYear() !== Number(year) || parsed.getUTCMonth() + 1 !== Number(month) || parsed.getUTCDate() !== Number(day)) continue;
-    rows.set(castle, { castle, reference_date: date, reference_time: `${String(timeMatch[1]).padStart(2, '0')}:${timeMatch[2]}` });
+    if (castle && dateMatch && timeMatch) {
+      const [, day, month, year] = dateMatch;
+      const date = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      const parsed = new Date(`${date}T12:00:00Z`);
+      if (parsed.getUTCFullYear() === Number(year) && parsed.getUTCMonth() + 1 === Number(month) && parsed.getUTCDate() === Number(day)) {
+        rows.set(castle, { castle, reference_date: date, reference_time: `${String(timeMatch[1]).padStart(2, '0')}:${timeMatch[2]}` });
+      }
+    }
+  }
+
+  if (rows.size < SIEGE_CASTLES.length) {
+    const foundCastles = [];
+    const castleRegex = new RegExp(SIEGE_CASTLES.map((name) => name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'), 'gi');
+    for (const match of source.matchAll(castleRegex)) {
+      const castle = SIEGE_CASTLES.find((name) => normalize(name) === normalize(match[0]));
+      if (castle && !foundCastles.includes(castle)) foundCastles.push(castle);
+    }
+    const dates = [...source.matchAll(/(\d{1,2})[.\-/](\d{1,2})[.\-/](\d{4})/g)].map((match) => {
+      const [, day, month, year] = match;
+      const date = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      const parsed = new Date(`${date}T12:00:00Z`);
+      return parsed.getUTCFullYear() === Number(year) && parsed.getUTCMonth() + 1 === Number(month) && parsed.getUTCDate() === Number(day) ? date : null;
+    }).filter(Boolean);
+    const times = [...source.matchAll(/(?:^|\D)([01]?\d|2[0-3]):([0-5]\d)(?:\D|$)/g)]
+      .map((match) => `${String(match[1]).padStart(2, '0')}:${match[2]}`);
+    if (foundCastles.length === dates.length && dates.length === times.length) {
+      foundCastles.forEach((castle, index) => {
+        if (!rows.has(castle)) rows.set(castle, { castle, reference_date: dates[index], reference_time: times[index] });
+      });
+    }
   }
   return SIEGE_CASTLES.filter((castle) => rows.has(castle)).map((castle) => rows.get(castle));
 }
