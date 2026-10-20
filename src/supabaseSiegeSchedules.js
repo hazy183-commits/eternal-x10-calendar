@@ -1,5 +1,5 @@
 import { supabase } from './supabaseClient.js';
-import { SIEGE_REFERENCE_DEFAULTS, normalizeSiegeRow } from './siegeSchedules.js';
+import { normalizeSiegeRow } from './siegeSchedules.js';
 
 async function requireAuthenticated() {
   if (!supabase) throw new Error('Supabase nie jest skonfigurowany.');
@@ -9,7 +9,7 @@ async function requireAuthenticated() {
 
 export class SupabaseSiegeScheduleRepository {
   async getAll() {
-    if (!supabase) return SIEGE_REFERENCE_DEFAULTS.map(normalizeSiegeRow).filter(Boolean);
+    if (!supabase) return [];
     try {
       const { data, error } = await supabase.schema('public').from('siege_schedule').select('*').order('castle').abortSignal(AbortSignal.timeout(5000));
       if (error || !Array.isArray(data)) {

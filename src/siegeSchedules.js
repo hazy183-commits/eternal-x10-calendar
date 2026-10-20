@@ -8,7 +8,7 @@ export const SIEGE_CASTLES = Object.freeze([
   'Gludio', 'Dion', 'Giran', 'Oren', 'Aden', 'Innadril', 'Goddard', 'Rune', 'Schuttgart',
 ]);
 
-// Reference dates are anchors for the recurring 14-day siege cycle.
+// Fallback reference dates are shown only until real screenshot-based dates are saved.
 // Do not recur by day-of-month: that shifts the weekday from month to month.
 export const SIEGE_REFERENCE_DEFAULTS = Object.freeze([
   Object.freeze({ castle: 'Gludio', reference_date: '2026-10-04', reference_time: '18:00', duration_minutes: SIEGE_DURATION_MINUTES }),
@@ -92,20 +92,14 @@ function serverDateTimeToLocal(dateKey, time) {
 export function nextMonthlyOccurrence(row, now = new Date()) {
   const normalizedRow = normalizeSiegeRow(row);
   if (!normalizedRow) return null;
-  const currentDate = localDateKey(now);
-  const elapsedDays = daysBetween(normalizedRow.reference_date, currentDate);
-  if (!Number.isFinite(elapsedDays)) return null;
-  const firstIndex = Math.max(0, Math.floor(elapsedDays / SIEGE_INTERVAL_DAYS));
-
-  for (let index = firstIndex; index < firstIndex + 2400; index += 1) {
-    const date = addDays(normalizedRow.reference_date, index * SIEGE_INTERVAL_DAYS);
-    const localReference = serverDateTimeToLocal(date, normalizedRow.reference_time);
-    const start = localReference ? localDateTimeToDate(localReference.date, localReference.time) : null;
-    if (!start) continue;
-    const end = new Date(start.getTime() + normalizedRow.duration_minutes * 60000);
-    if (end > now) return { date: localReference.date, time: localReference.time, serverDate: date, serverTime: normalizedRow.reference_time, start, end, duration: normalizedRow.duration_minutes };
-  }
-  return null;
+  // Dates are imported from the weekly official screenshot. Never invent a
+  // future siege date by extrapolating a recurring cycle.
+  const localReference = serverDateTimeToLocal(normalizedRow.reference_date, normalizedRow.reference_time);
+  const start = localReference ? localDateTimeToDate(localReference.date, localReference.time) : null;
+  if (!start) return null;
+  const end = new Date(start.getTime() + normalizedRow.duration_minutes * 60000);
+  if (end <= now) return null;
+  return { date: localReference.date, time: localReference.time, serverDate: normalizedRow.reference_date, serverTime: normalizedRow.reference_time, start, end, duration: normalizedRow.duration_minutes };
 }
 
 export function siegeStatus(occurrence, now = new Date()) {
@@ -147,7 +141,7 @@ function publicEvent(castle, occurrence, now) {
     time: occurrence.time,
     duration: occurrence.duration,
     location: `${castle} Castle`,
-    description: 'Oblężenie zamku w cyklu co 14 dni.',
+    description: 'Termin Siege odczytany z ostatniego zatwierdzonego screena.',
     isSiegeSchedule: true,
     siegeStatus: siegeStatus(occurrence, now),
     startAt: occurrence.start.toISOString(),
