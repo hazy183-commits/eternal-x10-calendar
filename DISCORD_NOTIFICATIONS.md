@@ -22,7 +22,7 @@ ten sam alert nie jest wysyłany ponownie.
 
 ## Codzienny raport planu dnia
 
-Codziennie o **08:00 czasu Europe/Warsaw** wysyłany jest jeden zbiorczy raport
+Codziennie o **11:00 czasu Europe/Warsaw** wysyłany jest jeden zbiorczy raport
 z wydarzeniami rozpoczynającymi się w najbliższych 24 godzinach. Raport obejmuje
 wydarzenia ręczne, RB/Epic RB, Siege, Clan Hall, Olympiadę oraz zgłoszenia
 „Potrzebne RB”. Zawiera tylko godzinę, typ i lokalizację — bez list „Będę” i
