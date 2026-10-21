@@ -1,5 +1,6 @@
 import { TERRITORY_GROUPS, TerritoryOwnershipRepository, parseTerritoryOwners } from './territoryOwnership.js';
 import { parseSiegeScreenshotText } from './siegeScreenshotImport.js';
+import { SIEGE_CASTLES } from './siegeSchedules.js';
 
 const esc = (value = '') => String(value).replace(/[&<>"']/g, (char) => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
@@ -8,7 +9,24 @@ const esc = (value = '') => String(value).replace(/[&<>"']/g, (char) => ({
 function mergeSiegeCandidates(candidateSets) {
   const merged = new Map();
   for (const rows of candidateSets) for (const row of rows || []) if (!merged.has(row.castle)) merged.set(row.castle, row);
-  return [...merged.values()];
+  return SIEGE_CASTLES.filter((castle) => merged.has(castle)).map((castle) => merged.get(castle));
+}
+
+// The cropped date column has no castle names. Pair its rows in the fixed
+// castle order used by the source table once all nine dates and times are read.
+function parseSiegeDateColumn(text) {
+  const source = String(text ?? '').replace(/\u00a0/g, ' ');
+  const dates = [...source.matchAll(/(\d{1,2})[.\-/](\d{1,2})[.\-/](\d{4})/g)]
+    .map((match) => {
+      const [, day, month, year] = match;
+      const date = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      const parsed = new Date(`${date}T12:00:00Z`);
+      return parsed.getUTCFullYear() === Number(year) && parsed.getUTCMonth() + 1 === Number(month) && parsed.getUTCDate() === Number(day) ? date : null;
+    }).filter(Boolean);
+  const times = [...source.matchAll(/(?:^|\D)([01]?\d|2[0-3]):([0-5]\d)(?:\D|$)/g)]
+    .map((match) => `${String(match[1]).padStart(2, '0')}:${match[2]}`);
+  if (dates.length !== SIEGE_CASTLES.length || times.length !== SIEGE_CASTLES.length) return [];
+  return SIEGE_CASTLES.map((castle, index) => ({ castle, reference_date: dates[index], reference_time: times[index] }));
 }
 
 function loadTesseract(setStatus) {
@@ -141,7 +159,7 @@ export function installTerritoryOwnershipScreenshotImport(supabase) {
     const section = document.createElement('section');
     section.className = 'territory-ocr';
     section.dataset.territoryOcr = '1';
-    section.innerHTML = `<div class="territory-ocr-head"><div><span class="eyebrow">Import właścicieli ze screena</span><h3>CASTLE / CLAN HALL OCR</h3><p>OCR wpisuje tylko aktualny klan. Terminy i godziny pozostają bez zmian.</p></div><div class="territory-ocr-tabs"><button type="button" class="active" data-territory-type="castle">ZAMKI</button><button type="button" data-territory-type="clan_hall">CLAN HALLE</button></div></div><div class="territory-ocr-drop"><div class="territory-ocr-preview" data-territory-preview>Podgląd screena</div><div><div class="territory-ocr-actions"><label class="territory-ocr-button">WYBIERZ SCREEN<input class="territory-ocr-file" data-territory-file type="file" accept="image/png,image/jpeg,image/webp"></label><button class="territory-ocr-button primary" type="button" data-territory-run disabled>ROZPOZNAJ</button></div><div class="territory-ocr-status" data-territory-status>Wybierz screen listy zamków.</div><div class="territory-ocr-progress"><i data-territory-progress></i></div></div></div><div class="territory-ocr-results" data-territory-results></div><div class="territory-ocr-footer"><button class="territory-ocr-button" type="button" data-territory-add>+ DODAJ WIERSZ</button><button class="territory-ocr-button primary" type="button" data-territory-save disabled>ZAPISZ ZAZNACZONE</button></div><p class="territory-ocr-note">Przed zapisem zawsze sprawdź rozpoznane nazwy klanów. Puste pole oznacza brak właściciela.</p>`;
+    section.innerHTML = `<div class="territory-ocr-head"><div><span class="eyebrow">Import właścicieli ze screena</span><h3>CASTLE / CLAN HALL OCR</h3><p>Jeden screen rozpoznaje właścicieli klanów oraz daty i godziny Siege. Sprawdź oba podglądy przed zapisem.</p></div><div class="territory-ocr-tabs"><button type="button" class="active" data-territory-type="castle">ZAMKI</button><button type="button" data-territory-type="clan_hall">CLAN HALLE</button></div></div><div class="territory-ocr-drop"><div class="territory-ocr-preview" data-territory-preview>Podgląd screena</div><div><div class="territory-ocr-actions"><label class="territory-ocr-button">WYBIERZ SCREEN<input class="territory-ocr-file" data-territory-file type="file" accept="image/png,image/jpeg,image/webp"></label><button class="territory-ocr-button primary" type="button" data-territory-run disabled>ROZPOZNAJ</button></div><div class="territory-ocr-status" data-territory-status>Wybierz screen listy zamków.</div><div class="territory-ocr-progress"><i data-territory-progress></i></div></div></div><div class="territory-ocr-results" data-territory-results></div><div class="territory-ocr-footer"><button class="territory-ocr-button" type="button" data-territory-add>+ DODAJ WIERSZ</button><button class="territory-ocr-button primary" type="button" data-territory-save disabled>ZAPISZ ZAZNACZONE</button></div><p class="territory-ocr-note">Przed zapisem zawsze sprawdź rozpoznane nazwy klanów. Puste pole oznacza brak właściciela.</p>`;
     manager.insertBefore(section, manager.firstChild);
 
     const setStatus = (message, progress = 0, state = '') => {
@@ -208,14 +226,14 @@ export function installTerritoryOwnershipScreenshotImport(supabase) {
             },
           });
           const recognizedText = result?.data?.text || '';
-          siegeTexts.push(recognizedText);
+          siegeTexts.push({ text: recognizedText, dateColumn: !variant.owners });
           if (variant.owners) parsed.push(parseTerritoryOwners(recognizedText, type));
         }
         const rows = mergeResults(parsed);
         render(rows);
-        const siegeRows = mergeSiegeCandidates(siegeTexts.map(parseSiegeScreenshotText));
+        const siegeRows = mergeSiegeCandidates(siegeTexts.map(({ text, dateColumn }) => dateColumn ? parseSiegeDateColumn(text) : parseSiegeScreenshotText(text)));
         if (siegeRows.length) window.dispatchEvent(new CustomEvent('ob:siege-screenshot-dates-detected', { detail: { rows: siegeRows, sourceFile: file?.name || '' } }));
-        const message = rows.length ? `Rozpoznano ${rows.length} pozycji właścicieli${siegeRows.length ? ` oraz ${siegeRows.length} terminów Siege` : ''}. Sprawdź podgląd i zatwierdź.` : 'Nie znaleziono nazw. Dodaj wiersze ręcznie lub użyj ciaśniejszego screena.';
+        const message = rows.length ? `Rozpoznano ${rows.length} pozycji właścicieli oraz ${siegeRows.length}/9 terminów Siege. ${siegeRows.length === 9 ? 'Sprawdź daty w sekcji importu terminów Siege.' : 'Nie odczytano kompletu dat — upewnij się, że cały prawy słupek jest widoczny.'}` : 'Nie znaleziono nazw. Dodaj wiersze ręcznie lub użyj ciaśniejszego screena.';
         setStatus(message, 88, rows.length ? 'success' : 'error');
       } catch (error) {
         setStatus(error?.message || 'Nie udało się odczytać screena.', 0, 'error');
