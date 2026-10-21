@@ -39,9 +39,9 @@ test('server UTC windows use the Polish seasonal offset based on the event date'
   assert.deepEqual(serverWindowToWarsaw({ date: '2026-01-17', start: '04:34', end: '05:04' }), {
     date: '2026-01-17', start: '05:34', end: '06:04', endDate: '2026-01-17',
   });
-  // The offset follows the event date, not today's date.
-  assert.deepEqual(serverWindowToWarsaw({ date: '2026-10-24', start: '23:30', end: '00:15' }), {
-    date: '2026-10-25', start: '01:30', end: '02:15', endDate: '2026-10-25',
+  // On the autumn clock-change date, times after the switch use CET (UTC+1).
+  assert.deepEqual(serverWindowToWarsaw({ date: '2026-10-25', start: '04:34', end: '05:04' }), {
+    date: '2026-10-25', start: '05:34', end: '06:04', endDate: '2026-10-25',
   });
   assert.deepEqual(serverWindowToWarsaw({ date: '2026-09-17', start: '04:34', end: '05:04' }), {
     date: '2026-09-17', start: '06:34', end: '07:04', endDate: '2026-09-17',
