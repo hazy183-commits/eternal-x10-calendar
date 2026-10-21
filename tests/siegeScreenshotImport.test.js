@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { parseSiegeScreenshotText, siegeCropRect } from '../src/siegeScreenshotImport.js';
+import { parseSiegeScreenshotText, siegeCropRect, siegeServerTimeToPoland, siegePolandTimeToServer } from '../src/siegeScreenshotImport.js';
 import { SIEGE_CASTLES } from '../src/siegeSchedules.js';
 
 test('Siege OCR keeps dates and times tied to individual castle rows', () => {
@@ -36,4 +36,15 @@ test('a wide, already-cropped table is kept intact like Epic Boss OCR', () => {
   assert.deepEqual(siegeCropRect(1536, 1128), {
     x: 38, y: 192, width: 1459, height: 451, tableLike: false,
   });
+});
+
+test('Siege screenshot time is shown in Polish summer and winter time', () => {
+  assert.deepEqual(siegeServerTimeToPoland('2026-07-15', '18:00'), { date: '2026-07-15', time: '20:00' });
+  assert.deepEqual(siegeServerTimeToPoland('2026-01-15', '18:00'), { date: '2026-01-15', time: '19:00' });
+});
+
+test('Siege local preview converts back to server time when saving, including date rollover', () => {
+  assert.deepEqual(siegePolandTimeToServer('2026-07-15', '20:00'), { date: '2026-07-15', time: '18:00' });
+  assert.deepEqual(siegeServerTimeToPoland('2026-07-15', '23:30'), { date: '2026-07-16', time: '01:30' });
+  assert.deepEqual(siegePolandTimeToServer('2026-07-16', '01:30'), { date: '2026-07-15', time: '23:30' });
 });
