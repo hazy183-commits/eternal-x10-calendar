@@ -11,7 +11,7 @@ function normalizeOcrDigits(value = '') {
     .replace(/[lI|!](?=\d)/g, '1')
     .replace(/(?<=\d)[,;]/g, '.')
     .replace(/[‐‑‒–—]/g, '-')
-    .replace(/(?<=\d)\s*[·.]\s*(?=\d{2}\b)/g, ':');
+    .replace(/[·]/g, '.');
 }
 
 function validDate(day, month, year) {
@@ -31,7 +31,8 @@ function extractDates(text) {
 function extractTimes(text) {
   const withoutDates = normalizeOcrDigits(text)
     .replace(/\d{1,2}\s*[.\-/]\s*\d{1,2}\s*[.\-/]\s*20\d{2}\b/g, ' ');
-  const matches = [...withoutDates.matchAll(/(?:^|\D)([01]?\d|2[0-3])\s*:\s*([0-5]\d)(?:\D|$)/g)];
+  const timeReady = withoutDates.replace(/(?<=\d)\s*[.,·]\s*(?=\d{2}\b)/g, ':');
+  const matches = [...timeReady.matchAll(/(?:^|\D)([01]?\d|2[0-3])\s*:\s*([0-5]\d)(?:\D|$)/g)];
   return matches.map((match) => `${pad(match[1])}:${match[2]}`);
 }
 
