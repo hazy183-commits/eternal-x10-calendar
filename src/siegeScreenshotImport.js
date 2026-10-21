@@ -36,6 +36,58 @@ function extractTimes(text) {
   return matches.map((match) => `${pad(match[1])}:${match[2]}`);
 }
 
+
+function warsawParts(date, time) {
+  const match = `${date} ${time}`.match(/^(\\d{4})-(\\d{2})-(\\d{2})\\s+(\\d{2}):(\\d{2})$/);
+  if (!match) return null;
+  const instant = new Date(Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3]), Number(match[4]), Number(match[5])));
+  if (!Number.isFinite(instant.getTime())) return null;
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Europe/Warsaw', year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+  }).formatToParts(instant).reduce((result, part) => {
+    if (part.type !== 'literal') result[part.type] = part.value;
+    return result;
+  }, {});
+  return { date: `${parts.year}-${parts.month}-${parts.day}`, time: `${parts.hour}:${parts.minute}` };
+}
+
+// Screenshot/database values remain server UTC; the admin preview is Polish local time,
+// like the Epic Boss importer. Reverse the conversion when saving the edited preview.
+export function siegeServerTimeToPoland(date, time) {
+  return warsawParts(date, time);
+}
+
+export function siegePolandTimeToServer(date, time) {
+  const match = `${date} ${time}`.match(/^(\\d{4})-(\\d{2})-(\\d{2})\\s+(\\d{2}):(\\d{2})$/);
+  if (!match) return null;
+  const target = Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3]), Number(match[4]), Number(match[5]));
+  let guess = target;
+  for (let attempt = 0; attempt < 4; attempt += 1) {
+    const actual = warsawParts(
+      new Date(guess).toISOString().slice(0, 10),
+      new Date(guess).toISOString().slice(11, 16),
+    );
+    if (!actual) return null;
+    const represented = Date.UTC(
+      Number(actual.date.slice(0, 4)), Number(actual.date.slice(5, 7)) - 1,
+      Number(actual.date.slice(8, 10)), Number(actual.time.slice(0, 2)), Number(actual.time.slice(3, 5)),
+    );
+    const delta = target - represented;
+    if (delta === 0) break;
+    guess += delta;
+  }
+  const utc = new Date(guess);
+  return { date: utc.toISOString().slice(0, 10), time: utc.toISOString().slice(11, 16) };
+}
+
+function rowsToPoland(rows) {
+  return rows.map((row) => {
+    const local = siegeServerTimeToPoland(row.reference_date, row.reference_time);
+    return local ? { ...row, reference_date: local.date, reference_time: local.time } : row;
+  });
+}
+
 function dateTimeRow(castle, date, time) {
   return { castle, reference_date: date, reference_time: time };
 }
@@ -200,14 +252,14 @@ export function installSiegeScreenshotImport(repository, onSaved = async () => {
   window.addEventListener('ob:siege-screenshot-dates-detected', (event) => {
     const detected = Array.isArray(event.detail?.rows) ? event.detail.rows : [];
     if (!detected.length) return;
-    rows = detected;
+    rows = rowsToPoland(detected);
     renderRows();
-    status.textContent = `Daty Siege odczytano tym samym OCR co właścicieli zamków (${detected.length}/9). Sprawdź podgląd i popraw ewentualne błędy przed zapisem.`;
+    status.textContent = `Rozpoznano ${detected.length}/9 terminów. Godziny przeliczono na czas polski (latem +2 h, zimą +1 h). Sprawdź podgląd przed zapisem.`;
     section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   });
 
   const renderRows = () => {
-    preview.innerHTML = rows.length ? `<div class="siege-import-table"><div class="siege-import-row siege-import-header"><span>Zamek</span><span>Data</span><span>Godzina serwera</span></div>${rows.map((row) => `<div class="siege-import-row" data-siege-row="${esc(row.castle)}"><b>${esc(row.castle)}</b><input type="date" data-siege-date value="${esc(row.reference_date)}" required><input type="time" data-siege-time value="${esc(row.reference_time)}" required></div>`).join('')}</div>` : '';
+    preview.innerHTML = rows.length ? `<div class="siege-import-table"><div class="siege-import-row siege-import-header"><span>Zamek</span><span>Data</span><span>Godzina w Polsce</span></div>${rows.map((row) => `<div class="siege-import-row" data-siege-row="${esc(row.castle)}"><b>${esc(row.castle)}</b><input type="date" data-siege-date value="${esc(row.reference_date)}" required><input type="time" data-siege-time value="${esc(row.reference_time)}" required></div>`).join('')}</div>` : '';
     saveButton.disabled = rows.length !== SIEGE_CASTLES.length;
   };
   fileInput.addEventListener('change', () => {
@@ -248,12 +300,12 @@ export function installSiegeScreenshotImport(repository, onSaved = async () => {
         rawPasses.push({ label: variant.label, text, confidence: Number(result?.data?.confidence || 0) });
         candidateSets.push(parseSiegeScreenshotText(text));
       }
-      rows = mergeCandidates(candidateSets);
+      rows = rowsToPoland(mergeCandidates(candidateSets));
       renderRows();
       const missing = SIEGE_CASTLES.filter((castle) => !rows.some((row) => row.castle === castle));
       status.textContent = missing.length
         ? `Rozpoznano ${rows.length}/9 zamków po ${variants.length} przebiegach OCR. Brakuje: ${missing.join(', ')}. Nie można zapisać, dopóki wszystkie pozycje nie zostaną rozpoznane.`
-        : `Odczytano wszystkie 9 zamków po ${variants.length} przebiegach OCR. Sprawdź daty i godziny — możesz je poprawić przed zapisem.`;
+        : `Odczytano wszystkie 9 zamków po ${variants.length} przebiegach OCR. Godziny przeliczono na czas polski (latem +2 h, zimą +1 h). Sprawdź daty i godziny przed zapisem.`;
       if (missing.length) {
         const details = rawPasses.map((pass) => `${pass.label} (${Math.round(pass.confidence)}%): ${pass.text.replace(/\s+/g, ' ').slice(0, 420)}`).join(' | ');
         status.title = details;
@@ -280,7 +332,11 @@ export function installSiegeScreenshotImport(repository, onSaved = async () => {
     readButton.disabled = true;
     status.textContent = 'Zapisuję zatwierdzone terminy…';
     try {
-      for (const row of values) await repository.saveReference(row.castle, row.date, row.time);
+      for (const row of values) {
+        const server = siegePolandTimeToServer(row.date, row.time);
+        if (!server) throw new Error(`Nie można przeliczyć daty/godziny dla zamku ${row.castle}.`);
+        await repository.saveReference(row.castle, server.date, server.time);
+      }
       await onSaved();
       status.textContent = 'Zapisano terminy wszystkich 9 zamków. Kalendarz został odświeżony.';
       rows = [];
