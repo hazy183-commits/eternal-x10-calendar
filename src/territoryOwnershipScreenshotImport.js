@@ -15,15 +15,15 @@ function mergeSiegeCandidates(candidateSets) {
 // The cropped date column has no castle names. Pair its rows in the fixed
 // castle order used by the source table once all nine dates and times are read.
 function parseSiegeDateColumn(text) {
-  const source = String(text ?? '').replace(/\\u00a0/g, ' ');
-  const dates = [...source.matchAll(/(\\d{1,2})[.\\-/](\\d{1,2})[.\\-/](\\d{4})/g)]
+  const source = String(text ?? '').replace(/\u00a0/g, ' ');
+  const dates = [...source.matchAll(/(\d{1,2})[.\-/](\d{1,2})[.\-/](\d{4})/g)]
     .map((match) => {
       const [, day, month, year] = match;
       const date = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
       const parsed = new Date(`${date}T12:00:00Z`);
       return parsed.getUTCFullYear() === Number(year) && parsed.getUTCMonth() + 1 === Number(month) && parsed.getUTCDate() === Number(day) ? date : null;
     }).filter(Boolean);
-  const times = [...source.matchAll(/(?:^|\\D)([01]?\\d|2[0-3]):([0-5]\\d)(?:\\D|$)/g)]
+  const times = [...source.matchAll(/(?:^|\D)([01]?\d|2[0-3]):([0-5]\d)(?:\D|$)/g)]
     .map((match) => `${String(match[1]).padStart(2, '0')}:${match[2]}`);
   if (dates.length !== SIEGE_CASTLES.length || times.length !== SIEGE_CASTLES.length) return [];
   return SIEGE_CASTLES.map((castle, index) => ({ castle, reference_date: dates[index], reference_time: times[index] }));
