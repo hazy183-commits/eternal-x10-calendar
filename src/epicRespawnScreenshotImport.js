@@ -190,6 +190,9 @@ export function parseOcrText(rawText = '', sourceScore = 0) {
   return candidates;
 }
 
+// Epic respawn screenshots show server time as UTC. Convert each event's own
+// date/time through Europe/Warsaw so CET adds +1 hour and CEST adds +2 hours;
+// never use the current date's offset, because an upcoming event can be in another season.
 function serverDateTimeToWarsaw(date, time) {
   const match = `${date} ${time}`.match(/^(\d{4})-(\d{2})-(\d{2})\s+(\d{2}):(\d{2})$/);
   if (!match) return null;
