@@ -229,7 +229,6 @@ export function installTerritoryOwnershipScreenshotImport(supabase) {
           { image: siegeColumns, label: 'Kolumna dat Siege', psm: '6' },
           { image: contrastCanvas(siegeColumns), label: 'Kolumna dat Siege — kontrast', psm: '6' },
           { image: contrastCanvas(siegeColumns, true), label: 'Kolumna dat Siege — czarno-białe', psm: '11' },
-          { image: contrastCanvas(siegeColumns, false), label: 'Kolumna dat Siege — wysoki kontrast (drugi przebieg)', psm: '11' },
           { image: contrastCanvas(siegeColumns, 'invert'), label: 'Kolumna dat Siege — odwrócony kontrast', psm: '6' },
           { image: file, label: 'Pełny screen — kontrola dat', psm: '6', parser: 'rows' },
           { image: file, label: 'Pełny screen — kontrola właścicieli', psm: '6', owners: true },
