@@ -88,7 +88,7 @@ function contrastCanvas(image, thresholdMode = false) {
   const data = ctx.getImageData(0, 0, canvas.width, canvas.height);
   for (let i = 0; i < data.data.length; i += 4) {
     const gray = data.data[i] * 0.299 + data.data[i + 1] * 0.587 + data.data[i + 2] * 0.114;
-    const value = thresholdMode ? (gray > 145 ? 255 : 0) : Math.max(0, Math.min(255, (gray - 115) * 2 + 128));
+    const value = thresholdMode === 'invert' ? (gray > 145 ? 0 : 255) : thresholdMode ? (gray > 145 ? 255 : 0) : Math.max(0, Math.min(255, (gray - 115) * 2 + 128));
     data.data[i] = data.data[i + 1] = data.data[i + 2] = value;
   }
   ctx.putImageData(data, 0, 0);
@@ -230,7 +230,7 @@ export function installTerritoryOwnershipScreenshotImport(supabase) {
           { image: contrastCanvas(siegeColumns), label: 'Kolumna dat Siege — kontrast', psm: '6' },
           { image: contrastCanvas(siegeColumns, true), label: 'Kolumna dat Siege — czarno-białe', psm: '11' },
           { image: contrastCanvas(siegeColumns, false), label: 'Kolumna dat Siege — wysoki kontrast (drugi przebieg)', psm: '11' },
-          { image: contrastCanvas(siegeColumns, true), label: 'Kolumna dat Siege — odwrócony kontrast', psm: '6' },
+          { image: contrastCanvas(siegeColumns, 'invert'), label: 'Kolumna dat Siege — odwrócony kontrast', psm: '6' },
           { image: file, label: 'Pełny screen — kontrola dat', psm: '6', parser: 'rows' },
           { image: file, label: 'Pełny screen — kontrola właścicieli', psm: '6', owners: true },
         ];
