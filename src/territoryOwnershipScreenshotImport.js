@@ -7,23 +7,40 @@ const esc = (value = '') => String(value).replace(/[&<>"']/g, (char) => ({
 }[char]));
 
 function mergeSiegeCandidates(candidateSets) {
-  const merged = new Map();
-  for (const rows of candidateSets) for (const row of rows || []) if (!merged.has(row.castle)) merged.set(row.castle, row);
-  return SIEGE_CASTLES.filter((castle) => merged.has(castle)).map((castle) => merged.get(castle));
+  const votes = new Map();
+  for (const rows of candidateSets) {
+    for (const row of rows || []) {
+      if (!row?.castle || !row.reference_date || !row.reference_time) continue;
+      if (!votes.has(row.castle)) votes.set(row.castle, new Map());
+      const key = `${row.reference_date}|${row.reference_time}`;
+      const options = votes.get(row.castle);
+      const current = options.get(key) || { row, count: 0 };
+      current.count += 1;
+      options.set(key, current);
+    }
+  }
+  return SIEGE_CASTLES.map((castle) => {
+    const options = [...(votes.get(castle)?.values() || [])].sort((a, b) => b.count - a.count);
+    return options[0]?.row;
+  }).filter(Boolean);
 }
 
-// The cropped date column has no castle names. Pair its rows in the fixed
-// castle order used by the source table once all nine dates and times are read.
+// Column-only OCR has no castle labels, so only map values to castles when
+// all nine dates AND all nine times were read, in source-table order.
 function parseSiegeDateColumn(text) {
-  const source = String(text ?? '').replace(/\u00a0/g, ' ');
-  const dates = [...source.matchAll(/(\d{1,2})[.\-/](\d{1,2})[.\-/](\d{4})/g)]
+  const source = String(text ?? '').replace(/\u00a0/g, ' ')
+    .replace(/[OoQ](?=\d)/g, '0').replace(/(?<=\d)[OoQ]/g, '0')
+    .replace(/[lI|!](?=\d)/g, '1').replace(/(?<=\d)[,;]/g, '.');
+  const dates = [...source.matchAll(/(\d{1,2})\s*[.\-/]\s*(\d{1,2})\s*[.\-/]\s*(20\d{2})\b/g)]
     .map((match) => {
       const [, day, month, year] = match;
       const date = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
       const parsed = new Date(`${date}T12:00:00Z`);
       return parsed.getUTCFullYear() === Number(year) && parsed.getUTCMonth() + 1 === Number(month) && parsed.getUTCDate() === Number(day) ? date : null;
     }).filter(Boolean);
-  const times = [...source.matchAll(/(?:^|\D)([01]?\d|2[0-3]):([0-5]\d)(?:\D|$)/g)]
+  const timeSource = source.replace(/\d{1,2}\s*[.\-/]\s*\d{1,2}\s*[.\-/]\s*20\d{2}\b/g, ' ')
+    .replace(/(?<=\d)\s*[.,·]\s*(?=\d{2}\b)/g, ':');
+  const times = [...timeSource.matchAll(/(?:^|\D)([01]?\d|2[0-3])\s*:\s*([0-5]\d)(?:\D|$)/g)]
     .map((match) => `${String(match[1]).padStart(2, '0')}:${match[2]}`);
   if (dates.length !== SIEGE_CASTLES.length || times.length !== SIEGE_CASTLES.length) return [];
   return SIEGE_CASTLES.map((castle, index) => ({ castle, reference_date: dates[index], reference_time: times[index] }));
@@ -212,7 +229,10 @@ export function installTerritoryOwnershipScreenshotImport(supabase) {
           { image: siegeColumns, label: 'Kolumna dat Siege', psm: '6' },
           { image: contrastCanvas(siegeColumns), label: 'Kolumna dat Siege — kontrast', psm: '6' },
           { image: contrastCanvas(siegeColumns, true), label: 'Kolumna dat Siege — czarno-białe', psm: '11' },
-          { image: file, label: 'Pełny screen — kontrola', psm: '6', owners: true },
+          { image: contrastCanvas(siegeColumns, false), label: 'Kolumna dat Siege — wysoki kontrast (drugi przebieg)', psm: '11' },
+          { image: contrastCanvas(siegeColumns, true), label: 'Kolumna dat Siege — odwrócony kontrast', psm: '6' },
+          { image: file, label: 'Pełny screen — kontrola dat', psm: '6', parser: 'rows' },
+          { image: file, label: 'Pełny screen — kontrola właścicieli', psm: '6', owners: true },
         ];
         const parsed = [];
         const siegeTexts = [];
@@ -226,12 +246,12 @@ export function installTerritoryOwnershipScreenshotImport(supabase) {
             },
           });
           const recognizedText = result?.data?.text || '';
-          siegeTexts.push({ text: recognizedText, dateColumn: !variant.owners });
+          siegeTexts.push({ text: recognizedText, parser: variant.parser || (variant.owners ? 'owners' : 'column') });
           if (variant.owners) parsed.push(parseTerritoryOwners(recognizedText, type));
         }
         const rows = mergeResults(parsed);
         render(rows);
-        const siegeRows = mergeSiegeCandidates(siegeTexts.map(({ text, dateColumn }) => dateColumn ? parseSiegeDateColumn(text) : parseSiegeScreenshotText(text)));
+        const siegeRows = mergeSiegeCandidates(siegeTexts.map(({ text, parser }) => parser === 'column' ? parseSiegeDateColumn(text) : parser === 'rows' ? parseSiegeScreenshotText(text) : []));
         if (siegeRows.length) window.dispatchEvent(new CustomEvent('ob:siege-screenshot-dates-detected', { detail: { rows: siegeRows, sourceFile: file?.name || '' } }));
         const message = rows.length ? `Rozpoznano ${rows.length} pozycji właścicieli oraz ${siegeRows.length}/9 terminów Siege. ${siegeRows.length === 9 ? 'Sprawdź daty w sekcji importu terminów Siege.' : 'Nie odczytano kompletu dat — upewnij się, że cały prawy słupek jest widoczny.'}` : 'Nie znaleziono nazw. Dodaj wiersze ręcznie lub użyj ciaśniejszego screena.';
         setStatus(message, 88, rows.length ? 'success' : 'error');
