@@ -11,9 +11,9 @@ export const MANUAL_RESPAWN_BOSSES = Object.freeze([
 ]);
 
 export const STATIC_RESPAWN_BOSSES = Object.freeze([
-  Object.freeze({ name: 'Baium', weekday: 6, intervalWeeks: 1, time: '22:00' }),
-  Object.freeze({ name: 'Antharas', weekday: 0, intervalWeeks: 2, referenceDate: '2026-09-20', time: '22:00' }),
-  Object.freeze({ name: 'Valakas', weekday: 0, intervalWeeks: 2, referenceDate: '2026-09-27', time: '21:00' }),
+  Object.freeze({ name: 'Baium', weekday: 6, intervalWeeks: 1 }),
+  Object.freeze({ name: 'Antharas', weekday: 0, intervalWeeks: 2, referenceDate: '2026-09-20' }),
+  Object.freeze({ name: 'Valakas', weekday: 0, intervalWeeks: 2, referenceDate: '2026-09-27' }),
 ]);
 
 export const BOSS_RESPAWN_BOSSES = Object.freeze([
@@ -173,7 +173,10 @@ export function nextStaticOccurrence(boss, now = new Date()) {
   let days = (config.weekday - weekdayForDate(date) + 7) % 7;
   date = addDays(date, days);
   for (let attempt = 0; attempt < 800; attempt += 1) {
-    const start = localDateTimeToDate(date, config.time || '22:00');
+    const noon = localDateTimeToDate(date, '12:00');
+    const winterOrSummerOffset = noon ? timeZoneOffsetMinutes(noon) : 60;
+    const localTime = winterOrSummerOffset >= 120 ? '22:00' : '21:00';
+    const start = localDateTimeToDate(date, localTime);
     const end = start ? new Date(start.getTime() + 60 * 60000) : null;
     if (start && end && end > now && isStaticBossOnDate(boss, date)) return { date, start, end };
     date = addDays(date, 7);
