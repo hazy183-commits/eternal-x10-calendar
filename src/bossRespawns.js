@@ -167,13 +167,14 @@ function staticStatus(start, end, now) {
 export function nextStaticOccurrence(boss, now = new Date()) {
   const config = STATIC_RESPAWN_BOSSES.find((item) => item.name === boss);
   if (!config) return null;
-  const parts = localParts(now);
-  let date = `${parts.year}-${parts.month}-${parts.day}`;
+  // Fixed Epic schedules are defined in server UTC; convert only when displaying in Poland.
+  let date = `${now.getUTCFullYear()}-${pad(now.getUTCMonth() + 1)}-${pad(now.getUTCDate())}`;
   let days = (config.weekday - weekdayForDate(date) + 7) % 7;
   date = addDays(date, days);
   for (let attempt = 0; attempt < 800; attempt += 1) {
-    const start = localDateTimeToDate(date, '22:00');
-    const end = localDateTimeToDate(date, '23:00');
+    const parsed = parseDateKey(date);
+    const start = parsed ? new Date(Date.UTC(parsed.getUTCFullYear(), parsed.getUTCMonth(), parsed.getUTCDate(), 22, 0, 0)) : null;
+    const end = parsed ? new Date(Date.UTC(parsed.getUTCFullYear(), parsed.getUTCMonth(), parsed.getUTCDate(), 23, 0, 0)) : null;
     if (start && end && end > now && isStaticBossOnDate(boss, date)) return { date, start, end };
     date = addDays(date, 7);
   }
@@ -191,13 +192,14 @@ function isStaticBossOnDate(boss, date) {
 
 function staticEvent(boss, occurrence, now = new Date()) {
   const preset = BOSS_PRESETS[boss];
+  const localStart = localParts(occurrence.start);
   return {
     id: `boss-respawn-${boss.toLowerCase().replace(/\s+/g, '-')}-${occurrence.date}`,
     name: boss,
     boss,
     type: preset?.type || 'Epic RB',
-    date: occurrence.date,
-    time: '22:00',
+    date: `${localStart.year}-${localStart.month}-${localStart.day}`,
+    time: `${localStart.hour}:${localStart.minute}`,
     duration: 60,
     location: preset?.location || '',
     description: 'Stałe okno respawnu.',
