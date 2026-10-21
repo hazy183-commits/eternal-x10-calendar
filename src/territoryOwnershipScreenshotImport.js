@@ -73,6 +73,19 @@ export function ownershipCropRect(width, height, territoryType = 'castle') {
   };
 }
 
+function cropSiegeColumns(image) {
+  const width = image.naturalWidth || image.width;
+  const height = image.naturalHeight || image.height;
+  const rect = { x: Math.round(width * 0.43), y: Math.round(height * 0.035), width: Math.round(width * 0.56), height: Math.round(height * 0.945) };
+  const scale = Math.max(2, Math.min(3.4, 2600 / Math.max(rect.width, rect.height)));
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.max(1, Math.round(rect.width * scale));
+  canvas.height = Math.max(1, Math.round(rect.height * scale));
+  const ctx = canvas.getContext('2d');
+  ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(image, rect.x, rect.y, rect.width, rect.height, 0, 0, canvas.width, canvas.height);
+  return canvas;
+}
 function cropOwnershipColumns(image, territoryType) {
   const width = image.naturalWidth || image.width;
   const height = image.naturalHeight || image.height;
@@ -171,12 +184,17 @@ export function installTerritoryOwnershipScreenshotImport(supabase) {
       try {
         const [Tesseract, image] = await Promise.all([loadTesseract(setStatus), loadImage(file)]);
         const ownershipColumns = cropOwnershipColumns(image, type);
+        const siegeColumns = cropSiegeColumns(image);
         const territoryLabel = type === 'castle' ? 'Zamek' : 'Clan Hall';
+        // Use the same OCR engine for owners and dates; date-column passes are isolated from clan recognition.
         const variants = [
-          { image: ownershipColumns, label: `Kolumny ${territoryLabel} + Klan`, psm: '6' },
-          { image: contrastCanvas(ownershipColumns), label: `${territoryLabel} + Klan — kontrast`, psm: '6' },
-          { image: contrastCanvas(ownershipColumns, true), label: `${territoryLabel} + Klan — czarno-białe`, psm: '11' },
-          { image: file, label: 'Pełny screen — kontrola', psm: '6' },
+          { image: ownershipColumns, label: `Kolumny ${territoryLabel} + Klan`, psm: '6', owners: true },
+          { image: contrastCanvas(ownershipColumns), label: `${territoryLabel} + Klan — kontrast`, psm: '6', owners: true },
+          { image: contrastCanvas(ownershipColumns, true), label: `${territoryLabel} + Klan — czarno-białe`, psm: '11', owners: true },
+          { image: siegeColumns, label: 'Kolumna dat Siege', psm: '6' },
+          { image: contrastCanvas(siegeColumns), label: 'Kolumna dat Siege — kontrast', psm: '6' },
+          { image: contrastCanvas(siegeColumns, true), label: 'Kolumna dat Siege — czarno-białe', psm: '11' },
+          { image: file, label: 'Pełny screen — kontrola', psm: '6', owners: true },
         ];
         const parsed = [];
         const siegeTexts = [];
@@ -191,7 +209,7 @@ export function installTerritoryOwnershipScreenshotImport(supabase) {
           });
           const recognizedText = result?.data?.text || '';
           siegeTexts.push(recognizedText);
-          parsed.push(parseTerritoryOwners(recognizedText, type));
+          if (variant.owners) parsed.push(parseTerritoryOwners(recognizedText, type));
         }
         const rows = mergeResults(parsed);
         render(rows);
