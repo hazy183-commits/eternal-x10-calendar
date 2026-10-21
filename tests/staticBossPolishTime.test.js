@@ -12,26 +12,29 @@ function warsawDateTime(value) {
   return { date: `${map.year}-${map.month}-${map.day}`, time: `${map.hour}:${map.minute}` };
 }
 
-test('Baium stays on Saturday at 22:00 Polish time in summer', () => {
-  const now = new Date('2026-07-04T19:00:00.000Z'); // Saturday, 21:00 in Poland
-  const occurrence = nextStaticOccurrence('Baium', now);
+test('Baium is Saturday at 22:00 in Polish summer time', () => {
+  const occurrence = nextStaticOccurrence('Baium', new Date('2026-07-04T19:00:00.000Z'));
   assert.deepEqual(warsawDateTime(occurrence.start), { date: '2026-07-04', time: '22:00' });
   assert.equal(formatLocalDateTime(occurrence.start), '04.07.2026, 22:00');
 });
 
-test('Baium stays on Saturday at 22:00 Polish time in winter', () => {
-  const now = new Date('2026-01-03T20:00:00.000Z'); // Saturday, 21:00 in Poland
-  const occurrence = nextStaticOccurrence('Baium', now);
-  assert.deepEqual(warsawDateTime(occurrence.start), { date: '2026-01-03', time: '22:00' });
+test('Baium is Saturday at 21:00 in Polish winter time', () => {
+  const occurrence = nextStaticOccurrence('Baium', new Date('2026-01-03T19:30:00.000Z'));
+  assert.deepEqual(warsawDateTime(occurrence.start), { date: '2026-01-03', time: '21:00' });
 });
 
-test('Valakas is scheduled Sunday at 21:00 Polish time after the DST change', () => {
-  const now = new Date('2026-09-27T17:00:00.000Z'); // Sunday, 19:00 in Poland
-  const occurrence = nextStaticOccurrence('Valakas', now);
-  assert.deepEqual(warsawDateTime(occurrence.start), { date: '2026-09-27', time: '21:00' });
+test('Valakas and Antharas alternate Sundays and use 22 summer / 21 winter Polish time', () => {
+  const valakasSummer = nextStaticOccurrence('Valakas', new Date('2026-09-27T17:00:00.000Z'));
+  assert.deepEqual(warsawDateTime(valakasSummer.start), { date: '2026-09-27', time: '22:00' });
+  const antharasNext = nextStaticOccurrence('Antharas', new Date('2026-10-04T17:00:00.000Z'));
+  assert.deepEqual(warsawDateTime(antharasNext.start), { date: '2026-10-04', time: '22:00' });
+  const valakasWinter = nextStaticOccurrence('Valakas', new Date('2026-11-01T12:00:00.000Z'));
+  assert.deepEqual(warsawDateTime(valakasWinter.start), { date: '2026-11-08', time: '21:00' });
+  const antharasWinter = nextStaticOccurrence('Antharas', new Date('2026-11-08T12:00:00.000Z'));
+  assert.deepEqual(warsawDateTime(antharasWinter.start), { date: '2026-11-15', time: '21:00' });
 });
 
-test('public static boss events expose local schedule date and time', () => {
+test('public static boss events expose Polish schedule date and time', () => {
   const now = new Date('2026-07-04T19:00:00.000Z');
   const baium = publicRespawnEvents([], now).find((event) => event.boss === 'Baium');
   assert.equal(baium.date, '2026-07-04');
