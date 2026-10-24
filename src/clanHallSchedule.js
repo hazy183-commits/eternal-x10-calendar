@@ -75,4 +75,16 @@ if (typeof document !== 'undefined' && !document.getElementById('calendar-filter
 `; document.head.appendChild(style);
 }
 
-export function clanHallEvents(reference=new Date(),daysBefore=7,daysAfter=35){const start=new Date(reference);start.setHours(0,0,0,0);start.setDate(start.getDate()-daysBefore);const totalDays=daysBefore+daysAfter;const events=[];for(let offset=0;offset<=totalDays;offset+=1){const date=new Date(start.getTime()+offset*DAY_MS);for(const hall of CLAN_HALLS){if(date.getDay()!==hall.weekday)continue;events.push({id:`clan-hall-${hall.name.toLowerCase().replace(/[^a-z0-9]+/g,'-')}-${dateKey(date)}`,name:hall.name,boss:'',type:'Clan Hall',location:hall.name,date:dateKey(date),time:hall.time,duration:60,description:'Cotygodniowe wydarzenie Clan Hall.',isClanHallSchedule:true});}}return events;}
+function winterAdjustedHallTime(date, configuredTime) {
+  // The configured Clan Hall times are the summer-time display schedule.
+  // During Polish winter time the same server schedule appears one hour earlier.
+  const noonUtc = new Date(`${date}T12:00:00.000Z`);
+  const hourInWarsaw = Number(new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Europe/Warsaw', hour: '2-digit', hourCycle: 'h23',
+  }).format(noonUtc));
+  if (hourInWarsaw >= 14) return configuredTime; // CEST (UTC+2)
+  const [hour, minute] = configuredTime.split(':').map(Number);
+  return `${String((hour + 23) % 24).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+}
+
+export function clanHallEvents(reference=new Date(),daysBefore=7,daysAfter=35){const start=new Date(reference);start.setHours(0,0,0,0);start.setDate(start.getDate()-daysBefore);const totalDays=daysBefore+daysAfter;const events=[];for(let offset=0;offset<=totalDays;offset+=1){const date=new Date(start.getTime()+offset*DAY_MS);for(const hall of CLAN_HALLS){if(date.getDay()!==hall.weekday)continue;const dateString=dateKey(date);events.push({id:`clan-hall-${hall.name.toLowerCase().replace(/[^a-z0-9]+/g,'-')}-${dateString}`,name:hall.name,boss:'',type:'Clan Hall',location:hall.name,date:dateString,time:winterAdjustedHallTime(dateString,hall.time),duration:60,description:'Cotygodniowe wydarzenie Clan Hall · godzina dostosowana do czasu letniego/zimowego w Polsce.',isClanHallSchedule:true});}}return events;}
