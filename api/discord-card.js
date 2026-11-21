@@ -24,8 +24,9 @@ const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" vie
 <text x="66" y="477" fill="#f5ead5" font-size="27" font-family="Roboto" font-weight="400">${esc(location)}</text>
 <text x="66" y="548" fill="#e1c27d" font-size="20" font-family="Roboto" font-weight="700" letter-spacing="2">PRZYGOTUJ SIĘ. ZBIÓRKA PRZED RESPAWNEM!</text>
 <text x="1135" y="580" text-anchor="end" fill="#d9b66e" font-size="17" font-family="Roboto" font-weight="700" letter-spacing="2">ORZELBIALY.EU</text></svg>`;
-const fontFiles=['../node_modules/roboto-npm-webfont/fonts/roboto.ttf','../node_modules/roboto-npm-webfont/fonts/robotobold.ttf'].map(p=>new URL(p,import.meta.url).pathname);
-const overlay=new Resvg(svg,{fitTo:{mode:'width',value:1200},font:{fontFiles,loadSystemFonts:false,defaultFontFamily:'Roboto'}}).render().asPng();
+const fontDir=new URL('../node_modules/roboto-npm-webfont/fonts/',import.meta.url).pathname;
+const fontFiles=['roboto.ttf','robotobold.ttf'].map(p=>fontDir+p);
+const overlay=new Resvg(svg,{fitTo:{mode:'width',value:1200},font:{fontFiles,fontDirs:[fontDir],loadSystemFonts:true,defaultFontFamily:'Roboto'}}).render().asPng();
 const overlayPixels=await sharp(overlay).raw().toBuffer({resolveWithObject:true});
 let textPixels=0;
 const textZones=[{x1:55,x2:1080,y1:48,y2:100},{x1:55,x2:1080,y1:118,y2:175},{x1:55,x2:1080,y1:195,y2:270},{x1:55,x2:1080,y1:285,y2:340},{x1:55,x2:1080,y1:365,y2:435},{x1:55,x2:1080,y1:445,y2:500},{x1:55,x2:1080,y1:520,y2:565},{x1:900,x2:1150,y1:560,y2:600}];
