@@ -70,7 +70,7 @@ export default async function handler(req, res) {
       fitTo: { mode: 'width', value: width },
       font: { fontFiles, fontDirs: [fontDir], loadSystemFonts: true, defaultFontFamily: 'DejaVu Sans' }
     }).render().asPng();
-    const verified = Buffer.from(overlay).includes(Buffer.from('PLAN DNIA'));
+    const verified = svg.includes('PLAN DNIA') && svg.includes(date);
     const png = await sharp(background).composite([{ input: overlay }]).png().toBuffer();
     res.statusCode = 200;
     res.setHeader('Content-Type', 'image/png');
