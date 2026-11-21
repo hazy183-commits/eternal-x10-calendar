@@ -15,18 +15,18 @@ const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" vie
 <defs><linearGradient id="shade"><stop offset="0" stop-color="#05080c" stop-opacity=".96"/><stop offset=".62" stop-color="#05080c" stop-opacity=".60"/><stop offset="1" stop-color="#05080c" stop-opacity=".10"/></linearGradient><linearGradient id="bottom"><stop offset="0" stop-color="#05080c" stop-opacity=".88"/><stop offset="1" stop-color="#05080c" stop-opacity="0"/></linearGradient></defs>
 <rect width="1200" height="630" fill="url(#shade)"/><rect y="365" width="1200" height="265" fill="url(#bottom)"/>
 <rect x="22" y="22" width="1156" height="586" rx="8" fill="none" stroke="#d4ad62" stroke-width="2" stroke-opacity=".8"/>
-<text x="66" y="82" fill="#e2c27d" font-size="25" font-family="Roboto" font-weight="700" letter-spacing="3">ORZEŁ BIAŁY  |  ETERNAL X10</text>
-<text x="66" y="151" fill="#d7b66d" font-size="21" font-family="Roboto" font-weight="700" letter-spacing="5">RAID BOSS / WYDARZENIE KLANOWE</text>
-<text x="66" y="240" fill="#fff8e9" font-size="76" font-family="Roboto" font-weight="700">${esc(name.toUpperCase())}</text>
-<text x="66" y="318" fill="#d9bd83" font-size="19" font-family="Roboto" font-weight="700" letter-spacing="4">DATA I GODZINA WYDARZENIA</text>
-<text x="66" y="405" fill="#fff7e6" font-size="57" font-family="Roboto" font-weight="700">${esc(date)}</text>
-<text x="450" y="405" fill="#e3bc69" font-size="88" font-family="Roboto" font-weight="700">${esc(time)}</text>
-<text x="66" y="477" fill="#f5ead5" font-size="27" font-family="Roboto" font-weight="400">${esc(location)}</text>
-<text x="66" y="548" fill="#e1c27d" font-size="20" font-family="Roboto" font-weight="700" letter-spacing="2">PRZYGOTUJ SIĘ. ZBIÓRKA PRZED RESPAWNEM!</text>
-<text x="1135" y="580" text-anchor="end" fill="#d9b66e" font-size="17" font-family="Roboto" font-weight="700" letter-spacing="2">ORZELBIALY.EU</text></svg>`;
-const fontDir=new URL('../node_modules/roboto-npm-webfont/fonts/',import.meta.url).pathname;
-const fontFiles=['roboto.ttf','robotobold.ttf'].map(p=>fontDir+p);
-const overlay=new Resvg(svg,{fitTo:{mode:'width',value:1200},font:{fontFiles,fontDirs:[fontDir],loadSystemFonts:true,defaultFontFamily:'Roboto'}}).render().asPng();
+<text x="66" y="82" fill="#e2c27d" font-size="25" font-family="DejaVu Sans" font-weight="700" letter-spacing="3">ORZEŁ BIAŁY  |  ETERNAL X10</text>
+<text x="66" y="151" fill="#d7b66d" font-size="21" font-family="DejaVu Sans" font-weight="700" letter-spacing="5">RAID BOSS / WYDARZENIE KLANOWE</text>
+<text x="66" y="240" fill="#fff8e9" font-size="76" font-family="DejaVu Sans" font-weight="700">${esc(name.toUpperCase())}</text>
+<text x="66" y="318" fill="#d9bd83" font-size="19" font-family="DejaVu Sans" font-weight="700" letter-spacing="4">DATA I GODZINA WYDARZENIA</text>
+<text x="66" y="405" fill="#fff7e6" font-size="57" font-family="DejaVu Sans" font-weight="700">${esc(date)}</text>
+<text x="450" y="405" fill="#e3bc69" font-size="88" font-family="DejaVu Sans" font-weight="700">${esc(time)}</text>
+<text x="66" y="477" fill="#f5ead5" font-size="27" font-family="DejaVu Sans" font-weight="400">${esc(location)}</text>
+<text x="66" y="548" fill="#e1c27d" font-size="20" font-family="DejaVu Sans" font-weight="700" letter-spacing="2">PRZYGOTUJ SIĘ. ZBIÓRKA PRZED RESPAWNEM!</text>
+<text x="1135" y="580" text-anchor="end" fill="#d9b66e" font-size="17" font-family="DejaVu Sans" font-weight="700" letter-spacing="2">ORZELBIALY.EU</text></svg>`;
+const fontDir=new URL('../node_modules/dejavu-fonts-ttf/ttf/',import.meta.url).pathname;
+const fontFiles=['DejaVuSans.ttf','DejaVuSans-Bold.ttf'].map(p=>fontDir+p);
+const overlay=new Resvg(svg,{fitTo:{mode:'width',value:1200},font:{fontFiles,fontDirs:[fontDir],loadSystemFonts:true,defaultFontFamily:'DejaVu Sans'}}).render().asPng();
 const overlayPixels=await sharp(overlay).raw().toBuffer({resolveWithObject:true});
 let textPixels=0;
 const textZones=[{x1:55,x2:1080,y1:48,y2:100},{x1:55,x2:1080,y1:118,y2:175},{x1:55,x2:1080,y1:195,y2:270},{x1:55,x2:1080,y1:285,y2:340},{x1:55,x2:1080,y1:365,y2:435},{x1:55,x2:1080,y1:445,y2:500},{x1:55,x2:1080,y1:520,y2:565},{x1:900,x2:1150,y1:560,y2:600}];
