@@ -46,7 +46,7 @@ function bossKey(name = '', type = '') {
   return 'default';
 }
 
-export default async function handler(req) {
+export default async function handler(req, res) {
   const url = new URL(req.url);
   const name = safeText(fromB64Url(url.searchParams.get('n')), 'Wydarzenie klanowe', 80);
   const date = safeText(fromB64Url(url.searchParams.get('d')), '--.--.----', 20);
@@ -80,9 +80,9 @@ export default async function handler(req) {
     React.createElement('div', { style: { position: 'absolute', right: 60, bottom: 48, display: 'flex', fontSize: 18, color: '#d2b16c', letterSpacing: 3, fontWeight: 700 } }, 'ORZELBIALY.EU')
   );
 
-  try { return new ImageResponse(card, {
+  try { const imageResponse = new ImageResponse(card, {
     width: 1200,
     height: 630,
     headers: { 'Cache-Control': 'public, max-age=60, s-maxage=300' },
-  }); } catch (err) { return new Response(String(err?.stack || err), { status: 500, headers: { 'Content-Type': 'text/plain' } }); }
+  }); const png = Buffer.from(await imageResponse.arrayBuffer()); res.statusCode = imageResponse.status || 200; res.setHeader('Content-Type', 'image/png'); res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=300'); res.end(png); } catch (err) { console.error('Discord card render failed:', err); res.statusCode = 500; res.setHeader('Content-Type', 'text/plain'); res.end(String(err?.stack || err)); }
 }
