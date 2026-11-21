@@ -26,7 +26,13 @@ const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" vie
 <text x="1135" y="580" text-anchor="end" fill="#d9b66e" font-size="17" font-family="Roboto" font-weight="700" letter-spacing="2">ORZELBIALY.EU</text></svg>`;
 const fontFiles=['../node_modules/roboto-npm-webfont/fonts/roboto.ttf','../node_modules/roboto-npm-webfont/fonts/robotobold.ttf'].map(p=>new URL(p,import.meta.url).pathname);
 const overlay=new Resvg(svg,{fitTo:{mode:'width',value:1200},font:{fontFiles,loadSystemFonts:false,defaultFontFamily:'Roboto'}}).render().asPng();
+const overlayPixels=await sharp(overlay).raw().toBuffer({resolveWithObject:true});
+let textPixels=0;
+for(let i=0;i<overlayPixels.data.length;i+=overlayPixels.info.channels){
+  const r=overlayPixels.data[i],g=overlayPixels.data[i+1],b=overlayPixels.data[i+2],a=overlayPixels.data[i+3];
+  if(a>180&&r>175&&g>125&&b>45)textPixels++;
+}
 const png=await sharp(background).composite([{input:overlay}]).png().toBuffer();
-res.statusCode=200;res.setHeader('Content-Type','image/png');res.setHeader('Cache-Control','public, max-age=60, s-maxage=300');res.setHeader('X-Card-Image-Source',key);res.setHeader('X-Card-Size',String(png.length));res.end(png);
+res.statusCode=200;res.setHeader('Content-Type','image/png');res.setHeader('Cache-Control','public, max-age=60, s-maxage=300');res.setHeader('X-Card-Image-Source',key);res.setHeader('X-Card-Size',String(png.length));res.setHeader('X-Card-Text-Pixels',String(textPixels));res.setHeader('X-Card-Text-Verified',textPixels>1500?'true':'false');res.end(png);
 }catch(e){console.error('Discord card render failed',e);res.statusCode=500;res.setHeader('Content-Type','text/plain');res.end(String(e?.stack||e))}
 }
