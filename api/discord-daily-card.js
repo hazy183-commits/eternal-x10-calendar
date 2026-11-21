@@ -1,0 +1,88 @@
+import sharp from 'sharp';
+import { Resvg } from '@resvg/resvg-js';
+
+const BG = '/images/eternal-hero-approved.webp';
+
+function decode(value = '') {
+  try {
+    const normalized = value.replace(/-/g, '+').replace(/_/g, '/').padEnd(Math.ceil(value.length / 4) * 4, '=');
+    return Buffer.from(normalized, 'base64').toString('utf8');
+  } catch {
+    return '';
+  }
+}
+function esc(value = '') {
+  return String(value).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+}
+function textWidthSafe(value, max = 52) {
+  const chars = Array.from(String(value || ''));
+  return chars.length > max ? chars.slice(0, max - 1).join('') + '…' : chars.join('');
+}
+
+export default async function handler(req, res) {
+  try {
+    const url = new URL(req.url, 'https://' + (req.headers['x-forwarded-host'] || req.headers.host || 'orzelbialy.eu'));
+    const payload = JSON.parse(decode(url.searchParams.get('p') || ''));
+    const date = textWidthSafe(payload.date || '--.--.----', 24);
+    const events = Array.isArray(payload.events) ? payload.events.slice(0, 8) : [];
+    const width = 1200;
+    const rowHeight = 104;
+    const top = 226;
+    const height = Math.max(590, top + Math.max(events.length, 1) * rowHeight + 112);
+
+    const backgroundResponse = await fetch('https://orzelbialy.eu' + BG);
+    if (!backgroundResponse.ok) throw new Error('Daily plan background fetch failed: ' + backgroundResponse.status);
+    const background = await sharp(Buffer.from(await backgroundResponse.arrayBuffer()))
+      .resize(width, height, { fit: 'cover', position: 'centre' })
+      .modulate({ brightness: 0.36, saturation: 0.72 })
+      .png().toBuffer();
+
+    const rows = events.length ? events.map((event, index) => {
+      const y = top + index * rowHeight;
+      const name = esc(textWidthSafe(event.name || 'Wydarzenie', 35));
+      const type = esc(textWidthSafe(event.type || 'EVENT', 28).toUpperCase());
+      const location = esc(textWidthSafe(event.location || 'Miejsce do ustalenia', 52));
+      const time = esc(textWidthSafe(event.time || '--:--', 8));
+      return `
+        <rect x="52" y="${y}" width="1096" height="86" rx="10" fill="#080d13" fill-opacity=".78" stroke="#cba65f" stroke-opacity=".42" stroke-width="1.5"/>
+        <rect x="52" y="${y}" width="8" height="86" rx="4" fill="#d6b36c"/>
+        <text x="86" y="${y + 35}" fill="#fff5df" font-size="31" font-family="DejaVu Sans" font-weight="700">${name}</text>
+        <text x="88" y="${y + 66}" fill="#d8c39b" font-size="17" font-family="DejaVu Sans" letter-spacing="1">${type}  ·  ${location}</text>
+        <text x="1098" y="${y + 56}" text-anchor="end" fill="#e7c477" font-size="46" font-family="DejaVu Sans" font-weight="700">${time}</text>`;
+    }).join('') : `
+      <rect x="52" y="${top}" width="1096" height="110" rx="10" fill="#080d13" fill-opacity=".78" stroke="#cba65f" stroke-opacity=".42"/>
+      <text x="600" y="${top + 66}" text-anchor="middle" fill="#fff5df" font-size="30" font-family="DejaVu Sans">Brak zaplanowanych wydarzeń</text>`;
+
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+      <defs><linearGradient id="shade"><stop offset="0" stop-color="#05080c" stop-opacity=".94"/><stop offset=".7" stop-color="#05080c" stop-opacity=".74"/><stop offset="1" stop-color="#05080c" stop-opacity=".60"/></linearGradient></defs>
+      <rect width="100%" height="100%" fill="url(#shade)"/>
+      <rect x="22" y="22" width="1156" height="${height - 44}" rx="12" fill="none" stroke="#d4ad62" stroke-width="2" stroke-opacity=".82"/>
+      <text x="62" y="78" fill="#e2c27d" font-size="25" font-family="DejaVu Sans" font-weight="700" letter-spacing="3">ORZEŁ BIAŁY  |  ETERNAL X10</text>
+      <text x="62" y="145" fill="#fff8e9" font-size="58" font-family="DejaVu Sans" font-weight="700">PLAN DNIA</text>
+      <text x="64" y="190" fill="#e3c27d" font-size="25" font-family="DejaVu Sans" font-weight="700" letter-spacing="2">${esc(date)}  ·  NAJBLIŻSZE 24 GODZINY</text>
+      ${rows}
+      <text x="1136" y="${height - 62}" text-anchor="end" fill="#d9b66e" font-size="17" font-family="DejaVu Sans" font-weight="700" letter-spacing="2">ORZELBIALY.EU</text>
+    </svg>`;
+
+    const fontDir = new URL('../node_modules/dejavu-fonts-ttf/ttf/', import.meta.url).pathname;
+    const fontFiles = ['DejaVuSans.ttf', 'DejaVuSans-Bold.ttf'].map(file => fontDir + file);
+    const overlay = new Resvg(svg, {
+      fitTo: { mode: 'width', value: width },
+      font: { fontFiles, fontDirs: [fontDir], loadSystemFonts: true, defaultFontFamily: 'DejaVu Sans' }
+    }).render().asPng();
+    const verified = Buffer.from(overlay).includes(Buffer.from('PLAN DNIA'));
+    const png = await sharp(background).composite([{ input: overlay }]).png().toBuffer();
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'image/png');
+    res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=300');
+    res.setHeader('X-Daily-Plan-Events', String(events.length));
+    res.setHeader('X-Daily-Plan-Size', String(png.length));
+    res.setHeader('X-Daily-Plan-Text-Verified', verified ? 'true' : 'false');
+    res.end(png);
+  } catch (error) {
+    console.error('Discord daily plan render failed', error);
+    res.statusCode = 500;
+    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+    res.end(String(error?.message || error));
+  }
+}
