@@ -11,27 +11,19 @@ const s=name.toLowerCase();const kind=type.toLowerCase();let key=['frintezza','a
 const response=await fetch('https://orzelbialy.eu'+ASSETS[key]);if(!response.ok)throw new Error('Boss image fetch failed: '+response.status);
 const original=Buffer.from(await response.arrayBuffer());
 const background=await sharp(original).resize(1200,630,{fit:'cover',position:'centre'}).modulate({brightness:.62}).png().toBuffer();
-const attendeeList=attendees.split(/[,\\n]+/).map(v=>v.trim()).filter(Boolean).slice(0,10);
-const attendeeRows=attendeeList.length
-  ? attendeeList.map((v,i)=>`<text x="875" y="${205+i*34}" fill="#fff7e6" font-size="21" font-family="DejaVu Sans" font-weight="700">${i+1}.</text><text x="912" y="${205+i*34}" fill="#fff7e6" font-size="21" font-family="DejaVu Sans" font-weight="700">${esc(v.slice(0,22))}</text>`).join('')
-  : '<text x="875" y="205" fill="#d9bd83" font-size="19" font-family="DejaVu Sans">Brak potwierdzonych</text><text x="875" y="235" fill="#d9bd83" font-size="19" font-family="DejaVu Sans">zgłoszeń</text>';
 const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-<defs><linearGradient id="shade"><stop offset="0" stop-color="#05080c" stop-opacity=".98"/><stop offset=".68" stop-color="#05080c" stop-opacity=".78"/><stop offset="1" stop-color="#05080c" stop-opacity=".28"/></linearGradient><linearGradient id="panel"><stop offset="0" stop-color="#090d13" stop-opacity=".94"/><stop offset="1" stop-color="#090d13" stop-opacity=".84"/></linearGradient></defs>
-<rect width="1200" height="630" fill="url(#shade)"/>
+<defs><linearGradient id="shade"><stop offset="0" stop-color="#05080c" stop-opacity=".96"/><stop offset=".62" stop-color="#05080c" stop-opacity=".60"/><stop offset="1" stop-color="#05080c" stop-opacity=".10"/></linearGradient><linearGradient id="bottom"><stop offset="0" stop-color="#05080c" stop-opacity=".88"/><stop offset="1" stop-color="#05080c" stop-opacity="0"/></linearGradient></defs>
+<rect width="1200" height="630" fill="url(#shade)"/><rect y="365" width="1200" height="265" fill="url(#bottom)"/>
 <rect x="22" y="22" width="1156" height="586" rx="8" fill="none" stroke="#d4ad62" stroke-width="2" stroke-opacity=".8"/>
-<rect x="835" y="125" width="315" height="430" rx="10" fill="url(#panel)" stroke="#b58b4d" stroke-width="1.5" stroke-opacity=".8"/>
-<path d="M810 145 V540" stroke="#d4ad62" stroke-width="2" stroke-opacity=".8"/>
 <text x="66" y="82" fill="#e2c27d" font-size="25" font-family="DejaVu Sans" font-weight="700" letter-spacing="3">ORZEŁ BIAŁY  |  ETERNAL X10</text>
 <text x="66" y="151" fill="#d7b66d" font-size="21" font-family="DejaVu Sans" font-weight="700" letter-spacing="5">RAID BOSS / WYDARZENIE KLANOWE</text>
-<text x="66" y="245" fill="#fff8e9" font-size="76" font-family="DejaVu Sans" font-weight="700">${esc(name.toUpperCase())}</text>
-<text x="66" y="305" fill="#d9bd83" font-size="19" font-family="DejaVu Sans" font-weight="700" letter-spacing="4">DATA I GODZINA WYDARZENIA</text>
-<text x="66" y="385" fill="#fff7e6" font-size="57" font-family="DejaVu Sans" font-weight="700">${esc(date)}</text>
-<text x="420" y="385" fill="#e3bc69" font-size="88" font-family="DejaVu Sans" font-weight="700">${esc(time)}</text>
-<text x="66" y="445" fill="#f5ead5" font-size="25" font-family="DejaVu Sans" font-weight="400">${esc(location)}</text>
-<text x="66" y="515" fill="#e1c27d" font-size="25" font-family="DejaVu Sans" font-weight="700">ZBIÓRKA: 30 MINUT PRZED STARTEM</text>
-<text x="875" y="165" fill="#e2c27d" font-size="25" font-family="DejaVu Sans" font-weight="700" letter-spacing="3">OBECNI</text>
-<text x="875" y="184" fill="#b58b4d" font-size="14" font-family="DejaVu Sans">POTWIERDZENI UCZESTNICY</text>
-${attendeeRows}
+<text x="66" y="240" fill="#fff8e9" font-size="76" font-family="DejaVu Sans" font-weight="700">${esc(name.toUpperCase())}</text>
+<text x="66" y="285" fill="#d9bd83" font-size="19" font-family="DejaVu Sans" font-weight="700" letter-spacing="4">DATA I GODZINA WYDARZENIA</text>
+<text x="66" y="355" fill="#fff7e6" font-size="57" font-family="DejaVu Sans" font-weight="700">${esc(date)}</text>
+<text x="450" y="355" fill="#e3bc69" font-size="88" font-family="DejaVu Sans" font-weight="700">${esc(time)}</text>
+<text x="66" y="410" fill="#f5ead5" font-size="25" font-family="DejaVu Sans" font-weight="400">${esc(location)}</text>
+<text x="66" y="468" fill="#e1c27d" font-size="25" font-family="DejaVu Sans" font-weight="700">ZBIÓRKA: 30 MINUT PRZED ROZPOCZĘCIEM</text>
+<text x="66" y="520" fill="#fff7e6" font-size="22" font-family="DejaVu Sans" font-weight="700">BĘDĄ: ${esc(attendees)}</text>
 <text x="1135" y="580" text-anchor="end" fill="#d9b66e" font-size="17" font-family="DejaVu Sans" font-weight="700" letter-spacing="2">ORZELBIALY.EU</text></svg>`;
 const fontDir=new URL('../node_modules/dejavu-fonts-ttf/ttf/',import.meta.url).pathname;
 const fontFiles=['DejaVuSans.ttf','DejaVuSans-Bold.ttf'].map(p=>fontDir+p);
