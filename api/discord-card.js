@@ -24,7 +24,7 @@ const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" vie
 <text x="66" y="477" fill="#f5ead5" font-size="27" font-family="Roboto" font-weight="400">${esc(location)}</text>
 <text x="66" y="548" fill="#e1c27d" font-size="20" font-family="Roboto" font-weight="700" letter-spacing="2">PRZYGOTUJ SIĘ. ZBIÓRKA PRZED RESPAWNEM!</text>
 <text x="1135" y="580" text-anchor="end" fill="#d9b66e" font-size="17" font-family="Roboto" font-weight="700" letter-spacing="2">ORZELBIALY.EU</text></svg>`;
-const fontFiles=['../node_modules/@fontsource/roboto/files/roboto-latin-ext-400-normal.woff2','../node_modules/@fontsource/roboto/files/roboto-latin-ext-700-normal.woff2'].map(p=>new URL(p,import.meta.url).pathname);
+const fontFiles=['../node_modules/roboto-npm-webfont/fonts/roboto.ttf','../node_modules/roboto-npm-webfont/fonts/robotobold.ttf'].map(p=>new URL(p,import.meta.url).pathname);
 const overlay=new Resvg(svg,{fitTo:{mode:'width',value:1200},font:{fontFiles,loadSystemFonts:false,defaultFontFamily:'Roboto'}}).render().asPng();
 const png=await sharp(background).composite([{input:overlay}]).png().toBuffer();
 res.statusCode=200;res.setHeader('Content-Type','image/png');res.setHeader('Cache-Control','public, max-age=60, s-maxage=300');res.setHeader('X-Card-Image-Source',key);res.setHeader('X-Card-Size',String(png.length));res.end(png);
