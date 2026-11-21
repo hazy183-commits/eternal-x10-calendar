@@ -80,9 +80,9 @@ export default async function handler(req) {
     React.createElement('div', { style: { position: 'absolute', right: 60, bottom: 48, display: 'flex', fontSize: 18, color: '#d2b16c', letterSpacing: 3, fontWeight: 700 } }, 'ORZELBIALY.EU')
   );
 
-  return new ImageResponse(card, {
+  try { return new ImageResponse(card, {
     width: 1200,
     height: 630,
     headers: { 'Cache-Control': 'public, max-age=60, s-maxage=300' },
-  });
+  }); } catch (err) { return new Response(String(err?.stack || err), { status: 500, headers: { 'Content-Type': 'text/plain' } }); }
 }
