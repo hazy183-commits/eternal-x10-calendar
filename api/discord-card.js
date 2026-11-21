@@ -1,7 +1,7 @@
 import React from 'react';
 import { ImageResponse } from '@vercel/og';
 
-export const config = { runtime: 'edge' };
+export const config = { runtime: 'nodejs' };
 
 const ASSETS = {
   antharas: '/images/bosses/antharas.webp',
