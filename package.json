@@ -17,6 +17,7 @@
     "sharp": "^0.34.5",
     "@resvg/resvg-js": "^2.6.2",
     "@fontsource/roboto": "^5.2.6",
-    "roboto-npm-webfont": "0.0.3"
+    "roboto-npm-webfont": "0.0.3",
+    "dejavu-fonts-ttf": "2.37.3"
   }
 }
