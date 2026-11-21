@@ -28,7 +28,10 @@ const fontFiles=['../node_modules/roboto-npm-webfont/fonts/roboto.ttf','../node_
 const overlay=new Resvg(svg,{fitTo:{mode:'width',value:1200},font:{fontFiles,loadSystemFonts:false,defaultFontFamily:'Roboto'}}).render().asPng();
 const overlayPixels=await sharp(overlay).raw().toBuffer({resolveWithObject:true});
 let textPixels=0;
-for(let i=0;i<overlayPixels.data.length;i+=overlayPixels.info.channels){
+const textZones=[{x1:55,x2:1080,y1:48,y2:100},{x1:55,x2:1080,y1:118,y2:175},{x1:55,x2:1080,y1:195,y2:270},{x1:55,x2:1080,y1:285,y2:340},{x1:55,x2:1080,y1:365,y2:435},{x1:55,x2:1080,y1:445,y2:500},{x1:55,x2:1080,y1:520,y2:565},{x1:900,x2:1150,y1:560,y2:600}];
+for(let y=0;y<overlayPixels.info.height;y++)for(let x=0;x<overlayPixels.info.width;x++){
+  if(!textZones.some(z=>x>=z.x1&&x<=z.x2&&y>=z.y1&&y<=z.y2))continue;
+  const i=(y*overlayPixels.info.width+x)*overlayPixels.info.channels;
   const r=overlayPixels.data[i],g=overlayPixels.data[i+1],b=overlayPixels.data[i+2],a=overlayPixels.data[i+3];
   if(a>180&&r>175&&g>125&&b>45)textPixels++;
 }
