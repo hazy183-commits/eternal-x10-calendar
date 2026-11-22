@@ -10,20 +10,20 @@ const name=(dec(u.searchParams.get('n'))||'Wydarzenie klanowe').slice(0,80),date
 const gathering=(dec(u.searchParams.get('g'))||'').slice(0,120);const gatheringParts=gathering.split('|');const gatherLine1=gatheringParts[0]||'';const gatherLine2=gatheringParts[1]||'';const s=name.toLowerCase();const kind=type.toLowerCase();let key=['frintezza','antharas','baium','valakas','zaken','core','orfen'].find(k=>s.includes(k));if(!key&&s.includes('queen ant'))key='queen-ant';if(!key&&kind==='siege'){key=['aden','dion','giran','gludio','goddard','innadril','oren','rune','schuttgart'].find(c=>s.includes(c))||'aden';}if(!key&&kind==='clan hall'){key=['fortress-of-resistance','devastated-castle','bandit-stronghold','rainbow-spring-chateau','wild-beast-reserve','fortress-of-the-dead'].find(c=>s.includes(c.replace(/-/g,' ')))||'default';}if(!key&&kind==='rb')key='rb';if(!key&&s.includes('pvp'))key='pvp';if(!key&&(s.includes('colloseum')||s.includes('colosseum')))key='colloseum';if(!key&&kind==='olympiad')key='olympiad';key=key||'default';
 const response=await fetch('https://orzelbialy.eu'+ASSETS[key]);if(!response.ok)throw new Error('Boss image fetch failed: '+response.status);
 const original=Buffer.from(await response.arrayBuffer());
-const background=await sharp(original).resize(1200,630,{fit:'cover',position:'centre'}).modulate({brightness:.62}).png().toBuffer();
+const background=await sharp(original).resize(1200,630,{fit:'cover',position:'centre'}).modulate({brightness:.83}).png().toBuffer();
 const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-<defs><linearGradient id="shade"><stop offset="0" stop-color="#05080c" stop-opacity=".96"/><stop offset=".62" stop-color="#05080c" stop-opacity=".60"/><stop offset="1" stop-color="#05080c" stop-opacity=".10"/></linearGradient><linearGradient id="bottom"><stop offset="0" stop-color="#05080c" stop-opacity=".88"/><stop offset="1" stop-color="#05080c" stop-opacity="0"/></linearGradient></defs>
+<defs><linearGradient id="shade"><stop offset="0" stop-color="#05080c" stop-opacity=".96"/><stop offset=".62" stop-color="#05080c" stop-opacity=".84"/><stop offset="1" stop-color="#05080c" stop-opacity=".10"/></linearGradient><linearGradient id="bottom"><stop offset="0" stop-color="#05080c" stop-opacity=".88"/><stop offset="1" stop-color="#05080c" stop-opacity="0"/></linearGradient></defs>
 <rect width="1200" height="630" fill="url(#shade)"/><rect y="365" width="1200" height="265" fill="url(#bottom)"/>
 <rect x="22" y="22" width="1156" height="586" rx="8" fill="none" stroke="#d4ad62" stroke-width="2" stroke-opacity=".8"/>
-<text x="66" y="82" fill="#e2c27d" font-size="25" font-family="DejaVu Sans" font-weight="700" letter-spacing="3">ORZEŁ BIAŁY  |  ETERNAL X10</text>
-<text x="66" y="151" fill="#d7b66d" font-size="21" font-family="DejaVu Sans" font-weight="700" letter-spacing="5">RAID BOSS / WYDARZENIE KLANOWE</text>
-<text x="66" y="240" fill="#fff8e9" font-size="76" font-family="DejaVu Sans" font-weight="700">${esc(name.toUpperCase())}</text>
-<text x="66" y="285" fill="#d9bd83" font-size="19" font-family="DejaVu Sans" font-weight="700" letter-spacing="4">DATA I GODZINA WYDARZENIA</text>
-<text x="66" y="355" fill="#fff7e6" font-size="57" font-family="DejaVu Sans" font-weight="700">${esc(date)}</text>
-<text x="450" y="355" fill="#e3bc69" font-size="88" font-family="DejaVu Sans" font-weight="700">${esc(time)}</text>
-<text x="66" y="410" fill="#f5ead5" font-size="25" font-family="DejaVu Sans" font-weight="400">${esc(location)}</text>
-${`<text x="66" y="462" fill="#e1c27d" font-size="24" font-family="DejaVu Sans" font-weight="700">MIEJSCE ZBIÓRKI: ${esc((gatherLine2||"HUNTER VILLAGE").toUpperCase())}</text>`}
-<text x="66" y="545" fill="#fff7e6" font-size="22" font-family="DejaVu Sans" font-weight="700">BĘDĄ: ${esc(attendees)}</text>
+<text x="66" y="87" fill="#f8f2e9" font-size="40" font-family="DejaVu Sans" font-weight="700" letter-spacing="2">ORZEŁ BIAŁY</text><path d="M66 103 H580" stroke="#e0ae56" stroke-width="2"/><text x="66" y="132" fill="#e4bc69" font-size="19" font-family="DejaVu Sans" letter-spacing="5">LINEAGE II  •  ETERNAL X10</text>
+<text x="66" y="183" fill="#d7b66d" font-size="20" font-family="DejaVu Sans" font-weight="700" letter-spacing="5">${esc(kind==="siege"?"CASTLE SIEGE":kind==="clan hall"?"CLAN HALL":kind==="rb"?"RAID BOSS":kind==="olympiad"?"OLYMPIAD":"EPIC BOSS / WYDARZENIE")}</text>
+<text x="66" y="263" fill="#fff8e9" font-size="${name.length>22?43:name.length>13?55:76}" font-family="DejaVu Sans" font-weight="700">${esc(name.toUpperCase())}</text>
+<path d="M66 286 H720" stroke="#d6a24e" stroke-width="1"/><text x="66" y="316" fill="#d9bd83" font-size="18" font-family="DejaVu Sans" font-weight="700" letter-spacing="3">DATA I GODZINA WYDARZENIA</text>
+<text x="66" y="375" fill="#ffda78" font-size="42" font-family="DejaVu Sans" font-weight="700">${esc(date)}</text>
+<text x="390" y="375" fill="#ffda78" font-size="55" font-family="DejaVu Sans" font-weight="700">${esc(time)}</text>
+<text x="66" y="416" fill="#f5ead5" font-size="19" font-family="DejaVu Sans" font-weight="400">${esc(location)}</text>
+${`<text x="66" y="479" fill="#ffce67" font-size="25" font-family="DejaVu Sans" font-weight="700">MIEJSCE ZBIÓRKI: ${esc((gatherLine2||"HUNTER VILLAGE").toUpperCase())}</text>`}
+<rect x="65" y="500" width="705" height="75" rx="4" fill="#08090c" fill-opacity=".78"/><text x="83" y="531" fill="#f2e7d1" font-size="22" font-family="DejaVu Sans" font-weight="700">LISTA OBECNOŚCI</text><text x="83" y="559" fill="#fff7e6" font-size="18" font-family="DejaVu Sans">${esc(attendees.slice(0,85))}</text>
 <text x="1135" y="580" text-anchor="end" fill="#d9b66e" font-size="17" font-family="DejaVu Sans" font-weight="700" letter-spacing="2">ORZELBIALY.EU</text></svg>`;
 const fontDir=new URL('../node_modules/dejavu-fonts-ttf/ttf/',import.meta.url).pathname;
 const fontFiles=['DejaVuSans.ttf','DejaVuSans-Bold.ttf'].map(p=>fontDir+p);
