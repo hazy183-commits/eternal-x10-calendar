@@ -24,7 +24,7 @@ export default async function handler(req, res) {
     const url = new URL(req.url, 'https://' + (req.headers['x-forwarded-host'] || req.headers.host || 'orzelbialy.eu'));
     const payload = JSON.parse(decode(url.searchParams.get('p') || ''));
     const date = textWidthSafe(payload.date || '--.--.----', 24);
-    const events = Array.isArray(payload.events) ? payload.events.slice(0, 8) : [];
+    const events = Array.isArray(payload.events) ? payload.events.slice(0, 16) : [];
     const width = 1200;
     const rowHeight = 104;
     const top = 242;
@@ -76,6 +76,7 @@ export default async function handler(req, res) {
     res.setHeader('Content-Type', 'image/png');
     res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=300');
     res.setHeader('X-Daily-Plan-Events', String(events.length));
+    res.setHeader('X-Daily-Plan-Style', 'fantasy-metal-v2');
     res.setHeader('X-Daily-Plan-Size', String(png.length));
     res.setHeader('X-Daily-Plan-Text-Verified', verified ? 'true' : 'false');
     res.end(png);
