@@ -12,21 +12,21 @@ const response=await fetch('https://orzelbialy.eu'+ASSETS[key]);if(!response.ok)
 const original=Buffer.from(await response.arrayBuffer());
 const background=await sharp(original).resize(1200,800,{fit:'cover',position:'attention'}).modulate({brightness:.85}).png().toBuffer();
 const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
-<defs><linearGradient id="shade"><stop offset="0" stop-color="#05080c" stop-opacity=".96"/><stop offset=".62" stop-color="#05080c" stop-opacity=".84"/><stop offset="1" stop-color="#05080c" stop-opacity=".10"/></linearGradient><linearGradient id="bottom"><stop offset="0" stop-color="#05080c" stop-opacity=".88"/><stop offset="1" stop-color="#05080c" stop-opacity="0"/></linearGradient></defs>
+<defs><linearGradient id="shade"><stop offset="0" stop-color="#050408" stop-opacity=".93"/><stop offset=".52" stop-color="#05070b" stop-opacity=".67"/><stop offset="1" stop-color="#05080c" stop-opacity=".04"/></linearGradient><linearGradient id="bottom" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#05080c" stop-opacity="0"/><stop offset="1" stop-color="#050509" stop-opacity=".94"/></linearGradient><linearGradient id="metal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#ffffff"/><stop offset=".42" stop-color="#dce5f1"/><stop offset=".58" stop-color="#6c859f"/><stop offset=".76" stop-color="#f0f3f5"/><stop offset="1" stop-color="#7e9bb4"/></linearGradient><linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff4aa"/><stop offset=".55" stop-color="#ffd455"/><stop offset="1" stop-color="#a97522"/></linearGradient></defs>
 <rect width="1200" height="800" fill="url(#shade)"/><rect y="510" width="1200" height="290" fill="url(#bottom)"/>
-<path d="M42 38 H1158 M42 763 H1158" fill="none" stroke="#d4ad62" stroke-width="2" stroke-opacity=".65"/>
-<text x="240" y="108" fill="#f8f2e9" font-size="55" font-family="DejaVu Sans" font-weight="700" letter-spacing="2">ORZEŁ BIAŁY</text><path d="M240 129 H700" stroke="#e0ae56" stroke-width="2"/><text x="240" y="165" fill="#e4bc69" font-size="22" font-family="DejaVu Sans" letter-spacing="5">LINEAGE II  •  ETERNAL X10</text>
-<text x="66" y="243" fill="#d7b66d" font-size="24" font-family="DejaVu Sans" font-weight="700" letter-spacing="5">${esc(kind==="siege"?"CASTLE SIEGE":kind==="clan hall"?"CLAN HALL":kind==="rb"?"RAID BOSS":kind==="olympiad"?"OLYMPIAD":"EPIC BOSS / WYDARZENIE")}</text>
-<text x="66" y="349" fill="#fff8e9" font-size="${name.length>22?43:name.length>13?62:94}" font-family="DejaVu Sans" font-weight="700">${esc(name.toUpperCase())}</text>
-<path d="M66 369 H735" stroke="#d6a24e" stroke-width="1"/><text x="66" y="412" fill="#d9bd83" font-size="19" font-family="DejaVu Sans" font-weight="700" letter-spacing="3">DATA I GODZINA WYDARZENIA</text>
-<text x="66" y="473" fill="#ffda78" font-size="49" font-family="DejaVu Sans" font-weight="700">${esc(date)}</text>
-<text x="421" y="473" fill="#ffda78" font-size="58" font-family="DejaVu Sans" font-weight="700">${esc(time)}</text>
-<text x="66" y="517" fill="#f5ead5" font-size="20" font-family="DejaVu Sans" font-weight="400">${esc(location)}</text>
-${`<text x="66" y="595" fill="#ffce67" font-size="30" font-family="DejaVu Sans" font-weight="700">MIEJSCE ZBIÓRKI: ${esc((gatherLine2||"HUNTER VILLAGE").toUpperCase())}</text>`}
-<rect x="65" y="634" width="705" height="105" rx="4" fill="#08090c" fill-opacity=".76"/><text x="83" y="669" fill="#f2e7d1" font-size="26" font-family="DejaVu Sans" font-weight="700">LISTA OBECNOŚCI</text><text x="83" y="709" fill="#fff7e6" font-size="20" font-family="DejaVu Sans">${esc(attendees.slice(0,85))}</text>
-<text x="1135" y="750" text-anchor="end" fill="#d9b66e" font-size="17" font-family="DejaVu Sans" font-weight="700" letter-spacing="2">ORZELBIALY.EU</text></svg>`;
+<path d="M32 629 H1168" fill="none" stroke="#d4ad62" stroke-width="2" stroke-opacity=".8"/><path d="M32 650 H1168" fill="none" stroke="#1a0d0d" stroke-width="4" opacity=".5"/>
+<text x="240" y="108" fill="url(#metal)" stroke="#0a0a10" stroke-width="1.4" paint-order="stroke" font-size="55" font-family="DejaVu Serif" font-weight="700" letter-spacing="-1">ORZEŁ BIAŁY</text><path d="M240 129 H700" stroke="#e0ae56" stroke-width="2"/><text x="310" y="165" fill="url(#gold)" font-size="26" font-family="DejaVu Serif" letter-spacing="8">LINEAGE II</text>
+
+<text x="66" y="327" fill="url(#metal)" stroke="#131a25" stroke-width="2.8" paint-order="stroke" font-size="${name.length>22?38:name.length>13?56:104}" font-family="DejaVu Serif" font-weight="700" letter-spacing="-2">${esc(name.toUpperCase())}</text><text x="275" y="370" fill="#f3f2f4" font-size="29" font-family="DejaVu Serif" font-weight="700" letter-spacing="3">${esc(kind==="siege"?"CASTLE SIEGE":kind==="clan hall"?"CLAN HALL":kind==="rb"?"RAID BOSS":kind==="olympiad"?"OLYMPIAD":"EPIC BOSS")}</text>
+<path d="M68 389 H735" stroke="#c6a775" stroke-width="2"/><rect x="60" y="406" width="700" height="140" fill="#030508" fill-opacity=".53"/>
+<text x="72" y="463" fill="#f3f1f1" font-size="32" font-family="DejaVu Serif" font-weight="700">DATA:</text><text x="226" y="463" fill="url(#gold)" font-size="40" font-family="DejaVu Serif" font-weight="700">${esc(date)}</text>
+<text x="72" y="522" fill="#f3f1f1" font-size="32" font-family="DejaVu Serif" font-weight="700">GODZINA:</text><text x="292" y="522" fill="url(#gold)" font-size="46" font-family="DejaVu Serif" font-weight="700">${esc(time)}</text>
+
+${`<rect x="60" y="552" width="820" height="78" fill="#030508" fill-opacity=".6"/><text x="80" y="584" fill="#f6f0e6" font-size="29" font-family="DejaVu Serif" font-weight="700">MIEJSCE ZBIÓRKI:</text><text x="80" y="619" fill="url(#gold)" font-size="34" font-family="DejaVu Serif" font-weight="700">${esc((gatherLine2||"HUNTER VILLAGE").toUpperCase())}</text>`}
+<text x="600" y="669" text-anchor="middle" fill="#f6f2f0" font-size="34" font-family="DejaVu Serif" font-weight="700">LISTA OBECNOŚCI:</text><text x="600" y="709" text-anchor="middle" fill="#f6f0e9" font-size="20" font-family="DejaVu Serif">${esc(attendees.slice(0,85))}</text><path d="M35 659 H410 M790 659 H1165" stroke="#c9a14f" stroke-width="3"/><text x="48" y="762" fill="url(#gold)" font-size="29" font-family="DejaVu Serif" font-style="italic">Razem po zwycięstwo!</text>
+</svg>`;
 const fontDir=new URL('../node_modules/dejavu-fonts-ttf/ttf/',import.meta.url).pathname;
-const fontFiles=['DejaVuSans.ttf','DejaVuSans-Bold.ttf'].map(p=>fontDir+p);
+const fontFiles=['DejaVuSans.ttf','DejaVuSans-Bold.ttf','DejaVuSerif.ttf','DejaVuSerif-Bold.ttf','DejaVuSerif-Italic.ttf'].map(p=>fontDir+p);
 const overlay=new Resvg(svg,{fitTo:{mode:'width',value:1200},font:{fontFiles,fontDirs:[fontDir],loadSystemFonts:true,defaultFontFamily:'DejaVu Sans'}}).render().asPng();
 const overlayPixels=await sharp(overlay).raw().toBuffer({resolveWithObject:true});
 let textPixels=0;
