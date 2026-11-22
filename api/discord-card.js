@@ -40,7 +40,12 @@ for(let y=0;y<overlayPixels.info.height;y++)for(let x=0;x<overlayPixels.info.wid
   if(a>180&&r>175&&g>125&&b>45)textPixels++;
 }
 let layers=[{input:overlay}];
-try { const emblemResponse=await fetch('https://orzelbialy.eu/images/logo-orzel-bialy.webp'); if(emblemResponse.ok){const emblem=await sharp(Buffer.from(await emblemResponse.arrayBuffer())).resize(155,155,{fit:'contain'}).png().toBuffer();layers.push({input:emblem,left:66,top:47});}}catch(err){console.warn('Logo overlay unavailable',err);}
+try {
+ const eagleResponse=await fetch('https://upload.wikimedia.org/wikipedia/commons/1/12/Coat_of_arms_of_Poland.svg',{signal:AbortSignal.timeout(2500)});
+ if(eagleResponse.ok){const eagle=await sharp(Buffer.from(await eagleResponse.arrayBuffer())).resize(170,170,{fit:'contain'}).png().toBuffer();layers.push({input:eagle,left:48,top:28});}
+}catch(err){console.warn('Eagle artwork unavailable',err);}
+const flag=Buffer.from('<svg xmlns="http://www.w3.org/2000/svg" width="470" height="170" viewBox="0 0 470 170"><defs><linearGradient id="white" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#c8c5ca" stop-opacity=".7"/></linearGradient><linearGradient id="red" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#de1a31" stop-opacity=".88"/><stop offset="1" stop-color="#7e0d20" stop-opacity=".8"/></linearGradient></defs><path d="M0 65 Q80 20 170 50 T350 40 T470 10 L470 88 Q350 124 250 98 T0 128Z" fill="url(#white)"/><path d="M0 128 Q100 75 220 105 T470 88 L470 170 L0 170Z" fill="url(#red)"/></svg>');
+layers.push({input:flag,left:730,top:630});
 const png=await sharp(background).composite(layers).png().toBuffer();
 res.statusCode=200;res.setHeader('Content-Type','image/png');res.setHeader('Cache-Control','public, max-age=60, s-maxage=300');res.setHeader('X-Card-Image-Source',key);res.setHeader('X-Card-Size',String(png.length));res.setHeader('X-Card-Text-Pixels',String(textPixels));res.setHeader('X-Card-Text-Verified',textPixels>1500?'true':'false');res.end(png);
 }catch(e){console.error('Discord card render failed',e);res.statusCode=500;res.setHeader('Content-Type','text/plain');res.end(String(e?.stack||e))}
