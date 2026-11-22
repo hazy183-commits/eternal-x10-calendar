@@ -5,6 +5,7 @@ import './persistentHeader.js';
 import { publishClanEventSources } from './clanEventFeed.js';
 import { SupabaseEventRepository } from './supabaseEvents.js';
 import { supabase } from './supabaseClient.js';
+import { installDiscordReminderSettings } from './discordReminderSettings.js';
 import { applyBossArtwork, bossArtworkUrl, refreshBossArtwork } from './bossArtwork.js';
 import { BOSS_NAMES, presetForBoss, defaultDurationForType } from './adminFormDefaults.js';
 import { ADMIN_FILTERS, ADMIN_SORTS, filterAndSortAdminEvents } from './adminList.js';
@@ -21,6 +22,7 @@ import { withPvpEvents, pvpEventStatus, pvpCountdownText } from './pvpEventSched
 import { withClanActivityEvents } from './clanActivitySchedule.js';
 import { renderPvpEventPanel, renderPvpSidebar, updatePvpRowCountdowns } from './pvpEventPanel.js';
 console.log('APP STARTED');
+installDiscordReminderSettings(supabase);
 
 const artworkName = (event) => event?.artwork || event?.boss || event?.name || '';
 const TYPES = ['RB', 'Epic RB', 'Clan Hall', 'Siege', 'Olympiad', 'Event'];
