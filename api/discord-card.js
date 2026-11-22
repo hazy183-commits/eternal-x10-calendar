@@ -7,7 +7,7 @@ export default async function handler(req,res){
 try{
 const u=new URL(req.url,'https://'+(req.headers['x-forwarded-host']||req.headers.host||'orzelbialy.eu'));
 const name=(dec(u.searchParams.get('n'))||'Wydarzenie klanowe').slice(0,80),date=(dec(u.searchParams.get('d'))||'--.--.----').slice(0,20),time=(dec(u.searchParams.get('t'))||'--:--').slice(0,10),location=(dec(u.searchParams.get('l'))||'Lokalizacja do ustalenia').slice(0,80),attendees=(dec(u.searchParams.get('a'))||'Brak potwierdzonych zgłoszeń').slice(0,180),type=(dec(u.searchParams.get('k'))||'EVENT').slice(0,30);
-const s=name.toLowerCase();const kind=type.toLowerCase();let key=['frintezza','antharas','baium','valakas','zaken','core','orfen'].find(k=>s.includes(k));if(!key&&s.includes('queen ant'))key='queen-ant';if(!key&&kind==='siege'){key=['aden','dion','giran','gludio','goddard','innadril','oren','rune','schuttgart'].find(c=>s.includes(c))||'aden';}if(!key&&kind==='clan hall'){key=['fortress-of-resistance','devastated-castle','bandit-stronghold','rainbow-spring-chateau','wild-beast-reserve','fortress-of-the-dead'].find(c=>s.includes(c.replace(/-/g,' ')))||'default';}if(!key&&kind==='rb')key='rb';if(!key&&s.includes('pvp'))key='pvp';if(!key&&(s.includes('colloseum')||s.includes('colosseum')))key='colloseum';if(!key&&kind==='olympiad')key='olympiad';key=key||'default';
+const gathering=(dec(u.searchParams.get('g'))||'').slice(0,120);const gatheringParts=gathering.split('|');const gatherLine1=gatheringParts[0]||'';const gatherLine2=gatheringParts[1]||'';const s=name.toLowerCase();const kind=type.toLowerCase();let key=['frintezza','antharas','baium','valakas','zaken','core','orfen'].find(k=>s.includes(k));if(!key&&s.includes('queen ant'))key='queen-ant';if(!key&&kind==='siege'){key=['aden','dion','giran','gludio','goddard','innadril','oren','rune','schuttgart'].find(c=>s.includes(c))||'aden';}if(!key&&kind==='clan hall'){key=['fortress-of-resistance','devastated-castle','bandit-stronghold','rainbow-spring-chateau','wild-beast-reserve','fortress-of-the-dead'].find(c=>s.includes(c.replace(/-/g,' ')))||'default';}if(!key&&kind==='rb')key='rb';if(!key&&s.includes('pvp'))key='pvp';if(!key&&(s.includes('colloseum')||s.includes('colosseum')))key='colloseum';if(!key&&kind==='olympiad')key='olympiad';key=key||'default';
 const response=await fetch('https://orzelbialy.eu'+ASSETS[key]);if(!response.ok)throw new Error('Boss image fetch failed: '+response.status);
 const original=Buffer.from(await response.arrayBuffer());
 const background=await sharp(original).resize(1200,630,{fit:'cover',position:'centre'}).modulate({brightness:.62}).png().toBuffer();
@@ -22,15 +22,15 @@ const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" vie
 <text x="66" y="355" fill="#fff7e6" font-size="57" font-family="DejaVu Sans" font-weight="700">${esc(date)}</text>
 <text x="450" y="355" fill="#e3bc69" font-size="88" font-family="DejaVu Sans" font-weight="700">${esc(time)}</text>
 <text x="66" y="410" fill="#f5ead5" font-size="25" font-family="DejaVu Sans" font-weight="400">${esc(location)}</text>
-<text x="66" y="468" fill="#e1c27d" font-size="25" font-family="DejaVu Sans" font-weight="700">ZBIÓRKA: 30 MINUT PRZED ROZPOCZĘCIEM</text>
-<text x="66" y="520" fill="#fff7e6" font-size="22" font-family="DejaVu Sans" font-weight="700">BĘDĄ: ${esc(attendees)}</text>
+${gathering?'<text x="66" y="462" fill="#e1c27d" font-size="24" font-family="DejaVu Sans" font-weight="700">'+esc(gatherLine1)+'</text><text x="66" y="498" fill="#fff2d6" font-size="24" font-family="DejaVu Sans" font-weight="700">'+esc(gatherLine2)+'</text>':'<text x="66" y="468" fill="#e1c27d" font-size="25" font-family="DejaVu Sans" font-weight="700">ZBIÓRKA: 30 MINUT PRZED ROZPOCZĘCIEM</text>'}
+<text x="66" y="545" fill="#fff7e6" font-size="22" font-family="DejaVu Sans" font-weight="700">BĘDĄ: ${esc(attendees)}</text>
 <text x="1135" y="580" text-anchor="end" fill="#d9b66e" font-size="17" font-family="DejaVu Sans" font-weight="700" letter-spacing="2">ORZELBIALY.EU</text></svg>`;
 const fontDir=new URL('../node_modules/dejavu-fonts-ttf/ttf/',import.meta.url).pathname;
 const fontFiles=['DejaVuSans.ttf','DejaVuSans-Bold.ttf'].map(p=>fontDir+p);
 const overlay=new Resvg(svg,{fitTo:{mode:'width',value:1200},font:{fontFiles,fontDirs:[fontDir],loadSystemFonts:true,defaultFontFamily:'DejaVu Sans'}}).render().asPng();
 const overlayPixels=await sharp(overlay).raw().toBuffer({resolveWithObject:true});
 let textPixels=0;
-const textZones=[{x1:55,x2:1080,y1:48,y2:100},{x1:55,x2:1080,y1:118,y2:175},{x1:55,x2:1080,y1:195,y2:270},{x1:55,x2:1080,y1:255,y2:305},{x1:55,x2:1080,y1:320,y2:385},{x1:55,x2:1080,y1:390,y2:435},{x1:55,x2:1080,y1:445,y2:485},{x1:55,x2:1080,y1:495,y2:550},{x1:900,x2:1150,y1:560,y2:600}];
+const textZones=[{x1:55,x2:1080,y1:48,y2:100},{x1:55,x2:1080,y1:118,y2:175},{x1:55,x2:1080,y1:195,y2:270},{x1:55,x2:1080,y1:255,y2:305},{x1:55,x2:1080,y1:320,y2:385},{x1:55,x2:1080,y1:390,y2:435},{x1:55,x2:1080,y1:445,y2:485},{x1:55,x2:1080,y1:520,y2:570},{x1:900,x2:1150,y1:560,y2:600}];
 for(let y=0;y<overlayPixels.info.height;y++)for(let x=0;x<overlayPixels.info.width;x++){
   if(!textZones.some(z=>x>=z.x1&&x<=z.x2&&y>=z.y1&&y<=z.y2))continue;
   const i=(y*overlayPixels.info.width+x)*overlayPixels.info.channels;
