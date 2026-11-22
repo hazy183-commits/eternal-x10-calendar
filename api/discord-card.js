@@ -13,8 +13,8 @@ const imageHost='https://orzelbialy.eu';let original;try{const response=await fe
 // Keep the event scene and all live text dynamic; missing artwork never breaks notifications.
 let templateArtwork=null;
 try{
- const templateResponse=await fetch(imageHost+'/images/discord/poster-template.png',{signal:AbortSignal.timeout(3500)});
- if(templateResponse.ok&&String(templateResponse.headers.get('content-type')||'').startsWith('image/')){
+ const templateResponse=await fetch(imageHost+'/images/discord/poster-template.svg',{signal:AbortSignal.timeout(3500)});
+ if(templateResponse.ok&&/^(image\/|application\/svg\+xml)/.test(String(templateResponse.headers.get('content-type')||''))){
    const bytes=Buffer.from(await templateResponse.arrayBuffer());
    templateArtwork=await sharp(bytes).resize(1200,800,{fit:'fill'}).png().toBuffer();
  }
