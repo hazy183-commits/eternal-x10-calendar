@@ -27,14 +27,14 @@ export default async function handler(req, res) {
     const events = Array.isArray(payload.events) ? payload.events.slice(0, 8) : [];
     const width = 1200;
     const rowHeight = 104;
-    const top = 226;
+    const top = 242;
     const height = Math.max(590, top + Math.max(events.length, 1) * rowHeight + 112);
 
     const backgroundResponse = await fetch('https://orzelbialy.eu' + BG);
     if (!backgroundResponse.ok) throw new Error('Daily plan background fetch failed: ' + backgroundResponse.status);
     const background = await sharp(Buffer.from(await backgroundResponse.arrayBuffer()))
       .resize(width, height, { fit: 'cover', position: 'centre' })
-      .modulate({ brightness: 0.36, saturation: 0.72 })
+      .modulate({ brightness: 0.72, saturation: 1.1 })
       .png().toBuffer();
 
     const rows = events.length ? events.map((event, index) => {
@@ -46,26 +46,26 @@ export default async function handler(req, res) {
       return `
         <rect x="52" y="${y}" width="1096" height="86" rx="10" fill="#080d13" fill-opacity=".78" stroke="#cba65f" stroke-opacity=".42" stroke-width="1.5"/>
         <rect x="52" y="${y}" width="8" height="86" rx="4" fill="#d6b36c"/>
-        <text x="86" y="${y + 35}" fill="#fff5df" font-size="31" font-family="DejaVu Sans" font-weight="700">${name}</text>
+        <text x="86" y="${y + 35}" fill="#fff5df" font-size="31" font-family="DejaVu Serif" font-weight="700">${name}</text>
         <text x="88" y="${y + 66}" fill="#d8c39b" font-size="17" font-family="DejaVu Sans" letter-spacing="1">${type}  ·  ${location}</text>
-        <text x="1098" y="${y + 56}" text-anchor="end" fill="#e7c477" font-size="46" font-family="DejaVu Sans" font-weight="700">${time}</text>`;
+        <text x="1098" y="${y + 56}" text-anchor="end" fill="#e7c477" font-size="46" font-family="DejaVu Serif" font-weight="700">${time}</text>`;
     }).join('') : `
       <rect x="52" y="${top}" width="1096" height="110" rx="10" fill="#080d13" fill-opacity=".78" stroke="#cba65f" stroke-opacity=".42"/>
       <text x="600" y="${top + 66}" text-anchor="middle" fill="#fff5df" font-size="30" font-family="DejaVu Sans">Brak zaplanowanych wydarzeń</text>`;
 
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
-      <defs><linearGradient id="shade"><stop offset="0" stop-color="#05080c" stop-opacity=".94"/><stop offset=".7" stop-color="#05080c" stop-opacity=".74"/><stop offset="1" stop-color="#05080c" stop-opacity=".60"/></linearGradient></defs>
+      <defs><linearGradient id="shade"><stop offset="0" stop-color="#050408" stop-opacity=".95"/><stop offset=".55" stop-color="#05070c" stop-opacity=".79"/><stop offset="1" stop-color="#05070c" stop-opacity=".65"/></linearGradient><linearGradient id="metal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff"/><stop offset=".45" stop-color="#dce5f1"/><stop offset=".62" stop-color="#6c859f"/><stop offset="1" stop-color="#e9edf1"/></linearGradient><linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff2a5"/><stop offset=".55" stop-color="#ffd45b"/><stop offset="1" stop-color="#aa7224"/></linearGradient></defs>
       <rect width="100%" height="100%" fill="url(#shade)"/>
-      <rect x="22" y="22" width="1156" height="${height - 44}" rx="12" fill="none" stroke="#d4ad62" stroke-width="2" stroke-opacity=".82"/>
-      <text x="62" y="78" fill="#e2c27d" font-size="25" font-family="DejaVu Sans" font-weight="700" letter-spacing="3">ORZEŁ BIAŁY  |  ETERNAL X10</text>
-      <text x="62" y="145" fill="#fff8e9" font-size="58" font-family="DejaVu Sans" font-weight="700">PLAN DNIA</text>
-      <text x="64" y="190" fill="#e3c27d" font-size="25" font-family="DejaVu Sans" font-weight="700" letter-spacing="2">${esc(date)}  ·  NAJBLIŻSZE 24 GODZINY</text>
+      <path d="M38 35 H1162 M38 ${height-35} H1162" stroke="#d4ad62" stroke-width="2" stroke-opacity=".8"/><path d="M35 45 V${height-45} M1165 45 V${height-45}" stroke="#d4ad62" stroke-width="1" stroke-opacity=".45"/>
+      <text x="62" y="82" fill="url(#metal)" font-size="47" font-family="DejaVu Serif" font-weight="700">ORZEŁ BIAŁY</text><path d="M62 95 H535" stroke="#e0ae56" stroke-width="2"/><text x="90" y="126" fill="url(#gold)" font-size="21" font-family="DejaVu Serif" letter-spacing="6">LINEAGE II</text>
+      <text x="62" y="182" fill="url(#metal)" stroke="#101621" stroke-width="2" paint-order="stroke" font-size="57" font-family="DejaVu Serif" font-weight="700">PLAN DNIA</text>
+      <text x="64" y="212" fill="url(#gold)" font-size="22" font-family="DejaVu Serif" font-weight="700" letter-spacing="1">${esc(date)}  ·  NAJBLIŻSZE 24 GODZINY</text>
       ${rows}
       <text x="1136" y="${height - 62}" text-anchor="end" fill="#d9b66e" font-size="17" font-family="DejaVu Sans" font-weight="700" letter-spacing="2">ORZELBIALY.EU</text>
     </svg>`;
 
     const fontDir = new URL('../node_modules/dejavu-fonts-ttf/ttf/', import.meta.url).pathname;
-    const fontFiles = ['DejaVuSans.ttf', 'DejaVuSans-Bold.ttf'].map(file => fontDir + file);
+    const fontFiles = ['DejaVuSans.ttf', 'DejaVuSans-Bold.ttf', 'DejaVuSerif.ttf', 'DejaVuSerif-Bold.ttf'].map(file => fontDir + file);
     const overlay = new Resvg(svg, {
       fitTo: { mode: 'width', value: width },
       font: { fontFiles, fontDirs: [fontDir], loadSystemFonts: true, defaultFontFamily: 'DejaVu Sans' }
