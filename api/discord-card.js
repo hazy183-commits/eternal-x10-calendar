@@ -13,13 +13,12 @@ const original=Buffer.from(await response.arrayBuffer());
 const background=await sharp(original).resize(1200,630,{fit:'cover',position:'centre'}).modulate({brightness:.62}).png().toBuffer();
 const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
 <defs>
- <linearGradient id="leftShade" x1="0" x2="1"><stop offset="0" stop-color="#05070b" stop-opacity=".97"/><stop offset=".58" stop-color="#05070b" stop-opacity=".86"/><stop offset="1" stop-color="#05070b" stop-opacity=".25"/></linearGradient>
- <linearGradient id="bottomShade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#05070b" stop-opacity="0"/><stop offset="1" stop-color="#05070b" stop-opacity=".88"/></linearGradient>
+ <linearGradient id="leftShade" x1="0" x2="1"><stop offset="0" stop-color="#05070b" stop-opacity=".88"/><stop offset=".42" stop-color="#05070b" stop-opacity=".68"/><stop offset=".72" stop-color="#05070b" stop-opacity=".28"/><stop offset="1" stop-color="#05070b" stop-opacity=".06"/></linearGradient>
+ <linearGradient id="bottomShade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#05070b" stop-opacity="0"/><stop offset="1" stop-color="#05070b" stop-opacity=".62"/></linearGradient>
  <linearGradient id="gold"><stop offset="0" stop-color="#956321"/><stop offset=".5" stop-color="#f7df9b"/><stop offset="1" stop-color="#a7772d"/></linearGradient>
  <linearGradient id="panel"><stop offset="0" stop-color="#101116" stop-opacity=".94"/><stop offset="1" stop-color="#080a0e" stop-opacity=".72"/></linearGradient>
  <filter id="soft"><feGaussianBlur stdDeviation="10"/></filter>
 </defs>
-<rect width="1200" height="630" fill="#05070b"/>
 <rect width="1200" height="630" fill="url(#leftShade)"/>
 <rect y="450" width="1200" height="180" fill="url(#bottomShade)"/>
 <rect x="18" y="18" width="1164" height="594" rx="18" fill="none" stroke="#08090c" stroke-width="12"/>
