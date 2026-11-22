@@ -57,32 +57,21 @@ const flag=Buffer.from('<svg xmlns="http://www.w3.org/2000/svg" width="470" heig
 layers.push({input:flag,left:730,top:630});
 layers.push({input:overlay});
 // Use the clan's real artwork when available; retain a crisp vector crest as fallback.
+// The clan's actual published artwork is the only permitted crest.
+// Never replace it with an invented eagle or shield.
 let crest=null;
-try {
- const logoResponse=await fetch(imageHost+'/images/logo-orzel-bialy.webp',{signal:AbortSignal.timeout(3500)});
- if(logoResponse.ok){
-  const logoBytes=Buffer.from(await logoResponse.arrayBuffer());
-  const meta=await sharp(logoBytes).metadata();
-  if(meta.width&&meta.height&&meta.width/meta.height>0.65&&meta.width/meta.height<1.6){
-   crest=await sharp(logoBytes).resize(174,174,{fit:'contain',background:'#00000000'}).png().toBuffer();
-  }
- }
-}catch(error){console.warn('Clan crest image unavailable',String(error));}
-const eagleSvg=Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180">
-<defs><linearGradient id="silver" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff"/><stop offset=".48" stop-color="#edf1f5"/><stop offset="1" stop-color="#a9b5c4"/></linearGradient><linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff1ad"/><stop offset="1" stop-color="#a66d24"/></linearGradient></defs>
-<path d="M90 12 L113 24 L148 23 L161 57 L153 111 Q137 146 90 167 Q43 146 27 111 L19 57 L32 23 L67 24Z" fill="#3b0713" stroke="#e3bb6e" stroke-width="5"/>
-<path d="M90 20 L111 32 L141 31 L152 59 L145 108 Q130 137 90 156 Q50 137 35 108 L28 59 L39 31 L69 32Z" fill="#7d1424" stroke="#f1d48b" stroke-width="1.5"/>
-<g fill="url(#silver)" stroke="#78828f" stroke-width="1">
-<path d="M81 66 Q62 42 39 45 L47 56 L35 55 L48 67 L35 69 L52 79 L39 85 L57 91 L47 103 L67 99 L62 115 L79 103 L88 80Z"/>
-<path d="M99 66 Q118 42 141 45 L133 56 L145 55 L132 67 L145 69 L128 79 L141 85 L123 91 L133 103 L113 99 L118 115 L101 103 L92 80Z"/>
-<path d="M81 72 L99 72 L106 115 L96 138 L90 127 L84 138 L74 115Z"/>
-<path d="M76 54 Q90 43 104 54 L105 70 L94 84 L86 84 L75 70Z"/>
-<path d="M72 110 L57 133 L78 127 L84 145 L90 130 L96 145 L102 127 L123 133 L108 110 L97 120 L90 116 L83 120Z"/>
-</g><g fill="none" stroke="#fff" stroke-width="1.8" opacity=".85"><path d="M42 59L74 84M40 75L76 91M49 94L79 99M138 59L106 84M140 75L104 91M131 94L101 99"/><path d="M81 92L90 109L99 92"/></g>
-<path d="M68 42 L75 24 L85 35 L90 19 L95 35 L105 24 L112 42 L104 48 L76 48Z" fill="url(#gold)" stroke="#f6d993" stroke-width="2"/>
-<path d="M90 60L107 64L91 71Z" fill="#e7b244"/><circle cx="82" cy="59" r="2.7" fill="#b01830"/>
-</svg>`);
-layers.push({input:crest||await sharp(eagleSvg).png().toBuffer(),left:40,top:16});
+try{
+ const logoResponse=await fetch(imageHost+'/images/logo-orzel-bialy.webp',{signal:AbortSignal.timeout(4500)});
+ if(!logoResponse.ok)throw new Error('Clan logo HTTP '+logoResponse.status);
+ const logoBytes=Buffer.from(await logoResponse.arrayBuffer());
+ const logoMeta=await sharp(logoBytes).metadata();
+ if(!logoMeta.width||!logoMeta.height)throw new Error('Clan logo has no dimensions');
+ const ratio=logoMeta.width/logoMeta.height;
+ const targetWidth=ratio>1.6?200:174;
+ const targetHeight=ratio>1.6?122:174;
+ crest=await sharp(logoBytes).trim({background:'#00000000',threshold:8}).resize(targetWidth,targetHeight,{fit:'contain',background:'#00000000'}).png().toBuffer();
+ layers.push({input:crest,left:ratio>1.6?25:40,top:ratio>1.6?40:16});
+}catch(error){console.warn('Original clan crest could not be rendered; no substitute emblem',String(error));}
 const png=await sharp(background).composite(layers).png().toBuffer();
 res.statusCode=200;res.setHeader('Content-Type','image/png');res.setHeader('Cache-Control','public, max-age=60, s-maxage=300');res.setHeader('X-Card-Image-Source',key);res.setHeader('X-Card-Template',templateArtwork?'artwork-dynamic-v3':'dynamic-event-v2');res.setHeader('X-Card-Size',String(png.length));res.setHeader('X-Card-Text-Pixels',String(textPixels));res.setHeader('X-Card-Text-Verified',textPixels>1500?'true':'false');res.end(png);
 }catch(e){console.error('Discord card render failed',e);res.statusCode=500;res.setHeader('Content-Type','text/plain');res.end(String(e?.stack||e))}
