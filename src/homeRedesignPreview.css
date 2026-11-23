@@ -478,3 +478,11 @@ body { background:#05080b; color:#edf0f3; }
   #top .boss-card { min-height:125px; }
 }
 @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } *,*::before,*::after { transition-duration:.01ms!important; animation-duration:.01ms!important; } }
+#top #nextEventCard .home-meeting-note { display:grid; grid-template-columns:1fr auto; align-items:center; gap:2px 8px; margin:8px 0 0; padding:7px 9px; border-left:2px solid #d6ad57; background:rgba(30,31,26,.58); }
+#top #nextEventCard .home-meeting-note>b { grid-column:1/-1; color:#a9bac4; font-size:8px; letter-spacing:.14em; }
+#top #nextEventCard .home-meeting-note>strong { color:#efcf79; font-family:Georgia,serif; font-size:13px; letter-spacing:.04em; }
+#top #nextEventCard .home-meeting-note>span { color:#e5dcc8; font-size:9px; text-align:right; }
+@media (max-width:560px) {
+  #top #nextEventCard .home-meeting-note { grid-template-columns:1fr; }
+  #top #nextEventCard .home-meeting-note>span { text-align:left; }
+}
