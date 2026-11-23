@@ -330,3 +330,29 @@
   .unified-calendar .event-info .olympiad-window,
   .unified-calendar .event-info .pvp-calendar-times { font-size:11px; }
 }
+
+/* Mobile event cards show the location directly under the title. */
+@media(max-width:900px) {
+  .unified-calendar .event-row .event-time { grid-row:1 / span 4!important; }
+  .unified-calendar .event-row .event-location {
+    display:block!important;
+    grid-column:2!important;
+    grid-row:2!important;
+    align-self:start!important;
+    max-width:100%!important;
+    margin:0!important;
+    padding-top:3px!important;
+    overflow-wrap:anywhere!important;
+    color:#c6c0b5!important;
+    font-size:11px!important;
+    line-height:1.35!important;
+    white-space:normal!important;
+  }
+  .unified-calendar .event-row>.type-chip { grid-row:3!important; }
+  .unified-calendar .event-row>.public-signup-count {
+    grid-row:4!important;
+    align-self:start!important;
+    justify-self:start!important;
+    margin-top:2px!important;
+  }
+}
