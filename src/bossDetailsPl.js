@@ -140,6 +140,13 @@ const BOSS_INFO = {
   }
 };
 
+const QUEST_GUIDES = Object.freeze({
+  Baium: 'baium',
+  Antharas: 'antharas',
+  Valakas: 'valakas',
+  Frintezza: 'frintezza'
+});
+
 const formatValue = (value) => value ?? '—';
 const esc = (value = '') => String(value).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
 
@@ -178,8 +185,10 @@ function ensureStyles() {
     .boss-info-pl-drop-wrap{max-height:330px;overflow:auto;border:1px solid #4c402d;background:#090c0b;scrollbar-color:#aa813d #171815;scrollbar-width:thin}.boss-info-pl-drop-head,.boss-info-pl-drop-row{display:grid;grid-template-columns:minmax(0,1fr) 82px 100px;gap:10px;align-items:center;padding:10px 12px}.boss-info-pl-drop-head{position:sticky;top:0;z-index:2;background:#1b160e;border-bottom:1px solid #765829;color:#d7b56e;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}.boss-info-pl-drop-row{border-bottom:1px solid #30291e;color:#ddd4c7;font-size:12px;line-height:1.35}.boss-info-pl-drop-row:hover{background:#17150f}.boss-info-pl-drop-row:last-child{border-bottom:0}.boss-info-pl-drop-row b{color:#f0e8dc;font-weight:700}.boss-info-pl-drop-row b small{color:#d2b46f;font-size:10px}.boss-info-pl-drop-row .chance,.boss-info-pl-drop-row .qty{text-align:right;color:#d8d0c3;font-variant-numeric:tabular-nums}.boss-info-pl-drop-row.epic{background:linear-gradient(90deg,#4a301466,transparent);box-shadow:inset 4px 0 #d69d38}.boss-info-pl-drop-row.epic b,.boss-info-pl-drop-row.epic .chance{color:#ffd477}
     .boss-info-pl-drop-summary{display:flex;justify-content:space-between;gap:10px;margin:10px 0 0;color:#aaa196;font-size:11px}.boss-info-pl-drop-summary b{color:#d3b16e}.boss-info-pl-mechanics{margin:0;padding-left:19px;color:#d0c8bc;font-size:13px;line-height:1.65}.boss-info-pl-mechanics li+li{margin-top:6px}
     .boss-info-pl-reference{margin-top:20px;padding:11px 12px;border:1px solid #2f332d;background:#0a0d0c;color:#82877f;font-size:9px;line-height:1.55}.boss-info-pl-reference b{color:#aeb7a7}.boss-info-pl-source{color:#c7a45f;text-decoration:none}.boss-info-pl-source:hover{text-decoration:underline}
+    .boss-info-pl-quest-copy{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 15px;border:1px solid #8e6c34;background:linear-gradient(100deg,#251b0d,#0c100f)}.boss-info-pl-quest-copy p{margin:0;color:#c8bdab;font-size:13px;line-height:1.55}.boss-info-pl-quest-button{flex:0 0 auto;min-height:44px;padding:0 16px;border:1px solid #c59b4b;background:linear-gradient(180deg,#3a2c17,#1b150d);color:#f1d17e;font:800 11px Inter,sans-serif;letter-spacing:.08em;cursor:pointer}.boss-info-pl-quest-button:hover,.boss-info-pl-quest-button:focus-visible{border-color:#f1d17e;background:linear-gradient(180deg,#594220,#2b2114);outline:2px solid #d5ad58;outline-offset:2px}
     .boss-info-pl-close{position:absolute;right:14px;top:10px;z-index:5;width:42px;height:42px;border:1px solid #b1843a;background:#10120ff2;color:#f1ca74;font-size:26px;cursor:pointer;box-shadow:0 4px 18px #0008}.boss-info-pl-close:hover,.boss-info-pl-close:focus-visible{background:#2a1d0c;color:#ffe09a;outline:2px solid #d2a34d;outline-offset:2px}
     @media(max-width:760px){#bossInfoModalPl{padding:7px}.boss-info-pl-card{grid-template-columns:1fr;width:100%;max-height:95vh}.boss-info-pl-art{position:relative;min-height:300px;height:300px}.boss-info-pl-art::after{background:linear-gradient(0deg,#0b0e0dd9 0%,transparent 42%)}.boss-info-pl-content{padding:22px 16px}.boss-info-pl-content h3{font-size:31px}.boss-info-pl-text{font-size:14px}.boss-info-pl-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.boss-info-pl-server{grid-template-columns:1fr 1fr}.boss-info-pl-drop-head,.boss-info-pl-drop-row{grid-template-columns:minmax(0,1fr) 58px 72px;gap:7px;padding:10px 8px}.boss-info-pl-drop-row{font-size:11px}.boss-info-pl-drop-wrap{max-height:350px}}
+    @media(max-width:760px){.boss-info-pl-quest-copy{align-items:stretch;flex-direction:column}.boss-info-pl-quest-button{width:100%}}
   `;
   document.head.appendChild(style);
 }
@@ -204,6 +213,7 @@ function ensureModal() {
         <section class="boss-info-pl-section"><h4>Statystyki Interlude</h4><div id="bossInfoPlStats" class="boss-info-pl-stats"></div></section>
         <section class="boss-info-pl-section"><h4>Drop · szansa i ilość</h4><div class="boss-info-pl-drop-wrap"><div class="boss-info-pl-drop-head"><span>Przedmiot</span><span style="text-align:right">Szansa</span><span style="text-align:right">Ilość</span></div><div id="bossInfoPlDrop"></div></div><div class="boss-info-pl-drop-summary"><span>Wartości bazowe: Interlude</span><b>Eternal Epic Boss Drop = x1</b></div></section>
         <section class="boss-info-pl-section"><h4>Mechanika / info</h4><ul id="bossInfoPlMechanics" class="boss-info-pl-mechanics"></ul></section>
+        <section id="bossInfoPlQuestSection" class="boss-info-pl-section" hidden><h4>QUEST WEJŚCIOWY</h4><div class="boss-info-pl-quest-copy"><p>Sprawdź trasę, NPC, wycinki map i potwory potrzebne do wejścia.</p><button id="bossInfoPlQuestButton" class="boss-info-pl-quest-button" type="button">OTWÓRZ PORADNIK QUESTU</button></div></section>
         <div class="boss-info-pl-reference"><b>Źródła:</b> oficjalna strona L2Reborn potwierdza dla Eternal mnożnik <b>Epic Boss Drop x1</b> i <b>Epic Boss XP/SP x5</b>. Tabela przedmiotów, szans i ilości jest referencją z bazy Lineage 2 Interlude. Reborn może mieć własne zmiany konkretnej tabeli — w grze najpewniejszą kontrolą jest Shift + klik na bossie. <a id="bossInfoPlSource" class="boss-info-pl-source" href="#" target="_blank" rel="noopener noreferrer">Pełna baza Interlude ↗</a> · <a class="boss-info-pl-source" href="https://l2reborn.org/server-features/eternal-2/" target="_blank" rel="noopener noreferrer">Eternal rates ↗</a></div>
       </div>
     </article>`;
@@ -211,6 +221,10 @@ function ensureModal() {
   const close = () => { modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); document.body.style.removeProperty('overflow'); const t=modal._returnTarget; if(t?.isConnected)t.focus({preventScroll:true}); };
   modal._closeBossInfo = close;
   modal.querySelector('.boss-info-pl-close').addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); close(); });
+  modal.querySelector('#bossInfoPlQuestButton').addEventListener('click', event => {
+    const slug = event.currentTarget.dataset.questSlug;
+    if (slug) window.dispatchEvent(new CustomEvent('orzel:open-epic-quest', { detail: { slug, trigger: event.currentTarget } }));
+  });
   modal.addEventListener('click', e => { if (e.target === modal) close(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) { e.preventDefault(); close(); } });
   return modal;
@@ -229,6 +243,9 @@ function openBossDetails(name, trigger) {
   modal.querySelector('#bossInfoPlDrop').innerHTML = (info.drops || []).map(dropMarkup).join('') || '<div class="boss-info-pl-drop-row"><b>—</b><span></span><span></span></div>';
   modal.querySelector('#bossInfoPlMechanics').innerHTML = (info.mechanics || []).map(x => `<li>${esc(x)}</li>`).join('');
   modal.querySelector('#bossInfoPlSource').href = `https://lineage2wiki.org/interlude/monster/${info.npcId}/${name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}/`;
+  const questSlug = QUEST_GUIDES[name];
+  modal.querySelector('#bossInfoPlQuestSection').hidden = !questSlug;
+  modal.querySelector('#bossInfoPlQuestButton').dataset.questSlug = questSlug || '';
   modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; modal.querySelector('.boss-info-pl-close').focus({preventScroll:true});
 }
 
