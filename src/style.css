@@ -262,16 +262,16 @@ body:before { content:""; position:fixed; z-index:-1; inset:0; background:radial
 
 /* Reassert the dark theme palette after component styles are loaded. */
 :root {
-  --bg: #060809;
-  --surface: #0b1112;
-  --surface2: #101718;
-  --gold: #d4a64d;
-  --goldlight: #f0cd7f;
-  --line: rgba(203, 158, 72, .46);
-  --soft: rgba(203, 158, 72, .16);
-  --text: #f2eee5;
-  --muted: #aaa69c;
-  --red: #e17261;
-  --green: #9ac488;
+  --bg: #060809 !important;
+  --surface: #0b1112 !important;
+  --surface2: #101718 !important;
+  --gold: #d4a64d !important;
+  --goldlight: #f0cd7f !important;
+  --line: rgba(203, 158, 72, .46) !important;
+  --soft: rgba(203, 158, 72, .16) !important;
+  --text: #f2eee5 !important;
+  --muted: #aaa69c !important;
+  --red: #e17261 !important;
+  --green: #9ac488 !important;
   color: var(--text);
 }
