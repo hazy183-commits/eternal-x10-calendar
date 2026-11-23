@@ -157,11 +157,74 @@ function guideMarkup(guide) {
   </details>`;
 }
 
-function openGuideFromHash() {
-  const guide = document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
-  if (!guide?.matches('[data-quest-guide]')) return;
+function setGuideToggleLabel(guide, open) {
+  const label = guide.querySelector('.quest-guide-open-label');
+  if (label) label.textContent = open ? 'Ukryj poradnik' : 'Zobacz quest, mapy i moby';
+}
+
+function ensureQuestModal(list) {
+  let modal = document.getElementById('epicQuestGuideModal');
+  if (modal) return modal;
+  modal = document.createElement('div');
+  modal.id = 'epicQuestGuideModal';
+  modal.className = 'quest-guide-modal';
+  modal.setAttribute('aria-hidden', 'true');
+  modal.innerHTML = `<div class="quest-guide-modal-backdrop" data-quest-guide-close></div><section class="quest-guide-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="questGuideModalTitle" tabindex="-1"><header class="quest-guide-modal-header"><span id="questGuideModalTitle">PORADNIK QUESTU WEJŚCIOWEGO</span><button class="quest-guide-modal-close" type="button" data-quest-guide-close aria-label="Zamknij poradnik">×</button></header><div class="quest-guide-modal-scroll"></div></section>`;
+  document.body.appendChild(modal);
+  const scroll = modal.querySelector('.quest-guide-modal-scroll');
+  const close = () => {
+    if (!modal.classList.contains('open')) return;
+    const activeGuide = modal._activeGuide;
+    if (activeGuide) {
+      activeGuide.open = false;
+      setGuideToggleLabel(activeGuide, false);
+      list.append(activeGuide);
+      modal._activeGuide = null;
+    }
+    scroll.replaceChildren();
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    if (modal._previousOverflow) document.body.style.overflow = modal._previousOverflow;
+    else document.body.style.removeProperty('overflow');
+    if (modal._returnFocus?.isConnected) modal._returnFocus.focus({ preventScroll: true });
+  };
+  modal._closeQuestGuide = close;
+  modal.querySelectorAll('[data-quest-guide-close]').forEach((control) => control.addEventListener('click', close));
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape' || !modal.classList.contains('open')) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    close();
+  }, true);
+  return modal;
+}
+
+function openQuestGuide(slug, trigger, list) {
+  const guide = [...list.querySelectorAll('[data-quest-guide]')].find((card) => card.dataset.questGuide === slug);
+  if (!guide) return;
+  const modal = ensureQuestModal(list);
+  if (modal._activeGuide === guide && modal.classList.contains('open')) return;
+  if (modal.classList.contains('open')) modal._closeQuestGuide();
+  const scroll = modal.querySelector('.quest-guide-modal-scroll');
+  modal._previousOverflow = document.body.style.overflow;
+  modal._returnFocus = trigger || document.activeElement;
   guide.open = true;
-  window.requestAnimationFrame(() => guide.scrollIntoView({ block: 'start', behavior: 'smooth' }));
+  setGuideToggleLabel(guide, true);
+  scroll.replaceChildren(guide);
+  modal._activeGuide = guide;
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  requestAnimationFrame(() => {
+    scroll.scrollTop = 0;
+    modal.querySelector('.quest-guide-modal-close').focus({ preventScroll: true });
+  });
+}
+
+function openGuideFromHash(list) {
+  const id = decodeURIComponent(window.location.hash.slice(1));
+  const guide = [...list.querySelectorAll('[data-quest-guide]')].find((card) => card.id === id);
+  if (guide) openQuestGuide(guide.dataset.questGuide, null, list);
 }
 
 export function renderEpicQuestGuides() {
@@ -169,11 +232,10 @@ export function renderEpicQuestGuides() {
   if (!list) return;
   list.innerHTML = guides.map(guideMarkup).join('');
   list.querySelectorAll('.quest-guide').forEach((card) => {
-    const label = card.querySelector('.quest-guide-open-label');
-    card.addEventListener('toggle', () => {
-      if (label) label.textContent = card.open ? 'Ukryj poradnik' : 'Zobacz quest, mapy i moby';
-    });
+    card.addEventListener('toggle', () => setGuideToggleLabel(card, card.open));
   });
-  window.addEventListener('hashchange', openGuideFromHash);
-  openGuideFromHash();
+  ensureQuestModal(list);
+  window.addEventListener('orzel:open-epic-quest', (event) => openQuestGuide(event.detail?.slug, event.detail?.trigger, list));
+  window.addEventListener('hashchange', () => openGuideFromHash(list));
+  openGuideFromHash(list);
 }
