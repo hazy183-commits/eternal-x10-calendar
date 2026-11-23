@@ -22,11 +22,15 @@ ten sam alert nie jest wysyłany ponownie.
 
 ## Codzienny raport planu dnia
 
-Codziennie o **11:00 czasu Europe/Warsaw** wysyłany jest jeden zbiorczy raport
+Codziennie o **11:00 latem i 10:00 zimą czasu Europe/Warsaw** wysyłany jest jeden zbiorczy raport
 z wydarzeniami rozpoczynającymi się w najbliższych 24 godzinach. Raport obejmuje
 wydarzenia ręczne, RB/Epic RB, Siege, Clan Hall, Olympiadę oraz zgłoszenia
 „Potrzebne RB”. Zawiera tylko godzinę, typ i lokalizację — bez list „Będę” i
 „Może”.
+
+Jeśli raport zawiera Baiuma, Antharasa, Valakasa lub Frintezzę, w treści
+wiadomości przy grafice pojawia się klikalny link do odpowiedniego poradnika
+questowego na stronie.
 
 Raport jest niezależny od pojedynczych przypomnień wysyłanych godzinę przed
 startem. Panel Ownera pozwala go osobno włączyć lub wyłączyć.

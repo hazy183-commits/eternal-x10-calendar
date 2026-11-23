@@ -1,0 +1,350 @@
+.quest-guides {
+  padding-top: clamp(42px, 6vw, 78px);
+  padding-bottom: clamp(48px, 6vw, 82px);
+  scroll-margin-top: 92px;
+}
+
+.quest-guides-heading {
+  align-items: end;
+  margin-bottom: 22px;
+}
+
+.quest-guides-heading .section-aside {
+  max-width: 360px;
+  margin: 0 0 4px;
+  color: var(--muted, #aaa28f);
+  text-align: right;
+}
+
+.quest-guide-list {
+  display: grid;
+  gap: 16px;
+}
+
+.quest-guide {
+  overflow: hidden;
+  border: 1px solid rgba(207, 166, 78, .58);
+  background: linear-gradient(145deg, rgba(13, 18, 19, .97), rgba(5, 8, 10, .96));
+  box-shadow: 0 18px 42px rgba(0, 0, 0, .24), inset 0 1px rgba(255, 231, 164, .07);
+  scroll-margin-top: 94px;
+}
+
+.quest-guide[open] {
+  border-color: rgba(232, 193, 105, .88);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, .32), 0 0 26px rgba(202, 155, 61, .08);
+}
+
+.quest-guide-summary {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(190px, 29%);
+  min-height: 190px;
+  overflow: hidden;
+  cursor: pointer;
+  list-style: none;
+  isolation: isolate;
+}
+
+.quest-guide-summary::-webkit-details-marker { display: none; }
+.quest-guide-summary::marker { content: ''; }
+
+.quest-guide-summary-copy {
+  z-index: 1;
+  align-self: center;
+  padding: 24px 30px;
+}
+
+.quest-guide-kicker,
+.quest-guide-route-title .eyebrow,
+.quest-guide-aside .eyebrow {
+  display: inline-block;
+  color: #d9b96d;
+  font: 700 11px/1.4 Inter, sans-serif;
+  letter-spacing: .18em;
+}
+
+.quest-guide-summary h3 {
+  margin: 7px 0 0;
+  color: #f2ead6;
+  font: 700 clamp(28px, 4vw, 42px)/1.05 Cinzel, Georgia, serif;
+  letter-spacing: .035em;
+  text-shadow: 0 2px 12px #000;
+}
+
+.quest-guide-quest-name {
+  margin: 5px 0 12px;
+  color: #d3c8ae;
+  font: 500 14px/1.5 Inter, sans-serif;
+}
+
+.quest-guide-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.quest-guide-tags span {
+  padding: 5px 9px;
+  border: 1px solid rgba(215, 175, 86, .42);
+  background: rgba(5, 9, 11, .76);
+  color: #e1c47e;
+  font: 600 11px/1.3 Inter, sans-serif;
+  letter-spacing: .04em;
+}
+
+.quest-guide-teaser {
+  max-width: 720px;
+  margin: 12px 0 13px;
+  color: #c2bcaf;
+  font: 400 13px/1.55 Inter, sans-serif;
+}
+
+.quest-guide-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #f1d17e;
+  font: 700 12px/1.2 Inter, sans-serif;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.quest-guide-open-icon {
+  display: grid;
+  width: 22px;
+  height: 22px;
+  place-items: center;
+  border: 1px solid #b9954e;
+  color: #f1d17e;
+  font: 500 17px/1 Inter, sans-serif;
+  transition: transform .2s ease, background .2s ease;
+}
+
+.quest-guide[open] .quest-guide-open-icon { transform: rotate(45deg); background: rgba(213, 172, 78, .12); }
+
+.quest-guide-art {
+  position: relative;
+  min-height: 190px;
+  overflow: hidden;
+  background: #070a0c;
+}
+
+.quest-guide-art::before {
+  position: absolute;
+  z-index: 1;
+  inset: 0 auto 0 -100px;
+  width: 180px;
+  background: linear-gradient(90deg, #0c1112 4%, rgba(12, 17, 18, .75) 42%, transparent 100%);
+  content: '';
+}
+
+.quest-guide-art::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(3, 6, 7, .76), transparent 65%);
+  content: '';
+}
+
+.quest-guide-art img {
+  width: 100%;
+  height: 100%;
+  min-height: 190px;
+  object-fit: cover;
+  object-position: center 35%;
+  opacity: .78;
+}
+
+.quest-guide-art-label {
+  position: absolute;
+  z-index: 2;
+  right: 18px;
+  bottom: 14px;
+  color: rgba(246, 224, 173, .76);
+  font: 700 11px/1 Inter, sans-serif;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+
+.quest-guide-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(230px, 290px);
+  gap: clamp(22px, 4vw, 42px);
+  padding: 24px 30px 28px;
+  border-top: 1px solid rgba(203, 164, 77, .28);
+  background: linear-gradient(115deg, rgba(11, 15, 16, .97), rgba(7, 10, 12, .96));
+}
+
+.quest-guide-route-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(203, 164, 77, .27);
+}
+
+.quest-route-emblem {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  place-items: center;
+  border: 1px solid #ac8541;
+  background: linear-gradient(145deg, rgba(203, 162, 75, .17), rgba(0, 0, 0, .1));
+  color: #e0bd66;
+  font: 26px/1 Georgia, serif;
+}
+
+.quest-guide-route-title h4 {
+  margin: 3px 0 0;
+  color: #f1e7d0;
+  font: 600 17px/1.3 Cinzel, Georgia, serif;
+}
+
+.quest-route-steps {
+  position: relative;
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 18px 0 0;
+  list-style: none;
+}
+
+.quest-route-steps::before {
+  position: absolute;
+  top: 35px;
+  bottom: 35px;
+  left: 16px;
+  width: 1px;
+  background: linear-gradient(#d8b45c, rgba(190, 148, 59, .18));
+  content: '';
+}
+
+.quest-route-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 13px;
+  padding: 0 0 21px;
+}
+
+.quest-route-step:last-child { padding-bottom: 0; }
+
+.quest-route-marker {
+  z-index: 1;
+  display: grid;
+  width: 33px;
+  height: 33px;
+  place-items: center;
+  border: 1px solid #c7a557;
+  border-radius: 50%;
+  background: #0d1214;
+  box-shadow: 0 0 0 4px rgba(8, 12, 13, .92);
+  color: #e7c777;
+  font: 700 10px/1 Inter, sans-serif;
+}
+
+.quest-route-area {
+  color: #d6b664;
+  font: 700 11px/1.45 Inter, sans-serif;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+
+.quest-route-copy h4 {
+  margin: 3px 0 4px;
+  color: #eee6d6;
+  font: 600 14px/1.4 Inter, sans-serif;
+}
+
+.quest-route-copy p {
+  margin: 0;
+  color: #bcb8ae;
+  font: 400 13px/1.62 Inter, sans-serif;
+}
+
+.quest-guide-aside { display: grid; align-content: start; gap: 12px; }
+
+.quest-guide-entry,
+.quest-guide-prep {
+  padding: 16px 17px;
+  border: 1px solid rgba(210, 171, 89, .42);
+  background: linear-gradient(145deg, rgba(46, 36, 18, .5), rgba(9, 13, 14, .65));
+}
+
+.quest-guide-entry h4 {
+  margin: 8px 0 7px;
+  color: #f0d07b;
+  font: 700 17px/1.3 Cinzel, Georgia, serif;
+  overflow-wrap: anywhere;
+}
+
+.quest-guide-entry p,
+.quest-guide-server-note {
+  margin: 0;
+  color: #c3bcae;
+  font: 400 13px/1.6 Inter, sans-serif;
+}
+
+.quest-guide-prep ul {
+  display: grid;
+  gap: 7px;
+  margin: 10px 0 0;
+  padding-left: 17px;
+  color: #e3dbca;
+  font: 500 12px/1.5 Inter, sans-serif;
+}
+
+.quest-guide-prep li::marker { color: #e0bb65; }
+
+.quest-guide-server-note {
+  padding: 0 2px;
+  font-size: 12px;
+}
+
+.quest-guide-source {
+  width: fit-content;
+  color: #d9b868;
+  font: 600 11px/1.5 Inter, sans-serif;
+  text-decoration: underline;
+  text-decoration-color: rgba(217, 184, 104, .42);
+  text-underline-offset: 3px;
+}
+
+.quest-guides-footnote {
+  max-width: 760px;
+  margin: 16px 0 0;
+  color: #99958b;
+  font: 400 12px/1.6 Inter, sans-serif;
+}
+
+@media (max-width: 760px) {
+  .quest-guides-heading { align-items: start; gap: 8px; }
+  .quest-guides-heading .section-aside { text-align: left; }
+  .quest-guide-summary { grid-template-columns: minmax(0, 1fr) 118px; min-height: 182px; }
+  .quest-guide-summary-copy { padding: 19px 16px; }
+  .quest-guide-summary h3 { font-size: 29px; }
+  .quest-guide-quest-name { font-size: 12px; }
+  .quest-guide-tags { gap: 5px; }
+  .quest-guide-tags span { padding: 4px 6px; font-size: 10px; }
+  .quest-guide-teaser { margin: 10px 0; font-size: 12px; }
+  .quest-guide-art { min-height: 182px; }
+  .quest-guide-art img { min-height: 182px; }
+  .quest-guide-art::before { left: -65px; width: 115px; }
+  .quest-guide-art-label { right: 9px; font-size: 9px; letter-spacing: .12em; }
+  .quest-guide-body { grid-template-columns: 1fr; gap: 22px; padding: 19px 16px 21px; }
+  .quest-guide-aside { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .quest-guide-entry { grid-column: 1 / -1; }
+  .quest-guide-server-note, .quest-guide-source { grid-column: 1 / -1; }
+}
+
+@media (max-width: 430px) {
+  .quest-guide-summary { grid-template-columns: minmax(0, 1fr) 88px; min-height: 198px; }
+  .quest-guide-summary-copy { padding: 16px 12px; }
+  .quest-guide-summary h3 { font-size: 25px; }
+  .quest-guide-kicker { font-size: 10px; letter-spacing: .12em; }
+  .quest-guide-teaser { font-size: 11px; line-height: 1.45; }
+  .quest-guide-open { font-size: 11px; letter-spacing: .04em; }
+  .quest-guide-art, .quest-guide-art img { min-height: 198px; }
+  .quest-guide-aside { grid-template-columns: 1fr; }
+  .quest-guide-entry, .quest-guide-server-note, .quest-guide-source { grid-column: auto; }
+}

@@ -2,6 +2,7 @@ import { confirmLocalized } from './i18nCore.js';
 import './i18n.js';
 import { createCalendarNavigation } from './calendarNavigation.js';
 import './persistentHeader.js';
+import { renderEpicQuestGuides } from './epicQuestGuides.js';
 import './siteMotion.js';
 import { publishClanEventSources } from './clanEventFeed.js';
 import { SupabaseEventRepository } from './supabaseEvents.js';
@@ -23,6 +24,7 @@ import { withClanActivityEvents } from './clanActivitySchedule.js';
 import { renderPvpEventPanel, renderPvpSidebar, updatePvpRowCountdowns } from './pvpEventPanel.js';
 console.log('APP STARTED');
 installDiscordReminderSettings(supabase);
+renderEpicQuestGuides();
 
 const artworkName = (event) => event?.artwork || event?.boss || event?.name || '';
 const TYPES = ['RB', 'Epic RB', 'Clan Hall', 'Siege', 'Olympiad', 'Event'];
