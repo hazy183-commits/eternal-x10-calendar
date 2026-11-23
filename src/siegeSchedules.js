@@ -89,17 +89,47 @@ function serverDateTimeToLocal(dateKey, time) {
   };
 }
 
+function addServerDays(dateKey, days) {
+  const date = parseDateKey(dateKey);
+  if (!date) return null;
+  date.setUTCDate(date.getUTCDate() + days);
+  return date.toISOString().slice(0, 10);
+}
+
 export function nextMonthlyOccurrence(row, now = new Date()) {
   const normalizedRow = normalizeSiegeRow(row);
   if (!normalizedRow) return null;
-  // Dates are imported from the weekly official screenshot. Never invent a
-  // future siege date by extrapolating a recurring cycle.
-  const localReference = serverDateTimeToLocal(normalizedRow.reference_date, normalizedRow.reference_time);
-  const start = localReference ? localDateTimeToDate(localReference.date, localReference.time) : null;
+
+  // The saved server date is an anchor. Each castle repeats on the same 14-day
+  // cycle; advance expired dates by whole intervals, preserving weekday and time.
+  let serverDate = normalizedRow.reference_date;
+  let localReference = serverDateTimeToLocal(serverDate, normalizedRow.reference_time);
+  let start = localReference ? localDateTimeToDate(localReference.date, localReference.time) : null;
   if (!start) return null;
-  const end = new Date(start.getTime() + normalizedRow.duration_minutes * 60000);
+
+  let end = new Date(start.getTime() + normalizedRow.duration_minutes * 60000);
+  let cycles = 0;
+  while (end <= now && cycles < 10000) {
+    const nextDate = addServerDays(serverDate, SIEGE_INTERVAL_DAYS);
+    if (!nextDate || nextDate === serverDate) return null;
+    serverDate = nextDate;
+    localReference = serverDateTimeToLocal(serverDate, normalizedRow.reference_time);
+    start = localReference ? localDateTimeToDate(localReference.date, localReference.time) : null;
+    if (!start) return null;
+    end = new Date(start.getTime() + normalizedRow.duration_minutes * 60000);
+    cycles += 1;
+  }
   if (end <= now) return null;
-  return { date: localReference.date, time: localReference.time, serverDate: normalizedRow.reference_date, serverTime: normalizedRow.reference_time, start, end, duration: normalizedRow.duration_minutes };
+
+  return {
+    date: localReference.date,
+    time: localReference.time,
+    serverDate,
+    serverTime: normalizedRow.reference_time,
+    start,
+    end,
+    duration: normalizedRow.duration_minutes,
+  };
 }
 
 export function siegeStatus(occurrence, now = new Date()) {
