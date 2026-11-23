@@ -595,6 +595,13 @@
 
 /* Destination markers are aligned to the map image and can be enlarged in the lightbox. */
 .quest-map-link {
+  width: 100%;
+  box-sizing: border-box;
+  appearance: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  cursor: zoom-in;
   aspect-ratio: 1 / 1;
   min-height: 0;
   display: grid;
@@ -622,31 +629,18 @@
   z-index: 4;
   top: var(--pin-y, 50%);
   left: var(--pin-x, 50%);
-  display: grid;
-  width: clamp(19px, 2.5vw, 28px);
-  aspect-ratio: 1;
-  place-items: center;
-  transform: translate(-50%, -50%);
-  border: 2px solid #fff;
-  border-radius: 50%;
-  background: #e32932;
-  box-shadow: 0 0 0 3px rgba(196, 31, 39, .72), 0 0 18px rgba(243, 43, 49, .95);
-  color: #fff;
-  font: 800 9px/1 Inter, sans-serif;
+  display: block;
+  width: clamp(22px, 2.8vw, 31px);
+  height: clamp(31px, 3.9vw, 44px);
+  transform: translate(-50%, -100%);
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, .9)) drop-shadow(0 0 7px rgba(243, 43, 49, .9));
   pointer-events: none;
 }
-.quest-map-pin::before {
-  position: absolute;
-  inset: -7px;
-  border: 1px solid rgba(255, 83, 86, .82);
-  border-radius: 50%;
-  content: '';
-  animation: quest-map-pulse 1.8s ease-out infinite;
-}
-.quest-map-pin > span { position: relative; z-index: 1; }
-@keyframes quest-map-pulse {
-  0% { transform: scale(.65); opacity: .9; }
-  100% { transform: scale(1.35); opacity: 0; }
+.quest-map-pin svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
 }
 .quest-map-card figcaption {
   display: flex;
@@ -749,12 +743,11 @@
   border: 1px solid rgba(211, 174, 88, .22);
 }
 .quest-map-lightbox-image-wrap .quest-map-pin {
-  width: clamp(34px, 4vw, 56px);
-  border-width: 3px;
-  box-shadow: 0 0 0 5px rgba(196, 31, 39, .72), 0 0 28px rgba(243, 43, 49, .95);
-  font-size: clamp(11px, 1vw, 16px);
+  width: clamp(36px, 4.4vw, 58px);
+  height: auto;
+  aspect-ratio: 24 / 34;
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, .95)) drop-shadow(0 0 14px rgba(243, 43, 49, .95));
 }
-.quest-map-lightbox-image-wrap .quest-map-pin::before { inset: -11px; }
 .quest-map-lightbox-legend {
   display: flex;
   align-items: flex-start;
@@ -765,14 +758,15 @@
   font: 500 13px/1.5 Inter, sans-serif;
 }
 .quest-map-lightbox-legend-dot {
-  width: 12px;
-  height: 12px;
-  flex: 0 0 12px;
-  margin-top: 3px;
+  width: 13px;
+  height: 18px;
+  flex: 0 0 13px;
+  margin: 1px 1px 0;
   border: 2px solid #fff;
-  border-radius: 50%;
+  border-radius: 50% 50% 50% 0;
   background: #e32932;
   box-shadow: 0 0 0 2px rgba(196, 31, 39, .72);
+  transform: rotate(-45deg);
 }
 .quest-map-link:focus-visible {
   outline: 2px solid #f1d17e;
