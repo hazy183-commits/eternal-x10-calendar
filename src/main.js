@@ -2,6 +2,7 @@ import { confirmLocalized } from './i18nCore.js';
 import './i18n.js';
 import { createCalendarNavigation } from './calendarNavigation.js';
 import './persistentHeader.js';
+import './siteMotion.js';
 import { publishClanEventSources } from './clanEventFeed.js';
 import { SupabaseEventRepository } from './supabaseEvents.js';
 import { supabase } from './supabaseClient.js';
