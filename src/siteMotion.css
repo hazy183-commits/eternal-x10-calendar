@@ -1,0 +1,50 @@
+@media (prefers-reduced-motion: no-preference) {
+  .site-motion-reveal {
+    opacity: 0;
+    translate: 0 14px;
+    transition: opacity .48s ease, translate .48s cubic-bezier(.2,.7,.2,1);
+  }
+
+  .site-motion-reveal.site-motion-visible {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  @media (hover:hover) {
+    .next-event-card,
+    .calendar-section,
+    .pvp-hero-panel,
+    .boss-card,
+    .clan-hall-gallery-card,
+    .ob-gate-login-slot .member-auth-box,
+    .ob-recruit-hero,
+    .ob-gate-info > div,
+    .ob-gate-video,
+    .zone-card {
+      transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
+    }
+
+    .next-event-card:hover,
+    .calendar-section:hover,
+    .pvp-hero-panel:hover {
+      border-color:rgba(213,172,91,.72);
+      box-shadow:0 12px 34px rgba(0,0,0,.3),0 0 22px rgba(193,145,56,.08);
+    }
+
+    .boss-card:hover,
+    .clan-hall-gallery-card:hover,
+    .ob-gate-info > div:hover,
+    .ob-gate-video:hover {
+      transform:translateY(-3px);
+      border-color:rgba(219,177,91,.82);
+      box-shadow:0 12px 26px rgba(0,0,0,.34),0 0 18px rgba(193,145,56,.1);
+    }
+
+    .ob-gate-login-slot .member-auth-box:hover,
+    .ob-recruit-hero:hover,
+    .zone-card:hover {
+      border-color:rgba(219,177,91,.8);
+      box-shadow:0 16px 38px rgba(0,0,0,.32),0 0 22px rgba(193,145,56,.09);
+    }
+  }
+}
