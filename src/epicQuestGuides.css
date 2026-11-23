@@ -732,7 +732,7 @@
   min-height: 0;
   place-items: center;
   overflow: auto;
-  padding: 14px;
+  padding: 10px;
   background: radial-gradient(ellipse at 50% 44%, rgba(108, 87, 46, .18), transparent 70%), #050809;
 }
 .quest-map-lightbox-image-wrap {
@@ -749,7 +749,7 @@
   border: 1px solid rgba(211, 174, 88, .22);
 }
 .quest-map-lightbox-image-wrap .quest-map-pin {
-  width: clamp(28px, 3vw, 46px);
+  width: clamp(34px, 4vw, 56px);
   border-width: 3px;
   box-shadow: 0 0 0 5px rgba(196, 31, 39, .72), 0 0 28px rgba(243, 43, 49, .95);
   font-size: clamp(11px, 1vw, 16px);
