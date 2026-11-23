@@ -1,6 +1,7 @@
 import { TERRITORY_GROUPS, TerritoryOwnershipRepository, parseTerritoryOwners } from './territoryOwnership.js';
-import { parseSiegeScreenshotText } from './siegeScreenshotImport.js';
-import { SIEGE_CASTLES } from './siegeSchedules.js';
+import { parseSiegeScreenshotText, siegePolandTimeToServer, siegeServerTimeToPoland } from './siegeScreenshotImport.js';
+import { SIEGE_CASTLES, nextMonthlyOccurrence } from './siegeSchedules.js';
+import { SupabaseSiegeScheduleRepository } from './supabaseSiegeSchedules.js';
 
 const esc = (value = '') => String(value).replace(/[&<>"']/g, (char) => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
@@ -161,14 +162,17 @@ export function installTerritoryOwnershipScreenshotImport(supabase) {
   if (!supabase || typeof document === 'undefined' || window.__obTerritoryOwnershipImportInstalled) return;
   window.__obTerritoryOwnershipImportInstalled = true;
   const repository = new TerritoryOwnershipRepository(supabase);
+  const siegeRepository = new SupabaseSiegeScheduleRepository();
   let type = 'castle';
   let file = null;
   let currentRows = [];
+  let currentSiegeRows = [];
 
   const style = document.createElement('style');
   style.textContent = `
     .territory-ocr{margin:0 0 18px;padding:16px;border:1px solid #5b482b;background:linear-gradient(145deg,#121511,#090c0c)}.territory-ocr-head{display:flex;justify-content:space-between;gap:15px}.territory-ocr-head h3{margin:3px 0 4px;color:#e6c779;font-size:17px}.territory-ocr-head p{margin:0;color:#888176;font-size:11px}.territory-ocr-tabs{display:flex;gap:6px}.territory-ocr-tabs button,.territory-ocr-button{padding:9px 11px;border:1px solid #66502b;background:#11120f;color:#b99a59;font-size:10px;font-weight:900;cursor:pointer}.territory-ocr-tabs button.active,.territory-ocr-button.primary{border-color:#a77b34;background:#33230f;color:#efca76}.territory-ocr-drop{display:grid;grid-template-columns:150px 1fr;gap:13px;align-items:center;margin-top:13px;padding:11px;border:1px dashed #64502e}.territory-ocr-preview{display:grid;place-items:center;height:96px;overflow:hidden;border:1px solid #342d22;background:#060808;color:#655f54;font-size:10px}.territory-ocr-preview img{width:100%;height:100%;object-fit:cover}.territory-ocr-actions{display:flex;gap:7px;flex-wrap:wrap}.territory-ocr-file{position:absolute;width:1px;height:1px;opacity:0}.territory-ocr-status{min-height:16px;margin-top:9px;color:#948978;font-size:10px}.territory-ocr-status.success{color:#8fb86f}.territory-ocr-status.error{color:#d98275}.territory-ocr-progress{height:4px;background:#18150f}.territory-ocr-progress i{display:block;height:100%;width:0;background:#b98636;transition:width .2s}.territory-ocr-results{display:grid;gap:7px;margin-top:12px}.territory-ocr-row{display:grid;grid-template-columns:66px minmax(145px,1fr) minmax(120px,.9fr) 20px minmax(150px,1fr) 32px;gap:7px;align-items:center}.territory-ocr-row label{display:flex;gap:5px;color:#9f927c;font-size:9px;font-weight:900}.territory-ocr-row select,.territory-ocr-row input{box-sizing:border-box;width:100%;padding:9px;border:1px solid #413723;background:#080b0b;color:#ddd;font-size:10px}.territory-ocr-current{overflow:hidden;color:#918a7f;font-size:10px;text-overflow:ellipsis;white-space:nowrap}.territory-ocr-arrow{text-align:center;color:#a77b34}.territory-ocr-row [data-territory-remove]{width:32px;height:32px;border:1px solid #5b342d;background:#170e0d;color:#d47c6c;cursor:pointer}.territory-ocr-footer{display:flex;gap:8px;margin-top:10px}.territory-ocr-note{margin:9px 0 0;color:#756e62;font-size:9px}@media(max-width:800px){.territory-ocr-head{flex-direction:column}.territory-ocr-drop{grid-template-columns:1fr}.territory-ocr-preview{height:145px}.territory-ocr-row{grid-template-columns:62px 1fr 30px}.territory-ocr-current{grid-column:1/3}.territory-ocr-arrow{display:none}.territory-ocr-row [data-territory-owner]{grid-column:1/3}.territory-ocr-footer{flex-wrap:wrap}}
   `;
+  style.textContent += '.territory-ocr-siege{margin-top:14px;padding:12px;border:1px solid #4b3b22;background:#0a0d0d}.territory-ocr-siege-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}.territory-ocr-siege-head b{display:block;color:#e6c779;font-size:12px;letter-spacing:.08em}.territory-ocr-siege-head span[data-siege-status]{color:#928977;font-size:10px}.territory-ocr-siege-results{display:grid;gap:5px}.territory-ocr-siege-row{display:grid;grid-template-columns:minmax(100px,1fr) minmax(130px,.8fr) minmax(130px,.8fr);gap:8px;align-items:center;padding:5px 0;border-bottom:1px solid #211e17}.territory-ocr-siege-row b{color:#e3c16e;font-size:11px}.territory-ocr-siege-row label{display:grid;gap:3px;color:#938a79;font-size:9px}.territory-ocr-siege-row input{box-sizing:border-box;width:100%;padding:7px;border:1px solid #413723;background:#080b0b;color:#ddd;font-size:11px}.territory-ocr-siege-note{margin:8px 0 0;color:#8d8475;font-size:10px}@media(max-width:800px){.territory-ocr-siege-head{align-items:flex-start;flex-direction:column}.territory-ocr-siege-row{grid-template-columns:1fr 1fr}.territory-ocr-siege-row b{grid-column:1/-1}}';
   document.head.appendChild(style);
 
   function mount(manager) {
@@ -176,7 +180,7 @@ export function installTerritoryOwnershipScreenshotImport(supabase) {
     const section = document.createElement('section');
     section.className = 'territory-ocr';
     section.dataset.territoryOcr = '1';
-    section.innerHTML = `<div class="territory-ocr-head"><div><span class="eyebrow">Import właścicieli ze screena</span><h3>CASTLE / CLAN HALL OCR</h3><p>Jeden screen rozpoznaje właścicieli klanów oraz daty i godziny Siege. Sprawdź oba podglądy przed zapisem.</p></div><div class="territory-ocr-tabs"><button type="button" class="active" data-territory-type="castle">ZAMKI</button><button type="button" data-territory-type="clan_hall">CLAN HALLE</button></div></div><div class="territory-ocr-drop"><div class="territory-ocr-preview" data-territory-preview>Podgląd screena</div><div><div class="territory-ocr-actions"><label class="territory-ocr-button">WYBIERZ SCREEN<input class="territory-ocr-file" data-territory-file type="file" accept="image/png,image/jpeg,image/webp"></label><button class="territory-ocr-button primary" type="button" data-territory-run disabled>ROZPOZNAJ</button></div><div class="territory-ocr-status" data-territory-status>Wybierz screen listy zamków.</div><div class="territory-ocr-progress"><i data-territory-progress></i></div></div></div><div class="territory-ocr-results" data-territory-results></div><div class="territory-ocr-footer"><button class="territory-ocr-button" type="button" data-territory-add>+ DODAJ WIERSZ</button><button class="territory-ocr-button primary" type="button" data-territory-save disabled>ZAPISZ ZAZNACZONE</button></div><p class="territory-ocr-note">Przed zapisem zawsze sprawdź rozpoznane nazwy klanów. Puste pole oznacza brak właściciela.</p>`;
+    section.innerHTML = `<div class="territory-ocr-head"><div><span class="eyebrow">Import właścicieli ze screena</span><h3>CASTLE / CLAN HALL OCR</h3><p>Jeden screen rozpoznaje właścicieli klanów oraz daty i godziny Siege. Sprawdź oba podglądy przed zapisem.</p></div><div class="territory-ocr-tabs"><button type="button" class="active" data-territory-type="castle">ZAMKI</button><button type="button" data-territory-type="clan_hall">CLAN HALLE</button></div></div><div class="territory-ocr-drop"><div class="territory-ocr-preview" data-territory-preview>Podgląd screena</div><div><div class="territory-ocr-actions"><label class="territory-ocr-button">WYBIERZ SCREEN<input class="territory-ocr-file" data-territory-file type="file" accept="image/png,image/jpeg,image/webp"></label><button class="territory-ocr-button primary" type="button" data-territory-run disabled>ROZPOZNAJ</button></div><div class="territory-ocr-status" data-territory-status>Wybierz screen listy zamków.</div><div class="territory-ocr-progress"><i data-territory-progress></i></div></div></div><div class="territory-ocr-results" data-territory-results></div><div class="territory-ocr-siege" data-siege-preview hidden><div class="territory-ocr-siege-head"><div><span class="eyebrow">Daty z tego samego screena</span><b>TERMINY SIEGE</b></div><span data-siege-status></span></div><div class="territory-ocr-siege-results" data-siege-results></div><p class="territory-ocr-siege-note">Sprawdź daty i godziny. Przy zapisie zamków terminy Siege zapisują się razem z zaznaczonymi właścicielami.</p></div><div class="territory-ocr-footer"><button class="territory-ocr-button" type="button" data-territory-add>+ DODAJ WIERSZ</button><button class="territory-ocr-button primary" type="button" data-territory-save disabled>ZAPISZ ZAZNACZONE</button></div><p class="territory-ocr-note">Przed zapisem zawsze sprawdź rozpoznane nazwy klanów. Puste pole oznacza brak właściciela.</p>`;
     manager.insertBefore(section, manager.firstChild);
 
     const setStatus = (message, progress = 0, state = '') => {
@@ -186,9 +190,53 @@ export function installTerritoryOwnershipScreenshotImport(supabase) {
       section.querySelector('[data-territory-progress]').style.width = `${progress}%`;
     };
     const currentOwners = () => new Map(currentRows.filter((row) => row.territory_type === type).map((row) => [row.territory_name, row.owner_clan]));
+    const updateSaveState = () => {
+      const hasOwners = [...section.querySelectorAll('[data-territory-enabled]')].some((input) => input.checked);
+      const hasSiegeDates = type === 'castle' && currentSiegeRows.length === SIEGE_CASTLES.length;
+      section.querySelector('[data-territory-save]').disabled = !hasOwners && !hasSiegeDates;
+    };
     const render = (rows) => {
       section.querySelector('[data-territory-results]').innerHTML = rows.map((row) => resultRow(row, currentOwners())).join('');
-      section.querySelector('[data-territory-save]').disabled = !rows.length;
+      updateSaveState();
+    };
+    const setSiegeStatus = (message) => {
+      const status = section.querySelector('[data-siege-status]');
+      if (status) status.textContent = message;
+    };
+    const renderSiegeRows = (rows, visible = false) => {
+      currentSiegeRows = Array.isArray(rows) ? rows : [];
+      const panel = section.querySelector('[data-siege-preview]');
+      const results = section.querySelector('[data-siege-results]');
+      panel.hidden = type !== 'castle' || !visible;
+      results.innerHTML = currentSiegeRows.map((row) => '<div class="territory-ocr-siege-row" data-siege-row="' + esc(row.castle) + '"><b>' + esc(row.castle) + ' Castle Siege</b><label>DATA<input type="date" data-siege-date value="' + esc(row.reference_date) + '" required></label><label>GODZINA (POLSKA)<input type="time" data-siege-time value="' + esc(row.reference_time) + '" required></label></div>').join('');
+      updateSaveState();
+    };
+    const resolveSiegeRows = async (detectedRows) => {
+      const now = new Date();
+      const rowsByCastle = new Map();
+      const advancedCastles = [];
+      for (const row of detectedRows) {
+        const next = nextMonthlyOccurrence(row, now);
+        const normalized = next ? { ...row, reference_date: next.serverDate, reference_time: next.serverTime } : row;
+        if (next && (next.serverDate !== row.reference_date || next.serverTime !== row.reference_time)) advancedCastles.push(row.castle);
+        rowsByCastle.set(row.castle, normalized);
+      }
+      let savedRows = [];
+      try { savedRows = await siegeRepository.getAll(); } catch { savedRows = []; }
+      const inferredCastles = [];
+      for (const castle of SIEGE_CASTLES) {
+        if (rowsByCastle.has(castle)) continue;
+        const saved = savedRows.find((row) => row?.castle === castle);
+        const next = nextMonthlyOccurrence(saved, now);
+        if (!next) continue;
+        rowsByCastle.set(castle, { ...saved, castle, reference_date: next.serverDate, reference_time: next.serverTime });
+        inferredCastles.push(castle);
+      }
+      const rows = SIEGE_CASTLES.map((castle) => rowsByCastle.get(castle)).filter(Boolean).map((row) => {
+        const local = siegeServerTimeToPoland(row.reference_date, row.reference_time);
+        return local ? { ...row, reference_date: local.date, reference_time: local.time } : null;
+      }).filter(Boolean);
+      return { rows, inferredCastles, advancedCastles };
     };
 
     repository.getAll().then((rows) => { currentRows = rows; });
@@ -196,6 +244,8 @@ export function installTerritoryOwnershipScreenshotImport(supabase) {
       type = button.dataset.territoryType;
       section.querySelectorAll('[data-territory-type]').forEach((item) => item.classList.toggle('active', item === button));
       render([]);
+      renderSiegeRows([], false);
+      setSiegeStatus('');
       setStatus(type === 'castle' ? 'Wybierz screen listy zamków.' : 'Wybierz screen listy Clan Halli.');
     }));
     section.querySelector('[data-territory-file]').addEventListener('change', (event) => {
@@ -209,12 +259,18 @@ export function installTerritoryOwnershipScreenshotImport(supabase) {
         preview.appendChild(image);
       } else preview.textContent = 'Podgląd screena';
       section.querySelector('[data-territory-run]').disabled = !file;
+      render([]);
+      renderSiegeRows([], false);
+      setSiegeStatus('');
       setStatus(file ? `Wybrano: ${file.name}` : 'Wybierz screen.');
     });
     section.querySelector('[data-territory-run]').addEventListener('click', async () => {
       if (!file) return;
       const button = section.querySelector('[data-territory-run]');
       button.disabled = true;
+      render([]);
+      renderSiegeRows([], type === 'castle');
+      setSiegeStatus(type === 'castle' ? 'Odczytuję terminy…' : 'Daty Siege odczytuje się z widoku zamków.');
       setStatus('Przygotowuję obraz…', 3);
       try {
         const [Tesseract, image] = await Promise.all([loadTesseract(setStatus), loadImage(file)]);
@@ -226,11 +282,13 @@ export function installTerritoryOwnershipScreenshotImport(supabase) {
           { image: ownershipColumns, label: `Kolumny ${territoryLabel} + Klan`, psm: '6', owners: true },
           { image: contrastCanvas(ownershipColumns), label: `${territoryLabel} + Klan — kontrast`, psm: '6', owners: true },
           { image: contrastCanvas(ownershipColumns, true), label: `${territoryLabel} + Klan — czarno-białe`, psm: '11', owners: true },
-          { image: siegeColumns, label: 'Kolumna dat Siege', psm: '6' },
-          { image: contrastCanvas(siegeColumns), label: 'Kolumna dat Siege — kontrast', psm: '6' },
-          { image: contrastCanvas(siegeColumns, true), label: 'Kolumna dat Siege — czarno-białe', psm: '11' },
-          { image: contrastCanvas(siegeColumns, 'invert'), label: 'Kolumna dat Siege — odwrócony kontrast', psm: '6' },
-          { image: file, label: 'Pełny screen — kontrola dat', psm: '6', parser: 'rows' },
+          ...(type === 'castle' ? [
+            { image: siegeColumns, label: 'Kolumna dat Siege', psm: '6' },
+            { image: contrastCanvas(siegeColumns), label: 'Kolumna dat Siege — kontrast', psm: '6' },
+            { image: contrastCanvas(siegeColumns, true), label: 'Kolumna dat Siege — czarno-białe', psm: '11' },
+            { image: contrastCanvas(siegeColumns, 'invert'), label: 'Kolumna dat Siege — odwrócony kontrast', psm: '6' },
+            { image: file, label: 'Pełny screen — kontrola dat', psm: '6', parser: 'rows' },
+          ] : []),
           { image: file, label: 'Pełny screen — kontrola właścicieli', psm: '6', owners: true },
         ];
         const parsed = [];
@@ -250,11 +308,29 @@ export function installTerritoryOwnershipScreenshotImport(supabase) {
         }
         const rows = mergeResults(parsed);
         render(rows);
-        const siegeRows = mergeSiegeCandidates(siegeTexts.map(({ text, parser }) => parser === 'column' ? parseSiegeDateColumn(text) : parser === 'rows' ? parseSiegeScreenshotText(text) : []));
-        if (siegeRows.length) window.dispatchEvent(new CustomEvent('ob:siege-screenshot-dates-detected', { detail: { rows: siegeRows, sourceFile: file?.name || '' } }));
-        const message = rows.length ? `Rozpoznano ${rows.length} pozycji właścicieli oraz ${siegeRows.length}/9 terminów Siege. ${siegeRows.length === 9 ? 'Sprawdź daty w sekcji importu terminów Siege.' : 'Nie odczytano kompletu dat — upewnij się, że cały prawy słupek jest widoczny.'}` : 'Nie znaleziono nazw. Dodaj wiersze ręcznie lub użyj ciaśniejszego screena.';
-        setStatus(message, 88, rows.length ? 'success' : 'error');
+        let siegePreview = { rows: [], inferredCastles: [], advancedCastles: [] };
+        let siegeMessage = '';
+        if (type === 'castle') {
+          const detectedRows = mergeSiegeCandidates(siegeTexts.map(({ text, parser }) => parser === 'column' ? parseSiegeDateColumn(text) : parser === 'rows' ? parseSiegeScreenshotText(text) : []));
+          siegePreview = await resolveSiegeRows(detectedRows);
+          renderSiegeRows(siegePreview.rows, true);
+          const missing = SIEGE_CASTLES.filter((castle) => !siegePreview.rows.some((row) => row.castle === castle));
+          const notes = [];
+          if (siegePreview.inferredCastles.length) notes.push('Uzupełniono z poprzedniego cyklu: ' + siegePreview.inferredCastles.join(', ') + '.');
+          if (siegePreview.advancedCastles.length) notes.push('Przesunięto wygasłe terminy: ' + [...new Set(siegePreview.advancedCastles)].join(', ') + '.');
+          siegeMessage = 'Terminy Siege: odczytano ' + detectedRows.length + '/9, podgląd zawiera ' + siegePreview.rows.length + '/9.';
+          if (notes.length) siegeMessage += ' ' + notes.join(' ');
+          if (missing.length) siegeMessage += ' Brakuje: ' + missing.join(', ') + '.';
+          else siegeMessage += ' Daty możesz zapisać razem z właścicielami.';
+          setSiegeStatus(siegeMessage);
+        } else {
+          renderSiegeRows([], false);
+          setSiegeStatus('Daty Siege są odczytywane z widoku zamków.');
+        }
+        const ownerMessage = rows.length ? 'Rozpoznano ' + rows.length + ' pozycji właścicieli.' : 'Nie znaleziono nazw. Dodaj wiersze ręcznie lub użyj ciaśniejszego screena.';
+        setStatus(ownerMessage + (type === 'castle' ? ' ' + siegeMessage : ''), 88, rows.length || siegePreview.rows.length ? 'success' : 'error');
       } catch (error) {
+        setSiegeStatus(type === 'castle' ? 'Nie udało się rozpoznać terminów Siege.' : '');
         setStatus(error?.message || 'Nie udało się odczytać screena.', 0, 'error');
       } finally {
         button.disabled = false;
@@ -270,7 +346,10 @@ export function installTerritoryOwnershipScreenshotImport(supabase) {
       const remove = event.target.closest('[data-territory-remove]');
       if (!remove) return;
       remove.closest('[data-territory-row]').remove();
-      section.querySelector('[data-territory-save]').disabled = !section.querySelector('[data-territory-row]');
+      updateSaveState();
+    });
+    section.addEventListener('change', (event) => {
+      if (event.target.matches('[data-territory-enabled]')) updateSaveState();
     });
     section.querySelector('[data-territory-save]').addEventListener('click', async () => {
       const rows = [...section.querySelectorAll('[data-territory-row]')].filter((row) => row.querySelector('[data-territory-enabled]').checked).map((row) => ({
@@ -278,13 +357,30 @@ export function installTerritoryOwnershipScreenshotImport(supabase) {
         territory_name: row.querySelector('[data-territory-name]').value,
         owner_clan: row.querySelector('[data-territory-owner]').value.trim(),
       }));
-      if (!rows.length) return setStatus('Zaznacz przynajmniej jeden wiersz.', 0, 'error');
+      const siegeValues = type === 'castle' && currentSiegeRows.length === SIEGE_CASTLES.length
+        ? [...section.querySelectorAll('[data-siege-row]')].map((element) => ({
+          castle: element.dataset.siegeRow,
+          date: element.querySelector('[data-siege-date]').value,
+          time: element.querySelector('[data-siege-time]').value,
+        }))
+        : [];
+      if (!rows.length && !siegeValues.length) return setStatus('Zaznacz przynajmniej jeden wiersz albo odczytaj komplet terminów Siege.', 0, 'error');
       const duplicate = rows.find((row, index) => rows.findIndex((other) => other.territory_name === row.territory_name) !== index);
       if (duplicate) return setStatus(`${duplicate.territory_name} występuje więcej niż raz.`, 0, 'error');
+      if (siegeValues.some((row) => !row.date || !row.time || !SIEGE_CASTLES.includes(row.castle)) || new Set(siegeValues.map((row) => row.castle)).size !== siegeValues.length) {
+        return setSiegeStatus('Sprawdź daty i godziny wszystkich 9 zamków.');
+      }
       try {
-        setStatus('Zapisuję wyłącznie właścicieli…', 92);
-        await repository.save(rows);
-        setStatus(`Zapisano ${rows.length} pozycji. Terminy pozostały bez zmian.`, 100, 'success');
+        setStatus('Zapisuję właścicieli i zatwierdzone terminy Siege…', 92);
+        if (rows.length) await repository.save(rows);
+        for (const row of siegeValues) {
+          const server = siegePolandTimeToServer(row.date, row.time);
+          if (!server) throw new Error('Nie można przeliczyć daty i godziny dla zamku ' + row.castle + '.');
+          await siegeRepository.saveReference(row.castle, server.date, server.time);
+        }
+        const savedOwners = rows.length ? 'Zapisano ' + rows.length + ' pozycji właścicieli' : '';
+        const savedSieges = siegeValues.length ? 'zapisano terminy Siege dla ' + siegeValues.length + ' zamków' : '';
+        setStatus([savedOwners, savedSieges].filter(Boolean).join(' oraz ') + '.', 100, 'success');
         setTimeout(() => window.location.reload(), 900);
       } catch (error) {
         setStatus(error.message, 0, 'error');

@@ -14,7 +14,6 @@ import { BOSS_RESPAWN_BOSSES, TIME_ZONE, formatLocalDateTime, localInputValues, 
 import { SupabaseBossRespawnRepository } from './supabaseBossRespawns.js';
 import { SIEGE_CASTLES, castleFromEvent, publicSiegeEvents, siegeCardData, siegePublicKey } from './siegeSchedules.js';
 import { SupabaseSiegeScheduleRepository } from './supabaseSiegeSchedules.js';
-import { installSiegeScreenshotImport } from './siegeScreenshotImport.js';
 import { TerritoryOwnershipRepository, applyTerritoryOwners, ownerFor } from './territoryOwnership.js';
 import { withOlympiadEvents, olympiadStatus, olympiadCountdownTarget, olympiadLocalDate, formatOlympiadDate } from './olympiadSchedule.js';
 import { renderOlympiadPanel } from './olympiadPanel.js';
@@ -881,7 +880,6 @@ async function initializeApp() {
     });
     await initializeAuth();
     await load();
-    installSiegeScreenshotImport(siegeScheduleRepository, load);
     updateClock();
     updateCountdown();
     const tick = () => { updateClock(); refreshDynamicEvents(); refreshCalendarClock(); renderNext(); updateCountdown(); updateBossRespawnClock(); updateSiegeClock(); renderOlympiadPanel($('#olympiadSchedule')); renderPvpEventPanel($('#pvpEventCards')); renderPvpSidebar($('#pvpSidebarEvents')); updatePvpRowCountdowns($('#dailyEvents')); };
