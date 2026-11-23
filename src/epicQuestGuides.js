@@ -186,7 +186,7 @@ function ensureQuestMapModal() {
   modal.id = 'questMapLightbox';
   modal.className = 'quest-map-lightbox';
   modal.setAttribute('aria-hidden', 'true');
-  modal.innerHTML = `<div class="quest-map-lightbox-backdrop" data-quest-map-close></div><section class="quest-map-lightbox-dialog" role="dialog" aria-modal="true" aria-labelledby="questMapLightboxTitle" tabindex="-1"><header class="quest-map-lightbox-header"><div><span class="quest-map-lightbox-kicker">CEL NA MAPIE</span><h3 class="quest-map-lightbox-title" id="questMapLightboxTitle"></h3></div><button class="quest-map-lightbox-close" type="button" data-quest-map-close aria-label="Zamknij mapę">×</button></header><div class="quest-map-lightbox-stage"><div class="quest-map-lightbox-image-wrap"></div></div><div class="quest-map-lightbox-legend"><span class="quest-map-lightbox-legend-dot" aria-hidden="true"></span><span class="quest-map-lightbox-legend-text"></span></div></section>`;
+  modal.innerHTML = `<div class="quest-map-lightbox-backdrop" data-quest-map-close></div><section class="quest-map-lightbox-dialog" role="dialog" aria-modal="true" aria-labelledby="questMapLightboxTitle" tabindex="-1"><header class="quest-map-lightbox-header"><div><span class="quest-map-lightbox-kicker">POWIĘKSZONA MAPA</span><h3 class="quest-map-lightbox-title" id="questMapLightboxTitle"></h3></div><button class="quest-map-lightbox-close" type="button" data-quest-map-close aria-label="Zamknij mapę">×</button></header><div class="quest-map-lightbox-stage"><div class="quest-map-lightbox-image-wrap"></div></div><div class="quest-map-lightbox-legend"><span class="quest-map-lightbox-legend-dot" aria-hidden="true"></span><span class="quest-map-lightbox-legend-text"></span></div></section>`;
   document.body.appendChild(modal);
   const close = () => {
     if (!modal.classList.contains('open')) return;
@@ -223,8 +223,8 @@ function openQuestMap(link) {
   image.referrerPolicy = 'no-referrer';
   const setImageSize = () => {
     const ratio = image.naturalWidth / image.naturalHeight || Number(link.dataset.mapRatio) || 1;
-    const maxWidth = Math.min(window.innerWidth * .88, 960);
-    const maxHeight = Math.min(window.innerHeight * .76, 820);
+    const maxWidth = Math.min(window.innerWidth * .94, 1280);
+    const maxHeight = Math.min(window.innerHeight * .84, 1000);
     const scale = Math.min(maxWidth / image.naturalWidth, maxHeight / image.naturalHeight);
     wrap.style.width = `${Math.max(1, image.naturalWidth * scale)}px`;
     wrap.style.height = `${Math.max(1, image.naturalHeight * scale)}px`;
@@ -245,7 +245,8 @@ function openQuestMap(link) {
   });
   modal.querySelector('.quest-map-lightbox-title').textContent = label;
   const legend = points.map((point, index) => `${index + 1}. ${point.label || label}`).join('   ·   ');
-  modal.querySelector('.quest-map-lightbox-legend-text').textContent = `Czerwone kółko wskazuje: ${legend}`;
+  const markerVerb = points.length === 1 ? 'Czerwona kropka wskazuje' : 'Czerwone kropki wskazują';
+  modal.querySelector('.quest-map-lightbox-legend-text').textContent = `${markerVerb}: ${legend}`;
   modal._previousOverflow = document.body.style.overflow;
   modal._returnFocus = link;
   modal.classList.add('open');
