@@ -310,3 +310,23 @@
   .unified-calendar .event-row[data-calendar-state="upcoming"] .row-status>span:before,
   .unified-calendar .event-row[data-calendar-state="active"] .row-status>span:before { padding-right:5px; font-size:7px; }
 }
+
+/* Give secondary event details a consistent, readable level of contrast. */
+.unified-calendar .event-table-head { color:#c0b8a8; letter-spacing:.095em; }
+.unified-calendar .selected-date { color:#d7c7a4; font-size:12px; }
+.unified-calendar .event-info .territory-owner-label,
+.unified-calendar .event-info .olympiad-window,
+.unified-calendar .event-info .pvp-calendar-times {
+  display:block;
+  margin-top:4px;
+  color:#c2bbad;
+  font:500 12px/1.45 Inter,Arial,sans-serif;
+}
+.unified-calendar .event-location { color:#c6c0b5; font-size:13px; line-height:1.4; }
+@media(max-width:900px) {
+  .unified-calendar .calendar-day span { color:#c2b9a8; font-size:9px; }
+  .unified-calendar .calendar-day small { color:#b8af9f; font-size:9px; }
+  .unified-calendar .event-info .territory-owner-label,
+  .unified-calendar .event-info .olympiad-window,
+  .unified-calendar .event-info .pvp-calendar-times { font-size:11px; }
+}
