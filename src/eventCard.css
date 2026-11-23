@@ -64,3 +64,63 @@
 #top #nextEventCard .event-fact-icon {position:absolute;left:0;top:50%;transform:translateY(-50%);width:28px;height:32px;fill:none;stroke:#d9ac56;stroke-width:1.4;}
 #top #nextEventCard #nextStartTime .event-fact-icon {left:16px;}
 @media(max-width:600px){#top #nextEventCard .event-fact-icon{display:none;}#top #nextEventCard .featured-event-location{padding-left:0;}#top #nextEventCard #nextStartTime{padding-left:9px;}}
+
+/* On narrow phones, give the event artwork and its details separate rows. */
+@media(max-width:600px){
+  #top #nextEventCard{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    grid-template-rows:auto auto auto auto!important;
+    min-height:0!important;
+  }
+  #top #nextEventCard .event-art-large{
+    position:relative!important;
+    inset:auto!important;
+    grid-column:1!important;
+    grid-row:1!important;
+    width:100%!important;
+    height:clamp(180px,52vw,230px)!important;
+    min-height:clamp(180px,52vw,230px)!important;
+    background-size:cover!important;
+    background-position:center 30%!important;
+  }
+  #top #nextEventCard .event-art-large:after{
+    inset:0!important;
+    background:linear-gradient(180deg,transparent 52%,rgba(7,11,12,.16) 72%,#070d0d 100%)!important;
+  }
+  #top #nextEventCard .next-event-content{
+    grid-column:1!important;
+    grid-row:2!important;
+    padding:15px 14px 8px!important;
+    text-align:left!important;
+  }
+  #top #nextEventCard #nextName{
+    margin:8px 0 5px!important;
+    font-size:clamp(26px,8vw,36px)!important;
+    line-height:1.1!important;
+  }
+  #top #nextEventCard #nextMeta,
+  #top #nextEventCard #nextDescription{font-size:12px!important;line-height:1.45!important}
+  #top #nextEventCard .event-facts{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:12px!important}
+  #top #nextEventCard .event-facts span{font-size:9px!important;letter-spacing:.08em!important}
+  #top #nextEventCard .featured-event-location b{font-size:15px!important;line-height:1.35!important}
+  #top #nextEventCard #nextStartTime{padding-left:12px!important}
+  #top #nextEventCard #nextStartTime b{font-size:23px!important}
+  #top #nextEventCard .countdown-block{
+    grid-column:1!important;
+    grid-row:3!important;
+    padding:12px 14px 58px!important;
+    gap:9px!important;
+  }
+  #top #nextEventCard #countdownLabel{padding-top:10px;font-size:9px!important}
+  #top #nextEventCard #countdown{gap:6px!important;font-size:clamp(22px,7.2vw,32px)!important}
+  #top #nextEventCard #countdown b{padding:12px 1px 29px!important}
+  #top #nextEventCard .countdown-block small{gap:6px!important;font-size:8px!important;margin-bottom:10px!important}
+  #top #nextEventCard .event-card-footer{
+    grid-column:1!important;
+    grid-row:4!important;
+    padding:9px 12px!important;
+    flex-wrap:wrap;
+  }
+  #top #nextEventCarouselControls .next-event-arrow{width:38px!important;height:38px!important}
+}
