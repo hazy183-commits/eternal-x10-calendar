@@ -116,7 +116,7 @@ function escapeHtml(value = '') {
 }
 
 function pinMarkup(point, index) {
-  return `<span class="quest-map-pin" style="--pin-x:${point.x}%;--pin-y:${point.y}%" aria-hidden="true"><span>${index + 1}</span></span>`;
+  return `<span class="quest-map-pin" style="--pin-x:${point.x}%;--pin-y:${point.y}%" aria-hidden="true"><svg viewBox="0 0 24 34" focusable="false"><path d="M12 33S2 20.6 2 11a10 10 0 1 1 20 0c0 9.6-10 22-10 22Z" fill="#e32932" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="11" r="5" fill="#fff"/><text x="12" y="14" text-anchor="middle" fill="#b51c26" font-size="8" font-weight="800" font-family="Arial, sans-serif">${index + 1}</text></svg></span>`;
 }
 
 function mapMarkup(map) {
