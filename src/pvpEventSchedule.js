@@ -1,15 +1,18 @@
-// Official UTC hours start registration; the event starts 5 minutes later.
 export const PVP_TIME_ZONE = 'Europe/Warsaw';
+export const PVP_SERVER_TIME_ZONE = 'UTC';
+export const PVP_INTERVAL_HOURS = 2;
 export const PVP_REWARD = '5 Medal (Event)';
-export const PVP_REGISTRATION_MINUTES = 5;
-export const PVP_EVENT_MINUTES = 10;
 export const PVP_EVENTS = [
-  { id: 'multi-team-battle', name: 'Multi Team Battle', utcHours: [2, 10, 18], command: '.mtreg' },
-  { id: 'capture-the-base', name: 'Capture The Base', utcHours: [4, 12, 20], command: '.ctbreg' },
-  { id: 'epic-boss-challenge', name: 'Epic Boss Challenge', utcHours: [0, 8, 16], command: '.bossreg' },
-  { id: 'death-match', name: 'Death Match', utcHours: [6, 14, 22], command: '.dmreg' },
+  { id: 'multi-team-battle', name: 'Multi Team Battle', command: '.mtreg' },
+  { id: 'capture-the-base', name: 'Capture The Base', command: '.ctbreg' },
+  { id: 'epic-boss-challenge', name: 'Epic Boss Challenge', command: '.bossreg' },
+  { id: 'korean-tvt', name: 'Korean TvT', command: '.kreg' },
+  { id: 'death-match', name: 'Death Match', command: '.dmreg' },
+  { id: 'capture-the-flag', name: 'Capture the Flag', command: '.ctfreg' },
 ];
+
 const pad = (value) => String(value).padStart(2, '0');
+const utcHours = Array.from({ length: 24 / PVP_INTERVAL_HOURS }, (_, index) => index * PVP_INTERVAL_HOURS);
 const partsFormatter = new Intl.DateTimeFormat('en-CA', {
   timeZone: PVP_TIME_ZONE, year: 'numeric', month: '2-digit', day: '2-digit',
   hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
@@ -36,25 +39,26 @@ function shiftDate(date, offset = 0) {
   return day.toISOString().slice(0, 10);
 }
 
-// startAt remains the base calendar time (registration), preserving identities
-// and deduplication with manual records at the official hour.
+function localTime(instant) {
+  const { hour, minute } = localParts(instant);
+  return `${hour}:${minute}`;
+}
+
+function utcTime(instant) {
+  return `${pad(instant.getUTCHours())}:${pad(instant.getUTCMinutes())}`;
+}
+
 export function pvpTiming(event) {
-  const registrationStart = new Date(event.startAt);
-  const eventStart = new Date(registrationStart.getTime() + PVP_REGISTRATION_MINUTES * 60000);
-  const end = new Date(eventStart.getTime() + PVP_EVENT_MINUTES * 60000);
-  return { registrationStart, eventStart, end };
+  const slotStart = new Date(event.startAt);
+  return { slotStart, registrationStart: slotStart, eventStart: slotStart, end: slotStart };
 }
 
 export function isPvpUpcoming(event, now = new Date()) {
-  return now < pvpTiming(event).end;
+  return pvpTiming(event).slotStart > now;
 }
 
 export function pvpEventStatus(event, now = new Date()) {
-  const { registrationStart, eventStart, end } = pvpTiming(event);
-  if (now < registrationStart) return 'NADCHODZI';
-  if (now < eventStart) return 'REJESTRACJA OTWARTA';
-  if (now < end) return 'EVENT ACTIVE';
-  return 'ZAKOŃCZONE';
+  return isPvpUpcoming(event, now) ? 'NADCHODZI' : 'SLOT MINĄŁ';
 }
 
 export function formatPvpDate(event) {
@@ -62,72 +66,86 @@ export function formatPvpDate(event) {
 }
 
 export function pvpCountdownText(event, now = new Date()) {
-  const status = pvpEventStatus(event, now);
-  if (status === 'ZAKOŃCZONE') return 'Zakończone';
-  const { registrationStart, eventStart, end } = pvpTiming(event);
-  const target = status === 'NADCHODZI' ? registrationStart : status === 'REJESTRACJA OTWARTA' ? eventStart : end;
-  const seconds = Math.max(0, Math.ceil((target - now) / 1000));
-  const minutesSeconds = `${pad(Math.floor(seconds % 3600 / 60))}:${pad(seconds % 60)}`;
-  if (status === 'REJESTRACJA OTWARTA') return `Start eventu za ${minutesSeconds}`;
-  if (status === 'EVENT ACTIVE') return `Koniec za ${minutesSeconds}`;
-  return `Rejestracja za ${pad(Math.floor(seconds / 3600))}:${minutesSeconds}`;
+  const seconds = Math.max(0, Math.ceil((pvpTiming(event).slotStart - now) / 1000));
+  if (!seconds) return 'Startuje teraz';
+  return `${pad(Math.floor(seconds / 3600))}:${pad(Math.floor(seconds % 3600 / 60))}:${pad(seconds % 60)}`;
 }
 
-function localTime(instant) {
-  const { hour, minute } = localParts(instant);
-  return `${hour}:${minute}`;
+function slotForUtcHour(date, hour, now) {
+  const time = `${pad(hour)}:00`;
+  const start = new Date(`${date}T${time}:00Z`);
+  return {
+    id: `pvp-random-${date}-${pad(hour)}`,
+    pvpId: 'random-pvp-event',
+    name: 'Auto PvP · losowany tryb',
+    type: 'Event',
+    boss: '',
+    location: '',
+    date: pvpLocalDate(start),
+    time: localTime(start),
+    startAt: start.toISOString(),
+    utcTime: time,
+    utcDate: date,
+    eventStartAt: start.toISOString(),
+    endAt: start.toISOString(),
+    registrationTimeRange: `${localTime(start)} · losowanie serwera`,
+    eventTimeRange: 'Rodzaj wybierany losowo',
+    duration: 0,
+    command: '',
+    reward: PVP_REWARD,
+    description: 'Co 2 godziny rozpoczyna się slot Auto PvP. Serwer losuje tryb z dostępnej puli.',
+    isPvpSchedule: true,
+    pvpStatus: pvpEventStatus({ startAt: start.toISOString() }, now),
+  };
 }
 
 export function pvpEventsForUtcDate(date, now = new Date()) {
   if (!shiftDate(date)) return [];
-  return PVP_EVENTS.flatMap((definition) => definition.utcHours.map((hour) => {
-    const utcTime = `${pad(hour)}:00`;
-    const start = new Date(`${date}T${utcTime}:00Z`);
-    const { eventStart, end } = pvpTiming({ startAt: start });
-    const event = {
-      id: `pvp-${definition.id}-${date}-${pad(hour)}`,
-      pvpId: definition.id, name: definition.name, type: 'Event', boss: '', location: '',
-      date: pvpLocalDate(start), time: localTime(start),
-      startAt: start.toISOString(), utcTime, utcDate: date,
-      eventStartAt: eventStart.toISOString(), endAt: end.toISOString(),
-      registrationTimeRange: `${localTime(start)}–${localTime(eventStart)}`,
-      eventTimeRange: `${localTime(eventStart)}–${localTime(end)}`,
-      duration: PVP_EVENT_MINUTES,
-      command: definition.command, reward: PVP_REWARD,
-      description: `Rejestracja: ${definition.command} · Nagroda: ${PVP_REWARD}. Zapisy od ${utcTime} UTC przez ${PVP_REGISTRATION_MINUTES} min, następnie ${PVP_EVENT_MINUTES} min wydarzenia.`,
-      isPvpSchedule: true,
-    };
-    return { ...event, pvpStatus: pvpEventStatus(event, now) };
-  })).sort((a, b) => new Date(a.startAt) - new Date(b.startAt));
+  return utcHours.map((hour) => slotForUtcHour(date, hour, now));
 }
 
 export function pvpEventsForLocalDate(date, now = new Date()) {
   if (!shiftDate(date)) return [];
-  // Warsaw is ahead of UTC: the local day also includes the preceding UTC day.
+  // Warsaw's local day also includes UTC slots from the preceding date.
   return [shiftDate(date, -1), date].flatMap((utcDate) => pvpEventsForUtcDate(utcDate, now))
-    .filter((event) => event.date === date);
+    .filter((event) => event.date === date)
+    .sort((a, b) => new Date(a.startAt) - new Date(b.startAt));
 }
 
-export function nextPvpEvent(id, now = new Date()) {
-  const date = now.toISOString().slice(0, 10);
-  return [date, shiftDate(date, 1)].flatMap((day) => pvpEventsForUtcDate(day, now))
-    .find((event) => event.pvpId === id && isPvpUpcoming(event, now)) ?? null;
+export function nextPvpEvent(_id = null, now = new Date()) {
+  return nextPvpEvents(1, now)[0] ?? null;
+}
+
+export function nextPvpEvents(limit = 3, now = new Date()) {
+  const today = pvpLocalDate(now);
+  const days = [today, shiftDate(today, 1), shiftDate(today, 2)].filter(Boolean);
+  return days.flatMap((date) => pvpEventsForLocalDate(date, now))
+    .filter((event) => isPvpUpcoming(event, now))
+    .sort((a, b) => new Date(a.startAt) - new Date(b.startAt))
+    .slice(0, Math.max(0, Number(limit) || 0));
+}
+
+function normalizedName(value) {
+  return String(value ?? '').trim().replace(/\s+/g, ' ').toLowerCase();
 }
 
 function identity(event) {
-  const name = String(event.name ?? '').trim().replace(/\s+/g, ' ').toLowerCase();
-  return `${name}\u0000${event.date}\u0000${String(event.time ?? '').slice(0, 5)}`;
+  return `${normalizedName(event.name)}\u0000${event.date}\u0000${String(event.time ?? '').slice(0, 5)}`;
 }
 
 // Generate only today, tomorrow and the requested calendar day, in memory.
-// Manual duplicates are hidden in the public view; stored records stay intact.
+// Automatic events stay out of ordinary calendar rows; only their time slots are generated.
 export function withPvpEvents(events, now = new Date(), calendarDate = null) {
   const today = pvpLocalDate(now);
   const dates = new Set([today, shiftDate(today, 1), calendarDate].filter(Boolean));
-  const schedule = new Map([...dates].flatMap((date) => pvpEventsForLocalDate(date, now))
-    .map((event) => [identity(event), event]));
+  const schedule = [...dates].flatMap((date) => pvpEventsForLocalDate(date, now));
+  const scheduleIdentities = new Set(schedule.map(identity));
+  const scheduleSlots = new Set(schedule.map((event) => `${event.date}\u0000${event.time}`));
+  const pvpNames = new Set(PVP_EVENTS.map((event) => normalizedName(event.name)));
   return [
-    ...events.filter((event) => !event.isPvpSchedule && !schedule.has(identity(event))),
-    ...schedule.values(),
+    ...events.filter((event) => !event.isPvpSchedule
+      && !scheduleIdentities.has(identity(event))
+      && !(pvpNames.has(normalizedName(event.name)) && scheduleSlots.has(`${event.date}\u0000${String(event.time ?? '').slice(0, 5)}`))),
+    ...schedule,
   ];
 }
