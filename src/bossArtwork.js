@@ -82,6 +82,13 @@ function paintArtwork(element, url) {
   // Ignore a previous request if this card now represents another event.
   if (assigned.get(element) !== url) return;
   element.style.setProperty('--boss-art', `url(${JSON.stringify(url)})`);
+  // Keep artwork visible even if production CSS drops its helper selector.
+  element.style.backgroundImage = `url(${JSON.stringify(url)})`;
+  element.style.backgroundPosition = 'center';
+  element.style.backgroundSize = 'cover';
+  element.style.backgroundRepeat = 'no-repeat';
+  const placeholder = element.querySelector(':scope > span');
+  if (placeholder) placeholder.style.visibility = 'hidden';
   element.classList.add('has-boss-art');
 }
 
@@ -105,6 +112,12 @@ export function applyBossArtwork(element, name = '') {
   assigned.set(element, url);
   element.classList.remove('has-boss-art');
   element.style.removeProperty('--boss-art');
+  element.style.removeProperty('background-image');
+  element.style.removeProperty('background-position');
+  element.style.removeProperty('background-size');
+  element.style.removeProperty('background-repeat');
+  const placeholder = element.querySelector(':scope > span');
+  if (placeholder) placeholder.style.removeProperty('visibility');
   artworkObserver?.unobserve(element);
   if (!url) return;
   pending.set(element, url);
