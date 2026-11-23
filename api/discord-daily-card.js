@@ -2,7 +2,30 @@ import sharp from 'sharp';
 import { Resvg } from '@resvg/resvg-js';
 
 const BG = '/images/discord/daily-plan-background.webp';
+const BACKGROUNDS = [
+  BG,
+  '/images/discord/daily-plan-background-02.webp',
+  '/images/discord/daily-plan-background-03.webp',
+  '/images/discord/daily-plan-background-04.webp',
+  '/images/discord/daily-plan-background-05.webp',
+];
 const FALLBACK_BG = '/images/eternal-hero-approved.webp';
+
+function artworkForDate(dateText = '') {
+  const match = String(dateText).match(/^\s*(\d{1,2})\.(\d{1,2})\.(\d{4})/);
+  if (!match) return BG;
+  const day = Number(match[1]);
+  const month = Number(match[2]);
+  const year = Number(match[3]);
+  const timestamp = Date.UTC(year, month - 1, day);
+  const parsed = new Date(timestamp);
+  if (parsed.getUTCFullYear() !== year || parsed.getUTCMonth() !== month - 1 || parsed.getUTCDate() !== day) return BG;
+
+  const firstRotationDay = Date.UTC(2026, 10, 23);
+  const offset = Math.floor((timestamp - firstRotationDay) / 86400000);
+  const index = ((offset % BACKGROUNDS.length) + BACKGROUNDS.length) % BACKGROUNDS.length;
+  return BACKGROUNDS[index];
+}
 
 function decode(value = '') {
   try {
@@ -32,7 +55,7 @@ export default async function handler(req, res) {
     const height = Math.max(590, top + Math.max(events.length, 1) * rowHeight + 112);
 
     const imageHost = 'https://orzelbialy.eu';
-    const artworkPath = BG;
+    const artworkPath = artworkForDate(date);
     let backgroundResponse;
     try {
       backgroundResponse = await fetch(imageHost + artworkPath, { signal: AbortSignal.timeout(7000) });
@@ -96,7 +119,7 @@ export default async function handler(req, res) {
     res.setHeader('Content-Type', 'image/png');
     res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=300');
     res.setHeader('X-Daily-Plan-Events', String(events.length));
-    res.setHeader('X-Daily-Plan-Style', 'fixed-clan-art-centered-v1');
+    res.setHeader('X-Daily-Plan-Style', 'fixed-clan-art-daily-rotation-v2');
     res.setHeader('X-Daily-Plan-Artwork', artworkPath);
     res.setHeader('X-Daily-Plan-Size', String(png.length));
     res.setHeader('X-Daily-Plan-Text-Verified', verified ? 'true' : 'false');
