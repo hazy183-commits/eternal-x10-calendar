@@ -785,3 +785,55 @@
   .quest-map-card figcaption { align-items: flex-start; font-size: 9px; }
   .quest-map-mark-count { font-size: 7px; }
 }
+
+/* Full world map lightbox controls and scrollable zoom */
+.quest-map-lightbox-header { flex-wrap: wrap; }
+.quest-map-lightbox-header > div:first-child { min-width: 0; flex: 1 1 auto; }
+.quest-map-lightbox-actions,
+.quest-map-lightbox-tools { display: flex; align-items: center; gap: 7px; }
+.quest-map-lightbox-actions { flex: 0 0 auto; }
+.quest-map-lightbox-tool {
+  display: grid;
+  min-width: 40px;
+  height: 40px;
+  padding: 0 8px;
+  place-items: center;
+  border: 1px solid rgba(218, 177, 86, .58);
+  background: rgba(34, 27, 15, .72);
+  color: #f1d17e;
+  cursor: pointer;
+  font: 700 20px/1 Inter, sans-serif;
+}
+.quest-map-lightbox-zoom-reset { min-width: 58px; font-size: 11px; }
+.quest-map-lightbox-tool:hover,
+.quest-map-lightbox-tool:focus-visible {
+  outline: none;
+  border-color: #f1d17e;
+  background: rgba(61, 46, 20, .92);
+}
+.quest-map-lightbox-stage {
+  display: block;
+  overflow: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-x pan-y;
+}
+.quest-map-lightbox-image-wrap {
+  max-width: none;
+  max-height: none;
+  margin: 0 auto;
+}
+.quest-map-lightbox-image-wrap .quest-map-pin {
+  width: clamp(32px, 6%, 64px);
+}
+@media (max-width: 760px) {
+  .quest-map-lightbox-actions,
+  .quest-map-lightbox-tools { gap: 4px; }
+  .quest-map-lightbox-tool { min-width: 34px; height: 34px; padding: 0 6px; }
+  .quest-map-lightbox-zoom-reset { min-width: 48px; font-size: 10px; }
+}
+@media (max-width: 430px) {
+  .quest-map-lightbox-header { gap: 8px; }
+  .quest-map-lightbox-actions { gap: 3px; }
+  .quest-map-lightbox-tool { min-width: 30px; height: 32px; }
+  .quest-map-lightbox-zoom-reset { min-width: 42px; font-size: 9px; }
+}
