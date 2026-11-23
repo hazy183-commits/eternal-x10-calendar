@@ -274,3 +274,39 @@
   .unified-calendar .calendar-week { min-height:78px; }
   .unified-calendar .selected-date { min-width:0; flex:1; }
 }
+
+/* Keep the state badge prominent while joining its label and timer on one line. */
+.unified-calendar .event-row>.row-status {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  min-width:0;
+  text-align:center;
+}
+.unified-calendar .event-row .row-status .status-dot { align-self:center; justify-self:auto; margin:0; }
+.unified-calendar .event-row .row-status>span {
+  display:flex;
+  align-items:baseline;
+  justify-content:center;
+  gap:7px;
+  white-space:nowrap;
+  line-height:1.2;
+}
+.unified-calendar .event-row[data-calendar-state="upcoming"] .row-status>span:before,
+.unified-calendar .event-row[data-calendar-state="active"] .row-status>span:before {
+  display:inline-block;
+  margin:0;
+  padding-right:7px;
+  border-right:1px solid #75623b88;
+  font-size:8px;
+  line-height:1;
+  letter-spacing:.08em;
+}
+@media(max-width:900px) {
+  .unified-calendar .event-row .row-status .status-dot { align-self:center; }
+  .unified-calendar .event-row .row-status>span { gap:5px; font-size:12px; }
+  .unified-calendar .event-row[data-calendar-state="upcoming"] .row-status>span:before,
+  .unified-calendar .event-row[data-calendar-state="active"] .row-status>span:before { padding-right:5px; font-size:7px; }
+}
