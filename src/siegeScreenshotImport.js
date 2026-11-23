@@ -1,4 +1,4 @@
-import { SIEGE_CASTLES } from './siegeSchedules.js';
+import { SIEGE_CASTLES, nextMonthlyOccurrence } from './siegeSchedules.js';
 
 const normalize = (value) => String(value ?? '').toLocaleLowerCase().replace(/[^a-z]/g, '');
 const esc = (value = '') => String(value).replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
@@ -300,12 +300,49 @@ export function installSiegeScreenshotImport(repository, onSaved = async () => {
         rawPasses.push({ label: variant.label, text, confidence: Number(result?.data?.confidence || 0) });
         candidateSets.push(parseSiegeScreenshotText(text));
       }
-      rows = rowsToPoland(mergeCandidates(candidateSets));
+      const now = new Date();
+      const detectedRows = mergeCandidates(candidateSets);
+      const rowsByCastle = new Map();
+      const advancedCastles = [];
+      for (const row of detectedRows) {
+        const next = nextMonthlyOccurrence(row, now);
+        const normalizedRow = next
+          ? { ...row, reference_date: next.serverDate, reference_time: next.serverTime }
+          : row;
+        if (next && (next.serverDate !== row.reference_date || next.serverTime !== row.reference_time)) advancedCastles.push(row.castle);
+        rowsByCastle.set(row.castle, normalizedRow);
+      }
+
+      // If today's screen omits a castle that sieged yesterday, reuse its saved
+      // anchor and roll it forward on the known 14-day cycle. The admin reviews it before saving.
+      let savedRows = [];
+      try { savedRows = await repository.getAll(); } catch { savedRows = []; }
+      const inferredCastles = [];
+      for (const castle of SIEGE_CASTLES) {
+        if (rowsByCastle.has(castle)) continue;
+        const saved = savedRows.find((row) => row?.castle === castle);
+        const next = nextMonthlyOccurrence(saved, now);
+        if (!next) continue;
+        rowsByCastle.set(castle, {
+          ...saved,
+          castle,
+          reference_date: next.serverDate,
+          reference_time: next.serverTime,
+          inferredFromPrevious: true,
+        });
+        inferredCastles.push(castle);
+      }
+
+      rows = rowsToPoland(SIEGE_CASTLES.map((castle) => rowsByCastle.get(castle)).filter(Boolean));
       renderRows();
       const missing = SIEGE_CASTLES.filter((castle) => !rows.some((row) => row.castle === castle));
+      const scheduleNotes = [
+        inferredCastles.length ? `Uzupełniono z poprzedniego cyklu (co 14 dni): ${inferredCastles.join(', ')}.` : '',
+        advancedCastles.length ? `Przesunięto wygasły termin na kolejny cykl: ${[...new Set(advancedCastles)].join(', ')}.` : '',
+      ].filter(Boolean).join(' ');
       status.textContent = missing.length
-        ? `Rozpoznano ${rows.length}/9 zamków po ${variants.length} przebiegach OCR. Brakuje: ${missing.join(', ')}. Nie można zapisać, dopóki wszystkie pozycje nie zostaną rozpoznane.`
-        : `Odczytano wszystkie 9 zamków po ${variants.length} przebiegach OCR. Godziny przeliczono na czas polski (latem +2 h, zimą +1 h). Sprawdź daty i godziny przed zapisem.`;
+        ? `Rozpoznano ${rows.length}/9 zamków po ${variants.length} przebiegach OCR. Brakuje: ${missing.join(', ')}. ${scheduleNotes} Nie można zapisać, dopóki wszystkie pozycje nie zostaną rozpoznane.`
+        : `Odczytano wszystkie 9 zamków po ${variants.length} przebiegach OCR. Godziny przeliczono na czas polski (latem +2 h, zimą +1 h). ${scheduleNotes} Sprawdź daty i godziny przed zapisem.`;
       if (missing.length) {
         const details = rawPasses.map((pass) => `${pass.label} (${Math.round(pass.confidence)}%): ${pass.text.replace(/\s+/g, ' ').slice(0, 420)}`).join(' | ');
         status.title = details;
