@@ -3,7 +3,7 @@ import { TIME_ZONE, localDateTimeToDate, addDays, daysBetween } from './bossResp
 export const SIEGE_DURATION_MINUTES = 120;
 // Siege times are entered in the UTC game server clock; Poland is +2 hours in summer and +1 hour in winter.
 export const SIEGE_SERVER_TIME_ZONE = 'UTC';
-export const SIEGE_INTERVAL_DAYS = 14;
+export const SIEGE_INTERVAL_DAYS = 28;
 export const SIEGE_CASTLES = Object.freeze([
   'Gludio', 'Dion', 'Giran', 'Oren', 'Aden', 'Innadril', 'Goddard', 'Rune', 'Schuttgart',
 ]);
@@ -100,7 +100,7 @@ export function nextMonthlyOccurrence(row, now = new Date()) {
   const normalizedRow = normalizeSiegeRow(row);
   if (!normalizedRow) return null;
 
-  // The saved server date is an anchor. Each castle repeats on the same 14-day
+  // The saved server date is an anchor. Each castle repeats on the same 28-day
   // cycle; advance expired dates by whole intervals, preserving weekday and time.
   let serverDate = normalizedRow.reference_date;
   let localReference = serverDateTimeToLocal(serverDate, normalizedRow.reference_time);
