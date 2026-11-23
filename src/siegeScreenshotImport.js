@@ -314,7 +314,7 @@ export function installSiegeScreenshotImport(repository, onSaved = async () => {
       }
 
       // If today's screen omits a castle that sieged yesterday, reuse its saved
-      // anchor and roll it forward on the known 14-day cycle. The admin reviews it before saving.
+      // anchor and roll it forward on the known 28-day cycle. The admin reviews it before saving.
       let savedRows = [];
       try { savedRows = await repository.getAll(); } catch { savedRows = []; }
       const inferredCastles = [];
@@ -337,7 +337,7 @@ export function installSiegeScreenshotImport(repository, onSaved = async () => {
       renderRows();
       const missing = SIEGE_CASTLES.filter((castle) => !rows.some((row) => row.castle === castle));
       const scheduleNotes = [
-        inferredCastles.length ? `Uzupełniono z poprzedniego cyklu (co 14 dni): ${inferredCastles.join(', ')}.` : '',
+        inferredCastles.length ? `Uzupełniono z poprzedniego cyklu (co 28 dni): ${inferredCastles.join(', ')}.` : '',
         advancedCastles.length ? `Przesunięto wygasły termin na kolejny cykl: ${[...new Set(advancedCastles)].join(', ')}.` : '',
       ].filter(Boolean).join(' ');
       status.textContent = missing.length
