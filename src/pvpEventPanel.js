@@ -3,8 +3,17 @@ import {
   nextPvpEvent, nextPvpEvents, formatPvpDate, pvpCountdownText,
 } from './pvpEventSchedule.js';
 
-const poolRows = (className = '') => PVP_EVENTS.map((event) => `<li class="${className}">
-  <span>${event.name}</span><code>${event.command}</code>
+const EVENT_ICONS = {
+  'multi-team-battle': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 4 15 16M3 8l4-4 3 3M5 14l-2 2 5 5 2-2M19 4l-4 4M13 10l-2 2"/></svg>',
+  'capture-the-base': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V9l3-3 3 3v12m2 0V9l3-3 3 3v12M7 6V3h3v3m5 0V3h3v3M8 13h.01M16 13h.01"/></svg>',
+  'epic-boss-challenge': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 7-2-4 6 3 3-2 3 2 6-3-2 7 2 2-3 9H6l-3-9 2-2zM9 13h.01M15 13h.01M10 17h4"/></svg>',
+  'korean-tvt': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h5v5H4zM15 14h5v5h-5zM9 8l7 8M15 8l-7 8M12 3v3M12 18v3"/></svg>',
+  'death-match': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a8 8 0 0 0-5 14.25V21h10v-3.75A8 8 0 0 0 12 3ZM9 11h.01M15 11h.01M9.5 15h5M4 20l3-2m13 2-3-2"/></svg>',
+  'capture-the-flag': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4m0 1c5-4 9 4 14 0v9c-5 4-9-4-14 0"/></svg>',
+};
+const poolRows = (className = '') => PVP_EVENTS.map((event) => `<li class="${className} pvp-pool-event-tile" data-pvp-event="${event.id}">
+  <span class="pvp-pool-event-icon" aria-hidden="true">${EVENT_ICONS[event.id] || EVENT_ICONS['multi-team-battle']}</span>
+  <span class="pvp-pool-event-name">${event.name}</span><code>${event.command}</code>
 </li>`).join('');
 
 function localSlotTime(event) {
@@ -95,9 +104,9 @@ function renderPvpSidebarUpcomingSlots(root, now) {
 
 export function renderPvpSidebar(root, now = new Date()) {
   if (!root) return;
-  if (root.dataset.pvpRenderer !== 'random-pool-v2') {
+  if (root.dataset.pvpRenderer !== 'random-pool-v3') {
     root.innerHTML = SIDEBAR_TEMPLATE;
-    root.dataset.pvpRenderer = 'random-pool-v2';
+    root.dataset.pvpRenderer = 'random-pool-v3';
   }
   const event = nextPvpEvent(null, now);
   if (event) updateSlot(root, event, now);
