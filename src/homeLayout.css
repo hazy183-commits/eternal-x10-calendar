@@ -154,11 +154,10 @@
   #top .pvp-sidebar-next-slot strong { font-size:.8rem; }
 }
 
-/* Authentic Interlude icons in classic inventory-style event tiles. */
+/* Generated Lineage II-style emblems for the Auto PvP event pool. */
 #top .pvp-pool-event-tile {
-  --pvp-accent:#d9b66d;
-  position:relative;display:grid;grid-template-columns:30px minmax(0,1fr) auto;align-items:center;
-  gap:7px;min-width:0;min-height:44px;padding:6px 7px 6px 8px!important;
+  position:relative;display:grid;grid-template-columns:34px minmax(0,1fr) auto;align-items:center;
+  gap:7px;min-width:0;min-height:46px;padding:5px 6px 5px 7px!important;
   border:1px solid rgba(190,143,59,.3)!important;border-radius:3px;
   background:linear-gradient(135deg,rgba(62,49,27,.42),rgba(8,12,12,.78))!important;
   box-shadow:inset 0 1px rgba(255,231,174,.06),inset 0 -1px rgba(0,0,0,.45);
@@ -168,14 +167,9 @@
   content:'';position:absolute;left:0;top:6px;bottom:6px;width:2px;border-radius:2px;
   background:linear-gradient(180deg,#f1d28a,#9f7533);opacity:.78;
 }
-#top .pvp-pool-event-icon {
-  display:grid;place-items:center;width:30px;height:30px;overflow:hidden;
-  border:1px solid rgba(198,157,76,.62);border-radius:2px;
-  background:linear-gradient(145deg,#292319,#090c0d);
-  box-shadow:inset 0 0 0 1px rgba(0,0,0,.8),0 1px 3px rgba(0,0,0,.5);
-}
-#top .pvp-pool-event-icon img { display:block;width:24px;height:24px;object-fit:contain;image-rendering:auto; }
-#top .pvp-pool-event-name { min-width:0;overflow-wrap:anywhere;color:#e2d7c2;font-size:.64rem;line-height:1.3; }
+#top .pvp-pool-event-icon { display:grid;place-items:center;width:34px;height:34px; }
+#top .pvp-pool-event-icon img { display:block;width:34px;height:34px;object-fit:contain;filter:drop-shadow(0 1px 2px rgba(0,0,0,.7)); }
+#top .pvp-pool-event-name { min-width:0;overflow-wrap:anywhere;color:#e2d7c2;font-size:.63rem;line-height:1.3; }
 #top .pvp-pool-event-tile code {
   min-width:43px;padding:4px 5px!important;border:1px solid rgba(186,143,63,.55)!important;
   background:linear-gradient(180deg,rgba(103,73,26,.3),rgba(15,14,11,.85))!important;
@@ -187,10 +181,9 @@
 }
 #top .pvp-pool-event-tile:hover:before { opacity:1; }
 @media(max-width:440px) {
-  #top .pvp-pool-event-tile { grid-template-columns:29px minmax(0,1fr) auto;gap:6px;padding-inline:6px!important; }
-  #top .pvp-pool-event-icon { width:29px;height:29px; }
-  #top .pvp-pool-event-icon img { width:23px;height:23px; }
-  #top .pvp-pool-event-name { font-size:.65rem; }
+  #top .pvp-pool-event-tile { grid-template-columns:32px minmax(0,1fr) auto;gap:6px;padding-inline:6px!important;min-height:44px; }
+  #top .pvp-pool-event-icon,#top .pvp-pool-event-icon img { width:32px;height:32px; }
+  #top .pvp-pool-event-name { font-size:.64rem; }
 }
 @media(prefers-reduced-motion:reduce) {
   #top .pvp-pool-event-tile { transition:none; }

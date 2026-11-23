@@ -4,15 +4,15 @@ import {
 } from './pvpEventSchedule.js';
 
 const EVENT_IMAGES = {
-  'multi-team-battle': '/assets/interlude/icons/weapon_dual_sword_i00.png',
-  'capture-the-base': '/assets/interlude/icons/shield_imperial_crusader_shield_i02.png',
-  'epic-boss-challenge': '/assets/interlude/icons/weapon_dragon_flame_head_i00.png',
-  'korean-tvt': '/assets/interlude/icons/weapon_tiphon_spear_i00.png',
-  'death-match': '/assets/interlude/icons/etc_piece_bone_white_i00.png',
-  'capture-the-flag': '/images/discord/clan-crest.svg',
+  'multi-team-battle': '/images/events/pvp-pool/multi-team-battle.webp',
+  'capture-the-base': '/images/events/pvp-pool/capture-the-base.webp',
+  'epic-boss-challenge': '/images/events/pvp-pool/epic-boss-challenge.webp',
+  'korean-tvt': '/images/events/pvp-pool/korean-tvt.webp',
+  'death-match': '/images/events/pvp-pool/death-match.webp',
+  'capture-the-flag': '/images/events/pvp-pool/capture-the-flag.webp',
 };
 const poolRows = (className = '') => PVP_EVENTS.map((event) => `<li class="${className} pvp-pool-event-tile" data-pvp-event="${event.id}">
-  <span class="pvp-pool-event-icon" aria-hidden="true"><img src="${EVENT_IMAGES[event.id] || EVENT_IMAGES['multi-team-battle']}" alt="" width="32" height="32" decoding="async"></span>
+  <span class="pvp-pool-event-icon" aria-hidden="true"><img src="${EVENT_IMAGES[event.id] || EVENT_IMAGES['multi-team-battle']}" alt="" width="96" height="96" decoding="async"></span>
   <span class="pvp-pool-event-name">${event.name}</span><code>${event.command}</code>
 </li>`).join('');
 
