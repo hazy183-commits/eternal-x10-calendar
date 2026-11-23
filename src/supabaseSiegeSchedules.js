@@ -1,5 +1,5 @@
 import { supabase } from './supabaseClient.js';
-import { normalizeSiegeRow } from './siegeSchedules.js';
+import { SIEGE_REFERENCE_DEFAULTS, normalizeSiegeRow } from './siegeSchedules.js';
 
 async function requireAuthenticated() {
   if (!supabase) throw new Error('Supabase nie jest skonfigurowany.');
