@@ -238,6 +238,28 @@
   .unified-calendar .event-row[data-calendar-state="upcoming"] .row-status>span:before,
   .unified-calendar .event-row[data-calendar-state="active"] .row-status>span:before { font-size:7px; }
 }
+@media(min-width:901px) {
+  .unified-calendar .event-row .event-time {
+    position:relative;
+    display:grid;
+    place-items:center;
+    align-self:stretch;
+  }
+  .unified-calendar .event-row[data-calendar-nearest="true"] .event-time:after {
+    position:absolute;
+    left:50%;
+    right:auto;
+    bottom:2px;
+    margin:0;
+    padding:2px 4px;
+    transform:translateX(-50%);
+    border:1px solid #735a2c;
+    border-radius:2px;
+    background:#15120c;
+    font-size:6px;
+    letter-spacing:.04em;
+  }
+}
 
 /* Full-height arrows frame the day strip; the return action stays below it. */
 .unified-calendar .calendar-strip { order:1; display:grid; grid-template-columns:44px minmax(0,1fr) 44px; gap:8px; padding:16px 20px; min-width:0; max-width:100%; border-bottom:1px solid var(--soft); }
