@@ -30,7 +30,8 @@ const displayName=name.replace(/\s*(castle siege|— potrzebne rb)$/i,'').trim()
 const titleSize=displayName.length>23?42:displayName.length>19?48:displayName.length>15?60:displayName.length>12?72:displayName.length>9?88:displayName.length>7?104:displayName.length>5?124:142;
 const isEpicBoss=['antharas','baium','core','frintezza','orfen','queen-ant','valakas','zaken'].includes(key);
 const eventSubtitle=kind==='siege'?'CASTLE SIEGE':kind==='clan hall'?'CLAN HALL':kind==='rb'?'RAID BOSS':kind==='olympiad'?'OLYMPIAD':(kind==='epic'||isEpicBoss)?'EPIC BOSS':'WYDARZENIE KLANOWE';
-const subtitleHalfWidth=Math.min(220,Array.from(eventSubtitle).length*10);\nconst gatheringPlace='HUNTER VILLAGE',meetingNotice='ZBIÓRKA 30 MINUT PRZED STARTEM';
+const subtitleHalfWidth=Math.min(220,Array.from(eventSubtitle).length*10);
+const gatheringPlace='HUNTER VILLAGE',meetingNotice='ZBIÓRKA 30 MINUT PRZED STARTEM';
 const names=attendees.split(/[\n,;]+/).map(p=>p.trim()).filter(Boolean).slice(0,8);
 const namesSvg=names.map((p,i)=>{const x=810,y=548+i*24,label=p.length>34?p.slice(0,32)+'…':p;return `<circle cx="${x}" cy="${y-6}" r="3" fill="#eac56c"/><text x="${x+20}" y="${y}" fill="#f8f2e9" font-size="18" font-family="DejaVu Sans">${esc(label)}</text>`}).join('');
 const noConfirmed=names.length===0||names.every(n=>/^brak potwierdzonych/i.test(n));const attendeeSvg=noConfirmed?'<circle cx="810" cy="544" r="3" fill="#eac56c"/><text x="830" y="550" fill="#eee5d5" font-size="18" font-family="DejaVu Sans">Brak potwierdzonych zgłoszeń</text>':namesSvg;
