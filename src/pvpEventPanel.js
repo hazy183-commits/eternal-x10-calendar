@@ -58,19 +58,19 @@ export function renderPvpEventPanel(root, now = new Date()) {
 
 const SIDEBAR_TEMPLATE = `<article class="pvp-sidebar-event pvp-next" data-pvp-slot-card>
   <div class="pvp-sidebar-main"><span class="pvp-sidebar-icon" aria-hidden="true">⚔</span><div class="pvp-sidebar-details">
-    <div class="pvp-sidebar-title"><h3>Auto PvP · tryb losowany</h3><span class="pvp-next-badge">NAJBLIŻSZY</span></div>
+    <div class="pvp-sidebar-title"><h3>Najbliższy slot</h3><span class="pvp-next-badge">LOSOWANY</span></div>
     <p class="pvp-sidebar-date" data-pvp-date></p>
     <p class="pvp-sidebar-ranges"><span data-pvp-local-time></span><span data-pvp-server-time></span></p>
   </div></div>
   <div class="pvp-sidebar-meta"><p class="pvp-sidebar-status">START SLOTU</p><p class="pvp-sidebar-countdown" data-pvp-countdown></p></div>
 </article>
-<section class="pvp-sidebar-pool"><div class="pvp-sidebar-pool-head"><h3>Losowana pula</h3><span>CO ${PVP_INTERVAL_HOURS}H</span></div><ul>${poolRows('pvp-sidebar-pool-row')}</ul><p>Typ i szanse wybiera serwer. Po ostatnio rozegranym evencie jego szansa spada.</p></section>`;
+<section class="pvp-sidebar-pool"><div class="pvp-sidebar-pool-head"><h3>Losowana pula</h3><span>${PVP_EVENTS.length} EVENTÓW</span></div><ul>${poolRows('pvp-sidebar-pool-row')}</ul><p>Serwer losuje tryb przy każdym slocie. Ostatni event nie powtarza się od razu, a jego szansa maleje.</p></section>`;
 
 export function renderPvpSidebar(root, now = new Date()) {
   if (!root) return;
-  if (root.dataset.pvpRenderer !== 'random-pool-v1') {
+  if (root.dataset.pvpRenderer !== 'random-pool-v2') {
     root.innerHTML = SIDEBAR_TEMPLATE;
-    root.dataset.pvpRenderer = 'random-pool-v1';
+    root.dataset.pvpRenderer = 'random-pool-v2';
   }
   const event = nextPvpEvent(null, now);
   if (event) updateSlot(root, event, now);
