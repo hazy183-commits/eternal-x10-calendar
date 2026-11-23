@@ -348,3 +348,161 @@
   .quest-guide-aside { grid-template-columns: 1fr; }
   .quest-guide-entry, .quest-guide-server-note, .quest-guide-source { grid-column: auto; }
 }
+
+/* Media appears only inside a boss guide after its existing card is opened. */
+.quest-route-media {
+  display: grid;
+  gap: 13px;
+  margin-top: 14px;
+  padding: 12px;
+  border: 1px solid rgba(203, 164, 77, .24);
+  background: rgba(3, 6, 7, .62);
+}
+
+.quest-media-label {
+  display: block;
+  margin-bottom: 8px;
+  color: #d8b866;
+  font: 700 9px/1.4 Inter, sans-serif;
+  letter-spacing: .16em;
+}
+
+.quest-map-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(152px, 1fr));
+  gap: 8px;
+}
+
+.quest-map-card {
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(200, 161, 76, .34);
+  background: #080c0e;
+}
+
+.quest-map-link {
+  position: relative;
+  display: grid;
+  aspect-ratio: 16 / 9;
+  min-height: 88px;
+  place-items: center;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 45%, rgba(123, 101, 55, .3), transparent 70%), #080c0e;
+}
+
+.quest-map-link img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.quest-map-link::before {
+  position: absolute;
+  color: rgba(223, 193, 126, .6);
+  content: 'MAPA INTERLUDE';
+  font: 700 9px/1 Inter, sans-serif;
+  letter-spacing: .15em;
+}
+
+.quest-map-link img:not([hidden]) { position: relative; z-index: 1; }
+
+.quest-map-link.is-image-missing::after {
+  position: absolute;
+  right: 8px;
+  bottom: 7px;
+  color: #d8bd7d;
+  content: 'OTWÓRZ MAPĘ ↗';
+  font: 700 8px/1 Inter, sans-serif;
+  letter-spacing: .1em;
+}
+
+.quest-map-open {
+  position: absolute;
+  z-index: 2;
+  top: 6px;
+  right: 7px;
+  display: grid;
+  width: 21px;
+  height: 21px;
+  place-items: center;
+  border: 1px solid rgba(232, 193, 105, .68);
+  background: rgba(4, 7, 8, .82);
+  color: #f1d17e;
+  font: 12px/1 Inter, sans-serif;
+}
+
+.quest-map-card figcaption {
+  min-height: 34px;
+  padding: 7px 8px;
+  border-top: 1px solid rgba(200, 161, 76, .22);
+  color: #d7caa8;
+  font: 500 10px/1.4 Inter, sans-serif;
+}
+
+.quest-mob-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(152px, 1fr));
+  gap: 7px;
+}
+
+.quest-mob-card {
+  display: flex;
+  min-width: 0;
+  min-height: 61px;
+  align-items: center;
+  gap: 9px;
+  padding: 6px 8px;
+  border: 1px solid rgba(200, 161, 76, .25);
+  background: linear-gradient(110deg, rgba(37, 31, 20, .62), rgba(7, 11, 12, .82));
+  color: #eee5d0;
+  text-decoration: none;
+  transition: border-color .18s ease, background .18s ease;
+}
+
+.quest-mob-card:hover,
+.quest-mob-card:focus-visible {
+  border-color: rgba(231, 192, 100, .75);
+  background: rgba(45, 36, 20, .72);
+}
+
+.quest-mob-portrait {
+  position: relative;
+  display: grid;
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(211, 174, 88, .52);
+  background: radial-gradient(circle, rgba(185, 143, 56, .35), rgba(9, 13, 14, .95));
+}
+
+.quest-mob-portrait::after {
+  position: absolute;
+  color: #dbbb6a;
+  content: '⚔';
+  font: 20px/1 Georgia, serif;
+}
+
+.quest-mob-portrait img {
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.quest-mob-copy { display: grid; gap: 3px; min-width: 0; }
+.quest-mob-copy b { font: 600 10px/1.35 Inter, sans-serif; overflow-wrap: anywhere; }
+.quest-mob-copy small { color: #d5b96f; font: 700 8px/1.2 Inter, sans-serif; letter-spacing: .1em; }
+
+@media (max-width: 430px) {
+  .quest-route-media { margin-top: 11px; padding: 9px; }
+  .quest-map-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .quest-map-link { min-height: 74px; }
+  .quest-map-card figcaption { font-size: 9px; }
+  .quest-mob-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .quest-mob-card { gap: 6px; padding: 5px; }
+  .quest-mob-portrait { width: 39px; height: 39px; flex-basis: 39px; }
+  .quest-mob-copy b { font-size: 9px; }
+}
