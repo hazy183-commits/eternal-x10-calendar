@@ -203,3 +203,82 @@
 @media(prefers-reduced-motion:reduce) {
   #top .pvp-sidebar-progress-fill { transition:none; }
 }
+
+
+/* Auto PvP alignment pass: consistent baselines, widths and responsive spacing. */
+#top .pvp-hero-heading { align-items:center; }
+#top .pvp-hero-heading h2 { margin:0; line-height:1.2; }
+#top .pvp-hero-heading span { display:inline-flex; align-items:center; justify-content:center; min-height:24px; line-height:1.2; white-space:nowrap; }
+
+#top .pvp-sidebar-event {
+  grid-template-columns:minmax(0,1fr) 96px;
+  align-items:stretch;
+  gap:10px;
+  padding:10px 10px 13px!important;
+}
+#top .pvp-sidebar-main { align-items:center; gap:9px; min-width:0; }
+#top .pvp-sidebar-details { flex:1 1 auto; min-width:0; }
+#top .pvp-sidebar-title { display:flex; align-items:center; flex-wrap:nowrap; gap:7px; min-height:21px; }
+#top .pvp-sidebar-title h3 { margin:0; line-height:1.25; white-space:nowrap; }
+#top .pvp-sidebar-title .pvp-next-badge { flex:0 0 auto; padding:3px 6px; line-height:1.2; white-space:nowrap; }
+#top .pvp-sidebar-event .pvp-sidebar-date { margin:4px 0 0; line-height:1.3; }
+#top .pvp-sidebar-ranges { display:grid; gap:3px; margin:5px 0 0; line-height:1.3; }
+#top .pvp-sidebar-ranges span { align-items:center; min-width:0; }
+#top .pvp-sidebar-meta {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  align-self:stretch;
+  gap:6px;
+  min-width:96px;
+  padding:7px 5px;
+  text-align:center;
+}
+#top .pvp-sidebar-event .pvp-sidebar-status { line-height:1.25; white-space:nowrap; }
+#top .pvp-sidebar-event .pvp-sidebar-countdown { line-height:1.2; font-variant-numeric:tabular-nums; }
+
+#top .pvp-sidebar-pool-head { align-items:center; }
+#top .pvp-sidebar-pool-head h3 { line-height:1.25; }
+#top .pvp-sidebar-pool-head>span { display:inline-flex; align-items:center; justify-content:center; min-height:22px; white-space:nowrap; }
+#top .pvp-sidebar-pool ul { grid-template-columns:repeat(2,minmax(0,1fr)); align-items:stretch; gap:6px 8px; }
+#top .pvp-pool-event-tile { grid-template-columns:34px minmax(0,1fr) 46px; align-items:center; min-height:48px; }
+#top .pvp-pool-event-name { display:flex; align-items:center; min-height:2.5em; line-height:1.25; text-align:left; }
+#top .pvp-pool-event-tile code { display:inline-grid; place-items:center; box-sizing:border-box; width:46px; min-width:46px; height:25px; padding:0 4px!important; white-space:nowrap; font-variant-numeric:tabular-nums; }
+
+#top .pvp-sidebar-pool>p { line-height:1.55; }
+#top .pvp-sidebar-next-head { align-items:center; }
+#top .pvp-sidebar-next-head h4,
+#top .pvp-sidebar-next-head span { line-height:1.25; }
+#top .pvp-sidebar-next-list { align-items:stretch; gap:7px; margin-top:9px; }
+#top .pvp-sidebar-next-slot { grid-template-rows:10px 1fr 10px; align-content:center; min-height:56px; padding:8px 4px; }
+#top .pvp-sidebar-next-index { line-height:1; }
+#top .pvp-sidebar-next-slot strong { align-self:center; line-height:1.15; font-variant-numeric:tabular-nums; }
+#top .pvp-sidebar-next-slot small { line-height:1; white-space:nowrap; }
+
+@media(max-width:440px) {
+  #top .pvp-sidebar-event { grid-template-columns:minmax(0,1fr) 88px; gap:8px; }
+  #top .pvp-sidebar-meta { min-width:88px; padding-inline:4px; }
+  #top .pvp-pool-event-tile { grid-template-columns:32px minmax(0,1fr) 43px; gap:6px; }
+  #top .pvp-pool-event-tile code { width:43px; min-width:43px; }
+  #top .pvp-pool-event-icon,
+  #top .pvp-pool-event-icon img { width:32px; height:32px; }
+}
+@media(max-width:380px) {
+  #top .pvp-sidebar-event { grid-template-columns:minmax(0,1fr)!important; }
+  #top .pvp-sidebar-meta {
+    grid-column:1;
+    flex-direction:row;
+    justify-content:space-between;
+    align-self:auto;
+    min-width:0;
+    margin:0 0 0 47px;
+    padding:6px 8px;
+    border-top:1px solid rgba(190,143,59,.24);
+    border-inline:0;
+    border-bottom:0;
+    background:transparent;
+    text-align:left;
+  }
+  #top .pvp-sidebar-pool ul { grid-template-columns:1fr; }
+}
