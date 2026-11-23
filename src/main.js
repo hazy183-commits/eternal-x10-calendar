@@ -84,6 +84,11 @@ function getUpcoming() {
 }
 
 function renderFilters() { const filters = $('#filters'); if (!filters) return; filters.innerHTML = ['Wszystkie', ...TYPES].map((item) => `<button class="filter-btn ${filter === item ? 'active' : ''}" data-filter="${item}">${item}</button>`).join(''); }
+document.querySelectorAll('[data-home-filter]').forEach((link) => link.addEventListener('click', () => {
+  filter = link.dataset.homeFilter || 'Wszystkie';
+  renderFilters();
+  renderCalendar();
+}));
 function rowCountdown(event) {
   if (event.isPvpSchedule) return pvpCountdownText(event);
   const currentStatus = eventStatus(event);
@@ -159,8 +164,47 @@ function renderCalendar() {
 }
 
  function miniRow(event) { const sameDay = event.date === (event.isOlympiadSchedule ? olympiadLocalDate() : dateKey(today)); const countdown = countdownTargetFor(event); return `<div class="mini-event" data-boss-name="${safe(artworkName(event))}" data-event-type="${safe(event.type)}" data-event-location="${safe(event.location || '')}" data-owner-clan="${safe(event.ownerClan || '')}" data-event-start-time="${safe(event.time || '')}" data-countdown-target="${countdown.target.toISOString()}" data-countdown-label="${countdown.label}"><time>${sameDay ? event.time : formatDate(dateFromEvent(event), { day: '2-digit', month: 'short', ...(event.isOlympiadSchedule ? { timeZone: 'Europe/Warsaw' } : {}) })}</time><div><b>${safe(event.name)}</b><span>${event.type}${event.location ? ` · ${safe(event.location)}` : ''}${event.ownerClan ? ` · Właściciel: ${safe(event.ownerClan)}` : ''}</span>${event.isOlympiadSchedule ? `<span class="olympiad-window">${event.timeRange}</span>` : ''}</div></div>`; }
-function homeAgendaRow(event) { const label = event.isOlympiadSchedule ? event.timeRange : event.time; const location = String(event.location || '').trim(); const owner = String(event.ownerClan || '').trim(); const meta = [location, owner ? `Właściciel: ${owner}` : ''].filter(Boolean).join(' · ') || 'Szczegóły w kalendarzu'; return `<article class="home-agenda-item"><div class="home-agenda-art" data-boss-name="${safe(String(artworkName(event)))}" aria-hidden="true"><span>LINEAGE II</span></div><div class="home-agenda-copy"><span class="home-agenda-type">${safe(String(event.type || 'Wydarzenie'))}</span><h3>${safe(String(event.name || 'Wydarzenie'))}</h3><p>${safe(meta)}</p></div><time datetime="${safe(String(event.date || ''))}T${safe(String(event.time || '00:00'))}">${safe(String(label || '—'))}</time></article>`; }
-function renderOverview() { const todays = sorted(events.filter((event) => !event.isPvpSchedule && event.date === (event.isOlympiadSchedule ? olympiadLocalDate() : dateKey(today)))); $('#todayCount').textContent = todays.length; $('#todayEvents').innerHTML = todays.length ? todays.map(miniRow).join('') : '<p class="empty-mini">Dziś nie zaplanowano wydarzeń.</p>'; const agenda = $('#homeDailyEvents'); const planCount = $('#homeTodayCount'); const planDate = $('#homePlanDate'); if (planCount) planCount.textContent = String(todays.length).padStart(2, '0'); if (planDate) planDate.textContent = formatDate(today, { weekday: 'long', day: 'numeric', month: 'long' }); if (agenda) { agenda.innerHTML = todays.length ? todays.map(homeAgendaRow).join('') : '<p class="home-agenda-empty">Dziś nie zaplanowano wydarzeń.</p>'; refreshBossArtwork(agenda); } const upcoming = getUpcoming().slice(0, 5); $('#upcomingEvents').innerHTML = upcoming.length ? upcoming.map(miniRow).join('') : '<p class="empty-mini">Brak nadchodzących wydarzeń.</p>'; refreshBossArtwork($('#statistics')); renderPvpSidebar($('#pvpSidebarEvents')); }
+function homeTimelineRow(event) {
+  const rawLabel = event.isOlympiadSchedule ? String(event.timeRange || '') : String(event.time || '');
+  const timeMatch = rawLabel.match(/([01]?\d|2[0-3]):([0-5]\d)/);
+  const hour = timeMatch ? Number(timeMatch[1]) : 0;
+  const minute = timeMatch ? Number(timeMatch[2]) : 0;
+  const position = Math.min(100, Math.max(0, ((hour * 60 + minute) / 1440) * 100));
+  const location = String(event.location || '').trim();
+  const meta = [String(event.type || 'Wydarzenie'), location].filter(Boolean).join(' · ');
+  const time = rawLabel || '—';
+  return `<article class="home-timeline-item"><div class="home-timeline-info"><div class="home-timeline-art" data-boss-name="${safe(String(artworkName(event)))}" aria-hidden="true"></div><div class="home-timeline-copy"><h3>${safe(String(event.name || 'Wydarzenie'))}</h3><p>${safe(meta)}</p></div><time datetime="${safe(String(event.date || ''))}T${timeMatch ? timeMatch[0] : '00:00'}">${safe(time)}</time></div><div class="home-timeline-track" style="--home-event-position:${position.toFixed(2)}%"><span class="home-timeline-marker" style="--home-event-position:${position.toFixed(2)}%">${safe(timeMatch ? timeMatch[0] : '—')}</span></div></article>`;
+}
+function homeUpcomingRow(event) {
+  const label = event.isOlympiadSchedule ? String(event.timeRange || '') : String(event.time || '');
+  const when = event.date === dateKey(today) ? 'Dzisiaj' : formatDate(dateFromEvent(event), { weekday: 'short', day: 'numeric', month: 'short' });
+  const meta = [when, label, String(event.location || '').trim()].filter(Boolean).join(' · ');
+  return `<article class="home-upcoming-item"><div class="home-upcoming-art" data-boss-name="${safe(String(artworkName(event)))}" aria-hidden="true"></div><div class="home-upcoming-copy"><span>${safe(String(event.type || 'Wydarzenie'))}</span><h3>${safe(String(event.name || 'Wydarzenie'))}</h3><p>${safe(meta)}</p></div><time>${safe(label || '—')}</time></article>`;
+}
+function renderOverview() {
+  const todays = sorted(events.filter((event) => !event.isPvpSchedule && event.date === (event.isOlympiadSchedule ? olympiadLocalDate() : dateKey(today))));
+  $('#todayCount').textContent = todays.length;
+  $('#todayEvents').innerHTML = todays.length ? todays.map(miniRow).join('') : '<p class="empty-mini">Dziś nie zaplanowano wydarzeń.</p>';
+  const planCount = $('#homeTodayCount');
+  const planDate = $('#homePlanDate');
+  if (planCount) planCount.textContent = String(todays.length).padStart(2, '0');
+  if (planDate) planDate.textContent = formatDate(today, { weekday: 'long', day: 'numeric', month: 'long' });
+  const agenda = $('#homeDailyEvents');
+  if (agenda) {
+    agenda.innerHTML = todays.length ? todays.map(homeTimelineRow).join('') : '<p class="home-agenda-empty">Dziś nie zaplanowano wydarzeń.</p>';
+    refreshBossArtwork(agenda);
+  }
+  const upcoming = getUpcoming().slice(0, 5);
+  $('#upcomingEvents').innerHTML = upcoming.length ? upcoming.map(miniRow).join('') : '<p class="empty-mini">Brak nadchodzących wydarzeń.</p>';
+  const sideUpcoming = $('#homeUpcomingEvents');
+  if (sideUpcoming) {
+    sideUpcoming.innerHTML = upcoming.length ? upcoming.slice(0, 3).map(homeUpcomingRow).join('') : '<p class="home-agenda-empty">Brak nadchodzących wydarzeń.</p>';
+    refreshBossArtwork(sideUpcoming);
+  }
+  refreshBossArtwork($('#statistics'));
+  renderPvpSidebar($('#pvpSidebarEvents'));
+}
+
 function eventWindowLabel(event) { if (event?.isOlympiadSchedule) return `${formatOlympiadDate(event)} · ${event.timeRange} · Europe/Warsaw`; if (!event?.isBossRespawn && !event?.isSiegeSchedule) return `${formatDate(dateFromEvent(event), { weekday: 'long', day: 'numeric', month: 'long' })} · ${event.time}${event.location ? ` · ${event.location}` : ''}`; const start = dateFromEvent(event); const end = event.endAt ? new Date(event.endAt) : new Date(start.getTime() + event.duration * 60000); const endTime = new Intl.DateTimeFormat('pl-PL', { timeZone: TIME_ZONE, hour: '2-digit', minute: '2-digit' }).format(end); return `${formatLocalDateTime(start, { dateStyle: 'full', timeStyle: 'short' })}–${endTime}${event.location ? ` · ${event.location}` : ''}`; }
  function renderFeaturedOwner(ownerClan) { const chip = $('#nextOwner'); if (!chip) return; const owner = String(ownerClan || '').trim(); chip.hidden = !owner; chip.textContent = owner ? `WŁAŚCICIEL: ${owner}` : ''; }
  function renderFeaturedStart(time) { const box = $('#nextStartTime'); if (!box) return; const value = String(time || '').slice(0, 5); box.hidden = !/^([01]\d|2[0-3]):[0-5]\d$/.test(value); const caption = box.querySelector('span'); const label = box.querySelector('b'); if (caption) caption.textContent = 'START WYDARZENIA'; if (label) label.textContent = box.hidden ? '--:--' : value; }
