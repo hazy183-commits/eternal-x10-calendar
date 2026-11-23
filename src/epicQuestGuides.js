@@ -131,7 +131,7 @@ function mapMarkup(map) {
   const pins = safePoints.map(pinMarkup).join('');
   const pointData = escapeHtml(JSON.stringify(safePoints));
   const mapRatio = map.aspectRatio || 1;
-  return `<figure class="quest-map-card"><a class="quest-map-link" href="${src}" target="_blank" rel="noopener noreferrer" aria-label="Otwórz mapę z zaznaczonym celem: ${label}" data-quest-map data-map-src="${src}" data-map-label="${label}" data-map-ratio="${mapRatio}" data-map-points="${pointData}"><span class="quest-map-image-frame" style="--map-ratio:${mapRatio}"><img src="${src}" alt="Wycinek mapy Interlude: ${label}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.hidden=true;this.closest('.quest-map-link').classList.add('is-image-missing')" />${pins}</span><span class="quest-map-open" aria-hidden="true">⌕</span></a><figcaption><span>${label}</span><span class="quest-map-mark-count">${safePoints.length} ${safePoints.length === 1 ? 'CEL' : 'CELE'}</span></figcaption></figure>`;
+  return `<figure class="quest-map-card"><button type="button" class="quest-map-link" aria-label="Powiększ mapę z zaznaczonym celem: ${label}" data-quest-map data-map-src="${src}" data-map-label="${label}" data-map-ratio="${mapRatio}" data-map-points="${pointData}"><span class="quest-map-image-frame" style="--map-ratio:${mapRatio}"><img src="${src}" alt="Wycinek mapy Interlude: ${label}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.hidden=true;this.closest('.quest-map-link').classList.add('is-image-missing')" />${pins}</span><span class="quest-map-open" aria-hidden="true">⌕</span></button><figcaption><span>${label}</span><span class="quest-map-mark-count">${safePoints.length} ${safePoints.length === 1 ? 'CEL' : 'CELE'}</span></figcaption></figure>`;
 }
 
 function mobMarkup(mob) {
@@ -217,7 +217,7 @@ function openQuestMap(link) {
   const wrap = modal.querySelector('.quest-map-lightbox-image-wrap');
   wrap.replaceChildren();
   const image = document.createElement('img');
-  image.src = link.dataset.mapSrc || link.href;
+  image.src = link.dataset.mapSrc;
   image.alt = `Mapa Interlude: ${label}`;
   image.decoding = 'async';
   image.referrerPolicy = 'no-referrer';
@@ -238,14 +238,35 @@ function openQuestMap(link) {
     pin.style.setProperty('--pin-x', `${Math.max(3, Math.min(97, Number(point.x) || 50))}%`);
     pin.style.setProperty('--pin-y', `${Math.max(3, Math.min(97, Number(point.y) || 50))}%`);
     pin.setAttribute('aria-hidden', 'true');
-    const number = document.createElement('span');
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', '0 0 24 34');
+    svg.setAttribute('focusable', 'false');
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', 'M12 33S2 20.6 2 11a10 10 0 1 1 20 0c0 9.6-10 22-10 22Z');
+    path.setAttribute('fill', '#e32932');
+    path.setAttribute('stroke', '#fff');
+    path.setAttribute('stroke-width', '1.5');
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('cx', '12');
+    circle.setAttribute('cy', '11');
+    circle.setAttribute('r', '5');
+    circle.setAttribute('fill', '#fff');
+    const number = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    number.setAttribute('x', '12');
+    number.setAttribute('y', '14');
+    number.setAttribute('text-anchor', 'middle');
+    number.setAttribute('fill', '#b51c26');
+    number.setAttribute('font-size', '8');
+    number.setAttribute('font-weight', '800');
+    number.setAttribute('font-family', 'Arial, sans-serif');
     number.textContent = String(index + 1);
-    pin.append(number);
+    svg.append(path, circle, number);
+    pin.append(svg);
     wrap.append(pin);
   });
   modal.querySelector('.quest-map-lightbox-title').textContent = label;
   const legend = points.map((point, index) => `${index + 1}. ${point.label || label}`).join('   ·   ');
-  const markerVerb = points.length === 1 ? 'Czerwona kropka wskazuje' : 'Czerwone kropki wskazują';
+  const markerVerb = points.length === 1 ? 'Czerwona pinezka wskazuje' : 'Czerwone pinezki wskazują';
   modal.querySelector('.quest-map-lightbox-legend-text').textContent = `${markerVerb}: ${legend}`;
   modal._previousOverflow = document.body.style.overflow;
   modal._returnFocus = link;
@@ -343,12 +364,16 @@ export function renderEpicQuestGuides() {
   });
   ensureQuestModal(list);
   ensureQuestMapModal();
-  list.addEventListener('click', (event) => {
-    const mapLink = event.target.closest('.quest-map-link[data-quest-map]');
-    if (!mapLink || !list.contains(mapLink)) return;
-    event.preventDefault();
-    openQuestMap(mapLink);
-  });
+  if (!document.documentElement.dataset.questMapClickHandler) {
+    document.documentElement.dataset.questMapClickHandler = 'bound';
+    document.addEventListener('click', (event) => {
+      const target = event.target instanceof Element ? event.target : null;
+      const mapButton = target?.closest('.quest-map-link[data-quest-map]');
+      if (!mapButton) return;
+      event.preventDefault();
+      openQuestMap(mapButton);
+    }, true);
+  }
   window.addEventListener('orzel:open-epic-quest', (event) => openQuestGuide(event.detail?.slug, event.detail?.trigger, list));
   window.addEventListener('hashchange', () => openGuideFromHash(list));
   openGuideFromHash(list);
