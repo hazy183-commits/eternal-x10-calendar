@@ -303,3 +303,171 @@ body:before { content:""; position:fixed; z-index:-1; inset:0; background:radial
 
 #top .pvp-sidebar-pool-row { padding-block: 7px; font-size: .72rem; line-height: 1.45; }
 #top .pvp-sidebar-pool-row code { padding: 3px 6px; font-size: .67rem; }
+
+/* Auto PvP sidebar: clear slot hierarchy and a compact random pool */
+.pvp-hero-panel {
+  isolation:isolate;
+  overflow:hidden;
+  min-height:0;
+  padding:19px;
+  border-color:#92713a;
+  background:radial-gradient(ellipse at 0 0,rgba(181,132,45,.16),transparent 42%),linear-gradient(150deg,#101716 0%,#080c0d 72%);
+  box-shadow:inset 0 1px 0 #f5dc9b16,0 16px 42px #0008;
+}
+.pvp-hero-panel::before {
+  position:absolute;
+  inset:7px;
+  z-index:-1;
+  border:1px solid #c49a4b24;
+  content:"";
+  pointer-events:none;
+}
+.pvp-hero-heading {
+  position:relative;
+  align-items:center;
+  gap:8px;
+  margin-bottom:12px;
+  padding:0 0 13px;
+  border-bottom:1px solid #c49a4b38;
+}
+.pvp-hero-heading h2 {
+  font-size:1.08rem;
+  letter-spacing:.12em;
+  text-shadow:0 0 18px #ddb45a22;
+}
+.pvp-hero-heading span {
+  padding:5px 8px;
+  border:1px solid #9b783d70;
+  background:#d5a34712;
+  color:#e2c887;
+  font-size:.58rem;
+  font-weight:800;
+  letter-spacing:.1em;
+}
+.pvp-hero-panel #pvpSidebarEvents { position:relative; z-index:1; gap:7px; }
+.pvp-sidebar-event {
+  grid-template-columns:minmax(0,1fr) 112px;
+  gap:12px;
+  padding:13px 12px;
+  border:1px solid #9b783d42;
+  border-radius:3px;
+  background:linear-gradient(115deg,#151811,#0b0f0f 72%);
+}
+.pvp-sidebar-event.pvp-next {
+  border:1px solid #bb934d;
+  border-left:3px solid #efc76d;
+  background:radial-gradient(ellipse at 0 50%,#c68e2b2b,transparent 73%),linear-gradient(110deg,#302514,#101311 76%);
+  box-shadow:inset 0 1px #f8dfa31a,0 8px 22px #0005;
+}
+.pvp-sidebar-main { align-items:flex-start; gap:11px; }
+.pvp-sidebar-icon {
+  display:grid;
+  place-items:center;
+  flex-basis:36px;
+  width:36px;
+  height:36px;
+  border:1px solid #b88b3d70;
+  border-radius:3px;
+  background:linear-gradient(145deg,#5a411c66,#17130c);
+  font-size:18px;
+}
+.pvp-sidebar-title { gap:7px; }
+.pvp-sidebar-event h3 { font-size:.9rem; line-height:1.35; }
+.pvp-next-badge { border-radius:2px; font-size:.57rem; }
+.pvp-sidebar-ranges {
+  gap:5px;
+  margin-top:8px;
+  color:#c1bcaf;
+  font-size:.77rem;
+  line-height:1.4;
+}
+.pvp-sidebar-ranges span { gap:0 5px; }
+.pvp-sidebar-ranges b { color:#f3e6c8; }
+.pvp-sidebar-meta {
+  align-self:stretch;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:7px 8px;
+  border-left:1px solid #c49a4b42;
+  background:linear-gradient(180deg,#0002,#d9a7420b);
+  text-align:center;
+}
+.pvp-sidebar-event .pvp-sidebar-status {
+  color:#c6a65f;
+  font-size:.56rem;
+  letter-spacing:.1em;
+}
+.pvp-sidebar-event .pvp-sidebar-countdown {
+  margin-top:4px;
+  color:#ffda83;
+  font-size:1.05rem;
+  font-weight:800;
+  text-shadow:0 0 14px #e9b84b42;
+}
+.pvp-sidebar-pool {
+  margin:11px 2px 0;
+  padding:13px 2px 0;
+  border-top:1px solid #c49a4b38;
+}
+.pvp-sidebar-pool-head h3 { font-size:.72rem; letter-spacing:.12em; }
+.pvp-sidebar-pool-head>span {
+  padding:4px 7px;
+  border:1px solid #7560396e;
+  background:#070a0a;
+  color:#d2b36e;
+}
+.pvp-sidebar-pool ul {
+  gap:6px 8px;
+  margin-top:9px;
+}
+.pvp-sidebar-pool .pvp-sidebar-pool-row {
+  min-height:35px;
+  box-sizing:border-box;
+  padding:7px 8px;
+  border:1px solid #b994492b;
+  border-radius:2px;
+  background:linear-gradient(100deg,#111512,#090c0c);
+  font-size:.68rem;
+  transition:border-color .16s ease,background .16s ease;
+}
+.pvp-sidebar-pool .pvp-sidebar-pool-row:hover {
+  border-color:#bc934e80;
+  background:linear-gradient(100deg,#211b10,#0c100f);
+}
+.pvp-sidebar-pool .pvp-sidebar-pool-row code {
+  padding:3px 5px;
+  border-color:#b78c4470;
+  background:#d5a34712;
+  color:#f3d38a;
+  font-size:.6rem;
+}
+.pvp-sidebar-pool>p {
+  margin:9px 2px 0;
+  color:#aaa397;
+  font-size:.65rem;
+  line-height:1.5;
+}
+@container (max-width:360px) {
+  .pvp-sidebar-event { grid-template-columns:minmax(0,1fr); gap:9px; }
+  .pvp-sidebar-meta {
+    flex-direction:row;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    margin-left:47px;
+    padding:8px 2px 0;
+    border-top:1px solid #c49a4b2b;
+    border-left:0;
+    background:none;
+    text-align:left;
+  }
+  .pvp-sidebar-pool ul { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .pvp-sidebar-pool .pvp-sidebar-pool-row { gap:5px; padding:7px 6px; font-size:.62rem; }
+  .pvp-sidebar-pool .pvp-sidebar-pool-row code { font-size:.56rem; }
+}
+@media(max-width:650px) {
+  .pvp-hero-panel { padding:16px; }
+  .pvp-hero-heading h2 { font-size:1rem; }
+}
+
