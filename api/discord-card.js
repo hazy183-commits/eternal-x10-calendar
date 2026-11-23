@@ -44,7 +44,7 @@ const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" vie
 <g fill="#dcb15e"><circle cx="72" cy="530" r="10"/><circle cx="102" cy="522" r="13"/><circle cx="133" cy="530" r="10"/><path d="M54 554Q54 537 72 537Q90 537 90 554ZM81 560Q81 539 102 539Q123 539 123 560ZM115 554Q115 537 133 537Q151 537 151 554Z"/></g><text x="181" y="535" fill="#f6f0e6" font-size="27" font-family="DejaVu Serif" font-weight="700">MIEJSCE ZBIÓRKI:</text><text x="181" y="577" fill="url(#gold)" font-size="38" font-family="DejaVu Serif" font-weight="700">${gatheringPlace}</text>
 <rect x="34" y="666" width="1132" height="80" rx="4" fill="#03050b" fill-opacity=".62"/><path d="M42 639H473M727 639H1158" stroke="#d6ad5e" stroke-width="3"/><text x="600" y="650" text-anchor="middle" fill="url(#gold)" stroke="#100b08" stroke-width="2" paint-order="stroke" font-size="26" font-family="DejaVu Serif" font-weight="700" letter-spacing="2">LISTA OBECNOŚCI</text><path d="M42 662H1158" stroke="#b99350" stroke-width="1.5"/>
 ${attendeeSvg}
-<text x="42" y="779" fill="url(#gold)" stroke="#1c0d0a" stroke-width="2" paint-order="stroke" font-size="29" font-family="DejaVu Serif" font-style="italic">Razem po zwycięstwo!</text><rect x="690" y="751" width="465" height="39" rx="7" fill="#070a11" fill-opacity=".94" stroke="#d6ad5e" stroke-width="2"/><text x="922" y="777" text-anchor="middle" fill="url(#gold)" stroke="#100b08" stroke-width="2" paint-order="stroke" font-size="20" font-family="DejaVu Serif" font-weight="700" letter-spacing=".6">${meetingNotice}</text>
+<text x="42" y="779" fill="url(#gold)" stroke="#1c0d0a" stroke-width="2" paint-order="stroke" font-size="29" font-family="DejaVu Serif" font-style="italic">Razem po zwycięstwo!</text><rect x="390" y="751" width="390" height="39" rx="7" fill="#070a11" fill-opacity=".94" stroke="#d6ad5e" stroke-width="2"/><text x="585" y="777" text-anchor="middle" fill="url(#gold)" stroke="#100b08" stroke-width="2" paint-order="stroke" font-size="18" font-family="DejaVu Serif" font-weight="700" letter-spacing=".3">${meetingNotice}</text>
 </svg>`;
 const fontDir=new URL('../node_modules/dejavu-fonts-ttf/ttf/',import.meta.url).pathname;
 const fontFiles=['DejaVuSans.ttf','DejaVuSans-Bold.ttf','DejaVuSerif.ttf','DejaVuSerif-Bold.ttf','DejaVuSerif-Italic.ttf'].map(p=>fontDir+p);
@@ -60,8 +60,15 @@ for(let y=0;y<overlayPixels.info.height;y++)for(let x=0;x<overlayPixels.info.wid
 }
 // Compose decorative artwork BELOW the event text to keep every label readable.
 let layers=[];
-const flag=Buffer.from('<svg xmlns="http://www.w3.org/2000/svg" width="540" height="180" viewBox="0 0 540 180"><defs><clipPath id="cloth"><path d="M0 36C65 7 127 9 193 33c63 23 111 21 169 0 65-24 114-18 178-29v137c-61 25-116 29-176 8-67-24-113-20-181 2C116 173 58 150 0 165Z"/></clipPath><linearGradient id="white" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset=".38" stop-color="#f4f1eb"/><stop offset=".72" stop-color="#c8c8ca"/><stop offset="1" stop-color="#f8f5f2"/></linearGradient><linearGradient id="red" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f3334b"/><stop offset=".42" stop-color="#c91f36"/><stop offset=".76" stop-color="#8f132a"/><stop offset="1" stop-color="#e42c42"/></linearGradient><linearGradient id="fold" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#111827" stop-opacity=".38"/><stop offset=".22" stop-color="#fff" stop-opacity=".25"/><stop offset=".48" stop-color="#111827" stop-opacity=".20"/><stop offset=".71" stop-color="#fff" stop-opacity=".22"/><stop offset="1" stop-color="#111827" stop-opacity=".34"/></linearGradient></defs><g clip-path="url(#cloth)"><rect width="540" height="180" fill="url(#white)"/><path d="M0 114c67-37 127-29 192-5 61 23 110 22 175 0 67-24 112-19 173-43v114H0Z" fill="url(#red)"/><path d="M0 25c67 22 116 47 174 76 66 34 125 30 190 2 62-26 116-31 176-21v29c-60-8-114-4-176 22-65 28-124 32-190-2C116 102 67 77 0 55Z" fill="url(#fold)" opacity=".74"/><path d="M22 31c49 15 83 37 133 61 61 30 101 37 162 17" fill="none" stroke="#fff" stroke-opacity=".52" stroke-width="8"/><path d="M205 19c32 30 69 45 112 50 46 6 89-11 133-28" fill="none" stroke="#fff" stroke-opacity=".34" stroke-width="6"/><path d="M52 143c67-32 114-12 166 4 62 19 108 4 168-19" fill="none" stroke="#621221" stroke-opacity=".34" stroke-width="10"/><path d="M0 36C65 7 127 9 193 33c63 23 111 21 169 0 65-24 114-18 178-29" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="3"/></g></svg>');
-layers.push({input:flag,left:720,top:635});
+let flag=null;
+try{
+ const flagResponse=await fetch(imageHost+'/images/discord/polish-flag-eagle.svg',{signal:AbortSignal.timeout(4500)});
+ if(!flagResponse.ok)throw new Error('Polish flag artwork HTTP '+flagResponse.status);
+ const flagBytes=Buffer.from(await flagResponse.arrayBuffer());
+ flag=await sharp(flagBytes).resize(700,233,{fit:'fill'}).png().toBuffer();
+ layers.push({input:flag,left:500,top:567});
+}catch(error){console.warn('Polish flag artwork could not be rendered',String(error));}
+
 layers.push({input:overlay});
 // Place the original Lineage II clan crest where the reference shows the eagle.
 let crest=null;
