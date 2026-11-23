@@ -89,6 +89,11 @@ document.querySelectorAll('[data-home-filter]').forEach((link) => link.addEventL
   renderFilters();
   renderCalendar();
 }));
+document.querySelectorAll('[data-home-next-event-link]').forEach((link) => link.addEventListener('click', () => {
+  const next = getUpcoming()[0];
+  if (next) selectedDay = new Date(dateFromEvent(next));
+  renderCalendar();
+}));
 function rowCountdown(event) {
   if (event.isPvpSchedule) return pvpCountdownText(event);
   const currentStatus = eventStatus(event);
