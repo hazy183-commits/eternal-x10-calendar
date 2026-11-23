@@ -506,3 +506,88 @@
   .quest-mob-portrait { width: 39px; height: 39px; flex-basis: 39px; }
   .quest-mob-copy b { font-size: 9px; }
 }
+
+#epicQuestGuideList[hidden] { display: none !important; }
+
+.quest-guide-modal {
+  position: fixed;
+  z-index: 31000;
+  inset: 0;
+  display: none;
+  place-items: center;
+  padding: 20px;
+}
+
+.quest-guide-modal.open { display: grid; }
+
+.quest-guide-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, .84);
+  backdrop-filter: blur(8px);
+}
+
+.quest-guide-modal-dialog {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  width: min(1240px, 100%);
+  max-height: 94vh;
+  overflow: hidden;
+  border: 1px solid rgba(218, 177, 86, .76);
+  background: linear-gradient(145deg, #111615, #070a0b);
+  box-shadow: 0 28px 90px rgba(0, 0, 0, .8), 0 0 28px rgba(202, 155, 61, .1);
+}
+
+.quest-guide-modal-header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  min-height: 54px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 8px 14px 8px 19px;
+  border-bottom: 1px solid rgba(203, 164, 77, .28);
+  background: rgba(8, 11, 12, .96);
+  color: #d9b96d;
+  font: 700 11px/1.4 Inter, sans-serif;
+  letter-spacing: .17em;
+}
+
+.quest-guide-modal-close {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  place-items: center;
+  border: 1px solid #9d7839;
+  background: #17130c;
+  color: #f0cc7d;
+  font: 25px/1 Inter, sans-serif;
+  cursor: pointer;
+}
+
+.quest-guide-modal-close:hover,
+.quest-guide-modal-close:focus-visible {
+  border-color: #f0cc7d;
+  background: #302414;
+  outline: 2px solid #d5ad58;
+  outline-offset: 2px;
+}
+
+.quest-guide-modal-scroll {
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.quest-guide-modal-scroll .quest-guide { margin: 0; border: 0; box-shadow: none; }
+
+@media (max-width: 760px) {
+  .quest-guide-modal { padding: 7px; }
+  .quest-guide-modal-dialog { width: 100%; max-height: calc(100dvh - 14px); }
+  .quest-guide-modal-header { min-height: 48px; padding-left: 12px; font-size: 10px; letter-spacing: .12em; }
+  .quest-guide-modal-close { width: 35px; height: 35px; flex-basis: 35px; }
+}
