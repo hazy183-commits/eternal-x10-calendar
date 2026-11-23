@@ -31,6 +31,15 @@ function updateSlot(root, event, now) {
   put('[data-pvp-local-time]', `${localSlotTime(event)} · Polska`);
   put('[data-pvp-server-time]', `${event.utcTime} · serwer (${PVP_SERVER_TIME_ZONE})`);
   put('[data-pvp-countdown]', pvpCountdownText(event, now));
+  const progress = root.querySelector('[data-pvp-slot-progress]');
+  const progressFill = root.querySelector('[data-pvp-slot-progress-fill]');
+  if (progress && progressFill) {
+    const interval = PVP_INTERVAL_HOURS * 60 * 60 * 1000;
+    const remaining = Math.max(0, Math.min(interval, new Date(event.startAt).getTime() - now.getTime()));
+    const percentage = Math.round(((interval - remaining) / interval) * 100);
+    progress.setAttribute('aria-valuenow', String(percentage));
+    progressFill.style.transform = `scaleX(${(percentage / 100).toFixed(4)})`;
+  }
 }
 
 export function updatePvpRowCountdowns(root, now = new Date()) {
@@ -66,12 +75,13 @@ export function renderPvpEventPanel(root, now = new Date()) {
 }
 
 const SIDEBAR_TEMPLATE = `<article class="pvp-sidebar-event pvp-next" data-pvp-slot-card>
-  <div class="pvp-sidebar-main"><span class="pvp-sidebar-icon" aria-hidden="true">⚔</span><div class="pvp-sidebar-details">
+  <div class="pvp-sidebar-main"><span class="pvp-sidebar-icon" aria-hidden="true"><img src="/images/events/pvp-pool/multi-team-battle.webp" alt="" width="96" height="96" decoding="async"></span><div class="pvp-sidebar-details">
     <div class="pvp-sidebar-title"><h3>Najbliższy slot</h3><span class="pvp-next-badge">LOSOWANY</span></div>
     <p class="pvp-sidebar-date" data-pvp-date></p>
     <p class="pvp-sidebar-ranges"><span data-pvp-local-time></span><span data-pvp-server-time></span></p>
   </div></div>
   <div class="pvp-sidebar-meta"><p class="pvp-sidebar-status">START SLOTU</p><p class="pvp-sidebar-countdown" data-pvp-countdown></p></div>
+  <div class="pvp-sidebar-progress" data-pvp-slot-progress role="progressbar" aria-label="Postęp do najbliższego slotu Auto PvP" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="pvp-sidebar-progress-fill" data-pvp-slot-progress-fill></span></div>
 </article>
 <section class="pvp-sidebar-pool"><div class="pvp-sidebar-pool-head"><h3>Losowana pula</h3><span>${PVP_EVENTS.length} EVENTÓW</span></div><ul>${poolRows('pvp-sidebar-pool-row')}</ul><p>Serwer losuje tryb przy każdym slocie. Ostatni event nie powtarza się od razu, a jego szansa maleje.</p></section>
 <aside class="pvp-sidebar-next-slots" aria-label="Kolejne sloty Auto PvP">
@@ -104,9 +114,9 @@ function renderPvpSidebarUpcomingSlots(root, now) {
 
 export function renderPvpSidebar(root, now = new Date()) {
   if (!root) return;
-  if (root.dataset.pvpRenderer !== 'random-pool-v4') {
+  if (root.dataset.pvpRenderer !== 'random-pool-v5') {
     root.innerHTML = SIDEBAR_TEMPLATE;
-    root.dataset.pvpRenderer = 'random-pool-v4';
+    root.dataset.pvpRenderer = 'random-pool-v5';
   }
   const event = nextPvpEvent(null, now);
   if (event) updateSlot(root, event, now);

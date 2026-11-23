@@ -106,9 +106,10 @@
 #top .pvp-hero-heading { align-items:center;margin-bottom:12px;padding:2px 1px 12px;border-bottom-color:rgba(190,143,59,.35); }
 #top .pvp-hero-heading h2 { font-size:1.1rem;letter-spacing:.12em;text-shadow:0 0 20px rgba(226,180,87,.2); }
 #top .pvp-hero-heading span { padding:5px 8px;border:1px solid rgba(177,133,61,.42);background:rgba(49,36,17,.36);color:#c7ad7b;font-size:.6rem; }
-#top .pvp-sidebar-event { padding:12px 10px!important;grid-template-columns:minmax(0,1fr) 96px;border:1px solid rgba(190,143,59,.6)!important;border-left:3px solid #e5b95c!important;background:linear-gradient(115deg,rgba(48,37,19,.95),rgba(15,18,16,.98))!important;box-shadow:inset 0 1px rgba(255,255,255,.035),0 8px 20px rgba(0,0,0,.18)!important; }
+#top .pvp-sidebar-event { position:relative;padding:12px 10px!important;grid-template-columns:minmax(0,1fr) 96px;border:1px solid rgba(190,143,59,.6)!important;border-left:3px solid #e5b95c!important;background:linear-gradient(115deg,rgba(48,37,19,.95),rgba(15,18,16,.98))!important;box-shadow:inset 0 1px rgba(255,255,255,.035),0 8px 20px rgba(0,0,0,.18)!important; }
 #top .pvp-sidebar-main { gap:10px; }
-#top .pvp-sidebar-icon { display:grid;flex-basis:38px;width:38px;height:38px;place-items:center;border:1px solid rgba(211,166,82,.48);background:linear-gradient(145deg,rgba(174,125,42,.26),rgba(15,18,17,.78));font-size:19px; }
+#top .pvp-sidebar-icon { display:grid;flex:0 0 40px;width:40px;height:40px;place-items:center;border:0;background:none;box-shadow:none; }
+#top .pvp-sidebar-icon img { display:block;width:40px;height:40px;object-fit:contain;filter:drop-shadow(0 1px 2px rgba(0,0,0,.7)); }
 #top .pvp-sidebar-title h3 { color:#f0d291;font-size:.88rem;line-height:1.3; }
 #top .pvp-sidebar-title .pvp-next-badge { color:#f6d993;border-color:rgba(221,174,83,.6);background:rgba(196,142,42,.15);font-size:.56rem; }
 #top .pvp-sidebar-event .pvp-sidebar-date { display:block;margin:5px 0 0;color:#b9ad96;font-size:.67rem;line-height:1.35;text-transform:capitalize; }
@@ -188,4 +189,17 @@
 @media(prefers-reduced-motion:reduce) {
   #top .pvp-pool-event-tile { transition:none; }
   #top .pvp-pool-event-tile:hover { transform:none; }
+}
+
+#top .pvp-sidebar-progress {
+  position:absolute;left:12px;right:12px;bottom:6px;height:4px;overflow:hidden;
+  border:1px solid rgba(190,143,59,.35);border-radius:99px;background:rgba(2,5,6,.86);
+}
+#top .pvp-sidebar-progress-fill {
+  display:block;width:100%;height:100%;transform:scaleX(0);transform-origin:left center;
+  border-radius:inherit;background:linear-gradient(90deg,#986b2d,#e5b95c,#fff0a6);
+  box-shadow:0 0 8px rgba(224,178,82,.42);transition:transform .8s linear;
+}
+@media(prefers-reduced-motion:reduce) {
+  #top .pvp-sidebar-progress-fill { transition:none; }
 }
