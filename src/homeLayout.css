@@ -154,46 +154,42 @@
   #top .pvp-sidebar-next-slot strong { font-size:.8rem; }
 }
 
-/* Event pool tiles: distinct Lineage-style emblems, unified with the gold UI. */
+/* Authentic Interlude icons in classic inventory-style event tiles. */
 #top .pvp-pool-event-tile {
-  --pvp-accent:#dfb56a;
-  position:relative;display:grid;grid-template-columns:26px minmax(0,1fr) auto;align-items:center;
+  --pvp-accent:#d9b66d;
+  position:relative;display:grid;grid-template-columns:30px minmax(0,1fr) auto;align-items:center;
   gap:7px;min-width:0;min-height:44px;padding:6px 7px 6px 8px!important;
-  border:1px solid rgba(190,143,59,.24)!important;border-radius:4px;
-  background:linear-gradient(115deg,rgba(255,255,255,.035),rgba(8,12,12,.55))!important;
-  box-shadow:inset 0 1px rgba(255,255,255,.025);
-  transition:border-color .18s ease,background .18s ease,transform .18s ease;
+  border:1px solid rgba(190,143,59,.3)!important;border-radius:3px;
+  background:linear-gradient(135deg,rgba(62,49,27,.42),rgba(8,12,12,.78))!important;
+  box-shadow:inset 0 1px rgba(255,231,174,.06),inset 0 -1px rgba(0,0,0,.45);
+  transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease;
 }
 #top .pvp-pool-event-tile:before {
-  content:'';position:absolute;left:0;top:7px;bottom:7px;width:2px;border-radius:2px;
-  background:var(--pvp-accent);opacity:.72;
+  content:'';position:absolute;left:0;top:6px;bottom:6px;width:2px;border-radius:2px;
+  background:linear-gradient(180deg,#f1d28a,#9f7533);opacity:.78;
 }
-#top .pvp-pool-event-tile[data-pvp-event="multi-team-battle"] { --pvp-accent:#dfb56a; }
-#top .pvp-pool-event-tile[data-pvp-event="capture-the-base"] { --pvp-accent:#8bb8c3; }
-#top .pvp-pool-event-tile[data-pvp-event="epic-boss-challenge"] { --pvp-accent:#dd795c; }
-#top .pvp-pool-event-tile[data-pvp-event="korean-tvt"] { --pvp-accent:#b39acb; }
-#top .pvp-pool-event-tile[data-pvp-event="death-match"] { --pvp-accent:#d77d7d; }
-#top .pvp-pool-event-tile[data-pvp-event="capture-the-flag"] { --pvp-accent:#8bbb88; }
 #top .pvp-pool-event-icon {
-  display:grid;place-items:center;width:26px;height:28px;color:var(--pvp-accent);
-  border:1px solid rgba(190,143,59,.22);border-radius:3px;
-  background:linear-gradient(145deg,rgba(190,143,59,.08),rgba(5,8,8,.4));
+  display:grid;place-items:center;width:30px;height:30px;overflow:hidden;
+  border:1px solid rgba(198,157,76,.62);border-radius:2px;
+  background:linear-gradient(145deg,#292319,#090c0d);
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.8),0 1px 3px rgba(0,0,0,.5);
 }
-#top .pvp-pool-event-icon svg { display:block;width:18px;height:18px; }
+#top .pvp-pool-event-icon img { display:block;width:24px;height:24px;object-fit:contain;image-rendering:auto; }
 #top .pvp-pool-event-name { min-width:0;overflow-wrap:anywhere;color:#e2d7c2;font-size:.64rem;line-height:1.3; }
 #top .pvp-pool-event-tile code {
-  min-width:43px;padding:4px 5px!important;border:1px solid color-mix(in srgb,var(--pvp-accent) 40%,transparent)!important;
-  background:color-mix(in srgb,var(--pvp-accent) 8%,#090d0d)!important;color:#f1d18d!important;
-  font-size:.57rem!important;text-align:center;
+  min-width:43px;padding:4px 5px!important;border:1px solid rgba(186,143,63,.55)!important;
+  background:linear-gradient(180deg,rgba(103,73,26,.3),rgba(15,14,11,.85))!important;
+  color:#f1d18d!important;font-size:.57rem!important;text-align:center;
 }
 #top .pvp-pool-event-tile:hover {
-  transform:translateY(-1px);border-color:color-mix(in srgb,var(--pvp-accent) 64%,transparent)!important;
-  background:linear-gradient(115deg,color-mix(in srgb,var(--pvp-accent) 11%,#111716),rgba(8,12,12,.75))!important;
+  transform:translateY(-1px);border-color:rgba(232,194,111,.72)!important;
+  box-shadow:inset 0 1px rgba(255,231,174,.1),0 0 12px rgba(209,164,78,.13);
 }
 #top .pvp-pool-event-tile:hover:before { opacity:1; }
 @media(max-width:440px) {
-  #top .pvp-pool-event-tile { grid-template-columns:25px minmax(0,1fr) auto;gap:6px;padding-inline:6px!important; }
-  #top .pvp-pool-event-icon { width:25px;height:27px; }
+  #top .pvp-pool-event-tile { grid-template-columns:29px minmax(0,1fr) auto;gap:6px;padding-inline:6px!important; }
+  #top .pvp-pool-event-icon { width:29px;height:29px; }
+  #top .pvp-pool-event-icon img { width:23px;height:23px; }
   #top .pvp-pool-event-name { font-size:.65rem; }
 }
 @media(prefers-reduced-motion:reduce) {
