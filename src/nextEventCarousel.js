@@ -23,7 +23,7 @@ function installMobileHeaderMenu() {
       <div class="mobile-menu-head"><span>ORZEŁ BIAŁY</span><button type="button" data-mobile-menu-close aria-label="Zamknij menu">×</button></div>
       <a href="#top" data-mobile-menu-link>⌂ <span>Strona główna</span></a>
       <a href="#calendar" data-mobile-menu-link>▣ <span>Kalendarz</span></a>
-      <a href="#guides" data-mobile-menu-link>♜ <span>Poradniki / Bossowie</span></a>
+      <a href="#calendar" data-mobile-menu-link>♜ <span>Kalendarz / Bossowie</span></a>
       <button type="button" data-mobile-action="craft">⚒ <span>Craft kalkulator</span></button>
       <button type="button" data-mobile-action="clan">♛ <span>Strefa klanu</span></button>
       <button type="button" data-mobile-action="admin">✦ <span>Panel administratora</span></button>
@@ -31,7 +31,6 @@ function installMobileHeaderMenu() {
       <button type="button" class="mobile-menu-logout" data-mobile-action="logout">↪ <span>Wyloguj</span></button>
     </nav>`;
   document.body.appendChild(panel);
-  window.dispatchEvent(new CustomEvent('orzel:nav-mounted'));
 
   const style = document.createElement('style');
   style.textContent = `
@@ -50,8 +49,6 @@ function installMobileHeaderMenu() {
       .mobile-menu-head button{width:38px;height:38px;border:1px solid #5b4524;background:#0b0f0f;color:#d7aa52;font-size:24px;cursor:pointer}
       .mobile-menu-panel>a,.mobile-menu-panel>button:not(.mobile-menu-head button){box-sizing:border-box;display:flex;width:100%;align-items:center;gap:12px;margin:5px 0;padding:13px 12px;border:1px solid #3e3424;background:#0a0f0f;color:#d8d3c8;text-decoration:none;text-align:left;font:700 11px/1.2 Inter,Arial,sans-serif;letter-spacing:.04em;cursor:pointer}
       .mobile-menu-panel>a:hover,.mobile-menu-panel>button:not(.mobile-menu-head button):hover{border-color:#9a7635;background:#1b160e;color:#efc66f}
-      .mobile-menu-panel>a[aria-current="location"]{border-color:#a77b36;background:linear-gradient(110deg,#2c2111,#12100c);color:#f2d18a;box-shadow:inset 3px 0 #e5b95c}
-      .mobile-menu-panel>a:focus-visible,.mobile-menu-panel>button:focus-visible,.mobile-menu-head button:focus-visible{outline:2px solid #e5b95c;outline-offset:2px}
       .mobile-menu-panel .mobile-menu-logout{margin-top:14px!important;color:#b9ad97!important}
       body.mobile-menu-open{overflow:hidden!important}
     }
