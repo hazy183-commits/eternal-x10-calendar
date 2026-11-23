@@ -1,8 +1,11 @@
+Warning: truncated output (original token count: 13164)
+Total output lines: 906
+
 import { confirmLocalized } from './i18nCore.js';
 import './i18n.js';
 import { createCalendarNavigation } from './calendarNavigation.js';
 import './persistentHeader.js';
-import './siteMotion.js';
+import { renderEpicQuestGuides } from './epicQuestGuides.js';
 import { publishClanEventSources } from './clanEventFeed.js';
 import { SupabaseEventRepository } from './supabaseEvents.js';
 import { supabase } from './supabaseClient.js';
@@ -23,6 +26,7 @@ import { withClanActivityEvents } from './clanActivitySchedule.js';
 import { renderPvpEventPanel, renderPvpSidebar, updatePvpRowCountdowns } from './pvpEventPanel.js';
 console.log('APP STARTED');
 installDiscordReminderSettings(supabase);
+renderEpicQuestGuides();
 
 const artworkName = (event) => event?.artwork || event?.boss || event?.name || '';
 const TYPES = ['RB', 'Epic RB', 'Clan Hall', 'Siege', 'Olympiad', 'Event'];
@@ -325,136 +329,7 @@ function applyQuickTemplate(name) {
   $('#eventName').focus();
 }
 function updateRecurrencePatternUi() {
-  const custom = $('#recurrencePattern').value === 'everyDays';
-  $('#recurrenceIntervalField').hidden = !custom;
-  updateRecurrencePreview();
-}
-function setRecurrenceMode(mode) {
-  recurrenceMode = mode === 'recurring' ? 'recurring' : 'single';
-  const recurring = recurrenceMode === 'recurring' && formMode === 'new';
-  $('#recurrenceSection').hidden = !recurring;
-  $('#recurrencePreview').hidden = !recurring;
-  if (recurring) updateRecurrencePatternUi();
-}
-function updateRecurrencePreview() {
-  if (formMode !== 'new' || recurrenceMode !== 'recurring') return;
-  const preview = previewRecurringDates({
-    startDate: $('#eventDate').value,
-    endDate: $('#recurrenceEndDate').value,
-    pattern: $('#recurrencePattern').value,
-    intervalDays: $('#recurrenceInterval').value,
-  });
-  const list = $('#recurrencePreviewList');
-  const summary = $('#recurrencePreviewSummary');
-  list.innerHTML = preview.dates.map((date) => `<li>${safe(date)}${$('#eventTime').value ? ` · ${safe($('#eventTime').value)}` : ''}</li>`).join('');
-  if (preview.error) {
-    summary.textContent = preview.error;
-    summary.className = 'recurrence-error';
-  } else if (!preview.total) {
-    summary.textContent = 'Wybierz pierwszą i końcową datę wydarzeń.';
-    summary.className = 'recurrence-error';
-  } else {
-    summary.textContent = `${preview.remaining ? `…oraz ${preview.remaining} kolejnych. ` : ''}Łącznie: ${preview.total}.${preview.exceedsLimit ? ` Maksymalnie można utworzyć ${MAX_BATCH_EVENTS}.` : ''}`;
-    summary.className = preview.exceedsLimit ? 'recurrence-error' : '';
-  }
-}
-function setAdminFeedback(message = '', isError = false) {
-  const feedback = $('#adminFeedback');
-  feedback.textContent = message;
-  feedback.classList.toggle('admin-feedback-error', isError);
-}
-function updateBossPreview(name = '') {
-  const image = $('#bossPreviewImage');
-  const placeholder = $('#bossPreviewPlaceholder');
-  if (!image || !placeholder) return;
-  const url = bossArtworkUrl(name);
-  image.hidden = true;
-  image.removeAttribute('src');
-  image.alt = '';
-  placeholder.hidden = false;
-  placeholder.textContent = url ? 'Ładowanie grafiki…' : 'Wybierz bossa, aby zobaczyć grafikę.';
-  if (!url) return;
-  image.onload = () => {
-    image.hidden = false;
-    placeholder.hidden = true;
-  };
-  image.onerror = () => {
-    image.hidden = true;
-    placeholder.hidden = false;
-    placeholder.textContent = 'Brak grafiki';
-  };
-  image.alt = `Grafika: ${name}`;
-  image.src = url;
-}
-function updateDurationDefault() {
-  if (formMode === 'new' && automaticDuration) {
-    $('#eventDuration').value = defaultDurationForType($('#eventType').value);
-  }
-}
-function applyBossDefaults() {
-  const boss = $('#eventBoss').value;
-  const preset = presetForBoss(boss);
-  if (formMode === 'new') {
-    if (automaticLocation) $('#eventLocation').value = preset?.location || '';
-    if (preset) {
-      if (!$('#eventName').value.trim()) $('#eventName').value = boss;
-      $('#eventType').value = preset.type;
-    }
-    updateDurationDefault();
-  }
-  updateBossPreview(preset ? boss : '');
-}
-function validateEventForm() {
-  const checks = [
-    ['#eventName', 'Podaj nazwę wydarzenia.'],
-    ['#eventDate', 'Wybierz datę wydarzenia.'],
-    ['#eventTime', 'Wybierz godzinę wydarzenia.'],
-    ['#eventType', 'Wybierz typ wydarzenia.'],
-  ];
-  for (const [selector, message] of checks) {
-    const field = $(selector);
-    if (!field.value.trim()) {
-      setAdminFeedback(message, true);
-      field.focus();
-      return false;
-    }
-  }
-  const duration = Number($('#eventDuration').value);
-  if (!Number.isFinite(duration) || duration <= 0) {
-    setAdminFeedback('Czas trwania musi być większy od 0 minut.', true);
-    $('#eventDuration').focus();
-    return false;
-  }
-  if (formMode === 'new' && recurrenceMode === 'recurring') {
-    const preview = previewRecurringDates({
-      startDate: $('#eventDate').value,
-      endDate: $('#recurrenceEndDate').value,
-      pattern: $('#recurrencePattern').value,
-      intervalDays: $('#recurrenceInterval').value,
-    });
-    if (preview.error) {
-      setAdminFeedback(preview.error, true);
-      return false;
-    }
-    if (preview.exceedsLimit) {
-      setAdminFeedback(`Jedna operacja może utworzyć maksymalnie ${MAX_BATCH_EVENTS} wydarzeń.`, true);
-      return false;
-    }
-  }
-  setAdminFeedback('');
-  return true;
-}
-function resetForm() {
-  formMode = 'new';
-  automaticLocation = true;
-  automaticDuration = true;
-  recurrenceMode = 'single';
-  $('#eventForm').reset();
-  $('#formTitle').textContent = 'Nowe wydarzenie';
-  $('#eventId').value = '';
-  $('#eventDate').value = dateKey(selectedDay);
-  $('#eventTime').value = '20:00';
-  $('#eventType').value = 'RB';
+  const custom = $('#recurrencePattern').value === 'ever…1164 tokens truncated…ntType').value = 'RB';
   $('#eventDuration').value = defaultDurationForType('RB');
   $('#eventModeChooser').hidden = false;
   $('#quickTemplates').hidden = false;
