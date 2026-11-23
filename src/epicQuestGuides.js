@@ -328,6 +328,15 @@ export function renderEpicQuestGuides() {
   const list = document.querySelector('#epicQuestGuideList');
   if (!list) return;
   list.innerHTML = guides.map(guideMarkup).join('');
+  list.querySelectorAll('.quest-map-image-frame img').forEach((image) => {
+    const setMapRatio = () => {
+      if (image.naturalWidth && image.naturalHeight) {
+        image.parentElement.style.aspectRatio = `${image.naturalWidth} / ${image.naturalHeight}`;
+      }
+    };
+    if (image.complete) setMapRatio();
+    else image.addEventListener('load', setMapRatio, { once: true });
+  });
   list.querySelectorAll('.quest-guide').forEach((card) => {
     card.addEventListener('toggle', () => setGuideToggleLabel(card, card.open));
   });
