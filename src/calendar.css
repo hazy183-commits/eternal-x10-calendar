@@ -185,6 +185,25 @@
   .unified-calendar .row-status .status-dot { font-size:10px; }
 }
 
+/* Distinct category accents make the schedule faster to scan. */
+.unified-calendar .event-row>.type-chip {
+  display:inline-flex;
+  align-items:center;
+  min-height:27px;
+  padding:5px 8px;
+  border-left-width:3px;
+  border-radius:3px;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.055em;
+}
+.unified-calendar .event-row>.type-chip.epic-rb { border-color:#bd6455; background:linear-gradient(110deg,#63292055,#28121066); color:#f3a292; }
+.unified-calendar .event-row>.type-chip.rb { border-color:#718a83; background:linear-gradient(110deg,#233b3755,#10181766); color:#bdd0c8; }
+.unified-calendar .event-row>.type-chip.siege { border-color:#bb6845; background:linear-gradient(110deg,#5d2c1d55,#26140f66); color:#f1a47d; }
+.unified-calendar .event-row>.type-chip.clan-hall { border-color:#bd9447; background:linear-gradient(110deg,#5c431e55,#241c1066); color:#efd087; }
+.unified-calendar .event-row>.type-chip.olympiad { border-color:#5a9bb2; background:linear-gradient(110deg,#1c485755,#0d1c2066); color:#a5d9e9; }
+.unified-calendar .event-row>.type-chip.event { border-color:#6f9b52; background:linear-gradient(110deg,#29431f55,#111a1066); color:#b8df9b; }
+
 /* Full-height arrows frame the day strip; the return action stays below it. */
 .unified-calendar .calendar-strip { order:1; display:grid; grid-template-columns:44px minmax(0,1fr) 44px; gap:8px; padding:16px 20px; min-width:0; max-width:100%; border-bottom:1px solid var(--soft); }
 .unified-calendar .calendar-week { min-height:89px; }
