@@ -64,7 +64,34 @@ const SIDEBAR_TEMPLATE = `<article class="pvp-sidebar-event pvp-next" data-pvp-s
   </div></div>
   <div class="pvp-sidebar-meta"><p class="pvp-sidebar-status">START SLOTU</p><p class="pvp-sidebar-countdown" data-pvp-countdown></p></div>
 </article>
-<section class="pvp-sidebar-pool"><div class="pvp-sidebar-pool-head"><h3>Losowana pula</h3><span>${PVP_EVENTS.length} EVENTÓW</span></div><ul>${poolRows('pvp-sidebar-pool-row')}</ul><p>Serwer losuje tryb przy każdym slocie. Ostatni event nie powtarza się od razu, a jego szansa maleje.</p></section>`;
+<section class="pvp-sidebar-pool"><div class="pvp-sidebar-pool-head"><h3>Losowana pula</h3><span>${PVP_EVENTS.length} EVENTÓW</span></div><ul>${poolRows('pvp-sidebar-pool-row')}</ul><p>Serwer losuje tryb przy każdym slocie. Ostatni event nie powtarza się od razu, a jego szansa maleje.</p></section>
+<aside class="pvp-sidebar-next-slots" aria-label="Kolejne sloty Auto PvP">
+  <div class="pvp-sidebar-next-head"><h4>Kolejne starty</h4><span>CZAS POLSKI</span></div>
+  <ol class="pvp-sidebar-next-list" data-pvp-next-slot-list></ol>
+</aside>`;
+
+function renderPvpSidebarUpcomingSlots(root, now) {
+  const list = root.querySelector('[data-pvp-next-slot-list]');
+  if (!list) return;
+  const slots = nextPvpEvents(4, now);
+  const first = slots[0];
+  const following = slots.slice(1, 4);
+  const signature = following.map((slot) => slot.startAt).join('|');
+  if (list.dataset.slots === signature) return;
+  list.dataset.slots = signature;
+  list.innerHTML = following.length ? following.map((slot, index) => {
+    const offset = (index + 1) * PVP_INTERVAL_HOURS;
+    const label = slot.date === first?.date
+      ? `+${offset}H`
+      : new Intl.DateTimeFormat('pl-PL', { timeZone: PVP_TIME_ZONE, weekday: 'short' })
+        .format(new Date(slot.startAt)).replace('.', '').toLocaleUpperCase('pl-PL');
+    return `<li class="pvp-sidebar-next-slot">
+      <span class="pvp-sidebar-next-index">${String(index + 1).padStart(2, '0')}</span>
+      <strong>${localSlotTime(slot)}</strong>
+      <small>${label}</small>
+    </li>`;
+  }).join('') : '<li class="pvp-sidebar-next-empty">Brak kolejnych slotów</li>';
+}
 
 export function renderPvpSidebar(root, now = new Date()) {
   if (!root) return;
@@ -74,6 +101,7 @@ export function renderPvpSidebar(root, now = new Date()) {
   }
   const event = nextPvpEvent(null, now);
   if (event) updateSlot(root, event, now);
+  renderPvpSidebarUpcomingSlots(root, now);
 
   const following = nextPvpEvents(3, now).slice(1);
   const nextTimes = following.map((slot) => `${localSlotTime(slot)} Polska`).join(' · ');
