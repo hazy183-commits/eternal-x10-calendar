@@ -160,3 +160,21 @@ body > .topbar { z-index:13000!important; }
     gap:12px!important;
   }
 }
+
+
+/* Final desktop alignment: keep the clan brand visibly separate from navigation. */
+@media (min-width: 1201px) {
+  html body > header.topbar > .topbar-inner {
+    width: min(1380px, calc(100% - 48px)) !important;
+    max-width: 1380px !important;
+    gap: 20px !important;
+    justify-content: space-between !important;
+  }
+  html body > header.topbar > .topbar-inner > .main-nav {
+    flex: 1 1 auto !important;
+    min-width: 0;
+    margin: 0 !important;
+    justify-content: center !important;
+    gap: clamp(14px, 1.2vw, 20px) !important;
+  }
+}
