@@ -204,6 +204,41 @@
 .unified-calendar .event-row>.type-chip.olympiad { border-color:#5a9bb2; background:linear-gradient(110deg,#1c485755,#0d1c2066); color:#a5d9e9; }
 .unified-calendar .event-row>.type-chip.event { border-color:#6f9b52; background:linear-gradient(110deg,#29431f55,#111a1066); color:#b8df9b; }
 
+/* Make event state and countdown readable at a glance. */
+.unified-calendar .event-row .row-status .status-dot {
+  display:inline-flex;
+  align-items:center;
+  justify-self:end;
+  width:max-content;
+  max-width:100%;
+  padding:5px 9px;
+  border:1px solid #8a6a33;
+  border-radius:3px;
+  background:linear-gradient(135deg,#332513,#17120b);
+  color:#f0cc77;
+  font-size:11px;
+  font-weight:900;
+  line-height:1.2;
+  letter-spacing:.055em;
+  text-transform:uppercase;
+}
+.unified-calendar .event-row[data-calendar-state="upcoming"] .row-status .status-dot { border-color:#9b783d; background:linear-gradient(135deg,#322716,#17130d); color:#f0cf82; }
+.unified-calendar .event-row[data-calendar-state="upcoming"] .row-status .status-dot.za-chwilę { border-color:#ba793d; background:linear-gradient(135deg,#432818,#20140d); color:#ffc17a; box-shadow:0 0 12px #d8873a20; }
+.unified-calendar .event-row[data-calendar-state="active"] .row-status .status-dot { justify-self:end; border-color:#568044; background:linear-gradient(135deg,#17321d,#0c1b11); color:#b9eda0; }
+.unified-calendar .event-row[data-calendar-state="active"] .row-status .status-dot:before { content:'● '; color:#71da68; }
+.unified-calendar .event-row[data-calendar-state="completed"] { opacity:.72; }
+.unified-calendar .event-row[data-calendar-state="completed"] .row-status .status-dot { border-color:#59625e; background:#161c1b; color:#b4b9b3; }
+.unified-calendar .event-row .row-status>span { display:grid; gap:2px; color:#f0d38e; font-size:14px; font-weight:800; font-variant-numeric:tabular-nums; }
+.unified-calendar .event-row[data-calendar-state="upcoming"] .row-status>span:before { content:"DO STARTU"; color:#9e927c; font-size:8px; font-weight:800; letter-spacing:.11em; }
+.unified-calendar .event-row[data-calendar-state="active"] .row-status>span:before { content:"DO KOŃCA"; color:#8ca68c; font-size:8px; font-weight:800; letter-spacing:.11em; }
+.unified-calendar .event-row[data-calendar-state="completed"] .row-status>span { color:#adb2ad; font-size:12px; font-weight:700; }
+@media(max-width:900px) {
+  .unified-calendar .event-row .row-status .status-dot { justify-self:end; padding:4px 7px; font-size:9px; }
+  .unified-calendar .event-row .row-status>span { font-size:12px; }
+  .unified-calendar .event-row[data-calendar-state="upcoming"] .row-status>span:before,
+  .unified-calendar .event-row[data-calendar-state="active"] .row-status>span:before { font-size:7px; }
+}
+
 /* Full-height arrows frame the day strip; the return action stays below it. */
 .unified-calendar .calendar-strip { order:1; display:grid; grid-template-columns:44px minmax(0,1fr) 44px; gap:8px; padding:16px 20px; min-width:0; max-width:100%; border-bottom:1px solid var(--soft); }
 .unified-calendar .calendar-week { min-height:89px; }
