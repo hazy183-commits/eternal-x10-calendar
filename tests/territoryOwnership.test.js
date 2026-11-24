@@ -1,7 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { applyTerritoryOwners, parseTerritoryOwners } from '../src/territoryOwnership.js';
-import { ownershipCropRect } from '../src/territoryOwnershipScreenshotImport.js';
+import { applyTerritoryOwners, ownershipCropRect, parseTerritoryOwners } from '../src/territoryOwnership.js';
 
 test('parses castle owner names from common OCR layouts', () => {
   const rows = parseTerritoryOwners(`Aden Castle | Owner: WhiteEagles\nGiran Castle\nClan: NightWatch`, 'castle');

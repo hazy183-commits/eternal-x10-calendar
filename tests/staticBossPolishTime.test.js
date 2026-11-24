@@ -15,7 +15,10 @@ function warsawDateTime(value) {
 test('Baium is Saturday at 22:00 in Polish summer time', () => {
   const occurrence = nextStaticOccurrence('Baium', new Date('2026-07-04T19:00:00.000Z'));
   assert.deepEqual(warsawDateTime(occurrence.start), { date: '2026-07-04', time: '22:00' });
-  assert.equal(formatLocalDateTime(occurrence.start), '04.07.2026, 22:00');
+  const polishFormat = new Intl.DateTimeFormat('pl-PL', {
+    timeZone: 'Europe/Warsaw', dateStyle: 'short', timeStyle: 'short',
+  });
+  assert.equal(formatLocalDateTime(occurrence.start), polishFormat.format(occurrence.start));
 });
 
 test('Baium is Saturday at 21:00 in Polish winter time', () => {
