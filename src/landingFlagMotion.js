@@ -42,6 +42,15 @@ export function animateLandingFlags(canvas, layer) {
     }
   }
 
+  // Size the fixed overlay to the background's scrollport, excluding the scrollbar.
+  const fit = () => {
+    if (!layer.clientWidth || !layer.clientHeight) return;
+    canvas.style.width = `${layer.clientWidth}px`;
+    canvas.style.height = `${layer.clientHeight}px`;
+  };
+  new ResizeObserver(fit).observe(layer);
+  fit();
+
   picture.onload = sync;
   picture.src = '/images/clan-background-v1.jpg';
   const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; sync(); });
