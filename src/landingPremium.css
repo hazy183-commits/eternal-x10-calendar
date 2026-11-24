@@ -93,7 +93,7 @@
 }
 
 /* Follow the existing full-screen image so the animated patches stay in place. */
-#memberAuthLayer .ob-landing-background-motion {
+.ob-landing-background-motion {
   position:fixed;
   inset:0 auto auto 0;
   width:0;
@@ -105,7 +105,7 @@
 }
 #memberAuthLayer .ob-gate-shell { z-index:1; }
 @media (prefers-reduced-motion:reduce) {
-  #memberAuthLayer .ob-landing-background-motion { display:none; }
+  .ob-landing-background-motion { display:none; }
 }
 
 #memberAuthLayer .ob-gate-shell {
@@ -115,5 +115,18 @@
   html body #memberAuthLayer:has(.ob-landing-background-motion) {
     background-position:right top!important;
   }
-  #memberAuthLayer .ob-landing-background-motion { object-position:right top; }
+  .ob-landing-background-motion { object-position:right top; }
+}
+
+.ob-page-background-motion { z-index:-1; }
+html.member-locked .ob-page-background-motion,
+body:has(#memberAuthLayer.open) .ob-page-background-motion { display:none; }
+#memberZoneLayer .member-zone-box { position:relative; z-index:1; }
+@media (max-width:700px) {
+  body > .ob-page-background-motion,
+  #memberZoneLayer > .ob-landing-background-motion { object-position:24% top; filter:brightness(.46); }
+}
+@media (min-width:701px) {
+  body > .ob-page-background-motion,
+  #memberZoneLayer > .ob-landing-background-motion { object-position:center top; }
 }

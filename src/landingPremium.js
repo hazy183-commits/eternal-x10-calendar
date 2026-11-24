@@ -119,6 +119,18 @@ export function installPremiumLanding(){
   layer.prepend(flags);
   layer.appendChild(shell);
   animateLandingFlags(flags, layer);
+  const pageFlags = flags.cloneNode();
+  pageFlags.classList.add('ob-page-background-motion');
+  document.body.prepend(pageFlags);
+  animateLandingFlags(pageFlags, document.documentElement, () =>
+    !document.documentElement.classList.contains('member-locked') && !layer.classList.contains('open'));
+
+  const zone = document.getElementById('memberZoneLayer');
+  if (zone) {
+    const zoneFlags = flags.cloneNode();
+    zone.prepend(zoneFlags);
+    animateLandingFlags(zoneFlags, zone);
+  }
   shell.querySelector('.ob-gate-login-slot').appendChild(authBox);
   authBox.querySelector('img')?.classList.add('ob-auth-old-logo');
   authBox.querySelector('.member-auth-close')?.setAttribute('aria-hidden','true');

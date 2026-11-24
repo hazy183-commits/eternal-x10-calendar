@@ -4,7 +4,7 @@ const FLAGS = [
   { left: 1468, right: 1554, top: 378, bottom: 471, amplitude: 5 },
 ];
 
-export function animateLandingFlags(canvas, layer) {
+export function animateLandingFlags(canvas, layer, isOpen = () => layer.classList.contains('open')) {
   const context = canvas.getContext('2d');
   if (!context) return;
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -32,7 +32,7 @@ export function animateLandingFlags(canvas, layer) {
   }
 
   function sync() {
-    const active = visible && layer.classList.contains('open') && !motion.matches
+    const active = visible && isOpen() && !motion.matches
       && !document.hidden && picture.complete && picture.naturalWidth === canvas.width;
     if (active && !frame) frame = requestAnimationFrame(draw);
     if (!active && frame) {
@@ -55,7 +55,11 @@ export function animateLandingFlags(canvas, layer) {
   picture.src = '/images/clan-background-v1.jpg';
   const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; sync(); });
   observer.observe(canvas);
-  new MutationObserver(sync).observe(layer, { attributes: true, attributeFilter: ['class'] });
+  const stateObserver = new MutationObserver(sync);
+  stateObserver.observe(layer, { attributes: true, attributeFilter: ['class'] });
+  if (layer === document.documentElement) {
+    stateObserver.observe(document.querySelector('#memberAuthLayer'), { attributes: true, attributeFilter: ['class'] });
+  }
   motion.addEventListener('change', sync);
   document.addEventListener('visibilitychange', sync);
 }
