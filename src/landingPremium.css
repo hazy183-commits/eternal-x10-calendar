@@ -121,12 +121,11 @@
 .ob-page-background-motion { z-index:-1; }
 html.member-locked .ob-page-background-motion,
 body:has(#memberAuthLayer.open) .ob-page-background-motion { display:none; }
-#memberZoneLayer .member-zone-box { position:relative; z-index:1; }
+/* The open clan panel overlays the same scene as the signed-in homepage. */
+html body #memberZoneLayer.open { background:transparent!important; }
 @media (max-width:700px) {
-  body > .ob-page-background-motion,
-  #memberZoneLayer > .ob-landing-background-motion { object-position:24% top; filter:brightness(.46); }
+  body > .ob-page-background-motion { object-position:24% top; filter:brightness(.46); }
 }
 @media (min-width:701px) {
-  body > .ob-page-background-motion,
-  #memberZoneLayer > .ob-landing-background-motion { object-position:center top; }
+  body > .ob-page-background-motion { object-position:center top; }
 }
