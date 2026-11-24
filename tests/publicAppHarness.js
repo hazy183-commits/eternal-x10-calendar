@@ -21,7 +21,8 @@ export function app(t, iso) {
   const element = (selector) => {
     if (!elements.has(selector)) elements.set(selector, {
       textContent: '', innerHTML: '', className: '', classList: { toggle() {} }, querySelector: element,
-      attributes: new Set(),
+      attributes: new Set(), dataset: {}, style: {}, querySelectorAll() { return []; },
+      setAttribute(name) { this.attributes.add(name); },
       toggleAttribute(name, force) { if (force) this.attributes.add(name); else this.attributes.delete(name); return Boolean(force); },
     });
     return elements.get(selector);
@@ -30,7 +31,8 @@ export function app(t, iso) {
     ...olympiad, ...bosses, ...sieges, ...territory, ...pvp, ...clanActivities, renderOlympiadPanel, renderPvpEventPanel, renderPvpSidebar, updatePvpRowCountdowns,
     publishClanEventSources, Date, Intl, console: { log() {} }, supabase: null,
     SupabaseEventRepository: class {}, SupabaseBossRespawnRepository: class {}, SupabaseSiegeScheduleRepository: class {},
-    applyBossArtwork() {}, refreshBossArtwork() {},
+    applyBossArtwork() {}, bossArtworkUrl() { return ''; }, refreshBossArtwork() {},
+    installDiscordReminderSettings() {}, renderEpicQuestGuides() {},
     document: { readyState: 'loading', addEventListener() {}, querySelector: element },
   });
   vm.runInContext(source, context);

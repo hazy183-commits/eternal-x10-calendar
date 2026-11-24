@@ -38,7 +38,7 @@ function extractTimes(text) {
 
 
 function warsawParts(date, time) {
-  const match = `${date} ${time}`.match(/^(\\d{4})-(\\d{2})-(\\d{2})\\s+(\\d{2}):(\\d{2})$/);
+  const match = `${date} ${time}`.match(/^(\d{4})-(\d{2})-(\d{2})\s+(\d{2}):(\d{2})$/);
   if (!match) return null;
   const instant = new Date(Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3]), Number(match[4]), Number(match[5])));
   if (!Number.isFinite(instant.getTime())) return null;
@@ -59,7 +59,7 @@ export function siegeServerTimeToPoland(date, time) {
 }
 
 export function siegePolandTimeToServer(date, time) {
-  const match = `${date} ${time}`.match(/^(\\d{4})-(\\d{2})-(\\d{2})\\s+(\\d{2}):(\\d{2})$/);
+  const match = `${date} ${time}`.match(/^(\d{4})-(\d{2})-(\d{2})\s+(\d{2}):(\d{2})$/);
   if (!match) return null;
   const target = Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3]), Number(match[4]), Number(match[5]));
   let guess = target;
