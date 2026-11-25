@@ -853,3 +853,5 @@
 .quest-map-spawn:is(:focus-visible,[aria-pressed="true"]){z-index:3;outline:2px solid white;outline-offset:2px}
 
 .quest-map-lightbox-dialog:has(.quest-map-spawn-controls:not([hidden])){grid-template-rows:auto auto minmax(0,1fr) auto}
+
+.quest-map-farm-circle{position:absolute;z-index:2;display:grid;place-items:center;box-sizing:border-box;border:2px solid var(--spawn-color);border-radius:50%;background:color-mix(in srgb,var(--spawn-color) 23%,transparent);color:#fff;text-shadow:0 1px 3px #000,0 0 4px #000;font:800 12px/1 Inter,sans-serif;transform:translate(-50%,-50%)}

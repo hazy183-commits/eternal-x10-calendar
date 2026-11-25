@@ -40,3 +40,35 @@ export const allianceSpawns = {
     {"name":"Varka’s Prophet / Prophet’s Guard / Disciple of Prophet","badge":"General","tier":3,"spawns":[[115200,-47352,-2568],[114720,-49746,-2584],[114369,-44708,-2688],[113480,-43898,-2776],[113980,-55060,-2736],[110990,-56426,-2736],[111368,-57221,-2720],[113134,-54352,-2776],[108666,-47503,-2152],[107424,-49095,-1976]]}
   ]
 };
+
+// Four densest non-repeated spawn clusters per badge, using a radius of 2,800 world units.
+export const allianceFarmAreas = {
+  ketra: [
+    {"badge":"Soldier","tier":1,"x":137419,"y":-76756,"radius":2800},
+    {"badge":"Soldier","tier":1,"x":139930,"y":-87465,"radius":2800},
+    {"badge":"Soldier","tier":1,"x":157166,"y":-80924,"radius":2800},
+    {"badge":"Soldier","tier":1,"x":157408,"y":-86750,"radius":2800},
+    {"badge":"Captain","tier":2,"x":153594,"y":-74640,"radius":2800},
+    {"badge":"Captain","tier":2,"x":143498,"y":-71918,"radius":2800},
+    {"badge":"Captain","tier":2,"x":140040,"y":-82620,"radius":2800},
+    {"badge":"Captain","tier":2,"x":153786,"y":-87397,"radius":2800},
+    {"badge":"General","tier":3,"x":148844,"y":-86334,"radius":2800},
+    {"badge":"General","tier":3,"x":143532,"y":-76736,"radius":2800},
+    {"badge":"General","tier":3,"x":149160,"y":-77240,"radius":2800},
+    {"badge":"General","tier":3,"x":146062,"y":-88584,"radius":2800}
+  ],
+  varka: [
+    {"badge":"Soldier","tier":1,"x":121288,"y":-43460,"radius":2800},
+    {"badge":"Soldier","tier":1,"x":127456,"y":-39590,"radius":2800},
+    {"badge":"Soldier","tier":1,"x":121396,"y":-38259,"radius":2800},
+    {"badge":"Soldier","tier":1,"x":127236,"y":-58172,"radius":2800},
+    {"badge":"Captain","tier":2,"x":119455,"y":-47357,"radius":2800},
+    {"badge":"Captain","tier":2,"x":120984,"y":-54604,"radius":2800},
+    {"badge":"Captain","tier":2,"x":122624,"y":-51350,"radius":2800},
+    {"badge":"Captain","tier":2,"x":117774,"y":-54861,"radius":2800},
+    {"badge":"General","tier":3,"x":112573,"y":-43955,"radius":2800},
+    {"badge":"General","tier":3,"x":111998,"y":-54836,"radius":2800},
+    {"badge":"General","tier":3,"x":108804,"y":-47901,"radius":2800},
+    {"badge":"General","tier":3,"x":113920,"y":-47694,"radius":2800}
+  ]
+};

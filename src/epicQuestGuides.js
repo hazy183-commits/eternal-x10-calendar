@@ -1,4 +1,4 @@
-import { allianceSpawns } from './allianceSpawns.js';
+import { allianceFarmAreas, allianceSpawns } from './allianceSpawns.js';
 
 const INTERLUDE_WORLD_MAP = '/quest-maps/epic-world.jpg';
 const worldPin = (x, y, label) => ({ x, y, label });
@@ -232,6 +232,14 @@ function guideMarkup(guide) {
   </details>`;
 }
 
+// Calibration of the 2048 × 1968 map from the existing raid boss markers.
+const mapScaleX = (1269 - 1245.3076923076924) / (115552 - 109216) / 2048 * 100;
+const mapScaleY = (841.525998492841 - 830) / 3040 / 1968 * 100;
+const mapPosition = (x, y) => ({
+  x: 1269 / 2048 * 100 + (x - 115552) * mapScaleX,
+  y: 830 / 1968 * 100 + (y + 39200) * mapScaleY
+});
+
 function ensureQuestMapModal() {
   let modal = document.getElementById('questMapLightbox');
   if (modal) return modal;
@@ -339,21 +347,37 @@ export function openQuestMap(link) {
   modal._mapResizeHandler = fitImage;
   window.addEventListener('resize', fitImage);
   const legend = modal.querySelector('.quest-map-lightbox-legend-text');
-  const renderPoints = (mob) => {
-    wrap.querySelectorAll('.quest-map-pin, .quest-map-spawn').forEach(pin => pin.remove());
-    points = mob ? mob.spawns.map(([x, y, z]) => ({
-      // Use the existing world map's pixel calibration from the raid boss markers.
-      x: (1269 + (x - 115552) * (1269 - 1245.3076923076924) / (115552 - 109216)) / 2048 * 100,
-      y: (830 + (y + 39200) * (841.525998492841 - 830) / 3040) / 1968 * 100,
-      coordinates: [x, y, z].join(', ')
-    })) : basePoints;
+  const renderPoints = (mob, areas = []) => {
+    wrap.querySelectorAll('.quest-map-pin, .quest-map-spawn, .quest-map-farm-circle').forEach(pin => pin.remove());
+    points = areas.length ? areas.map(area => ({ ...area, ...mapPosition(area.x, area.y) })) : basePoints;
+    if (mob) {
+      points = mob.spawns.map(([x, y, z]) => ({
+        ...mapPosition(x, y),
+        coordinates: [x, y, z].join(', ')
+      }));
+    }
     center = {
       x: (Math.min(...points.map(point => point.x)) + Math.max(...points.map(point => point.x))) / 200,
       y: (Math.min(...points.map(point => point.y)) + Math.max(...points.map(point => point.y))) / 200
     };
     const description = mob ? `${mob.badge} · ${mob.name} · ${points.length} pkt. Wybierz punkt, aby zobaczyć współrzędne.` : '';
-    legend.textContent = description || points.map((point, index) => `${index + 1}. ${point.label || label}`).join(' · ');
+    const areaNames = [...new Set(areas.map(area => area.badge))];
+    const colors = { Soldier: 'S · Soldier (zielony)', Captain: 'C · Captain (niebieski)', General: 'G · General (pomarańczowy)' };
+    legend.textContent = areaNames.length ? areaNames.map(badge => colors[badge]).join('   /   ') : description || points.map((point, index) => `${index + 1}. ${point.label || label}`).join(' · ');
     points.forEach((point, index) => {
+      if (areas.length) {
+        const circle = document.createElement('span');
+        circle.className = 'quest-map-farm-circle quest-map-spawn--' + point.badge.toLowerCase();
+        circle.style.left = `${point.x}%`;
+        circle.style.top = `${point.y}%`;
+        circle.style.width = `${point.radius * 2 * mapScaleX}%`;
+        circle.style.height = `${point.radius * 2 * mapScaleY}%`;
+        circle.textContent = point.badge[0];
+        circle.title = point.badge + ' · obszar farmy';
+        circle.setAttribute('aria-hidden', 'true');
+        wrap.append(circle);
+        return;
+      }
       if (mob) {
         const marker = document.createElement('button');
         marker.type = 'button';
@@ -409,18 +433,25 @@ export function openQuestMap(link) {
   spawnSelect.onchange = null;
   if (mobs.length) {
     if (basePoints.length) spawnSelect.add(new Option('Raid boss', 'boss'));
+    const areas = allianceFarmAreas[link.dataset.allianceArea].filter(area => area.tier <= Number(link.dataset.allianceTier));
+    spawnSelect.add(new Option('Obszary farmy · wszystkie odznaki', 'areas'));
     for (const badge of ['Soldier', 'Captain', 'General']) {
       const group = document.createElement('optgroup');
       group.label = badge;
       mobs.forEach((mob, index) => {
         if (mob.badge === badge) group.append(new Option(mob.name, String(index)));
       });
-      if (group.children.length) spawnSelect.append(group);
+      if (group.children.length) {
+        group.prepend(new Option('Obszary farmy · ' + badge, badge));
+        spawnSelect.append(group);
+      }
     }
     spawnSelect.onchange = () => {
       const mob = mobs[Number(spawnSelect.value)];
-      modal._mapZoom = mob ? 8 : 3;
-      renderPoints(mob);
+      const selection = spawnSelect.value;
+      const selectedAreas = selection === 'areas' ? areas : areas.filter(area => area.badge === selection);
+      modal._mapZoom = selectedAreas.length ? 5 : mob ? 8 : 3;
+      renderPoints(mob, selectedAreas);
     };
     spawnSelect.onchange();
   } else {
