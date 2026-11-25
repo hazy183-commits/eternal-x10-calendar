@@ -62,7 +62,7 @@ function organizeClanMenu(zone, side) {
 
   const directNavs = [...side.children].filter(child => child.matches?.('.zone-nav'));
   for (const nav of directNavs) {
-    const groupKey = viewToGroup.get(nav.dataset.zoneView);
+    const groupKey = nav.dataset.zoneAction ? 'tools' : viewToGroup.get(nav.dataset.zoneView);
     if (!groupKey) continue;
     groups.get(groupKey)?.querySelector('.ob-menu-group-items')?.appendChild(nav);
   }
