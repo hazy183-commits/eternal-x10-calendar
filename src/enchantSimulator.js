@@ -42,10 +42,18 @@ function referenceRows() {
   const chances = Object.values(weaponBaseChances).map(value => value / 100);
   return Array.from({ length: 16 }, (_, level) => {
     const goal = level + 1;
-    const cells = chances.map(chance => `
-      <td><strong>${referencePercent(nextChance(level, chance))}</strong><br>od +0: ${referencePercent(streakChance(0, goal, chance))}</td>
-    `).join('');
-    return `<tr><th scope="row">+${level} → +${goal}</th>${cells}</tr>`;
+    const cells = chances.map(chance => {
+      const cumulative = streakChance(0, goal, chance);
+      return `
+        <td>
+          <strong class="enchant-odds-step">${referencePercent(nextChance(level, chance))}</strong>
+          <span class="enchant-odds-total">od +0 <b>${referencePercent(cumulative)}</b></span>
+          <span class="enchant-odds-track" aria-hidden="true"><span style="width:${cumulative * 100}%"></span></span>
+        </td>
+      `;
+    }).join('');
+    const rowClass = level < 3 ? 'enchant-odds-safe' : level === 15 ? 'enchant-odds-final' : '';
+    return `<tr class="${rowClass}"><th scope="row">+${level} <span>→</span> <strong>+${goal}</strong></th>${cells}</tr>`;
   }).join('');
 }
 
@@ -82,13 +90,15 @@ dialog.innerHTML = `
     <label>Szansa bazowa do +15 (%) <input name="chance" type="number" min="0" max="100" step="any" value="70" required></label>
   </div>
   <p class="enchant-note">Model Interlude. Broń fizyczna ma domyślnie 70%, a magiczna 40%. Próba z +15 na +16 ma połowę szansy bazowej. Stawki Eternal nie są potwierdzone. Do +3 próby są bezpieczne. Porażka EWS niszczy broń, a BEWS resetuje ją do +0.</p>
-  <details class="enchant-note">
-    <summary style="cursor:pointer;color:#ffcf80">Tabela szans od +0 do +16 · broń fizyczna i magiczna</summary>
-    <p>Wytłuszczony procent to szansa na udane przejście na kolejny plus. „Od +0” pokazuje szansę dojścia do tego poziomu bez żadnej porażki. Tabela korzysta z domyślnych stawek symulatora.</p>
-    <table style="width:100%;text-align:center">
-      <thead><tr><th scope="col">Wzmocnienie</th><th scope="col">Broń fizyczna</th><th scope="col">Broń magiczna</th></tr></thead>
-      <tbody>${referenceRows()}</tbody>
-    </table>
+  <details class="enchant-odds-reference">
+    <summary><span>Szanse wzmocnienia</span><span class="enchant-odds-range">+0 → +16</span></summary>
+    <div class="enchant-odds-body">
+      <p>Duża liczba pokazuje szansę na kolejny plus. Wartość „od +0” i pasek pokazują szansę dojścia do danego poziomu bez porażki. Tabela używa domyślnych stawek symulatora.</p>
+      <table class="enchant-odds-table">
+        <thead><tr><th scope="col">Poziom</th><th scope="col">Broń fizyczna</th><th scope="col">Broń magiczna</th></tr></thead>
+        <tbody>${referenceRows()}</tbody>
+      </table>
+    </div>
   </details>
   <div class="enchant-result">
     <strong data-enchant-weapon></strong>
