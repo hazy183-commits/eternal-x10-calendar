@@ -840,3 +840,8 @@
 
 .quest-map-focus .quest-map-lightbox-image-wrap .quest-map-pin{width:18px;filter:drop-shadow(0 1px 2px #000c)}
 .quest-map-focus .quest-map-lightbox-zoom-reset{white-space:nowrap}
+
+.quest-map-farm-zone{position:absolute;z-index:2;display:grid;place-items:center;min-width:13px;min-height:13px;border:2px dashed var(--farm-color);border-radius:50%;background:color-mix(in srgb,var(--farm-color) 22%,transparent);color:#fff;font:800 12px/1 Inter,sans-serif;text-shadow:0 1px 3px #000,0 0 4px #000;transform:translate(-50%,-50%)}
+.quest-map-farm-zone--soldier{--farm-color:#78e5a1}
+.quest-map-farm-zone--captain{--farm-color:#79c7ff}
+.quest-map-farm-zone--general{--farm-color:#ffc46d}

@@ -288,7 +288,7 @@ export function openQuestMap(link) {
   const reset = modal.querySelector('.quest-map-lightbox-zoom-reset');
   modal.classList.toggle('quest-map-focus', focused);
   wrap.replaceChildren();
-  modal._mapZoom = focused ? 3 : 1;
+  modal._mapZoom = focused ? (points.some(point => point.zone) ? 4 : 3) : 1;
   modal._mapSize = null;
   reset.textContent = focused ? 'Cały świat' : '100%';
   reset.setAttribute('aria-label', focused ? 'Pokaż całą mapę świata' : 'Dopasuj mapę do ekranu');
@@ -334,6 +334,19 @@ export function openQuestMap(link) {
   modal._mapResizeHandler = fitImage;
   window.addEventListener('resize', fitImage);
   points.forEach((point, index) => {
+    if (point.zone) {
+      const field = document.createElement('span');
+      field.className = 'quest-map-farm-zone quest-map-farm-zone--' + point.zone.tier;
+      field.style.left = `${point.x}%`;
+      field.style.top = `${point.y}%`;
+      field.style.width = `${point.zone.w}%`;
+      field.style.height = `${point.zone.h}%`;
+      field.title = point.label;
+      field.setAttribute('aria-hidden', 'true');
+      field.textContent = String(index + 1);
+      wrap.append(field);
+      return;
+    }
     const pin = document.createElement('span');
     pin.className = 'quest-map-pin';
     pin.style.setProperty('--pin-x', `${Math.max(3, Math.min(97, Number(point.x) || 50))}%`);
