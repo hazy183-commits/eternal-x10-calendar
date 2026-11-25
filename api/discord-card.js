@@ -32,6 +32,49 @@ const SCENE_EFFECTS = {
   "default": ["#797164","#d9d1c3",0.2,"dust",13],
 };
 
+function eventScene(name, kind) {
+  const words = name.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  const has = phrase => (' ' + words + ' ').includes(' ' + phrase + ' ');
+  const boss = ['frintezza', 'antharas', 'baium', 'valakas', 'zaken', 'core', 'orfen'].find(has);
+  if (boss) return boss;
+  if (has('queen ant') || has('qa')) return 'queen-ant';
+  if (kind === 'siege') {
+    return ['aden', 'dion', 'giran', 'gludio', 'goddard', 'innadril', 'oren', 'rune', 'schuttgart'].find(has) ?? 'aden';
+  }
+  if (kind === 'clan hall') {
+    if (has('forest of the dead')) return 'fortress-of-the-dead';
+    return ['fortress-of-resistance', 'devastated-castle', 'bandit-stronghold', 'rainbow-spring-chateau', 'wild-beast-reserve', 'fortress-of-the-dead']
+      .find(hall => has(hall.replaceAll('-', ' '))) ?? 'default';
+  }
+  if (kind === 'olympiad' || has('olympiad') || has('olympiada')) return 'olympiad';
+  if (has('colloseum') || has('colosseum') || has('koloseum')) return 'colloseum';
+  if (has('pvp')) return 'pvp';
+  return kind === 'rb' ? 'rb' : 'default';
+}
+
+async function sceneEffects(key, image) {
+  const [glow, particle, intensity, shape, count] = SCENE_EFFECTS[key];
+  if (key === 'zaken') return [glow, particle, intensity, shape, count];
+  const sample = await sharp(image).resize(20, 14, { fit: 'fill' }).removeAlpha().raw().toBuffer();
+  const sides = [[0, 0, 0, 0], [0, 0, 0, 0]];
+  for (let y = 2; y < 10; y++) {
+    for (let x = 0; x < 20; x++) {
+      if (x >= 6 && x < 14) continue;
+      const offset = (y * 20 + x) * 3;
+      const rgb = sample.subarray(offset, offset + 3);
+      const weight = .4 + (Math.max(...rgb) - Math.min(...rgb)) / 255;
+      const side = sides[x < 6 ? 0 : 1];
+      rgb.forEach((value, channel) => { side[channel] += value * weight; });
+      side[3] += weight;
+    }
+  }
+  const mix = side => '#' + side.slice(0, 3).map((value, channel) => {
+    const tint = parseInt(glow.slice(1 + channel * 2, 3 + channel * 2), 16);
+    return Math.round(tint * .68 + value / side[3] * .32).toString(16).padStart(2, '0');
+  }).join('');
+  return [mix(sides[0]), particle, intensity, shape, count, mix(sides[1])];
+}
+
 function dec(v=''){try{return new TextDecoder().decode(Uint8Array.from(atob(v.replace(/-/g,'+').replace(/_/g,'/').padEnd(Math.ceil(v.length/4)*4,'=')),c=>c.charCodeAt(0)))}catch{return ''}}
 function esc(s=''){return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
 const RALLY_OPENERS = [
@@ -97,7 +140,8 @@ export default async function handler(req,res){
 try{
 const u=new URL(req.url,'https://'+(req.headers['x-forwarded-host']||req.headers.host||'orzelbialy.eu'));
 const name=(dec(u.searchParams.get('n'))||'Wydarzenie klanowe').slice(0,80),date=(dec(u.searchParams.get('d'))||'--.--.----').slice(0,20),time=(dec(u.searchParams.get('t'))||'--:--').slice(0,10),location=(dec(u.searchParams.get('l'))||'Lokalizacja do ustalenia').slice(0,80),type=(dec(u.searchParams.get('k'))||'EVENT').slice(0,30);
-const gathering=(dec(u.searchParams.get('g'))||'').slice(0,120);const gatheringParts=gathering.split('|');const gatherLine1=gatheringParts[0]||'';const gatherLine2=gatheringParts[1]||'';const s=name.toLowerCase();const kind=type.toLowerCase();let key=['frintezza','antharas','baium','valakas','zaken','core','orfen'].find(k=>s.includes(k));if(!key&&/\b(?:queen[\s-]+ant|qa)\b/.test(s))key='queen-ant';if(!key&&kind==='siege'){key=['aden','dion','giran','gludio','goddard','innadril','oren','rune','schuttgart'].find(c=>s.includes(c))||'aden';}if(!key&&kind==='clan hall'){key=['fortress-of-resistance','devastated-castle','bandit-stronghold','rainbow-spring-chateau','wild-beast-reserve','fortress-of-the-dead'].find(c=>s.includes(c.replace(/-/g,' ')))||'default';}if(!key&&kind==='rb')key='rb';if(!key&&s.includes('pvp'))key='pvp';if(!key&&(s.includes('colloseum')||s.includes('colosseum')))key='colloseum';if(!key&&kind==='olympiad')key='olympiad';key=key||'default';
+const gathering=(dec(u.searchParams.get('g'))||'').slice(0,120);const gatheringParts=gathering.split('|');const gatherLine1=gatheringParts[0]||'';const gatherLine2=gatheringParts[1]||'';const kind=type.toLowerCase().trim();
+const key=eventScene(name, kind);
 const imageHost='https://orzelbialy.eu';let original;
 let sceneKey = key;
 try{const response=await fetch(imageHost+ASSETS[key],{signal:AbortSignal.timeout(7000)});if(!response.ok)throw new Error('Image HTTP '+response.status);original=Buffer.from(await response.arrayBuffer());}catch(error){console.warn('Event background unavailable, using clan artwork',key,String(error));sceneKey = 'default';const fallback=await fetch(imageHost+ASSETS.default,{signal:AbortSignal.timeout(7000)});if(!fallback.ok)throw new Error('Fallback image HTTP '+fallback.status);original=Buffer.from(await fallback.arrayBuffer());}
@@ -111,11 +155,11 @@ try{
    templateArtwork=await sharp(bytes).resize(1200,800,{fit:'fill'}).png().toBuffer();
  }
 }catch(error){console.warn('Poster artwork not yet available',String(error));}
-const eventScene=await sharp(original).resize(1200,800,{fit:'cover',position:'attention'}).modulate({brightness:1.22,saturation:1.16}).sharpen({sigma:0.7,m1:0.8,m2:1.2}).png().toBuffer();
+const eventSceneImage=await sharp(original).resize(1200,800,{fit:'cover',position:'attention'}).modulate({brightness:1.22,saturation:1.16}).sharpen({sigma:0.7,m1:0.8,m2:1.2}).png().toBuffer();
 // Use the full boss scene as the poster background, then layer the transparent frame artwork over it.
 const scene=templateArtwork
- ? await sharp(eventScene).composite([{input:templateArtwork,left:0,top:0}]).png().toBuffer()
- : eventScene;
+ ? await sharp(eventSceneImage).composite([{input:templateArtwork,left:0,top:0}]).png().toBuffer()
+ : eventSceneImage;
 const backdrop=Buffer.from('<svg width="1200" height="800" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="left" x1="0" x2="1"><stop stop-color="#03040a" stop-opacity=".92"/><stop offset=".34" stop-color="#040710" stop-opacity=".84"/><stop offset=".52" stop-color="#060914" stop-opacity=".60"/><stop offset=".67" stop-color="#070812" stop-opacity=".29"/><stop offset=".82" stop-color="#070812" stop-opacity=".08"/><stop offset="1" stop-color="#050510" stop-opacity=".04"/></linearGradient><linearGradient id="vignette" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#02030a" stop-opacity=".18"/><stop offset=".42" stop-color="#05030a" stop-opacity="0"/><stop offset="1" stop-color="#080207" stop-opacity=".52"/></linearGradient><linearGradient id="lower" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#03050b" stop-opacity="0"/><stop offset="1" stop-color="#03050b" stop-opacity=".56"/></linearGradient></defs><rect width="1200" height="800" fill="url(#left)"/><rect width="1200" height="800" fill="url(#vignette)"/><rect y="610" width="1200" height="190" fill="url(#lower)"/></svg>');
 const background=await sharp(scene).composite([{input:backdrop}]).png().toBuffer();
 const displayName=name.replace(/\s*(castle siege|— potrzebne rb)$/i,'').trim();
@@ -151,14 +195,15 @@ const fontDir=new URL('../node_modules/dejavu-fonts-ttf/ttf/',import.meta.url).p
 const fontFiles=['DejaVuSans.ttf','DejaVuSans-Bold.ttf','DejaVuSerif.ttf','DejaVuSerif-Bold.ttf','DejaVuSerif-Italic.ttf'].map(p=>fontDir+p);
 const cinematic = u.searchParams.get('layout') !== 'classic';
 const [headline, invitation] = rallyLines(name, date, time, kind);
-const [glow, particle, intensity, shape, count] = SCENE_EFFECTS[sceneKey] ?? SCENE_EFFECTS.default;
+const [glow, particle, intensity, shape, count, rightGlow = glow] = await sceneEffects(sceneKey, eventSceneImage);
 const cinematicSvg = cinematic ? `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
 <defs>
 <linearGradient id="night" x2="0" y2="1"><stop stop-color="#100608" stop-opacity=".65"/><stop offset=".26" stop-color="#100608" stop-opacity="0"/><stop offset=".48" stop-color="#100608" stop-opacity=".08"/><stop offset=".77" stop-color="#100608" stop-opacity=".92"/><stop offset="1" stop-color="#100608"/></linearGradient>
 <radialGradient id="scene-glow"><stop stop-color="${glow}" stop-opacity="${intensity}"/><stop offset="1" stop-color="${glow}" stop-opacity="0"/></radialGradient>
+<radialGradient id="scene-glow-right"><stop stop-color="${rightGlow}" stop-opacity="${intensity}"/><stop offset="1" stop-color="${rightGlow}" stop-opacity="0"/></radialGradient>
 <linearGradient id="steel" x2="0" y2="1"><stop stop-color="#fff8e7"/><stop offset=".46" stop-color="#ffe2ba"/><stop offset="1" stop-color="#f08c66"/></linearGradient>
 </defs>
-<ellipse cx="58" cy="370" rx="355" ry="292" fill="url(#scene-glow)"/><ellipse cx="1140" cy="325" rx="290" ry="315" fill="url(#scene-glow)"/>
+<ellipse cx="58" cy="370" rx="355" ry="292" fill="url(#scene-glow)"/><ellipse cx="1140" cy="325" rx="290" ry="315" fill="url(#scene-glow-right)"/>
 <rect width="1200" height="800" fill="url(#night)"/>
 <path d="M8 165V8H1162L1192 38V160M8 635V792H1010" fill="none" stroke="#ef7860" stroke-opacity=".66" stroke-width="2"/>
 <g stroke="${particle}" stroke-linecap="round" opacity="${shape === 'spark' ? .72 : .55}">${Array.from({length:count}, (_, i) => {
@@ -237,7 +282,7 @@ try{
    layers.push({ input: crest, left: 27, top: 29 });
  }
 }catch(error){console.warn('Clan crest could not be rendered',String(error));}
-const card = await sharp(cinematic ? eventScene : background).composite(layers).png().toBuffer();
+const card = await sharp(cinematic ? eventSceneImage : background).composite(layers).png().toBuffer();
 res.statusCode=200;res.setHeader('Content-Type','image/png');res.setHeader('Cache-Control','public, max-age=60, s-maxage=300');res.setHeader('X-Card-Image-Source',sceneKey);res.setHeader('X-Card-Scene-Effect',sceneKey);res.setHeader('X-Card-Template',cinematic ? 'cinematic-embers' : templateArtwork ? 'core-style-crest-v6' : 'dynamic-event-v4');res.setHeader('X-Card-Size',String(card.length));res.setHeader('X-Card-Text-Pixels',String(textPixels));res.setHeader('X-Card-Text-Verified',textPixels>1500?'true':'false');res.end(card);
 }catch(e){console.error('Discord card render failed',e);res.statusCode=500;res.setHeader('Content-Type','text/plain');res.end(String(e?.stack||e))}
 }
