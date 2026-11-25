@@ -82,6 +82,22 @@ function illustration(quest) {
   return image;
 }
 
+function closeOnBackdrop(dialog) {
+  const outside = (event) => {
+    if (event.target !== dialog) return false;
+    const { left, right, top, bottom } = dialog.getBoundingClientRect();
+    return event.clientX < left || event.clientX >= right || event.clientY < top || event.clientY >= bottom;
+  };
+  let startedOutside = false;
+  dialog.addEventListener('pointerdown', (event) => {
+    startedOutside = outside(event);
+  });
+  dialog.addEventListener('click', (event) => {
+    if (startedOutside && outside(event)) dialog.close();
+    startedOutside = false;
+  });
+}
+
 export function installThirdClassQuests() {
   const section = document.getElementById('przydatne-questy');
   if (!section) return;
@@ -104,6 +120,8 @@ export function installThirdClassQuests() {
   header.append(title, close);
   preview.append(header, previewContent);
   section.append(preview);
+  closeOnBackdrop(dialog);
+  closeOnBackdrop(preview);
 
   const catalogue = element('dialog', '', 'third-class-catalogue');
   catalogue.setAttribute('aria-labelledby', 'thirdClassTitle');
