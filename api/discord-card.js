@@ -1,6 +1,37 @@
 import sharp from 'sharp';
 import { Resvg } from '@resvg/resvg-js';
 const ASSETS={antharas:'/images/bosses/antharas.webp',baium:'/images/bosses/baium.webp',core:'/images/bosses/core.webp',frintezza:'/images/bosses/frintezza.webp',orfen:'/images/bosses/orfen.webp','queen-ant':'/images/bosses/queen-ant.webp',valakas:'/images/bosses/valakas.webp',zaken:'/images/bosses/zaken.webp',rb:'/images/eternal-hero-approved.webp',aden:'/images/castles/aden.jpg',dion:'/images/castles/dion.jpg',giran:'/images/castles/giran.jpg',gludio:'/images/castles/gludio.jpg',goddard:'/images/castles/goddard.jpg',innadril:'/images/castles/innadril.jpg',oren:'/images/castles/oren.jpg',rune:'/images/castles/rune.jpg',schuttgart:'/images/castles/schuttgart.jpg','fortress-of-resistance':'/images/fortress-of-resistance.jpg','devastated-castle':'/images/devastated-castle.jpg','bandit-stronghold':'/images/bandit-stronghold.jpg','rainbow-spring-chateau':'/images/Rainbow%20Springs%20Chateau.jpg','wild-beast-reserve':'/images/Wild%20Beast%20Reserve.jpg','fortress-of-the-dead':'/images/fortress-of-the-dead.jpg',pvp:'/images/events/clan-pvp.webp',colloseum:'/images/events/colloseum-training.webp',olympiad:'/images/events/olympiad.jpg',default:'/images/eternal-hero-approved.webp'};
+const SCENE_EFFECTS = {
+  "zaken": ["#ff240b","#ffad6e",0.65,"spark",38],
+  "antharas": ["#637d4d","#cad297",0.38,"dust",25],
+  "baium": ["#586fbd","#c6dcff",0.44,"ray",21],
+  "core": ["#1b9aad","#98eaff",0.43,"ray",23],
+  "frintezza": ["#79529c","#dec3ff",0.4,"mote",24],
+  "orfen": ["#3a8655","#bce28f",0.37,"mote",25],
+  "queen-ant": ["#a66a24","#f2ca80",0.38,"dust",32],
+  "valakas": ["#ed4216","#ffd090",0.54,"spark",34],
+  "aden": ["#957741","#efda9b",0.31,"dust",18],
+  "dion": ["#87854e","#e4dfa1",0.29,"dust",18],
+  "giran": ["#8e613b","#efc998",0.31,"dust",19],
+  "gludio": ["#6f795f","#d3dbb6",0.28,"dust",18],
+  "goddard": ["#617892","#c3d9ef",0.33,"ray",16],
+  "innadril": ["#437e8b","#b1dfe4",0.32,"mote",18],
+  "oren": ["#496d87","#a9cde6",0.31,"ray",16],
+  "rune": ["#6c567c","#d6c0e4",0.34,"mote",18],
+  "schuttgart": ["#688ca6","#edf8ff",0.31,"dust",26],
+  "fortress-of-resistance": ["#795f40","#e3c49b",0.29,"dust",18],
+  "devastated-castle": ["#6c6762","#d7cdba",0.34,"dust",25],
+  "bandit-stronghold": ["#536d38","#d6dc9c",0.31,"mote",24],
+  "rainbow-spring-chateau": ["#518c8e","#bbf0df",0.34,"mote",24],
+  "wild-beast-reserve": ["#697b39","#dbe8a4",0.33,"mote",27],
+  "fortress-of-the-dead": ["#53657c","#b7cde0",0.35,"mote",19],
+  "pvp": ["#594c7d","#dbbdf4",0.33,"ray",21],
+  "colloseum": ["#967b4f","#efcf91",0.3,"dust",22],
+  "olympiad": ["#486ba0","#c7e2ff",0.36,"ray",20],
+  "rb": ["#746454","#d6c3ab",0.25,"dust",17],
+  "default": ["#797164","#d9d1c3",0.2,"dust",13],
+};
+
 function dec(v=''){try{return new TextDecoder().decode(Uint8Array.from(atob(v.replace(/-/g,'+').replace(/_/g,'/').padEnd(Math.ceil(v.length/4)*4,'=')),c=>c.charCodeAt(0)))}catch{return ''}}
 function esc(s=''){return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
 const RALLY_OPENERS = [
@@ -67,7 +98,9 @@ try{
 const u=new URL(req.url,'https://'+(req.headers['x-forwarded-host']||req.headers.host||'orzelbialy.eu'));
 const name=(dec(u.searchParams.get('n'))||'Wydarzenie klanowe').slice(0,80),date=(dec(u.searchParams.get('d'))||'--.--.----').slice(0,20),time=(dec(u.searchParams.get('t'))||'--:--').slice(0,10),location=(dec(u.searchParams.get('l'))||'Lokalizacja do ustalenia').slice(0,80),type=(dec(u.searchParams.get('k'))||'EVENT').slice(0,30);
 const gathering=(dec(u.searchParams.get('g'))||'').slice(0,120);const gatheringParts=gathering.split('|');const gatherLine1=gatheringParts[0]||'';const gatherLine2=gatheringParts[1]||'';const s=name.toLowerCase();const kind=type.toLowerCase();let key=['frintezza','antharas','baium','valakas','zaken','core','orfen'].find(k=>s.includes(k));if(!key&&/\b(?:queen[\s-]+ant|qa)\b/.test(s))key='queen-ant';if(!key&&kind==='siege'){key=['aden','dion','giran','gludio','goddard','innadril','oren','rune','schuttgart'].find(c=>s.includes(c))||'aden';}if(!key&&kind==='clan hall'){key=['fortress-of-resistance','devastated-castle','bandit-stronghold','rainbow-spring-chateau','wild-beast-reserve','fortress-of-the-dead'].find(c=>s.includes(c.replace(/-/g,' ')))||'default';}if(!key&&kind==='rb')key='rb';if(!key&&s.includes('pvp'))key='pvp';if(!key&&(s.includes('colloseum')||s.includes('colosseum')))key='colloseum';if(!key&&kind==='olympiad')key='olympiad';key=key||'default';
-const imageHost='https://orzelbialy.eu';let original;try{const response=await fetch(imageHost+ASSETS[key],{signal:AbortSignal.timeout(7000)});if(!response.ok)throw new Error('Image HTTP '+response.status);original=Buffer.from(await response.arrayBuffer());}catch(error){console.warn('Event background unavailable, using clan artwork',key,String(error));const fallback=await fetch(imageHost+ASSETS.default,{signal:AbortSignal.timeout(7000)});if(!fallback.ok)throw new Error('Fallback image HTTP '+fallback.status);original=Buffer.from(await fallback.arrayBuffer());}
+const imageHost='https://orzelbialy.eu';let original;
+let sceneKey = key;
+try{const response=await fetch(imageHost+ASSETS[key],{signal:AbortSignal.timeout(7000)});if(!response.ok)throw new Error('Image HTTP '+response.status);original=Buffer.from(await response.arrayBuffer());}catch(error){console.warn('Event background unavailable, using clan artwork',key,String(error));sceneKey = 'default';const fallback=await fetch(imageHost+ASSETS.default,{signal:AbortSignal.timeout(7000)});if(!fallback.ok)throw new Error('Fallback image HTTP '+fallback.status);original=Buffer.from(await fallback.arrayBuffer());}
 // The finished poster artwork can be deployed at /images/discord/poster-template.png.
 // Keep the event scene and all live text dynamic; missing artwork never breaks notifications.
 let templateArtwork=null;
@@ -118,19 +151,25 @@ const fontDir=new URL('../node_modules/dejavu-fonts-ttf/ttf/',import.meta.url).p
 const fontFiles=['DejaVuSans.ttf','DejaVuSans-Bold.ttf','DejaVuSerif.ttf','DejaVuSerif-Bold.ttf','DejaVuSerif-Italic.ttf'].map(p=>fontDir+p);
 const cinematic = u.searchParams.get('layout') !== 'classic';
 const [headline, invitation] = rallyLines(name, date, time, kind);
+const [glow, particle, intensity, shape, count] = SCENE_EFFECTS[sceneKey] ?? SCENE_EFFECTS.default;
 const cinematicSvg = cinematic ? `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
 <defs>
 <linearGradient id="night" x2="0" y2="1"><stop stop-color="#100608" stop-opacity=".65"/><stop offset=".26" stop-color="#100608" stop-opacity="0"/><stop offset=".48" stop-color="#100608" stop-opacity=".08"/><stop offset=".77" stop-color="#100608" stop-opacity=".92"/><stop offset="1" stop-color="#100608"/></linearGradient>
-<radialGradient id="fire"><stop stop-color="#ff240b" stop-opacity=".65"/><stop offset="1" stop-color="#ff240b" stop-opacity="0"/></radialGradient>
+<radialGradient id="scene-glow"><stop stop-color="${glow}" stop-opacity="${intensity}"/><stop offset="1" stop-color="${glow}" stop-opacity="0"/></radialGradient>
 <linearGradient id="steel" x2="0" y2="1"><stop stop-color="#fff8e7"/><stop offset=".46" stop-color="#ffe2ba"/><stop offset="1" stop-color="#f08c66"/></linearGradient>
 </defs>
-<ellipse cx="58" cy="370" rx="355" ry="292" fill="url(#fire)"/><ellipse cx="1140" cy="325" rx="290" ry="315" fill="url(#fire)"/>
+<ellipse cx="58" cy="370" rx="355" ry="292" fill="url(#scene-glow)"/><ellipse cx="1140" cy="325" rx="290" ry="315" fill="url(#scene-glow)"/>
 <rect width="1200" height="800" fill="url(#night)"/>
 <path d="M8 165V8H1162L1192 38V160M8 635V792H1010" fill="none" stroke="#ef7860" stroke-opacity=".66" stroke-width="2"/>
-<g stroke="#ffad6e" stroke-linecap="round" opacity=".72">${Array.from({length:38}, (_, i) => {
+<g stroke="${particle}" stroke-linecap="round" opacity="${shape === 'spark' ? .72 : .55}">${Array.from({length:count}, (_, i) => {
   const side = i % 2;
   const x = side ? 910 + (i * 79) % 262 : 28 + (i * 79) % 262;
   const y = 144 + (i * 103) % 489;
+  if (shape === 'dust' || shape === 'mote') {
+    const radius = shape === 'dust' ? 1 + i % 3 * .5 : 1.5 + i % 4 * .65;
+    return `<circle cx="${x}" cy="${y}" r="${radius}" fill="${particle}" stroke="none" opacity="${.4 + i % 4 * .15}"/>`;
+  }
+  if (shape === 'ray') return `<path d="M${x} ${y}v-${5 + i % 13}" stroke-width="${1 + i % 2}"/>`;
   return `<path d="M${x} ${y}l${4+i%9} -${4+i%5}" stroke-width="${1+i%3}"/>`;
 }).join('')}</g>
 <text x="106" y="38" text-anchor="middle" fill="#f6dfcd" stroke="#16090b" stroke-width="2" paint-order="stroke" font-size="15" font-family="DejaVu Sans" font-weight="700" letter-spacing="1.7">ORZEŁ BIAŁY</text>
@@ -199,6 +238,6 @@ try{
  }
 }catch(error){console.warn('Clan crest could not be rendered',String(error));}
 const card = await sharp(cinematic ? eventScene : background).composite(layers).png().toBuffer();
-res.statusCode=200;res.setHeader('Content-Type','image/png');res.setHeader('Cache-Control','public, max-age=60, s-maxage=300');res.setHeader('X-Card-Image-Source',key);res.setHeader('X-Card-Template',cinematic ? 'cinematic-embers' : templateArtwork ? 'core-style-crest-v6' : 'dynamic-event-v4');res.setHeader('X-Card-Size',String(card.length));res.setHeader('X-Card-Text-Pixels',String(textPixels));res.setHeader('X-Card-Text-Verified',textPixels>1500?'true':'false');res.end(card);
+res.statusCode=200;res.setHeader('Content-Type','image/png');res.setHeader('Cache-Control','public, max-age=60, s-maxage=300');res.setHeader('X-Card-Image-Source',sceneKey);res.setHeader('X-Card-Scene-Effect',sceneKey);res.setHeader('X-Card-Template',cinematic ? 'cinematic-embers' : templateArtwork ? 'core-style-crest-v6' : 'dynamic-event-v4');res.setHeader('X-Card-Size',String(card.length));res.setHeader('X-Card-Text-Pixels',String(textPixels));res.setHeader('X-Card-Text-Verified',textPixels>1500?'true':'false');res.end(card);
 }catch(e){console.error('Discord card render failed',e);res.statusCode=500;res.setHeader('Content-Type','text/plain');res.end(String(e?.stack||e))}
 }
