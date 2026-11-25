@@ -8,7 +8,8 @@ const weapons = [
 ];
 
 const magicWeapons = new Set(['Arcana Mace', 'Imperial Staff']);
-const baseChanceForWeapon = (weapon) => magicWeapons.has(weapon) ? 40 : 70;
+const weaponBaseChances = { physical: 70, magic: 40 };
+const baseChanceForWeapon = (weapon) => weaponBaseChances[magicWeapons.has(weapon) ? 'magic' : 'physical'];
 
 const scrollIcons = {
   regular: 'https://l2db.info/uploads/images/icons/etc_scroll_of_enchant_weapon_i05.png',
@@ -30,6 +31,22 @@ function streakChance(level, target, chance) {
   let probability = 1;
   for (let step = level; step < target; step += 1) probability *= nextChance(step, chance);
   return probability;
+}
+
+function referencePercent(probability) {
+  const value = probability * 100;
+  return value > 0 && value < 0.01 ? value.toPrecision(2).replace('.', ',') + '%' : percent(probability);
+}
+
+function referenceRows() {
+  const chances = Object.values(weaponBaseChances).map(value => value / 100);
+  return Array.from({ length: 16 }, (_, level) => {
+    const goal = level + 1;
+    const cells = chances.map(chance => `
+      <td><strong>${referencePercent(nextChance(level, chance))}</strong><br>od +0: ${referencePercent(streakChance(0, goal, chance))}</td>
+    `).join('');
+    return `<tr><th scope="row">+${level} → +${goal}</th>${cells}</tr>`;
+  }).join('');
 }
 
 function enchant(level, chance, blessed, roll) {
@@ -65,6 +82,14 @@ dialog.innerHTML = `
     <label>Szansa bazowa do +15 (%) <input name="chance" type="number" min="0" max="100" step="any" value="70" required></label>
   </div>
   <p class="enchant-note">Model Interlude. Broń fizyczna ma domyślnie 70%, a magiczna 40%. Próba z +15 na +16 ma połowę szansy bazowej. Stawki Eternal nie są potwierdzone. Do +3 próby są bezpieczne. Porażka EWS niszczy broń, a BEWS resetuje ją do +0.</p>
+  <details class="enchant-note">
+    <summary style="cursor:pointer;color:#ffcf80">Tabela szans od +0 do +16 · broń fizyczna i magiczna</summary>
+    <p>Wytłuszczony procent to szansa na udane przejście na kolejny plus. „Od +0” pokazuje szansę dojścia do tego poziomu bez żadnej porażki. Tabela korzysta z domyślnych stawek symulatora.</p>
+    <table style="width:100%;text-align:center">
+      <thead><tr><th scope="col">Wzmocnienie</th><th scope="col">Broń fizyczna</th><th scope="col">Broń magiczna</th></tr></thead>
+      <tbody>${referenceRows()}</tbody>
+    </table>
+  </details>
   <div class="enchant-result">
     <strong data-enchant-weapon></strong>
     <span data-enchant-level></span>
