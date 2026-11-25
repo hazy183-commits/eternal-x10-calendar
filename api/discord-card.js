@@ -41,17 +41,25 @@ const RALLY_INVITES = [
   "Niech to będzie dzień Orła Białego!",
 ];
 
-function rallyLines(name, date, time) {
+const RALLY_EVENT_OPENERS = {
+  "clan hall": ["Zawalczmy o nasz wspólny dom.","Razem zdobędziemy siedzibę klanu.","Za tym herbem stoi cały klan.","Tu możemy wywalczyć swoje miejsce."],
+  "siege": ["Pod bramą pokażemy naszą siłę.","Zgrany klan przełamie każdą obronę.","Razem możemy zdobyć ten zamek.","Pod tym herbem ruszamy na mury."],
+  "olympiad": ["Nasi mają w sobie ducha zwycięzców.","Na arenie liczy się odwaga.","Cały klan trzyma kciuki za swoich.","Dziś nasi pokażą, na co ich stać."],
+  "event": ["Każda wspólna walka nas wzmacnia.","W drużynie możemy sięgnąć po więcej.","Mamy ekipę, która potrafi zaskoczyć.","Razem potrafimy przechylić szalę."],
+};
+
+function rallyLines(name, date, time, kind) {
+  const openers = Object.hasOwn(RALLY_EVENT_OPENERS, kind) ? RALLY_EVENT_OPENERS[kind] : RALLY_OPENERS;
   const isoDate = date.replace(/^(\d{1,2})[.\/-](\d{1,2})[.\/-](\d{4})$/, (_, day, month, year) =>
     [year, month.padStart(2, '0'), day.padStart(2, '0')].join('-'));
   const day = Math.floor(Date.parse(isoDate + 'T00:00:00Z') / 86400000) || 0;
   const [hour, minute] = time.split(':').map(Number);
   const eventOffset = Array.from(name.toLowerCase()).reduce((sum, letter) => sum * 31 + letter.charCodeAt(0) | 0, 0);
-  const combinations = RALLY_OPENERS.length * RALLY_INVITES.length;
+  const combinations = openers.length * RALLY_INVITES.length;
   // The event's details keep the choice stable when Discord fetches the card again.
   const slot = day * 17 + (hour || 0) * 7 + (minute || 0) + eventOffset;
   const index = ((slot % combinations) + combinations) % combinations;
-  return [RALLY_OPENERS[index % RALLY_OPENERS.length], RALLY_INVITES[Math.floor(index / RALLY_OPENERS.length)]];
+  return [openers[index % openers.length], RALLY_INVITES[Math.floor(index / openers.length)]];
 }
 
 export default async function handler(req,res){
@@ -88,7 +96,7 @@ const gatheringMinutes = startMinutes === null ? null : (startMinutes + 1410) % 
 const gatheringTime = gatheringMinutes === null ? '' :
   String(Math.floor(gatheringMinutes / 60)).padStart(2, '0') + ':' + String(gatheringMinutes % 60).padStart(2, '0');
 const gatheringLabel = gatheringTime ? 'Zbiórka ' + gatheringTime + ' · Hunter Village' : 'Zbiórka w Hunter Village';
-const rallySvg = rallyLines(name, date, time).map((line, index) =>
+const rallySvg = rallyLines(name, date, time, kind).map((line, index) =>
   `<text x="600" y="${687 + index * 39}" text-anchor="middle" fill="${index === 0 ? 'url(#gold)' : '#f6f0e6'}" stroke="#100b08" stroke-width="3" paint-order="stroke" font-size="${index === 0 ? 35 : 26}" font-family="DejaVu Serif" font-weight="${index === 0 ? 700 : 400}" font-style="${index === 0 ? 'normal' : 'italic'}">${esc(line)}</text>`
 ).join('');
 const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
@@ -109,7 +117,7 @@ ${rallySvg}
 const fontDir=new URL('../node_modules/dejavu-fonts-ttf/ttf/',import.meta.url).pathname;
 const fontFiles=['DejaVuSans.ttf','DejaVuSans-Bold.ttf','DejaVuSerif.ttf','DejaVuSerif-Bold.ttf','DejaVuSerif-Italic.ttf'].map(p=>fontDir+p);
 const cinematic = u.searchParams.get('layout') !== 'classic';
-const [headline, invitation] = rallyLines(name, date, time);
+const [headline, invitation] = rallyLines(name, date, time, kind);
 const cinematicSvg = cinematic ? `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
 <defs>
 <linearGradient id="night" x2="0" y2="1"><stop stop-color="#100608" stop-opacity=".65"/><stop offset=".26" stop-color="#100608" stop-opacity="0"/><stop offset=".48" stop-color="#100608" stop-opacity=".08"/><stop offset=".77" stop-color="#100608" stop-opacity=".92"/><stop offset="1" stop-color="#100608"/></linearGradient>
