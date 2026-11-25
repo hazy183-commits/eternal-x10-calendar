@@ -108,7 +108,30 @@ ${rallySvg}
 </svg>`;
 const fontDir=new URL('../node_modules/dejavu-fonts-ttf/ttf/',import.meta.url).pathname;
 const fontFiles=['DejaVuSans.ttf','DejaVuSans-Bold.ttf','DejaVuSerif.ttf','DejaVuSerif-Bold.ttf','DejaVuSerif-Italic.ttf'].map(p=>fontDir+p);
-const overlay=new Resvg(svg,{fitTo:{mode:'width',value:1200},font:{fontFiles,fontDirs:[fontDir],loadSystemFonts:true,defaultFontFamily:'DejaVu Sans'}}).render().asPng();
+const cinematic = u.searchParams.get('layout') === 'cinematic';
+const [headline, invitation] = rallyLines(name, date, time);
+const cinematicSvg = cinematic ? `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+<defs><linearGradient id="caption" x2="0" y2="1"><stop stop-color="#090910" stop-opacity="0"/><stop offset=".58" stop-color="#090910" stop-opacity=".84"/><stop offset="1" stop-color="#090910" stop-opacity=".98"/></linearGradient></defs>
+<rect y="210" width="1200" height="590" fill="url(#caption)"/>
+<text x="232" y="93" fill="#f9e3b4" font-size="27" font-family="DejaVu Sans" font-weight="700" letter-spacing="4">ORZEŁ BIAŁY</text>
+<path d="M232 113H463" stroke="#d7af64" stroke-width="2"/>
+<text x="600" y="349" text-anchor="middle" fill="#f9e3b4" font-size="22" font-family="DejaVu Sans" font-weight="700" letter-spacing="5">${esc(eventSubtitle)}</text>
+<text x="600" y="449" text-anchor="middle" fill="#fff9ec" stroke="#110b10" stroke-width="5" paint-order="stroke" font-size="${Math.min(titleSize, 100)}" font-family="DejaVu Serif" font-weight="700">${esc(displayName.toUpperCase())}</text>
+<path d="M262 479H938" stroke="#d7af64" stroke-width="2"/>
+<text x="600" y="528" text-anchor="middle" fill="#ffdc92" font-size="32" font-family="DejaVu Serif" font-weight="700">${esc(headline)}</text>
+<text x="600" y="567" text-anchor="middle" fill="#f7e9d7" font-size="24" font-family="DejaVu Serif" font-style="italic">${esc(invitation)}</text>
+<rect x="140" y="614" width="920" height="146" rx="8" fill="#10121b" fill-opacity=".96"/>
+<path d="M140 614H1060M600 638V738" stroke="#b99453" stroke-width="1.5"/>
+<g text-anchor="middle" font-family="DejaVu Sans">
+<text x="370" y="647" fill="#eac57d" font-size="20" font-weight="700" letter-spacing="3">ZBIÓRKA</text>
+<text x="370" y="702" fill="#fff4dd" font-size="48" font-weight="700">${esc(gatheringTime || '—')}</text>
+<text x="370" y="734" fill="#e8d9c0" font-size="21">${startMinutes !== null && startMinutes < 30 ? 'Hunter Village · poprzedniego dnia' : 'Hunter Village'}</text>
+<text x="830" y="647" fill="#eac57d" font-size="20" font-weight="700" letter-spacing="3">START</text>
+<text x="830" y="702" fill="#fff4dd" font-size="48" font-weight="700">${esc(time)}</text>
+<text x="830" y="734" fill="#e8d9c0" font-size="21">${esc(date)}</text>
+</g>
+</svg>` : svg;
+const overlay=new Resvg(cinematicSvg,{fitTo:{mode:'width',value:1200},font:{fontFiles,fontDirs:[fontDir],loadSystemFonts:true,defaultFontFamily:'DejaVu Sans'}}).render().asPng();
 const overlayPixels=await sharp(overlay).raw().toBuffer({resolveWithObject:true});
 let textPixels=0;
 const textZones=[{x1:240,x2:970,y1:60,y2:170},{x1:120,x2:1080,y1:195,y2:340},{x1:280,x2:935,y1:360,y2:630},{x1:165,x2:1035,y1:650,y2:739}];
