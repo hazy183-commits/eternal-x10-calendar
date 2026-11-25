@@ -90,6 +90,7 @@ export default async function handler(req, res) {
     const date = textWidthSafe(payload.date || '--.--.----', 24);
     const events = Array.isArray(payload.events) ? payload.events.slice(0, 16) : [];
     const cinematic = url.searchParams.get('layout') === 'cinematic';
+    const refined = url.searchParams.get('layout') === 'refined';
     const width = 1200;
     const rowHeight = cinematic ? 90 : 104;
     const top = cinematic ? 274 : 242;
@@ -131,17 +132,18 @@ export default async function handler(req, res) {
           <text x="287" y="${y+61}" fill="#dcd5cf" font-size="18" font-family="DejaVu Sans">${type} · ${location}</text>`;
       }
       return `
-        <rect x="52" y="${y}" width="1096" height="86" rx="10" fill="#050910" fill-opacity=".84" stroke="#d8b66c" stroke-opacity=".56" stroke-width="1.5"/>
-        <rect x="52" y="${y}" width="8" height="86" rx="4" fill="#d6b36c"/>
+        <rect x="52" y="${y}" width="1096" height="86" rx="10" fill="#050910" fill-opacity="${refined ? .72 : .84}" stroke="#d8b66c" stroke-opacity="${refined ? .43 : .56}" stroke-width="1.5"/>
+        <rect x="52" y="${y}" width="${refined ? 4 : 8}" height="86" rx="2" fill="#d6b36c"/>
+        ${refined ? `<path d="M925 ${y+16}V${y+70}" stroke="#d8b66c" stroke-opacity=".5"/>` : ''}
         <text x="86" y="${y + 35}" fill="#fff5df" font-size="31" font-family="DejaVu Serif" font-weight="700">${name}</text>
-        <text x="88" y="${y + 66}" fill="#d8c39b" font-size="17" font-family="DejaVu Sans" letter-spacing="1">${type}  ·  ${location}</text>
-        <text x="1098" y="${y + 56}" text-anchor="end" fill="#e7c477" font-size="46" font-family="DejaVu Serif" font-weight="700">${time}</text>`;
+        <text x="88" y="${y + 66}" fill="#d8c39b" font-size="${refined ? 19 : 17}" font-family="DejaVu Sans" letter-spacing="1">${type}  ·  ${location}</text>
+        <text x="1098" y="${y + 56}" text-anchor="end" fill="#e7c477" font-size="${refined ? 51 : 46}" font-family="DejaVu Serif" font-weight="700">${time}</text>`;
     }).join('') : `
       <rect x="52" y="${top}" width="1096" height="110" rx="10" fill="#050910" fill-opacity=".84" stroke="#d8b66c" stroke-opacity=".56"/>
       <text x="600" y="${top + 66}" text-anchor="middle" fill="#fff5df" font-size="30" font-family="DejaVu Sans">Brak zaplanowanych wydarzeń</text>`;
 
     const classicSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
-      <defs><linearGradient id="shade"><stop offset="0" stop-color="#050408" stop-opacity=".94"/><stop offset=".48" stop-color="#05070c" stop-opacity=".80"/><stop offset="1" stop-color="#05070c" stop-opacity=".58"/></linearGradient><linearGradient id="metal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff"/><stop offset=".45" stop-color="#dce5f1"/><stop offset=".62" stop-color="#6c859f"/><stop offset="1" stop-color="#e9edf1"/></linearGradient><linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff2a5"/><stop offset=".55" stop-color="#ffd45b"/><stop offset="1" stop-color="#aa7224"/></linearGradient></defs>
+      <defs><linearGradient id="shade"><stop offset="0" stop-color="#050408" stop-opacity=".94"/><stop offset=".48" stop-color="#05070c" stop-opacity="${refined ? .67 : .80}"/><stop offset="1" stop-color="#05070c" stop-opacity="${refined ? .40 : .58}"/></linearGradient><linearGradient id="metal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff"/><stop offset=".45" stop-color="#dce5f1"/><stop offset=".62" stop-color="#6c859f"/><stop offset="1" stop-color="#e9edf1"/></linearGradient><linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff2a5"/><stop offset=".55" stop-color="#ffd45b"/><stop offset="1" stop-color="#aa7224"/></linearGradient></defs>
       <rect width="100%" height="100%" fill="url(#shade)"/>
       <path d="M38 35 H1162 M38 ${height-35} H1162" stroke="#d4ad62" stroke-width="2" stroke-opacity=".88"/><path d="M35 45 V${height-45} M1165 45 V${height-45}" stroke="#d4ad62" stroke-width="1" stroke-opacity=".5"/>
       <path d="M350 94 H850" stroke="#e0ae56" stroke-width="2"/><text x="600" y="82" text-anchor="middle" fill="url(#metal)" font-size="47" font-family="DejaVu Serif" font-weight="700">ORZEŁ BIAŁY</text><text x="600" y="128" text-anchor="middle" fill="url(#gold)" font-size="21" font-family="DejaVu Serif" letter-spacing="6">LINEAGE II</text>
@@ -192,7 +194,7 @@ export default async function handler(req, res) {
     res.setHeader('Content-Type', 'image/png');
     res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=300');
     res.setHeader('X-Daily-Plan-Events', String(events.length));
-    res.setHeader('X-Daily-Plan-Style', cinematic ? 'cinematic-series-preview' : 'fixed-clan-art-daily-rotation-v2');
+    res.setHeader('X-Daily-Plan-Style', cinematic ? 'cinematic-series-preview' : refined ? 'classic-refined-preview' : 'fixed-clan-art-daily-rotation-v2');
     res.setHeader('X-Daily-Plan-Artwork', artworkPath);
     res.setHeader('X-Daily-Plan-Size', String(png.length));
     res.setHeader('X-Daily-Plan-Text-Verified', verified ? 'true' : 'false');
