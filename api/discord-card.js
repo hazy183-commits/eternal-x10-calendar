@@ -191,7 +191,7 @@ if (animated) {
   }
   card = await sharp(Buffer.concat(frames), {
     raw: { width, height: height * frameCount, channels: 3, pageHeight: height },
-  }).gif({ loop: 0, delay: 120, effort: 2, colours: 128, dither: 0 }).toBuffer();
+  }).gif({ loop: 0, delay: Array(frameCount).fill(120), keepDuplicateFrames: true, effort: 2, colours: 128, dither: 0 }).toBuffer();
   const { pages, delay } = await sharp(card, { animated: true }).metadata();
   res.setHeader('X-Card-Frames', String(pages));
   res.setHeader('X-Card-Loop-Ms', String(delay.reduce((sum, value) => sum + value, 0)));
