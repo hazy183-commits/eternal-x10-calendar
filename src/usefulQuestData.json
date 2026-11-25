@@ -95,15 +95,23 @@
     "steps": [
       {
         "title": "Część I — Talien · poziom 50",
-        "text": "W Aden odbierz quest od Taliena. W Giran porozmawiaj z Gabrielle, potem z Gilmore w Dragon Valley. Pokonaj Baraham w okolicy Bee Hive i zanieś Legend of Seventeen Talienowi.",
+        "text": "W Aden odbierz quest od Taliena, po wschodniej stronie schodów do świątyni Einhasad. W Giran porozmawiaj z Gabrielle, potem z Gilmore w Dragon Valley. Pokonaj Baraham w okolicy Bee Hive i zanieś Legend of Seventeen Talienowi.",
         "images": [
+          [
+            "https://mxtqtlphmsjbkwiwsmvj.supabase.co/storage/v1/object/public/site-assets/blog/talien-aden-stairs-map-301fcd9d.webp",
+            "Zaznaczony punkt · Talien · wschodnie schody świątyni w Aden"
+          ],
+          [
+            "https://mxtqtlphmsjbkwiwsmvj.supabase.co/storage/v1/object/public/site-assets/blog/gabrielle-giran-square-map-7d252673.webp",
+            "Zaznaczony punkt · Gabrielle · plac Giran"
+          ],
+          [
+            "https://mxtqtlphmsjbkwiwsmvj.supabase.co/storage/v1/object/public/site-assets/blog/baraham-cave-of-trials-fa1c5fe3.webp",
+            "Zaznaczony punkt · Baraham · jaskinia przy Bee Hive"
+          ],
           [
             "https://la2wiki.com/npc/talien.webp",
             "Talien · portret"
-          ],
-          [
-            "https://la2wiki.com/town/c-aden.webp",
-            "Mapa miasta · Town of Aden"
           ]
         ]
       },
@@ -112,12 +120,20 @@
         "text": "Odwiedź Kantabilona w Heine. Zbierz 10 Malruk Succubus Claw od Malruk Succubus lub Malruk Succubus Turen w Dragon Valley. Oddaj je Kantabilonowi, a kryształ z nagraniem Talienowi. Odbierz Faded Poetry Book od Stedmiela w Hunters Village i zanieś Talienowi.",
         "images": [
           [
-            "https://la2wiki.com/npc/talien.webp",
-            "Talien · portret"
+            "https://mxtqtlphmsjbkwiwsmvj.supabase.co/storage/v1/object/public/site-assets/blog/kantabilon-heine-grocery-map-f613d47f.webp",
+            "Zaznaczony punkt · Kantabilon · sklep w Heine"
           ],
           [
-            "https://la2wiki.com/town/c-hunters.webp",
-            "Mapa miasta · Hunters Village"
+            "https://mxtqtlphmsjbkwiwsmvj.supabase.co/storage/v1/object/public/site-assets/blog/malruk-succubus-turen-map-801x383-288904d4.webp",
+            "Zaznaczony punkt · Malruk Succubus Turen · miejsce farmy"
+          ],
+          [
+            "https://mxtqtlphmsjbkwiwsmvj.supabase.co/storage/v1/object/public/site-assets/blog/stedmiel-hunters-village-map-f3c8e59f.webp",
+            "Zaznaczony punkt · Stedmiel · gildia wojowników"
+          ],
+          [
+            "https://la2wiki.com/npc/talien.webp",
+            "Talien · portret"
           ]
         ]
       },
@@ -126,12 +142,12 @@
         "text": "W Rune porozmawiaj kolejno z Virgilem, Ogmarem i Rahoraktim. Zbierz 5 Crimson Moss ze Splinter Stakato Drone w Swamp of Screams. Lek od Rahoraktiego oddaj Kassandrze i wróć do Virgila. W Goddard odwiedź Caradine i Noela. Daj Noelowi 5 Lunargent i 1 Hellfire Oil, potem odbierz list od Caradine.",
         "images": [
           [
-            "https://la2wiki.com/npc/caradine.webp",
-            "Caradine · portret"
+            "https://mxtqtlphmsjbkwiwsmvj.supabase.co/storage/v1/object/public/site-assets/blog/stakato-drone-swamp-of-screams-map-1bce5ef4.webp",
+            "Zaznaczony punkt · Splinter Stakato Drone · Swamp of Screams"
           ],
           [
-            "https://la2wiki.com/town/c-goddard.webp",
-            "Mapa miasta · Town of Goddard"
+            "https://la2wiki.com/npc/caradine.webp",
+            "Caradine · portret"
           ]
         ]
       },
@@ -159,12 +175,16 @@
         "text": "W Goddard porozmawiaj z Caradine i Ossianem. W Valley of Saints zdobądź Waterbinder z Pilgrim of Splendor oraz EverGreen z Judge of Splendor. Oddaj oba Ossianowi przed pójściem na Barakiela.",
         "images": [
           [
-            "https://la2wiki.com/npc/caradine.webp",
-            "Caradine · portret"
+            "https://mxtqtlphmsjbkwiwsmvj.supabase.co/storage/v1/object/public/site-assets/blog/pilgrim-of-splendor-map-801x383-9b756d32.webp",
+            "Zaznaczony punkt · Pilgrim of Splendor · Valley of Saints"
           ],
           [
-            "https://la2wiki.com/town/c-goddard.webp",
-            "Mapa miasta · Town of Goddard"
+            "https://mxtqtlphmsjbkwiwsmvj.supabase.co/storage/v1/object/public/site-assets/blog/judge-of-splendor-map-801x383-d6c6e160.webp",
+            "Zaznaczony punkt · Judge of Splendor · Valley of Saints"
+          ],
+          [
+            "https://la2wiki.com/npc/caradine.webp",
+            "Caradine · portret"
           ]
         ]
       },

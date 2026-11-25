@@ -3,20 +3,6 @@ import quests from './thirdClassQuestData.json';
 import './thirdClassQuests.css';
 
 
-// Regional markers use the same Interlude world map as the epic quest guides.
-const worldMap = 'https://lineage.pmfun.com/data/maps/world/Aden%20World%20Map%20Interlude%20%28big%29.png';
-const regionPins = {
-  'Town of Aden': [78.2, 54.6],
-  'Town of Giran': [61.4, 77.6],
-  'Town of Oren': [60.8, 59.1],
-  'Hunters Village': [67.8, 63.9],
-  'Town of Goddard': [77.1, 38.9],
-  'Rune Township': [45.7, 40],
-  'Wall of Argos': [84.8, 40.7],
-  'Forsaken Plains': [85.5, 57.4],
-  "The Giant's Cave": [88.2, 61.7],
-};
-
 const races = ['Ludzie', 'Elfy', 'Mroczne elfy', 'Orkowie', 'Krasnoludy'];
 const normalize = (value) => value.toLowerCase().normalize('NFD').replace(/\p{Mark}/gu, '').replaceAll('’', "'");
 
@@ -158,26 +144,10 @@ export function installThirdClassQuests() {
   function showImage(url, label, step) {
     const portrait = url.includes('/npc/') || label.endsWith(' · zdjęcie NPC');
     const forumImage = url.startsWith('https://forum.l2mad.net/');
-    const region = label.includes(' · ') && !portrait
-      ? label.split(' · ').at(-1)
-      : step.text.split(/\. | \(/, 1)[0];
-    const point = portrait || forumImage ? null : regionPins[region];
-    title.textContent = portrait ? label : 'Mapa · krok questa';
+    title.textContent = label;
     previewContent.replaceChildren();
-    if (point) {
-      const frame = element('div', '', 'third-class-map-frame');
-      const image = mapImage(worldMap, 'Mapa świata Interlude');
-      const marker = element('span', '●', 'third-class-map-pin');
-      marker.style.left = point[0] + '%';
-      marker.style.top = point[1] + '%';
-      marker.setAttribute('aria-hidden', 'true');
-      marker.hidden = true;
-      image.addEventListener('load', () => { marker.hidden = false; });
-      if (image.complete && image.naturalWidth) marker.hidden = false;
-      frame.append(image, marker);
-      previewContent.append(element('p', 'Zaznaczony rejon: ' + region), frame);
-    } else if (!portrait && !forumImage) {
-      previewContent.append(element('p', 'Fragment mapy z poradnika. Dokładna pozycja wymaga potwierdzenia.'));
+    if (!portrait && !forumImage && !label.startsWith('Zaznaczony punkt')) {
+      previewContent.append(element('p', 'Mapa poglądowa. Kierunek i cel znajdziesz w opisie kroku.'));
     }
     const viewport = element('div', '', 'third-class-full-viewport');
     const zoom = element('button', 'Powiększ mapę');
