@@ -1,4 +1,4 @@
-const INTERLUDE_WORLD_MAP = 'https://lineage.pmfun.com/data/maps/world/Aden%20World%20Map%20Interlude%20%28big%29.png';
+const INTERLUDE_WORLD_MAP = '/quest-maps/epic-world.jpg';
 const worldPin = (x, y, label) => ({ x, y, label });
 const worldPointsForMap = (mapLabel = '') => {
   const label = mapLabel.toLowerCase();
