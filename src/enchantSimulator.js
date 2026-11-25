@@ -118,22 +118,8 @@ view('roll').addEventListener('click', () => {
   else feedback.textContent = `Sukces: +${previous} → +${level}.` + (level >= target.valueAsNumber ? ' Cel osiągnięty!' : '');
   render();
 });
-function mountPanelShortcut() {
-  const sidebar = document.querySelector('#memberZoneLayer .member-zone-side');
-  if (!sidebar || sidebar.querySelector('[data-open-enchant-simulator]')) return;
-  const shortcut = document.createElement('a');
-  shortcut.className = 'zone-nav quest-catalogue-shortcut';
-  shortcut.href = '#enchant-s';
-  shortcut.textContent = 'Enchant S';
-  shortcut.dataset.openEnchantSimulator = '';
-  shortcut.setAttribute('aria-controls', dialog.id);
-  shortcut.addEventListener('click', (event) => {
-    event.preventDefault();
-    if (!dialog.open) dialog.showModal();
-  });
-  sidebar.append(shortcut);
-}
-
-mountPanelShortcut();
-new MutationObserver(mountPanelShortcut).observe(document.body, { childList: true, subtree: true });
+document.addEventListener('click', (event) => {
+  const trigger = event.target.closest?.('#memberZoneLayer.open [data-open-enchant-simulator]');
+  if (trigger && !dialog.open) dialog.showModal();
+});
 render();
