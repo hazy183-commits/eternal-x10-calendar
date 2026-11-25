@@ -108,7 +108,7 @@ ${rallySvg}
 </svg>`;
 const fontDir=new URL('../node_modules/dejavu-fonts-ttf/ttf/',import.meta.url).pathname;
 const fontFiles=['DejaVuSans.ttf','DejaVuSans-Bold.ttf','DejaVuSerif.ttf','DejaVuSerif-Bold.ttf','DejaVuSerif-Italic.ttf'].map(p=>fontDir+p);
-const cinematic = u.searchParams.get('layout') === 'cinematic';
+const cinematic = u.searchParams.get('layout') !== 'classic';
 const [headline, invitation] = rallyLines(name, date, time);
 const cinematicSvg = cinematic ? `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
 <defs>
@@ -127,7 +127,7 @@ const cinematicSvg = cinematic ? `<svg xmlns="http://www.w3.org/2000/svg" width=
 }).join('')}</g>
 <text x="228" y="95" fill="#fff3e3" font-size="26" font-family="DejaVu Sans" font-weight="700" letter-spacing="4">ORZEŁ BIAŁY</text>
 <text x="600" y="385" text-anchor="middle" fill="#ffd4a9" stroke="#280e0e" stroke-width="5" paint-order="stroke" font-size="22" font-family="DejaVu Sans" font-weight="700" letter-spacing="6">${esc(eventSubtitle)}</text>
-<text x="600" y="492" text-anchor="middle" fill="url(#steel)" stroke="#2e0e13" stroke-width="9" paint-order="stroke" font-size="${Math.min(titleSize, 114)}" font-family="DejaVu Serif" font-weight="700">${esc(displayName.toUpperCase())}</text>
+<text x="600" y="492" text-anchor="middle" fill="url(#steel)" stroke="#2e0e13" stroke-width="9" paint-order="stroke" font-size="${Math.min(titleSize, 114, Math.floor(1040 / Math.max(1, displayName.length * 0.85)))}" font-family="DejaVu Serif" font-weight="700">${esc(displayName.toUpperCase())}</text>
 <path d="M196 522H550L600 529L650 522H1004" fill="none" stroke="#ff9b70" stroke-width="2"/>
 <g font-family="DejaVu Sans" text-anchor="middle">
 <text x="362" y="565" fill="#ffc2a3" font-size="19" font-weight="700" letter-spacing="3">ZBIÓRKA</text>
@@ -172,6 +172,6 @@ try{
  layers.push({input:crest,left:27,top:29});
 }catch(error){console.warn('Clan crest could not be rendered',String(error));}
 const png=await sharp(cinematic ? eventScene : background).composite(layers).png().toBuffer();
-res.statusCode=200;res.setHeader('Content-Type','image/png');res.setHeader('Cache-Control','public, max-age=60, s-maxage=300');res.setHeader('X-Card-Image-Source',key);res.setHeader('X-Card-Template',templateArtwork?'core-style-crest-v6':'dynamic-event-v4');res.setHeader('X-Card-Size',String(png.length));res.setHeader('X-Card-Text-Pixels',String(textPixels));res.setHeader('X-Card-Text-Verified',textPixels>1500?'true':'false');res.end(png);
+res.statusCode=200;res.setHeader('Content-Type','image/png');res.setHeader('Cache-Control','public, max-age=60, s-maxage=300');res.setHeader('X-Card-Image-Source',key);res.setHeader('X-Card-Template',cinematic ? 'cinematic-embers' : templateArtwork ? 'core-style-crest-v6' : 'dynamic-event-v4');res.setHeader('X-Card-Size',String(png.length));res.setHeader('X-Card-Text-Pixels',String(textPixels));res.setHeader('X-Card-Text-Verified',textPixels>1500?'true':'false');res.end(png);
 }catch(e){console.error('Discord card render failed',e);res.statusCode=500;res.setHeader('Content-Type','text/plain');res.end(String(e?.stack||e))}
 }
