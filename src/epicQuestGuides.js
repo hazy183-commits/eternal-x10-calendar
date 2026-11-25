@@ -155,6 +155,10 @@ const guides = [
   }
 ];
 
+export const epicQuestEntries = guides.map(({ slug, name, quest, level, image }) => ({
+  slug, name, title: quest, level, image, category: 'Wejścia na epiki',
+}));
+
 function escapeHtml(value = '') {
   return String(value).replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
 }
@@ -269,6 +273,7 @@ function ensureQuestMapModal() {
 
 function openQuestMap(link) {
   const modal = ensureQuestMapModal();
+  (link.closest('.third-class-catalogue') || document.body).append(modal);
   const label = link.dataset.mapLabel || 'Mapa questa';
   let points = [];
   try { points = JSON.parse(link.dataset.mapWorldPoints || '[]'); } catch { points = []; }
@@ -400,6 +405,7 @@ function openQuestGuide(slug, trigger, list) {
   const modal = ensureQuestModal(list);
   if (modal._activeGuide === guide && modal.classList.contains('open')) return;
   if (modal.classList.contains('open')) modal._closeQuestGuide();
+  (trigger?.closest('.third-class-catalogue') || document.body).append(modal);
   const scroll = modal.querySelector('.quest-guide-modal-scroll');
   modal._previousOverflow = document.body.style.overflow;
   modal._returnFocus = trigger || document.activeElement;

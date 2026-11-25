@@ -1,3 +1,4 @@
+import { epicQuestEntries } from './epicQuestGuides.js';
 import usefulQuests from './usefulQuestData.json';
 import quests from './thirdClassQuestData.json';
 import './thirdClassQuests.css';
@@ -115,21 +116,41 @@ export function installThirdClassQuests() {
   catalogueClose.type = 'button';
   catalogueClose.setAttribute('aria-label', 'Zamknij przydatne questy');
   catalogueClose.addEventListener('click', () => catalogue.close());
-  const originalPosition = document.createComment('Przydatne questy');
-  section.before(originalPosition);
+  catalogue.id = 'usefulQuestCatalogue';
+  catalogue.append(catalogueClose, section);
   document.body.append(catalogue);
-  catalogue.append(catalogueClose);
-  catalogue.addEventListener('close', () => originalPosition.after(section));
-  document.addEventListener('click', (event) => {
-    const trigger = event.target.closest?.('a[href$="#przydatne-questy"]');
-    const clanOpen = document.querySelector('#memberZoneLayer.open');
-    if (!trigger || !clanOpen || event.defaultPrevented || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
-    event.preventDefault();
+  section.hidden = false;
+  closeOnBackdrop(catalogue);
+
+  function mountPanelShortcut() {
+    const sidebar = document.querySelector('#memberZoneLayer .member-zone-side');
+    if (!sidebar || sidebar.querySelector('[data-open-useful-quests]')) return;
+    const link = element('a', 'Przydatne questy', 'zone-nav quest-catalogue-shortcut');
+    link.href = '#przydatne-questy';
+    link.dataset.openUsefulQuests = '';
+    link.setAttribute('aria-controls', catalogue.id);
+    sidebar.append(link);
+  }
+  mountPanelShortcut();
+  new MutationObserver(mountPanelShortcut).observe(document.body, { childList: true, subtree: true });
+
+  function openCatalogue() {
     if (catalogue.open) return;
-    catalogue.append(section);
     catalogue.showModal();
     search.focus({ preventScroll: true });
+  }
+
+  document.addEventListener('click', (event) => {
+    const trigger = event.target.closest?.('a[href$="#przydatne-questy"]');
+    if (!trigger || event.defaultPrevented || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    openCatalogue();
   });
+  function openCatalogueFromHash() {
+    if (location.hash === '#przydatne-questy') openCatalogue();
+  }
+  window.addEventListener('hashchange', openCatalogueFromHash);
+  openCatalogueFromHash();
 
   function mapImage(url, label) {
     const img = element('img');
@@ -189,7 +210,7 @@ export function installThirdClassQuests() {
   const filters = section.querySelector('.third-class-filters');
   const categoryLabel = element('label', 'Kategoria');
   const category = element('select');
-  for (const name of ['Wszystkie questy', 'Rozwój postaci', 'Dostęp do lokacji', 'Farm i wymiany', 'Trzecia profesja']) {
+  for (const name of ['Wszystkie questy', 'Rozwój postaci', 'Dostęp do lokacji', 'Farm i wymiany', 'Wejścia na epiki', 'Trzecia profesja']) {
     category.add(new Option(name, name));
   }
   categoryLabel.append(category);
@@ -203,14 +224,14 @@ export function installThirdClassQuests() {
     const requested = category.value;
     const raceActive = requested === 'Trzecia profesja' || requested === 'Wszystkie questy';
     race.disabled = !raceActive;
-    const all = [...usefulQuests, ...quests];
+    const all = [...usefulQuests, ...epicQuestEntries, ...quests];
     const groups = new Map();
     let total = 0;
     for (const quest of all) {
       const key = quest.category || 'Trzecia profesja';
       if (requested !== 'Wszystkie questy' && requested !== key) continue;
       if (raceActive && race.value !== '' && Number(race.value) !== quest.race) continue;
-      const steps = quest.category ? quest.steps.map((step) => step.text).join(' ') : '';
+      const steps = quest.category && quest.steps ? quest.steps.map((step) => step.text).join(' ') : '';
       const keywords = [quest.from, quest.name, quest.title, quest.alias, key, steps].filter(Boolean).join(' ');
       if (!normalize(keywords).includes(query)) continue;
       const button = element('button', '', 'third-class-card');
@@ -219,8 +240,21 @@ export function installThirdClassQuests() {
       const copy = element('span', '', 'third-class-card-copy');
       copy.append(element('small', quest.from || quest.level), element('strong', quest.name));
       if (quest.title) copy.append(element('small', quest.title));
-      button.append(illustration(quest), copy);
-      button.addEventListener('click', () => openGuide(quest));
+      if (quest.image) {
+        const art = element('img', '', 'quest-epic-card-art');
+        art.src = quest.image;
+        art.alt = '';
+        art.loading = 'lazy';
+        art.decoding = 'async';
+        button.append(art, copy);
+        button.classList.add('quest-epic-card');
+        button.addEventListener('click', () => window.dispatchEvent(new CustomEvent('orzel:open-epic-quest', {
+          detail: { slug: quest.slug, trigger: button },
+        })));
+      } else {
+        button.append(illustration(quest), copy);
+        button.addEventListener('click', () => openGuide(quest));
+      }
       if (!groups.has(key)) groups.set(key, []);
       groups.get(key).push(button);
       total++;

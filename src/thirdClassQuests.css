@@ -81,3 +81,8 @@
 .quest-dependencies{margin:12px 0;padding:10px 12px;border:1px solid #6b5431;background:#191610}
 .quest-dependencies summary{padding:6px 0;cursor:pointer}
 .quest-dependencies p{margin:4px 0 8px}
+
+.third-class-card.quest-epic-card{min-height:100px}
+.quest-epic-card .quest-epic-card-art{width:88px;height:66px;object-fit:cover;border:1px solid #8b713c;border-radius:4px}
+#memberZoneLayer .quest-catalogue-shortcut{text-decoration:none}
+@media(max-width:700px){#memberZoneLayer .quest-catalogue-shortcut.zone-nav{white-space:normal;text-align:center;font-size:9px}}

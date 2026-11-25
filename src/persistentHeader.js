@@ -32,7 +32,7 @@ if (typeof document !== 'undefined') {
       for (const link of links) {
         const selector = link.getAttribute('href');
         const section = document.querySelector(selector);
-        if (section && section.getBoundingClientRect().top <= offset) current = selector;
+        if (section && !section.closest('dialog') && section.getBoundingClientRect().top <= offset) current = selector;
       }
       links.forEach((link) => {
         if (link.getAttribute('href') === current) link.setAttribute('aria-current', 'location');
