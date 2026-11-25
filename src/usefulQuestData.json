@@ -831,13 +831,13 @@
   {
     "name": "Stakato Nest · materiały",
     "title": "The Zero Hour · wymiana Fang of Stakato",
-    "alias": "stakato fang kły matsy Kahman",
+    "alias": "stakato fang kły matsy Kahman Maria",
     "category": "Farm i wymiany",
     "level": "66+",
     "icon": "pi-bones",
     "quickStart": "Mercenary Kahman przy punkcie teleportu Swamp of Screams (teleport z Rune Township).",
     "prepare": "Hunt of the Golden Ram Mercenary Force → In Search of the Nest → The Zero Hour.",
-    "outcome": "Powtarzalna wymiana Fang of Stakato na wybrane materiały u Kahmana.",
+    "outcome": "Na Eternal wymienisz Fang of Stakato na materiały u Marii.",
     "steps": [
       {
         "title": "1. Dołącz do Golden Ram u Kahmana",
@@ -892,14 +892,9 @@
         ]
       },
       {
-        "title": "4. Wymień Fang of Stakato u Kahmana",
-        "text": "Wróć do Kahmana w Swamp of Screams, wybierz The Zero Hour w dialogu i wskaż materiał. Po wymianie możesz wrócić do farmy z aktywnym questem. Tabela pokazuje stawki Interlude. Przed zatwierdzeniem sprawdź koszt i ilość w dialogu na Eternal.",
-        "images": [
-          [
-            "https://la2wiki.com/npc/kahman.webp",
-            "Mercenary Kahman · zdjęcie NPC"
-          ]
-        ],
+        "title": "4. Wymień Fang of Stakato u Marii",
+        "text": "Na Eternal podejdź do NPC Maria w mieście. Otwórz sklep wymiany Fang of Stakato i wybierz materiał. Koszt w tabeli dotyczy całej paczki z kolumny Ilość. Osiem stawek odczytano ze sklepu na Eternal. Przy Enrii zrzut pokazuje jedną sztukę, a koszt 12 kłów pochodzi z tabeli Interlude i wymaga potwierdzenia w grze.",
+        "images": [],
         "exchange": [
           [
             "Asofe",
@@ -914,7 +909,7 @@
           [
             "Enria",
             1,
-            12
+            "12 (Interlude)"
           ],
           [
             "Compound Braid",
