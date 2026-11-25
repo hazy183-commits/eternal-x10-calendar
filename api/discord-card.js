@@ -125,7 +125,7 @@ const cinematicSvg = cinematic ? `<svg xmlns="http://www.w3.org/2000/svg" width=
   const y = 144 + (i * 103) % 489;
   return `<path d="M${x} ${y}l${4+i%9} -${4+i%5}" stroke-width="${1+i%3}"/>`;
 }).join('')}</g>
-<text x="228" y="95" fill="#fff3e3" font-size="26" font-family="DejaVu Sans" font-weight="700" letter-spacing="4">ORZEŁ BIAŁY</text>
+<text x="189" y="90" fill="#fff3e3" font-size="26" font-family="DejaVu Sans" font-weight="700" letter-spacing="4">ORZEŁ BIAŁY</text>
 <text x="600" y="385" text-anchor="middle" fill="#ffd4a9" stroke="#280e0e" stroke-width="5" paint-order="stroke" font-size="22" font-family="DejaVu Sans" font-weight="700" letter-spacing="6">${esc(eventSubtitle)}</text>
 <text x="600" y="492" text-anchor="middle" fill="url(#steel)" stroke="#2e0e13" stroke-width="9" paint-order="stroke" font-size="${Math.min(titleSize, 114, Math.floor(1040 / Math.max(1, displayName.length * 0.85)))}" font-family="DejaVu Serif" font-weight="700">${esc(displayName.toUpperCase())}</text>
 <path d="M196 522H550L600 529L650 522H1004" fill="none" stroke="#ff9b70" stroke-width="2"/>
@@ -168,8 +168,27 @@ try{
  const crestResponse=await fetch(imageHost+'/images/discord/clan-crest.svg',{signal:AbortSignal.timeout(4500)});
  if(!crestResponse.ok)throw new Error('Clan crest HTTP '+crestResponse.status);
  const crestBytes=Buffer.from(await crestResponse.arrayBuffer());
- crest=await sharp(crestBytes,{density:180}).resize(180,112,{fit:'fill'}).png().toBuffer();
- layers.push({input:crest,left:27,top:29});
+ if (cinematic) {
+   const { data, info } = await sharp(crestBytes, { density: 180 })
+     .resize(146, 91).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+   for (let y = 0; y < info.height; y++) {
+     for (let x = 0; x < info.width; x++) {
+       const offset = (y * info.width + x) * 4;
+       const edge = Math.min(x, y, info.width - 1 - x, info.height - 1 - y);
+       const feather = Math.min(1, edge / 12);
+       const brightness = Math.max(data[offset], data[offset + 1], data[offset + 2]);
+       const darkBorderFade = edge < 16 ? Math.min(1, brightness / 65) : 1;
+       data[offset + 1] *= 0.95;
+       data[offset + 2] *= 0.88;
+       data[offset + 3] *= feather * darkBorderFade;
+     }
+   }
+   crest = await sharp(data, { raw: { width: info.width, height: info.height, channels: 4 } }).png().toBuffer();
+   layers.push({ input: crest, left: 33, top: 33 });
+ } else {
+   crest = await sharp(crestBytes, { density: 180 }).resize(180, 112, { fit: 'fill' }).png().toBuffer();
+   layers.push({ input: crest, left: 27, top: 29 });
+ }
 }catch(error){console.warn('Clan crest could not be rendered',String(error));}
 const card = await sharp(cinematic ? eventScene : background).composite(layers).png().toBuffer();
 res.statusCode=200;res.setHeader('Content-Type','image/png');res.setHeader('Cache-Control','public, max-age=60, s-maxage=300');res.setHeader('X-Card-Image-Source',key);res.setHeader('X-Card-Template',cinematic ? 'cinematic-embers' : templateArtwork ? 'core-style-crest-v6' : 'dynamic-event-v4');res.setHeader('X-Card-Size',String(card.length));res.setHeader('X-Card-Text-Pixels',String(textPixels));res.setHeader('X-Card-Text-Verified',textPixels>1500?'true':'false');res.end(card);
