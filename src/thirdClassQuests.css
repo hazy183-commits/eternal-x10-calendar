@@ -56,3 +56,6 @@
 .third-class-catalogue .third-class-quests{margin:0;width:auto;border:0}
 .third-class-catalogue-close{position:sticky;top:0;float:right;z-index:1;min-width:44px;min-height:44px;color:#fae1a9;background:#2e2313;border:1px solid #9b753e;font-size:24px;cursor:pointer}
 .third-class-maps img{width:132px;height:92px}
+
+.third-class-cards.useful-quest-groups{display:grid;grid-template-columns:minmax(0,1fr);gap:20px}
+.useful-quest-group h3{margin:0 0 10px}

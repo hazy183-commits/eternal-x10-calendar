@@ -1,3 +1,4 @@
+import usefulQuests from './usefulQuestData.json';
 import quests from './thirdClassQuestData.json';
 import './thirdClassQuests.css';
 
@@ -75,7 +76,7 @@ const addedSupplies = {
 
 function illustration(quest) {
   const image = element('img', '', 'third-class-emblem');
-  image.src = '/assets/interlude/buff-icons/skill' + classArt[quest.name] + '.png';
+  image.src = '/assets/interlude/buff-icons/skill' + (quest.icon || classArt[quest.name]) + '.png';
   image.alt = '';
   image.loading = 'lazy';
   return image;
@@ -176,21 +177,53 @@ export function installThirdClassQuests() {
     preview.scrollTop = 0;
   }
 
+  const filters = section.querySelector('.third-class-filters');
+  const categoryLabel = element('label', 'Kategoria');
+  const category = element('select');
+  for (const name of ['Wszystkie questy', 'Rozwój postaci', 'Dostęp do lokacji', 'Farm i wymiany', 'Trzecia profesja']) {
+    category.add(new Option(name, name));
+  }
+  categoryLabel.append(category);
+  filters.prepend(categoryLabel);
+  const searchLabel = search.parentElement.firstChild;
+  searchLabel.textContent = 'Szukaj questa lub klasy';
+  search.placeholder = 'np. Noblesse, MoS, Adventurer';
   races.forEach((name, id) => race.add(new Option(name, id)));
   const render = () => {
     const query = normalize(search.value.trim());
-    const results = quests.filter((quest) => (race.value === '' || Number(race.value) === quest.race)
-      && normalize(quest.from + ' ' + quest.name + ' ' + (quest.alias || '')).includes(query));
-    count.textContent = results.length ? 'Poradniki: ' + results.length : 'Brak klas pasujących do wyszukiwania.';
-    cards.replaceChildren(...results.map((quest) => {
+    const requested = category.value;
+    const raceActive = requested === 'Trzecia profesja' || requested === 'Wszystkie questy';
+    race.disabled = !raceActive;
+    const all = [...usefulQuests, ...quests];
+    const groups = new Map();
+    let total = 0;
+    for (const quest of all) {
+      const key = quest.category || 'Trzecia profesja';
+      if (requested !== 'Wszystkie questy' && requested !== key) continue;
+      if (raceActive && race.value !== '' && Number(race.value) !== quest.race) continue;
+      const steps = quest.category ? quest.steps.map((step) => step.text).join(' ') : '';
+      const keywords = [quest.from, quest.name, quest.title, quest.alias, key, steps].filter(Boolean).join(' ');
+      if (!normalize(keywords).includes(query)) continue;
       const button = element('button', '', 'third-class-card');
       button.type = 'button';
-      button.dataset.race = quest.race;
+      if (quest.race !== undefined) button.dataset.race = quest.race;
       const copy = element('span', '', 'third-class-card-copy');
-      copy.append(element('small', quest.from), element('strong', quest.name));
+      copy.append(element('small', quest.from || quest.level), element('strong', quest.name));
+      if (quest.title) copy.append(element('small', quest.title));
       button.append(illustration(quest), copy);
       button.addEventListener('click', () => openGuide(quest));
-      return button;
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(button);
+      total++;
+    }
+    count.textContent = total ? 'Poradniki: ' + total : 'Brak questów pasujących do wyszukiwania.';
+    cards.classList.add('useful-quest-groups');
+    cards.replaceChildren(...Array.from(groups, ([name, buttons]) => {
+      const group = element('section', '', 'useful-quest-group');
+      const grid = element('div', '', 'third-class-cards');
+      grid.append(...buttons);
+      group.append(element('h3', name), grid);
+      return group;
     }));
   };
 
@@ -204,11 +237,11 @@ export function installThirdClassQuests() {
         document.head.append(connection);
       }
     }
-    dialog.querySelector('h3').textContent = quest.from + ' → ' + quest.name;
+    dialog.querySelector('h3').textContent = quest.from ? quest.from + ' → ' + quest.name : quest.name;
     const introduction = element('header', '', 'third-class-intro');
     const heading = element('div');
-    heading.append(element('strong', 'Saga of the ' + (quest.name === 'Dreadnought' ? 'Dreadnoughts' : quest.name)),
-      element('p', races[quest.race] + ' · poziom 76'));
+    heading.append(element('strong', quest.title || 'Saga of the ' + (quest.name === 'Dreadnought' ? 'Dreadnoughts' : quest.name)),
+      element('p', quest.level ? 'Poziom ' + quest.level : races[quest.race] + ' · poziom 76'));
     introduction.append(illustration(quest), heading);
     const supplies = element('p', 'Przygotuj: ' +
       ['Ice Crystal', 'Divine Stone of Wisdom', addedSupplies[quest.name]].filter(Boolean).join(' · '),
@@ -216,7 +249,7 @@ export function installThirdClassQuests() {
     const steps = element('ol', '', 'third-class-steps');
     for (const [index, step] of quest.steps.entries()) {
       const row = element('li');
-      row.append(element('h4', stepTitles[index]), element('p', step.text));
+      row.append(element('h4', step.title || stepTitles[index]), element('p', step.text));
       if (step.forumRoute) {
         row.append(element('p', 'Dojście: ' + step.forumRoute, 'third-class-forum-route'));
       }
@@ -240,12 +273,16 @@ export function installThirdClassQuests() {
       if (images.children.length) row.append(images);
       steps.append(row);
     }
-    content.replaceChildren(introduction, supplies, steps);
+    content.replaceChildren(introduction, ...(quest.category ? [] : [supplies]), steps);
     dialog.showModal();
     dialog.scrollTop = 0;
   }
 
   search.addEventListener('input', render);
   race.addEventListener('change', render);
+  category.addEventListener('change', () => {
+    if (category.value !== 'Trzecia profesja' && category.value !== 'Wszystkie questy') race.value = '';
+    render();
+  });
   render();
 }

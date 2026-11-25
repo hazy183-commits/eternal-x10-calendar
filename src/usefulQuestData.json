@@ -1,0 +1,422 @@
+[
+  {
+    "name": "Subclassa",
+    "title": "Fate’s Whisper",
+    "category": "Rozwój postaci",
+    "level": "75+",
+    "icon": "0297",
+    "steps": [
+      {
+        "title": "Odbierz quest u Reorina",
+        "text": "Z Oren teleportuj się do Skyshadow Meadow. Porozmawiaj z Maestro Reorin.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/reorin.webp",
+            "Reorin · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-oren.webp",
+            "Mapa miasta · Town of Oren"
+          ]
+        ]
+      },
+      {
+        "title": "Cabrio na cmentarzu",
+        "text": "Idź do The Cemetery. Po śmierci Cabrio porozmawiaj ze skrzynią Coffer of the Dead, odbierz Reiria’s Soul Orb i wróć do Reorina.",
+        "images": []
+      },
+      {
+        "title": "Trzy berła z Tower of Insolence",
+        "text": "Odbierz berła ze skrzyń po Hallate na 3. piętrze, Kernonie na 8. i Golkondzie na 11. Wróć z kompletem do Reorina.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/reorin.webp",
+            "Reorin · portret"
+          ]
+        ]
+      },
+      {
+        "title": "Narzędzia Reorina",
+        "text": "Odbierz Infernium Varnish od Cliffa w magazynie w Oren i oddaj Reorinowi. Potem odbierz młot od Ferrisa w kuźni w Aden i ponownie wróć do Reorina. Po formę idź do Zenkin w sklepie z bronią w Oren.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/reorin.webp",
+            "Reorin · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-oren.webp",
+            "Mapa miasta · Town of Oren"
+          ]
+        ]
+      },
+      {
+        "title": "Pipette na Eternal",
+        "text": "Porozmawiaj z Kasparem w Hardin’s Academy. Z otrzymaną Pipette udaj się do Marii po Red Pipette. Oddaj ją Kasparowi w zamian za formę i zanieś ją do Reorina.",
+        "images": []
+      },
+      {
+        "title": "Oddaj quest",
+        "text": "Oddaj Reorinowi broń B i 984 kryształy B albo wybierz dostępny na Eternal wariant z kuponem na broń A. Kupon wymienisz później u Marii, dostarczając broń B i 984 kryształy B. Po zakończeniu Fate’s Whisper wybierz subclassę u mistrza odpowiedniej gildii.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/reorin.webp",
+            "Reorin · portret"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Noblesse",
+    "title": "Possessor of a Precious Soul I–IV",
+    "category": "Rozwój postaci",
+    "level": "50 / 60 / 65 / 75 na subclassie",
+    "icon": "1356",
+    "steps": [
+      {
+        "title": "Część I — Talien · poziom 50",
+        "text": "W Aden odbierz quest od Taliena. W Giran porozmawiaj z Gabrielle, potem z Gilmore w Dragon Valley. Pokonaj Baraham w okolicy Bee Hive i zanieś Legend of Seventeen Talienowi.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/talien.webp",
+            "Talien · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-aden.webp",
+            "Mapa miasta · Town of Aden"
+          ]
+        ]
+      },
+      {
+        "title": "Nagranie i księga",
+        "text": "Odwiedź Kantabilona w Heine. Zbierz 10 Malruk Succubus Claw od Malruk Succubus lub Malruk Succubus Turen w Dragon Valley. Oddaj je Kantabilonowi, a kryształ z nagraniem Talienowi. Odbierz Faded Poetry Book od Stedmiela w Hunters Village i zanieś Talienowi.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/talien.webp",
+            "Talien · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-hunters.webp",
+            "Mapa miasta · Hunters Village"
+          ]
+        ]
+      },
+      {
+        "title": "Lek i przedmioty dla Noela",
+        "text": "W Rune porozmawiaj kolejno z Virgilem, Ogmarem i Rahoraktim. Zbierz 5 Crimson Moss ze Splinter Stakato Drone w Swamp of Screams. Lek od Rahoraktiego oddaj Kassandrze i wróć do Virgila. W Goddard odwiedź Caradine i Noela. Daj Noelowi 5 Lunargent i 1 Hellfire Oil, potem odbierz list od Caradine.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/caradine.webp",
+            "Caradine · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Mapa miasta · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "title": "Część II — Virgil · poziom 60",
+        "text": "W Rune porozmawiaj z Virgilem, Kassandrą i Ogmarem. W okolicy Swamp of Screams znajdź Mysterious Dark Knighta. Sprawdź Corpse of Angel, odbierz Strand of Golden Hair i wróć do rycerza.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/r-a-fighterguild-teacher-mdarkelf-m00-06a396.webp",
+            "Virgil · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-rune.webp",
+            "Mapa miasta · Rune Township"
+          ]
+        ]
+      },
+      {
+        "title": "Uwolnij jednorożca",
+        "text": "Zanieś włosy Witch Kalis. Odwiedź Alchemist Matild przy Sea of Spores i wróć do Kalis ze składnikiem. W Valley of Saints odszukaj Fallen Unicorn, zbierz 4 Orb of Binding z Restrainer of Glory i uwolnij jednorożca. Na koniec wróć do Kassandry.",
+        "images": []
+      },
+      {
+        "title": "Część III — Caradine · poziom 65",
+        "text": "W Goddard porozmawiaj z Caradine i Ossianem. W Valley of Saints zdobądź Waterbinder z Pilgrim of Splendor oraz EverGreen z Judge of Splendor. Oddaj oba Ossianowi przed pójściem na Barakiela.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/caradine.webp",
+            "Caradine · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Mapa miasta · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "title": "Barakiel na Eternal",
+        "text": "Zdobądź Rain Song z Barakiela. Na Eternal możesz też uzbierać 15 fragmentów Rain Song, które automatycznie połączą się w laskę. Oddaj ją Ossianowi, a Relic Box zanieś Laddowi w Ivory Tower.",
+        "images": []
+      },
+      {
+        "title": "Część IV — Caradine · poziom 75",
+        "text": "Na aktywnej subclassie wróć do Caradine w Goddard. Skorzystaj z teleportu w dialogu i porozmawiaj z Lady of the Lake, aby otrzymać Noblesse.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/caradine.webp",
+            "Caradine · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Mapa miasta · Town of Goddard"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Wejście do Pagan’s Temple",
+    "title": "Truth Beyond the Gate · Through the Gate Once More",
+    "category": "Dostęp do lokacji",
+    "level": "73+",
+    "icon": "0270",
+    "steps": [
+      {
+        "title": "Visitor’s Mark",
+        "text": "W Rune, na dolnym poziomie świątyni, odbierz quest od Eliyah. Wejdź wyżej do Flaurona po Visitor’s Mark.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/eliyah.webp",
+            "Eliyah · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-rune.webp",
+            "Mapa miasta · Rune Township"
+          ]
+        ]
+      },
+      {
+        "title": "Pierwsze wejście",
+        "text": "Zejdź wejściem za Flauronem. Przejdź przez Triol’s Mirror i podejdź do Temple Gatekeepera. Użyj Visitor’s Mark w dialogu. Gdy otrzymasz Faded Visitor’s Mark, wróć do Flaurona.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/flauron.webp",
+            "Flauron · portret"
+          ]
+        ]
+      },
+      {
+        "title": "Pagan’s Mark",
+        "text": "Weź Through the Gate Once More. W Forest of the Dead zbierz 10 Necromancer’s Heart, m.in. z Bone Animatorów. Oddaj serca i Faded Visitor’s Mark Flauronowi, żeby dostać Pagan’s Mark.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/flauron.webp",
+            "Flauron · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-rune.webp",
+            "Mapa miasta · Rune Township"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Pagan’s Temple · enchanty S",
+    "title": "Seekers of the Holy Grail",
+    "category": "Farm i wymiany",
+    "level": "73+",
+    "icon": "0351",
+    "steps": [
+      {
+        "title": "Innocentin w Rune",
+        "text": "Zacznij quest u High Priest Innocentin. Przygotuj dostęp do świątyni, żeby móc wracać na farmę.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/innocentin.webp",
+            "Innocentin · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-rune.webp",
+            "Mapa miasta · Rune Township"
+          ]
+        ]
+      },
+      {
+        "title": "2 000 Pagan Totem",
+        "text": "Poluj na potwory w Pagan’s Temple i zbieraj Pagan Totem w ekwipunku questowym.",
+        "images": []
+      },
+      {
+        "title": "Oddaj totemy Innocentinowi",
+        "text": "W standardowym Interlude nagroda za 2 000 totemów jest losowa. Możesz otrzymać adenę, EAS albo EWS. Sprawdź wariant wymiany w dialogu na Eternal.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/innocentin.webp",
+            "Innocentin · portret"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "name": "MoS · enchanty S",
+    "title": "Guardians of the Holy Grail",
+    "category": "Farm i wymiany",
+    "level": "73+",
+    "icon": "0341",
+    "steps": [
+      {
+        "title": "Dominic w Rune",
+        "text": "Weź quest u Priest Dominic, następnie udaj się do Monastery of Silence. Monk’s Scripture wypadają z miejscowych mnichów i strażników.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/dominic.webp",
+            "Dominic · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-rune.webp",
+            "Mapa miasta · Rune Township"
+          ]
+        ]
+      },
+      {
+        "title": "Odszukaj Gremory’ego",
+        "text": "W klasztorze odszukaj Priest Gremory w ukrytym pomieszczeniu. Porozmawiaj z nim przed wejściem do Room of Splendor.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/gremory.webp",
+            "Gremory · portret"
+          ]
+        ]
+      },
+      {
+        "title": "Zbierz wodę z Graala",
+        "text": "Na najwyższym poziomie klasztoru wejdź do Room of Splendor, używając Key of Splendor Room. Kliknij Holy Grail i zanieś Gremory’emu butelkę z wodą. W pomieszczeniu może stać agresywny Anays.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/gremory.webp",
+            "Gremory · portret"
+          ]
+        ]
+      },
+      {
+        "title": "Wymień Monk’s Scripture",
+        "text": "W standardowym Interlude Gremory wymienia 400 Monk’s Scripture na EAS, a 4 000 na EWS. Oddanie skryptów Dominicowi daje adenę. Sprawdź progi u Gremory’ego na Eternal.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/gremory.webp",
+            "Gremory · portret"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Primeval Isle · recepty A",
+    "title": "A Powerful Primeval Creature",
+    "category": "Farm i wymiany",
+    "level": "75+",
+    "icon": "1191",
+    "steps": [
+      {
+        "title": "Dinn na przystani",
+        "text": "Odbierz quest u Dinna na Primeval Isle Wharf.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/dinn.webp",
+            "Dinn · portret"
+          ]
+        ]
+      },
+      {
+        "title": "Zbierz tkanki i jajko",
+        "text": "Zbierz 150 Dinosaur Tissue z Deinonychus, Ornithomimus, Velociraptor lub Pterosaur. Z Ancient Egg w dżungli zdobądź 1 Dinosaur Egg.",
+        "images": []
+      },
+      {
+        "title": "Wybierz receptę u Dinna",
+        "text": "Oddaj 150 tkanek i jajko przez opcję wymiany zestawu. Wybierz receptę broni A (60%). Opcja oddania samych tkanek wypłaca adenę.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/dinn.webp",
+            "Dinn · portret"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Primeval Isle · części broni A",
+    "title": "Rise and Fall of the Elroki Tribe",
+    "category": "Farm i wymiany",
+    "level": "75+",
+    "icon": "1268",
+    "steps": [
+      {
+        "title": "Singsing na przystani",
+        "text": "Weź quest od Singsinga na Primeval Isle Wharf.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/singsing.webp",
+            "Singsing · portret"
+          ]
+        ]
+      },
+      {
+        "title": "Zbierz kości",
+        "text": "Na Primeval Plains pokonuj Pachycephalosaurus i Wild Strider. Zbierz 300 Bones of a Plains Dinosaur.",
+        "images": []
+      },
+      {
+        "title": "Wymiana u Karakawei",
+        "text": "Odszukaj Orahochin i przejdź do wioski Elroki. Oddaj kości Karakawei, żeby odebrać części do broni A. U Singsinga kości możesz oddać za adenę.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/singsing.webp",
+            "Singsing · portret"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Primeval Isle · enchant broni A",
+    "title": "Meeting the Elroki · The Name of Evil I–II",
+    "category": "Farm i wymiany",
+    "level": "75 / 76 / 77",
+    "icon": "1307",
+    "steps": [
+      {
+        "title": "Meeting the Elroki · poziom 75",
+        "text": "Zacznij u Marqueza na przystani. W wiosce porozmawiaj z Mushiką, Asamahem i Karakawei. Zabierz Mantarasa Egg z przystani i oddaj Asamahowi.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/marquez.webp",
+            "Marquez · portret"
+          ]
+        ]
+      },
+      {
+        "title": "The Name of Evil I · poziom 76",
+        "text": "Weź quest od Mushiki, potem porozmawiaj z Karakawei. Zdobądź 2 Deinonychus Bone Fragment i 2 Ornithomimus Claw. Oddaj je Karakawei, następnie odwiedź kolejno Ulu Kaimu, Balu Kaimu i Chuta Kaimu. Zanieś Epitaph of Wisdom do Mushiki.",
+        "images": []
+      },
+      {
+        "title": "The Name of Evil II · poziom 77",
+        "text": "Zacznij u Asamaha. Odwiedź te same trzy kamienie w tej samej kolejności. Odczytaj od nich trzy części melodii i wprowadź je przy Warrior’s Grave: Do Mi Fa Sol Fa, Fa Sol Ti Sol Fa, Sol Fa Mi Fa Mi. Ti może występować jako Si.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/asamah.webp",
+            "Asamah · portret"
+          ]
+        ]
+      },
+      {
+        "title": "Oddaj Bone Powder",
+        "text": "Zanieś Bone Powder do Shilen’s Stone Statue. Wróć do Asamaha, a następnie do Mushiki. Standardowa nagroda to jednorazowy EWA. Ten etap otwiera też dalszy quest do Sailrena.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/asamah.webp",
+            "Asamah · portret"
+          ]
+        ]
+      }
+    ]
+  }
+]
