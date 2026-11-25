@@ -121,11 +121,12 @@ export function installThirdClassQuests() {
   }
 
   function showImage(url, label, step) {
-    const portrait = url.includes('/npc/');
+    const portrait = url.includes('/npc/') || label.endsWith(' · zdjęcie NPC');
+    const forumImage = url.startsWith('https://forum.l2mad.net/');
     const region = label.includes(' · ') && !portrait
       ? label.split(' · ').at(-1)
       : step.text.split(/\. | \(/, 1)[0];
-    const point = portrait ? null : regionPins[region];
+    const point = portrait || forumImage ? null : regionPins[region];
     title.textContent = portrait ? label : 'Mapa · krok questa';
     previewContent.replaceChildren();
     if (point) {
@@ -140,10 +141,21 @@ export function installThirdClassQuests() {
       if (image.complete && image.naturalWidth) marker.hidden = false;
       frame.append(image, marker);
       previewContent.append(element('p', 'Zaznaczony rejon: ' + region), frame);
-    } else if (!portrait) {
+    } else if (!portrait && !forumImage) {
       previewContent.append(element('p', 'Fragment mapy z poradnika. Dokładna pozycja wymaga potwierdzenia.'));
     }
-    previewContent.append(mapImage(url, label), element('p', step.text));
+    const viewport = element('div', '', 'third-class-full-viewport');
+    const zoom = element('button', 'Powiększ mapę');
+    zoom.type = 'button';
+    zoom.setAttribute('aria-pressed', 'false');
+    zoom.addEventListener('click', () => {
+      const expanded = viewport.classList.toggle('is-zoomed');
+      zoom.setAttribute('aria-pressed', String(expanded));
+      zoom.textContent = expanded ? 'Dopasuj do okna' : 'Powiększ mapę';
+    });
+    viewport.append(mapImage(url, label));
+    if (!portrait) previewContent.append(zoom);
+    previewContent.append(viewport, element('p', step.text));
     preview.showModal();
     preview.scrollTop = 0;
   }
@@ -180,6 +192,9 @@ export function installThirdClassQuests() {
     for (const [index, step] of quest.steps.entries()) {
       const row = element('li');
       row.append(element('h4', stepTitles[index]), element('p', step.text));
+      if (step.forumRoute) {
+        row.append(element('p', 'Dojście wg L2Mad: ' + step.forumRoute, 'third-class-forum-route'));
+      }
       const images = element('div', '', 'third-class-maps');
       for (const [url, label] of step.images) {
         const link = element('button');
@@ -197,7 +212,8 @@ export function installThirdClassQuests() {
       if (images.children.length) row.append(images);
       steps.append(row);
     }
-    content.replaceChildren(introduction, supplies, steps, externalLink('Źródło i dodatkowe mapy oraz zdjęcia NPC', quest.url));
+    const sourceLabel = quest.url.includes('forum.l2mad.ws') ? 'Poradnik źródłowy · Forum L2Mad' : 'Poradnik źródłowy · La2Wiki';
+    content.replaceChildren(introduction, supplies, steps, externalLink(sourceLabel, quest.url));
     dialog.showModal();
     dialog.scrollTop = 0;
   }
