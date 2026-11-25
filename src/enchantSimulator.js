@@ -7,6 +7,9 @@ const weapons = [
   'Imperial Staff', 'Saint Spear'
 ];
 
+const magicWeapons = new Set(['Arcana Mace', 'Imperial Staff']);
+const baseChanceForWeapon = (weapon) => magicWeapons.has(weapon) ? 40 : 70;
+
 const scrollIcons = {
   regular: 'https://l2db.info/uploads/images/icons/etc_scroll_of_enchant_weapon_i05.png',
   blessed: 'https://l2db.info/uploads/images/icons/etc_blessed_scrl_of_ench_wp_s_i05.png'
@@ -16,11 +19,14 @@ const formatter = new Intl.NumberFormat('pl-PL', { maximumFractionDigits: 2 });
 const percent = (value) => formatter.format(value * 100) + '%';
 
 function nextChance(level, chance) {
-  return level < 3 ? 1 : chance;
+  if (level < 3) return 1;
+  return level >= 15 ? chance / 2 : chance;
 }
 
 function streakChance(level, target, chance) {
-  return chance ** Math.max(0, target - Math.max(3, level));
+  let probability = 1;
+  for (let step = level; step < target; step += 1) probability *= nextChance(step, chance);
+  return probability;
 }
 
 function enchant(level, chance, blessed, roll) {
@@ -53,9 +59,9 @@ dialog.innerHTML = `
   <div class="enchant-settings">
     <label>Start <input name="start" type="number" min="0" max="15" value="3" required></label>
     <label>Cel <input name="target" type="number" min="1" max="16" value="8" required></label>
-    <label>Szansa powyżej +3 (%) <input name="chance" type="number" min="0" max="100" step="any" value="66.67" required></label>
+    <label>Szansa bazowa do +15 (%) <input name="chance" type="number" min="0" max="100" step="any" value="70" required></label>
   </div>
-  <p class="enchant-note">Model Interlude. Szansa 66,67% to założenie. Stawka Reborn Eternal nie jest potwierdzona. Do +3 próby są bezpieczne. Porażka EWS niszczy broń, a BEWS resetuje ją do +0.</p>
+  <p class="enchant-note">Model Interlude. Broń fizyczna ma domyślnie 70%, a magiczna 40%. Próba z +15 na +16 ma połowę szansy bazowej. Stawki Eternal nie są potwierdzone. Do +3 próby są bezpieczne. Porażka EWS niszczy broń, a BEWS resetuje ją do +0.</p>
   <div class="enchant-result">
     <strong data-enchant-weapon></strong>
     <span data-enchant-level></span>
@@ -108,7 +114,8 @@ function render() {
   const hasWeapon = Boolean(field('weapon').value);
   const hasScroll = Boolean(field('scroll').value);
   const active = valid && hasWeapon && hasScroll && level !== null && level < target.valueAsNumber;
-  view('weapon').textContent = field('weapon').value || 'Włóż broń i zwój';
+  const weapon = field('weapon').value;
+  view('weapon').textContent = weapon ? weapon + (magicWeapons.has(weapon) ? ' · magiczna' : ' · fizyczna') : 'Włóż broń i zwój';
   view('level').textContent = !hasWeapon ? '—' : level === null ? 'Rozbita' : Number.isInteger(level) ? '+' + level : '—';
   view('scrolls').textContent = formatter.format(scrolls);
   view('broken').textContent = formatter.format(broken);
@@ -146,7 +153,10 @@ dialog.querySelector('.enchant-settings').addEventListener('input', (event) => {
     render();
   }
 });
-field('weapon').addEventListener('change', reset);
+field('weapon').addEventListener('change', () => {
+  chanceInput.value = baseChanceForWeapon(field('weapon').value);
+  reset();
+});
 field('scroll').addEventListener('change', render);
 view('reset').addEventListener('click', reset);
 function rollEnchant() {
