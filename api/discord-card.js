@@ -111,26 +111,35 @@ const fontFiles=['DejaVuSans.ttf','DejaVuSans-Bold.ttf','DejaVuSerif.ttf','DejaV
 const cinematic = u.searchParams.get('layout') === 'cinematic';
 const [headline, invitation] = rallyLines(name, date, time);
 const cinematicSvg = cinematic ? `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
-<defs><linearGradient id="shade"><stop stop-color="#10090e" stop-opacity=".99"/><stop offset=".47" stop-color="#10090e" stop-opacity=".92"/><stop offset=".78" stop-color="#10090e" stop-opacity=".12"/><stop offset="1" stop-color="#10090e" stop-opacity="0"/></linearGradient></defs>
-<rect width="1200" height="800" fill="url(#shade)"/>
-<path d="M0 0H1200V10H0Z" fill="#ce183e"/>
-<text x="224" y="99" fill="#fff4f4" font-size="29" font-family="DejaVu Sans" font-weight="700" letter-spacing="3">ORZEŁ BIAŁY</text>
-<path d="M58 178H79" stroke="#f34a69" stroke-width="5"/>
-<text x="95" y="185" fill="#ff8298" font-size="22" font-family="DejaVu Sans" font-weight="700" letter-spacing="4">${esc(eventSubtitle)}</text>
-<text x="55" y="292" fill="#fff8f6" stroke="#17090e" stroke-width="4" paint-order="stroke" font-size="${Math.min(titleSize, 93)}" font-family="DejaVu Sans" font-weight="700" letter-spacing="-2">${esc(displayName.toUpperCase())}</text>
-<path d="M59 336H680" stroke="#ff657d" stroke-opacity=".65" stroke-width="2"/>
-<g font-family="DejaVu Sans">
-<text x="59" y="390" fill="#ff8298" font-size="22" font-weight="700" letter-spacing="3">ZBIÓRKA</text>
-<text x="59" y="470" fill="#fff8f6" font-size="70" font-weight="700">${esc(gatheringTime || '—')}</text>
-<text x="59" y="513" fill="#f1dce1" font-size="25">${startMinutes !== null && startMinutes < 30 ? 'Hunter Village · dzień wcześniej' : 'Hunter Village'}</text>
-<path d="M352 373V516" stroke="#ff657d" stroke-opacity=".55" stroke-width="2"/>
-<text x="389" y="390" fill="#ff8298" font-size="22" font-weight="700" letter-spacing="3">START</text>
-<text x="389" y="470" fill="#fff8f6" font-size="70" font-weight="700">${esc(time)}</text>
-<text x="389" y="513" fill="#f1dce1" font-size="25">${esc(date)}</text>
-<rect x="59" y="621" width="5" height="87" fill="#ed3156"/>
-<text x="83" y="656" fill="#fff8f6" font-size="29" font-weight="700">${esc(headline)}</text>
-<text x="83" y="698" fill="#ffacbb" font-size="24">${esc(invitation)}</text>
+<defs>
+<linearGradient id="night" x2="0" y2="1"><stop stop-color="#100608" stop-opacity=".65"/><stop offset=".26" stop-color="#100608" stop-opacity="0"/><stop offset=".48" stop-color="#100608" stop-opacity=".08"/><stop offset=".77" stop-color="#100608" stop-opacity=".92"/><stop offset="1" stop-color="#100608"/></linearGradient>
+<radialGradient id="fire"><stop stop-color="#ff240b" stop-opacity=".65"/><stop offset="1" stop-color="#ff240b" stop-opacity="0"/></radialGradient>
+<linearGradient id="steel" x2="0" y2="1"><stop stop-color="#fff8e7"/><stop offset=".46" stop-color="#ffe2ba"/><stop offset="1" stop-color="#f08c66"/></linearGradient>
+</defs>
+<ellipse cx="58" cy="370" rx="355" ry="292" fill="url(#fire)"/><ellipse cx="1140" cy="325" rx="290" ry="315" fill="url(#fire)"/>
+<rect width="1200" height="800" fill="url(#night)"/>
+<path d="M8 165V8H1162L1192 38V160M8 635V792H1010" fill="none" stroke="#ef7860" stroke-opacity=".66" stroke-width="2"/>
+<g stroke="#ffad6e" stroke-linecap="round" opacity=".72">${Array.from({length:38}, (_, i) => {
+  const side = i % 2;
+  const x = side ? 910 + (i * 79) % 262 : 28 + (i * 79) % 262;
+  const y = 144 + (i * 103) % 489;
+  return `<path d="M${x} ${y}l${4+i%9} -${4+i%5}" stroke-width="${1+i%3}"/>`;
+}).join('')}</g>
+<text x="228" y="95" fill="#fff3e3" font-size="26" font-family="DejaVu Sans" font-weight="700" letter-spacing="4">ORZEŁ BIAŁY</text>
+<text x="600" y="385" text-anchor="middle" fill="#ffd4a9" stroke="#280e0e" stroke-width="5" paint-order="stroke" font-size="22" font-family="DejaVu Sans" font-weight="700" letter-spacing="6">${esc(eventSubtitle)}</text>
+<text x="600" y="492" text-anchor="middle" fill="url(#steel)" stroke="#2e0e13" stroke-width="9" paint-order="stroke" font-size="${Math.min(titleSize, 114)}" font-family="DejaVu Serif" font-weight="700">${esc(displayName.toUpperCase())}</text>
+<path d="M196 522H550L600 529L650 522H1004" fill="none" stroke="#ff9b70" stroke-width="2"/>
+<g font-family="DejaVu Sans" text-anchor="middle">
+<text x="362" y="565" fill="#ffc2a3" font-size="19" font-weight="700" letter-spacing="3">ZBIÓRKA</text>
+<text x="362" y="622" fill="#fff5e7" font-size="53" font-weight="700">${esc(gatheringTime || '—')}</text>
+<text x="362" y="651" fill="#f5d9c7" font-size="20">${startMinutes !== null && startMinutes < 30 ? 'Hunter Village · dzień wcześniej' : 'Hunter Village'}</text>
+<path d="M600 554V649" stroke="#e27760" stroke-opacity=".75"/>
+<text x="838" y="565" fill="#ffc2a3" font-size="19" font-weight="700" letter-spacing="3">START</text>
+<text x="838" y="622" fill="#fff5e7" font-size="53" font-weight="700">${esc(time)}</text>
+<text x="838" y="651" fill="#f5d9c7" font-size="20">${esc(date)}</text>
 </g>
+<text x="68" y="715" fill="#ffce9d" font-size="29" font-family="DejaVu Serif" font-weight="700">${esc(headline)}</text>
+<text x="68" y="755" fill="#fff0df" font-size="24" font-family="DejaVu Serif" font-style="italic">${esc(invitation)}</text>
 </svg>` : svg;
 const overlay=new Resvg(cinematicSvg,{fitTo:{mode:'width',value:1200},font:{fontFiles,fontDirs:[fontDir],loadSystemFonts:true,defaultFontFamily:'DejaVu Sans'}}).render().asPng();
 const overlayPixels=await sharp(overlay).raw().toBuffer({resolveWithObject:true});
@@ -161,7 +170,7 @@ try{
  crest=await sharp(crestBytes,{density:180}).resize(180,112,{fit:'fill'}).png().toBuffer();
  layers.push({input:crest,left:27,top:29});
 }catch(error){console.warn('Clan crest could not be rendered',String(error));}
-const png=await sharp(background).composite(layers).png().toBuffer();
+const png=await sharp(cinematic ? eventScene : background).composite(layers).png().toBuffer();
 res.statusCode=200;res.setHeader('Content-Type','image/png');res.setHeader('Cache-Control','public, max-age=60, s-maxage=300');res.setHeader('X-Card-Image-Source',key);res.setHeader('X-Card-Template',templateArtwork?'core-style-crest-v6':'dynamic-event-v4');res.setHeader('X-Card-Size',String(png.length));res.setHeader('X-Card-Text-Pixels',String(textPixels));res.setHeader('X-Card-Text-Verified',textPixels>1500?'true':'false');res.end(png);
 }catch(e){console.error('Discord card render failed',e);res.statusCode=500;res.setHeader('Content-Type','text/plain');res.end(String(e?.stack||e))}
 }
