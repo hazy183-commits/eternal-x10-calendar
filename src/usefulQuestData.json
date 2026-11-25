@@ -144,6 +144,12 @@
               1408
             ]
           ]
+        ],
+        "dependencies": [
+          {
+            "title": "An Arrogant Search · tylko wariant z Baiumem",
+            "text": "Jeśli na Twoim serwerze Kaspar wymaga uderzenia Baiuma, zacznij u Hanellin w gildii mrocznych elfów w Aden i zdobądź Blooded Fabric do wejścia na ostatnie piętro Tower of Insolence. Na opisanej ścieżce Eternal z Red Pipette od Marii ten dodatkowy quest nie jest wymagany."
+          }
         ]
       },
       {
@@ -182,6 +188,12 @@
             "Magister Ladd",
             "84985, 15991, -1769"
           ]
+        ],
+        "dependencies": [
+          {
+            "title": "Fate’s Whisper · warunek Mimir’s Elixir",
+            "text": "Najpierw ukończ Fate’s Whisper. Star of Destiny od Reorina jest potrzebna, żeby rozpocząć Mimir’s Elixir u Ladda. Na Eternal sprawdź najpierw, czy mistrz już pozwala dodać subclassę."
+          }
         ]
       },
       {
@@ -210,6 +222,12 @@
             "Magic Trader Wesley",
             "85655, 16767, -4271"
           ]
+        ],
+        "dependencies": [
+          {
+            "title": "Supplier of Reagents · dostęp do urny",
+            "text": "W podziemiach Ivory Tower weź Supplier of Reagents od Magic Trader Wesley. Składniki wypadają m.in. z potworów w Tower of Insolence i Blazing Swamp. Możesz też kupić gotowe składniki od graczy. Do mieszanek w Alchemist’s Mixing Urn użyj temperatury 1 (Salamander)."
+          }
         ]
       },
       {
@@ -302,6 +320,13 @@
             "https://la2wiki.com/npc/talien.webp",
             "Talien · portret"
           ]
+        ],
+        "dependencies": [
+          {
+            "title": "Subclassa · wymagana przed rozpoczęciem",
+            "text": "Weź pierwszą część na aktywnej subclassie po osiągnięciu poziomu 50. Kolejne części odblokują się po ukończeniu poprzednich i wbiciu poziomów 60, 65 i 75.",
+            "guide": "Subclassa"
+          }
         ]
       },
       {
@@ -338,6 +363,12 @@
             "https://la2wiki.com/npc/caradine.webp",
             "Caradine · portret"
           ]
+        ],
+        "dependencies": [
+          {
+            "title": "Supplier of Reagents · jeśli sam robisz Lunargent i Hellfire Oil",
+            "text": "W podziemiach Ivory Tower weź Supplier of Reagents od Magic Trader Wesley. Składniki wypadają m.in. z potworów w Tower of Insolence i Blazing Swamp. Możesz też kupić gotowe składniki od graczy. Do mieszanek w Alchemist’s Mixing Urn użyj temperatury 1 (Salamander). Na 1 Lunargent wymieszaj 10 Moon Dust i 1 Quicksilver. Na 1 Hellfire Oil połącz 1 Fire Essence i 1 Draconic Essence. Gotowe 5 Lunargent i 1 Hellfire Oil możesz kupić i oddać Noelowi bez robienia questa Wesleya."
+          }
         ]
       },
       {
@@ -475,6 +506,12 @@
             "https://la2wiki.com/town/c-rune.webp",
             "Mapa miasta · Rune Township"
           ]
+        ],
+        "dependencies": [
+          {
+            "title": "Truth Beyond the Gate → Through the Gate Once More",
+            "text": "Najpierw odbierz Visitor’s Mark w Truth Beyond the Gate i użyj go przy pierwszym wejściu. Z Faded Visitor’s Mark wróć do Flaurona. Dopiero wtedy weź Through the Gate Once More, żeby zdobyć stały dostęp."
+          }
         ]
       }
     ],
@@ -505,6 +542,13 @@
             "https://masterwork.wiki/upload/Innocentin-6648c50b8b04f.jpg",
             "Innocentin · świątynia w Rune"
           ]
+        ],
+        "dependencies": [
+          {
+            "title": "Wejście do Pagan’s Temple · dostęp do farmy",
+            "text": "Żeby móc wracać do świątyni, zdobądź Pagan’s Mark z łańcucha Truth Beyond the Gate i Through the Gate Once More.",
+            "guide": "Wejście do Pagan’s Temple"
+          }
         ]
       },
       {
@@ -723,6 +767,12 @@
             "Chuta Kaimu",
             "18714, -9635, -2795"
           ]
+        ],
+        "dependencies": [
+          {
+            "title": "Meeting the Elroki · wymagana część pierwsza",
+            "text": "Dokończ Meeting the Elroki u Asamaha, zanim zaczniesz The Name of Evil I u Mushiki na poziomie 76."
+          }
         ]
       },
       {
@@ -755,6 +805,12 @@
             "Warrior’s Grave",
             "13123, -8895, -3122"
           ]
+        ],
+        "dependencies": [
+          {
+            "title": "The Name of Evil I · wymagana część druga",
+            "text": "Oddaj Epitaph of Wisdom Mushice, żeby zakończyć część I. Na poziomie 77 przejdź do Asamaha po część II."
+          }
         ]
       },
       {

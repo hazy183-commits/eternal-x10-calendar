@@ -77,3 +77,7 @@
 .quest-location-pin{position:absolute;left:50%;top:50%;width:14px;height:14px;border:2px solid #fff3d0;border-radius:50%;background:#c02e25;box-shadow:0 0 0 2px #311410;transform:translate(-50%,-50%)}
 .third-class-maps .quest-location-pin{width:8px;height:8px;border-width:1px}
 .quest-location-map--error{display:grid;place-items:center}
+
+.quest-dependencies{margin:12px 0;padding:10px 12px;border:1px solid #6b5431;background:#191610}
+.quest-dependencies summary{padding:6px 0;cursor:pointer}
+.quest-dependencies p{margin:4px 0 8px}

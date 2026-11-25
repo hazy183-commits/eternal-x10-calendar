@@ -252,6 +252,41 @@ export function installThirdClassQuests() {
     container.append(list);
   }
 
+  const thirdClassDependencies = [
+    {
+      "title": "The Finest Ingredients – Part 1 · Ice Crystal",
+      "text": "Weź quest u Chef Jeremy w Hot Springs. Zdobądź po 50 składników z Hot Springs Bandersnatchling, Hot Springs Atrox i Hot Springs Nepenthes. Wróć do Jeremy’ego po Ice Crystal."
+    },
+    {
+      "title": "Magical Power of Water – Part 1 · ścieżka Ketra",
+      "text": "W sojuszu Alliance with Ketra Orcs osiągnij poziom 2. Weź Magical Power of Water u Wakhana w Ketra Orc Outpost. Asefa wyśle Cię po totem ze skrzyni Udan Mardui w Varka Silenos Stronghold. Wróć po Divine Stone of Wisdom."
+    },
+    {
+      "title": "Magical Power of Fire – Part 1 · ścieżka Varka",
+      "text": "Jeśli masz sojusz Alliance with Varka Silenos na poziomie 2, wybierz Magical Power of Fire u Naharan Ashanuka w Varka Silenos Outpost. Udan Mardui wyśle Cię po totem ze skrzyni Asefy w Ketra Orc Outpost. Ta ścieżka daje ten sam kamień co sojusz Ketra. Zrób jedną z nich."
+    }
+  ];
+
+  function dependencyList(entries) {
+    const group = element('div', '', 'quest-dependencies');
+    group.append(element('strong', 'Questy powiązane'));
+    for (const entry of entries) {
+      const details = element('details');
+      details.append(element('summary', entry.title), element('p', entry.text));
+      if (entry.guide) {
+        const target = usefulQuests.find((quest) => quest.name === entry.guide);
+        if (target) {
+          const button = element('button', 'Otwórz poradnik · ' + target.name);
+          button.type = 'button';
+          button.addEventListener('click', () => openGuide(target));
+          details.append(button);
+        }
+      }
+      group.append(details);
+    }
+    return group;
+  }
+
   function openGuide(quest) {
     if (!document.querySelector('link[data-quest-image-origin]')) {
       for (const origin of ['https://forum.l2mad.net', 'https://la2wiki.com']) {
@@ -284,6 +319,7 @@ export function installThirdClassQuests() {
       const row = element('li');
       row.append(element('h4', step.title || stepTitles[index]));
       addInstructionList(row, step.text);
+      if (step.dependencies?.length) row.append(dependencyList(step.dependencies));
       if (step.forumRoute) {
         row.append(element('p', 'Dojście: ' + step.forumRoute, 'third-class-forum-route'));
       }
@@ -325,8 +361,10 @@ export function installThirdClassQuests() {
       if (images.children.length) row.append(images);
       steps.append(row);
     }
-    content.replaceChildren(introduction, quick, steps);
-    dialog.showModal();
+    content.replaceChildren(introduction, quick);
+    if (!quest.category) content.append(dependencyList(thirdClassDependencies));
+    content.append(steps);
+    if (!dialog.open) dialog.showModal();
     dialog.scrollTop = 0;
   }
 
