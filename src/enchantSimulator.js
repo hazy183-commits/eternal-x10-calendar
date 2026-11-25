@@ -46,14 +46,13 @@ function referenceRows() {
       const cumulative = streakChance(0, goal, chance);
       return `
         <td>
-          <strong class="enchant-odds-step">${referencePercent(nextChance(level, chance))}</strong>
-          <span class="enchant-odds-total">od +0 <b>${referencePercent(cumulative)}</b></span>
+          <strong class="enchant-odds-step">${referencePercent(cumulative)}</strong>
           <span class="enchant-odds-track" aria-hidden="true"><span style="width:${cumulative * 100}%"></span></span>
         </td>
       `;
     }).join('');
     const rowClass = level < 3 ? 'enchant-odds-safe' : level === 15 ? 'enchant-odds-final' : '';
-    return `<tr class="${rowClass}"><th scope="row">+${level} <span>→</span> <strong>+${goal}</strong></th>${cells}</tr>`;
+    return `<tr class="${rowClass}"><th scope="row"><strong>+${goal}</strong></th>${cells}</tr>`;
   }).join('');
 }
 
@@ -93,7 +92,7 @@ dialog.innerHTML = `
   <details class="enchant-odds-reference">
     <summary><span>Szanse wzmocnienia</span><span class="enchant-odds-range">+0 → +16</span></summary>
     <div class="enchant-odds-body">
-      <p>Duża liczba pokazuje szansę na kolejny plus. Wartość „od +0” i pasek pokazują szansę dojścia do danego poziomu bez porażki. Tabela używa domyślnych stawek symulatora.</p>
+      <p>Procent i pasek pokazują szansę dojścia od +0 do wskazanego poziomu bez porażki, według domyślnych stawek symulatora.</p>
       <table class="enchant-odds-table">
         <thead><tr><th scope="col">Poziom</th><th scope="col">Broń fizyczna</th><th scope="col">Broń magiczna</th></tr></thead>
         <tbody>${referenceRows()}</tbody>
