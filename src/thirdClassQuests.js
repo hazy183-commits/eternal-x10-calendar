@@ -141,12 +141,33 @@ export function installThirdClassQuests() {
     return img;
   }
 
-  function showImage(url, label, step) {
+  function locationMap(url, label, [x, y], thumbnail = false) {
+    const frame = element('div', '', 'quest-location-map');
+    const picture = element('img');
+    picture.alt = label;
+    picture.loading = thumbnail ? 'lazy' : 'eager';
+    picture.decoding = 'async';
+    const windowWidth = 520;
+    picture.style.width = (2048 / windowWidth * 100) + '%';
+    picture.style.left = (50 - x / windowWidth * 100) + '%';
+    picture.style.top = (50 - y / 390 * 100) + '%';
+    picture.addEventListener('error', () => {
+      frame.classList.add('quest-location-map--error');
+      frame.replaceChildren(element('span', 'Nie udało się wczytać mapy.'));
+    }, { once: true });
+    picture.src = url;
+    const pin = element('span', '', 'quest-location-pin');
+    pin.setAttribute('aria-hidden', 'true');
+    frame.append(picture, pin);
+    return frame;
+  }
+
+  function showImage(url, label, step, point) {
     const portrait = url.includes('/npc/') || label.endsWith(' · zdjęcie NPC');
     const forumImage = url.startsWith('https://forum.l2mad.net/');
     title.textContent = label;
     previewContent.replaceChildren();
-    if (!portrait && !forumImage && !label.startsWith('Zaznaczony punkt') && !/l2-servera\.com|masterwork\.wiki|lineage2dex\.com/.test(url)) {
+    if (!point && !portrait && !forumImage && !label.startsWith('Zaznaczony punkt') && !/l2-servera\.com|masterwork\.wiki|lineage2dex\.com/.test(url)) {
       previewContent.append(element('p', 'Mapa poglądowa. Kierunek i cel znajdziesz w opisie kroku.'));
     }
     const viewport = element('div', '', 'third-class-full-viewport');
@@ -158,7 +179,7 @@ export function installThirdClassQuests() {
       zoom.setAttribute('aria-pressed', String(expanded));
       zoom.textContent = expanded ? 'Dopasuj do okna' : 'Powiększ mapę';
     });
-    viewport.append(mapImage(url, label));
+    viewport.append(point ? locationMap(url, label, point) : mapImage(url, label));
     if (!portrait) previewContent.append(zoom);
     previewContent.append(viewport, element('p', step.text));
     preview.showModal();
@@ -277,11 +298,16 @@ export function installThirdClassQuests() {
         row.append(coordinates);
       }
       const images = element('div', '', 'third-class-maps');
-      for (const [url, label] of step.images) {
+      for (const [url, label, point] of step.images) {
         const link = element('button');
         link.type = 'button';
         link.setAttribute('aria-label', 'Powiększ: ' + label);
-        link.addEventListener('click', () => showImage(url, label, step));
+        link.addEventListener('click', () => showImage(url, label, step, point));
+        if (point) {
+          link.append(locationMap(url, label, point, true), element('span', label, 'quest-map-caption'));
+          images.append(link);
+          continue;
+        }
         const picture = element('img');
         picture.alt = label;
         picture.width = 132;

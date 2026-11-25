@@ -8,7 +8,7 @@
     "steps": [
       {
         "title": "Odbierz quest u Reorina",
-        "text": "Z Town of Oren kieruj się na wschód do Skyshadow Meadow. Maestro Reorin stoi na polanie. Sprawdź punkt na minimapie na zrzucie i weź Fate’s Whisper.",
+        "text": "Z Town of Oren kieruj się na wschód do Skyshadow Meadow. Maestro Reorin stoi na polanie. Sprawdź pinezkę na mapie i weź Fate’s Whisper.",
         "images": [
           [
             "https://la2wiki.com/npc/reorin.webp",
@@ -19,8 +19,12 @@
             "Mapa miasta · Town of Oren"
           ],
           [
-            "https://l2-servera.com/wp-content/uploads/2025/02/maestro-reorin.jpg",
-            "Zaznaczony punkt · Maestro Reorin, Skyshadow Meadow"
+            "https://linedia.ru/img/wikimap.jpg",
+            "Zaznaczony punkt · Maestro Reorin, Skyshadow Meadow",
+            [
+              1184,
+              1191
+            ]
           ]
         ],
         "waypoints": [
@@ -32,11 +36,15 @@
       },
       {
         "title": "Cabrio na cmentarzu",
-        "text": "Teleportuj się z Aden w okolice Seal of Shilen. Podejdź do północnej części The Cemetery, do ogrodzonej polany zaznaczonej na zrzucie. Po śmierci Cabrio kliknij skrzynię Coffer of the Dead, odbierz Reiria’s Soul Orb i wróć do Reorina.",
+        "text": "Teleportuj się z Aden w okolice Seal of Shilen. Podejdź do północnej części The Cemetery, do ogrodzonej polany zaznaczonej na mapie. Po śmierci Cabrio kliknij skrzynię Coffer of the Dead, odbierz Reiria’s Soul Orb i wróć do Reorina.",
         "images": [
           [
-            "https://l2-servera.com/wp-content/uploads/2025/02/shilens-messenger-cabrio1.jpg",
-            "Zaznaczony punkt · Cabrio, północna część The Cemetery"
+            "https://linedia.ru/img/wikimap.jpg",
+            "Zaznaczony punkt · Cabrio, północna część The Cemetery",
+            [
+              1513,
+              1023
+            ]
           ]
         ],
         "waypoints": [
@@ -55,16 +63,28 @@
             "Reorin · portret"
           ],
           [
-            "https://l2-servera.com/wp-content/uploads/2025/02/death-lord-hallate.jpg",
-            "Death Lord Hallate · Tower of Insolence, piętro 3"
+            "https://linedia.ru/img/wikimap.jpg",
+            "Death Lord Hallate · Tower of Insolence, piętro 3",
+            [
+              1261,
+              1042
+            ]
           ],
           [
-            "https://l2-servera.com/wp-content/uploads/2025/02/kernon.jpg",
-            "Kernon · Tower of Insolence, piętro 8"
+            "https://linedia.ru/img/wikimap.jpg",
+            "Kernon · Tower of Insolence, piętro 8",
+            [
+              1261,
+              1039
+            ]
           ],
           [
-            "https://l2-servera.com/wp-content/uploads/2025/02/longhorn-golkonda.jpg",
-            "Longhorn Golkonda · Tower of Insolence, piętro 11"
+            "https://linedia.ru/img/wikimap.jpg",
+            "Longhorn Golkonda · Tower of Insolence, piętro 11",
+            [
+              1272,
+              1038
+            ]
           ]
         ],
         "waypoints": [
@@ -87,16 +107,28 @@
             "Mapa miasta · Town of Oren"
           ],
           [
-            "https://l2-servera.com/wp-content/uploads/2025/01/warehouse-freightman-cliff.jpg",
-            "Cliff · magazyn w Oren"
+            "https://linedia.ru/img/wikimap.jpg",
+            "Cliff · magazyn w Oren",
+            [
+              1141,
+              1189
+            ]
           ],
           [
-            "https://l2-servera.com/wp-content/uploads/2025/02/head-blacksmith-ferris.jpg",
-            "Ferris · kuźnia w Aden"
+            "https://linedia.ru/img/wikimap.jpg",
+            "Ferris · kuźnia w Aden",
+            [
+              1400,
+              1089
+            ]
           ],
           [
-            "https://l2-servera.com/wp-content/uploads/2025/02/trader-zenkin.jpg",
-            "Zenkin · sklep w Oren"
+            "https://linedia.ru/img/wikimap.jpg",
+            "Zenkin · sklep w Oren",
+            [
+              1133,
+              1184
+            ]
           ]
         ]
       },
@@ -105,8 +137,12 @@
         "text": "Porozmawiaj z Kasparem w Hardin’s Academy. Z otrzymaną Pipette udaj się do Marii po Red Pipette. Oddaj ją Kasparowi w zamian za formę i zanieś ją do Reorina.",
         "images": [
           [
-            "https://l2-servera.com/wp-content/uploads/2025/02/magister-kaspar.jpg",
-            "Kaspar · Hardin’s Academy"
+            "https://linedia.ru/img/wikimap.jpg",
+            "Kaspar · Hardin’s Academy",
+            [
+              1230,
+              1408
+            ]
           ]
         ]
       },
@@ -119,8 +155,12 @@
             "Reorin · portret"
           ],
           [
-            "https://l2-servera.com/wp-content/uploads/2025/02/maestro-reorin.jpg",
-            "Zaznaczony punkt · powrót do Reorina"
+            "https://linedia.ru/img/wikimap.jpg",
+            "Zaznaczony punkt · powrót do Reorina",
+            [
+              1184,
+              1191
+            ]
           ]
         ]
       },
@@ -129,8 +169,12 @@
         "text": "Oficjalny opis Eternal wymienia Fate’s Whisper jako warunek subclassy. W klasycznym Interlude dochodzi Mimir’s Elixir. Gdy opcja dodania subclassy nadal jest zablokowana, zabierz Star of Destiny do Magister Ladd na 4. piętrze Ivory Tower i sprawdź, czy oferuje quest.",
         "images": [
           [
-            "https://l2-servera.com/wp-content/uploads/2024/09/magister-ladd.jpg",
-            "Ladd · Ivory Tower, piętro mrocznych elfów"
+            "https://linedia.ru/img/wikimap.jpg",
+            "Ladd · Ivory Tower, piętro mrocznych elfów",
+            [
+              1155,
+              1042
+            ]
           ]
         ],
         "waypoints": [
@@ -145,12 +189,20 @@
         "text": "W podziemiach Ivory Tower odbierz Supplier of Reagents od Wesley’a. W urnie na temperaturze 1 (Salamander) połącz 10 Moonstone Shard z 1 Volcanic Ash, aby uzyskać Moon Dust. Połącz 10 Moon Dust z 1 Quicksilver na Lunargent, a następnie 1 Lunargent z 1 Quicksilver na Pure Silver. Jeśli kupisz Lunargent, wystarczy ostatnia mieszanka. Pokaż Pure Silver Laddowi.",
         "images": [
           [
-            "https://l2-servera.com/wp-content/uploads/2025/02/magic-trader-wesley.jpg",
-            "Wesley · podziemia Ivory Tower"
+            "https://linedia.ru/img/wikimap.jpg",
+            "Wesley · podziemia Ivory Tower",
+            [
+              1157,
+              1045
+            ]
           ],
           [
-            "https://l2-servera.com/wp-content/uploads/2025/02/alchemists-mixing-urn.jpg",
-            "Alchemist’s Mixing Urn · naprzeciwko Wesley’a"
+            "https://linedia.ru/img/wikimap.jpg",
+            "Alchemist’s Mixing Urn · naprzeciwko Wesley’a",
+            [
+              1157,
+              1043
+            ]
           ]
         ],
         "waypoints": [
@@ -165,16 +217,28 @@
         "text": "Porozmawiaj z Magister Joan na 3. piętrze. Zdobądź Sage’s Stone z Chimera Piece w Silent Valley i zanieś go Joan po True Gold. Wróć do Ladda po Mixing Stone. W Lair of Antharas zdobądź Blood Fire z Bloody Guardian.",
         "images": [
           [
-            "https://l2-servera.com/wp-content/uploads/2024/04/magister-joan-1.jpg",
-            "Joan · trzecie piętro Ivory Tower"
+            "https://linedia.ru/img/wikimap.jpg",
+            "Joan · trzecie piętro Ivory Tower",
+            [
+              1155,
+              1042
+            ]
           ],
           [
-            "https://l2-servera.com/wp-content/uploads/2025/02/chimera-piece.jpg",
-            "Chimera Piece · Silent Valley"
+            "https://linedia.ru/img/wikimap.jpg",
+            "Chimera Piece · Silent Valley",
+            [
+              1487,
+              1188
+            ]
           ],
           [
-            "https://l2-servera.com/wp-content/uploads/2025/02/bloody-guardian.jpg",
-            "Bloody Guardian · Lair of Antharas"
+            "https://linedia.ru/img/wikimap.jpg",
+            "Bloody Guardian · Lair of Antharas",
+            [
+              1406,
+              1415
+            ]
           ]
         ],
         "waypoints": [
@@ -189,12 +253,20 @@
         "text": "W podziemiach Ivory Tower użyj Mixing Stone w Alchemist’s Mixing Urn. Połącz Pure Silver, True Gold i Blood Fire na temperaturze 3 (Phoenix). Wróć do Ladda i wypij eliksir przez opcję w dialogu. Następnie wybierz subclassę u mistrza właściwej gildii.",
         "images": [
           [
-            "https://l2-servera.com/wp-content/uploads/2025/02/alchemists-mixing-urn.jpg",
-            "Alchemist’s Mixing Urn · podziemia Ivory Tower"
+            "https://linedia.ru/img/wikimap.jpg",
+            "Alchemist’s Mixing Urn · podziemia Ivory Tower",
+            [
+              1157,
+              1043
+            ]
           ],
           [
-            "https://l2-servera.com/wp-content/uploads/2024/09/magister-ladd.jpg",
-            "Ladd · oddanie eliksiru"
+            "https://linedia.ru/img/wikimap.jpg",
+            "Ladd · oddanie eliksiru",
+            [
+              1155,
+              1042
+            ]
           ]
         ]
       }
@@ -572,8 +644,12 @@
             "Singsing · portret"
           ],
           [
-            "https://l2-servera.com/wp-content/uploads/2025/01/singsing.jpg",
-            "Singsing · przystań Primeval Isle"
+            "https://linedia.ru/img/wikimap.jpg",
+            "Singsing · przystań Primeval Isle",
+            [
+              874,
+              888
+            ]
           ]
         ]
       },
@@ -591,8 +667,12 @@
             "Singsing · portret"
           ],
           [
-            "https://l2-servera.com/wp-content/uploads/2025/01/orahochin.jpg",
-            "Orahochin · teleport do wioski Elroki"
+            "https://linedia.ru/img/wikimap.jpg",
+            "Orahochin · teleport do wioski Elroki",
+            [
+              863,
+              962
+            ]
           ],
           [
             "https://l2-servera.com/wp-content/uploads/2025/01/karakawei.jpg",
