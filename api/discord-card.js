@@ -3,11 +3,43 @@ import { Resvg } from '@resvg/resvg-js';
 const ASSETS={antharas:'/images/bosses/antharas.webp',baium:'/images/bosses/baium.webp',core:'/images/bosses/core.webp',frintezza:'/images/bosses/frintezza.webp',orfen:'/images/bosses/orfen.webp','queen-ant':'/images/bosses/queen-ant.webp',valakas:'/images/bosses/valakas.webp',zaken:'/images/bosses/zaken.webp',rb:'/images/eternal-hero-approved.webp',aden:'/images/castles/aden.jpg',dion:'/images/castles/dion.jpg',giran:'/images/castles/giran.jpg',gludio:'/images/castles/gludio.jpg',goddard:'/images/castles/goddard.jpg',innadril:'/images/castles/innadril.jpg',oren:'/images/castles/oren.jpg',rune:'/images/castles/rune.jpg',schuttgart:'/images/castles/schuttgart.jpg','fortress-of-resistance':'/images/fortress-of-resistance.jpg','devastated-castle':'/images/devastated-castle.jpg','bandit-stronghold':'/images/bandit-stronghold.jpg','rainbow-spring-chateau':'/images/Rainbow%20Springs%20Chateau.jpg','wild-beast-reserve':'/images/Wild%20Beast%20Reserve.jpg','fortress-of-the-dead':'/images/fortress-of-the-dead.jpg',pvp:'/images/events/clan-pvp.webp',colloseum:'/images/events/colloseum-training.webp',olympiad:'/images/events/olympiad.jpg',default:'/images/eternal-hero-approved.webp'};
 function dec(v=''){try{return new TextDecoder().decode(Uint8Array.from(atob(v.replace(/-/g,'+').replace(/_/g,'/').padEnd(Math.ceil(v.length/4)*4,'=')),c=>c.charCodeAt(0)))}catch{return ''}}
 function esc(s=''){return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+const RALLY_LINES = {
+  'queen-ant': ['Ruszamy po pierścień QA!|Widzimy się na zbiórce.', 'Szykuj postać na QA.|Cała ekipa do mrowiska!', 'Królowa czeka w mrowisku.|Zbierzmy pełną ekipę!', 'Kto leci z nami na QA?|Wskakuj do party!'],
+  baium: ['Baium czeka na szczycie.|Wchodzimy całą ekipą!', 'Szykuj wejściówkę.|Ruszamy na Baiuma!'],
+  antharas: ['Ruszamy do smoczej jamy.|Dołącz do wyprawy!', 'Antharas czeka pod ziemią.|Chodź z nami na smoka!'],
+  valakas: ['Czas ruszyć do kuźni.|Widzimy się na Valakasie!', 'Szykuje się gorące starcie.|Dołącz do ekipy!'],
+  frintezza: ['Czas przerwać koncert.|Widzimy się na Frintezzie!', 'Zbierzmy ekipę na Frintezzę.|Każda para rąk się przyda!'],
+  orfen: ['Ruszamy na Orfen.|Dołącz do wyprawy!', 'Na Orfen idziemy razem.|Kto wpada na zbiórkę?'],
+  core: ['Ruszamy do wieży Cruma.|Widzimy się na Core!', 'Czas ruszyć po Core.|Zbierzmy pełną ekipę!'],
+  zaken: ['Wszyscy na pokład!|Ruszamy na Zakena.', 'Zaken czeka na statku.|Wpadnij na zbiórkę!'],
+  siege: ['Pod bramą liczy się każdy.|Widzimy się na oblężeniu!', 'Zbierzmy pełny skład.|Ruszamy pod zamek!'],
+  'clan hall': ['Ruszamy po siedzibę klanu.|Dołącz do ekipy!', 'Wpadnij na zbiórkę.|Razem po Clan Hall!'],
+  pvp: ['Wskakuj na głosowy.|Ruszamy na klanowe PvP!', 'Zbierzmy pełne party.|Czas na wspólne PvP!'],
+  colloseum: ['Wpadnij na trening.|Zgrajmy się przed walką!', 'Widzimy się na arenie.|Poćwiczymy grę w party!'],
+  olympiad: ['Wpadaj kibicować naszym.|Widzimy się na Olympiadzie!', 'Czas na pojedynki.|Wspieramy naszych!'],
+  rb: ['Każda rola się przyda.|Wpadaj na wspólnego rajda!', 'Zbieramy party na bossa.|Dołącz do nas na zbiórce!'],
+  epic: ['Czas na klanową wyprawę.|Zbierzmy pełny skład!', 'Szykuj postać na epika.|Widzimy się na zbiórce!'],
+  default: ['Wpadaj na zbiórkę.|Zróbmy to całą ekipą!', 'Wskakuj do party.|Fajnie będzie zagrać razem!', 'Zbierzmy pełny skład.|Do zobaczenia w grze!', 'Masz czas na wspólną grę?|Ekipa czeka na zbiórce!'],
+};
+
+function rallyLines(key, kind, date, time) {
+  const poolKey = key !== 'default' && Object.hasOwn(RALLY_LINES, key) ? key : kind;
+  const phrases = Object.hasOwn(RALLY_LINES, poolKey) ? RALLY_LINES[poolKey] : RALLY_LINES.default;
+  const isoDate = date.replace(/^(\d{1,2})[.\/-](\d{1,2})[.\/-](\d{4})$/, (_, day, month, year) =>
+    [year, month.padStart(2, '0'), day.padStart(2, '0')].join('-'));
+  const day = Math.floor(Date.parse(isoDate + 'T00:00:00Z') / 86400000) || 0;
+  const [hour, minute] = time.split(':').map(Number);
+  // Repeated requests for the same card should show the same phrase.
+  const slot = day + (hour || 0) + Math.floor((minute || 0) / 5);
+  const index = ((slot % phrases.length) + phrases.length) % phrases.length;
+  return phrases[index].split('|');
+}
+
 export default async function handler(req,res){
 try{
 const u=new URL(req.url,'https://'+(req.headers['x-forwarded-host']||req.headers.host||'orzelbialy.eu'));
-const name=(dec(u.searchParams.get('n'))||'Wydarzenie klanowe').slice(0,80),date=(dec(u.searchParams.get('d'))||'--.--.----').slice(0,20),time=(dec(u.searchParams.get('t'))||'--:--').slice(0,10),location=(dec(u.searchParams.get('l'))||'Lokalizacja do ustalenia').slice(0,80),attendees=(dec(u.searchParams.get('a'))||'Brak potwierdzonych zgłoszeń').slice(0,180),type=(dec(u.searchParams.get('k'))||'EVENT').slice(0,30);
-const gathering=(dec(u.searchParams.get('g'))||'').slice(0,120);const gatheringParts=gathering.split('|');const gatherLine1=gatheringParts[0]||'';const gatherLine2=gatheringParts[1]||'';const s=name.toLowerCase();const kind=type.toLowerCase();let key=['frintezza','antharas','baium','valakas','zaken','core','orfen'].find(k=>s.includes(k));if(!key&&s.includes('queen ant'))key='queen-ant';if(!key&&kind==='siege'){key=['aden','dion','giran','gludio','goddard','innadril','oren','rune','schuttgart'].find(c=>s.includes(c))||'aden';}if(!key&&kind==='clan hall'){key=['fortress-of-resistance','devastated-castle','bandit-stronghold','rainbow-spring-chateau','wild-beast-reserve','fortress-of-the-dead'].find(c=>s.includes(c.replace(/-/g,' ')))||'default';}if(!key&&kind==='rb')key='rb';if(!key&&s.includes('pvp'))key='pvp';if(!key&&(s.includes('colloseum')||s.includes('colosseum')))key='colloseum';if(!key&&kind==='olympiad')key='olympiad';key=key||'default';
+const name=(dec(u.searchParams.get('n'))||'Wydarzenie klanowe').slice(0,80),date=(dec(u.searchParams.get('d'))||'--.--.----').slice(0,20),time=(dec(u.searchParams.get('t'))||'--:--').slice(0,10),location=(dec(u.searchParams.get('l'))||'Lokalizacja do ustalenia').slice(0,80),type=(dec(u.searchParams.get('k'))||'EVENT').slice(0,30);
+const gathering=(dec(u.searchParams.get('g'))||'').slice(0,120);const gatheringParts=gathering.split('|');const gatherLine1=gatheringParts[0]||'';const gatherLine2=gatheringParts[1]||'';const s=name.toLowerCase();const kind=type.toLowerCase();let key=['frintezza','antharas','baium','valakas','zaken','core','orfen'].find(k=>s.includes(k));if(!key&&/\b(?:queen[\s-]+ant|qa)\b/.test(s))key='queen-ant';if(!key&&kind==='siege'){key=['aden','dion','giran','gludio','goddard','innadril','oren','rune','schuttgart'].find(c=>s.includes(c))||'aden';}if(!key&&kind==='clan hall'){key=['fortress-of-resistance','devastated-castle','bandit-stronghold','rainbow-spring-chateau','wild-beast-reserve','fortress-of-the-dead'].find(c=>s.includes(c.replace(/-/g,' ')))||'default';}if(!key&&kind==='rb')key='rb';if(!key&&s.includes('pvp'))key='pvp';if(!key&&(s.includes('colloseum')||s.includes('colosseum')))key='colloseum';if(!key&&kind==='olympiad')key='olympiad';key=key||'default';
 const imageHost='https://orzelbialy.eu';let original;try{const response=await fetch(imageHost+ASSETS[key],{signal:AbortSignal.timeout(7000)});if(!response.ok)throw new Error('Image HTTP '+response.status);original=Buffer.from(await response.arrayBuffer());}catch(error){console.warn('Event background unavailable, using clan artwork',key,String(error));const fallback=await fetch(imageHost+ASSETS.default,{signal:AbortSignal.timeout(7000)});if(!fallback.ok)throw new Error('Fallback image HTTP '+fallback.status);original=Buffer.from(await fallback.arrayBuffer());}
 // The finished poster artwork can be deployed at /images/discord/poster-template.png.
 // Keep the event scene and all live text dynamic; missing artwork never breaks notifications.
@@ -32,9 +64,9 @@ const isEpicBoss=['antharas','baium','core','frintezza','orfen','queen-ant','val
 const eventSubtitle=kind==='siege'?'CASTLE SIEGE':kind==='clan hall'?'CLAN HALL':kind==='rb'?'RAID BOSS':kind==='olympiad'?'OLYMPIAD':(kind==='epic'||isEpicBoss)?'EPIC BOSS':'WYDARZENIE KLANOWE';
 const subtitleHalfWidth=Math.min(220,Array.from(eventSubtitle).length*10);
 const gatheringPlace='HUNTER VILLAGE',meetingNotice='ZBIÓRKA 30 MINUT PRZED STARTEM';
-const names=attendees.split(/[\n,;]+/).map(p=>p.trim()).filter(Boolean).slice(0,8);
-const namesSvg=names.map((p,i)=>{const x=810,y=548+i*24,label=p.length>34?p.slice(0,32)+'…':p;return `<circle cx="${x}" cy="${y-6}" r="3" fill="#eac56c"/><text x="${x+20}" y="${y}" fill="#f8f2e9" font-size="18" font-family="DejaVu Sans">${esc(label)}</text>`}).join('');
-const noConfirmed=names.length===0||names.every(n=>/^brak potwierdzonych/i.test(n));const attendeeSvg=noConfirmed?'<circle cx="810" cy="544" r="3" fill="#eac56c"/><text x="830" y="550" fill="#eee5d5" font-size="18" font-family="DejaVu Sans">Brak potwierdzonych zgłoszeń</text>':namesSvg;
+const rallySvg = rallyLines(key, kind, date, time).map((line, index) =>
+  `<text x="968" y="${580 + index * 40}" text-anchor="middle" fill="#fff4db" font-size="20" font-family="DejaVu Sans" font-weight="700">${esc(line)}</text>`
+).join('');
 const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
 <defs><linearGradient id="metal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff"/><stop offset=".42" stop-color="#dce7f4"/><stop offset=".72" stop-color="#8296b0"/><stop offset="1" stop-color="#f4f5f7"/></linearGradient><linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff1ad"/><stop offset=".52" stop-color="#ffd45c"/><stop offset="1" stop-color="#a87525"/></linearGradient><linearGradient id="panel"><stop stop-color="#02040a" stop-opacity=".90"/><stop offset=".84" stop-color="#02040a" stop-opacity=".56"/><stop offset="1" stop-color="#02040a" stop-opacity=".12"/></linearGradient><linearGradient id="blue" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#75d8ff"/><stop offset=".55" stop-color="#315e8e"/><stop offset="1" stop-color="#0b182b"/></linearGradient></defs>
 <rect x="20" y="20" width="740" height="146" fill="#03050b" fill-opacity=".54"/>
@@ -43,9 +75,8 @@ const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" vie
 <rect x="38" y="349" width="704" height="288" fill="url(#panel)"/>
 <g stroke="#e8b65d" fill="none" stroke-width="4"><rect x="66" y="374" width="43" height="39" rx="2"/><path d="M66 385H109M76 367V381M99 367V381M76 394H99M76 403H99"/><circle cx="87" cy="456" r="22"/><path d="M87 441V456L100 464"/></g><text x="129" y="410" fill="#f5f2ef" font-size="32" font-family="DejaVu Serif" font-weight="700">DATA:</text><text x="350" y="410" fill="url(#gold)" font-size="42" font-family="DejaVu Serif" font-weight="700">${esc(date)}</text><text x="129" y="474" fill="#f5f2ef" font-size="32" font-family="DejaVu Serif" font-weight="700">GODZINA:</text><text x="350" y="474" fill="url(#gold)" font-size="48" font-family="DejaVu Serif" font-weight="700">${esc(time)}</text>
 <g fill="#dcb15e"><circle cx="72" cy="530" r="10"/><circle cx="102" cy="522" r="13"/><circle cx="133" cy="530" r="10"/><path d="M54 554Q54 537 72 537Q90 537 90 554ZM81 560Q81 539 102 539Q123 539 123 560ZM115 554Q115 537 133 537Q151 537 151 554Z"/></g><text x="181" y="535" fill="#f6f0e6" font-size="27" font-family="DejaVu Serif" font-weight="700">MIEJSCE ZBIÓRKI:</text><text x="181" y="577" fill="url(#gold)" font-size="38" font-family="DejaVu Serif" font-weight="700">${gatheringPlace}</text><rect x="181" y="593" width="450" height="36" rx="5" fill="#1b160d" fill-opacity=".94" stroke="#d6ad5e" stroke-width="1.5"/><text x="406" y="617" text-anchor="middle" fill="url(#gold)" font-size="18" font-family="DejaVu Serif" font-weight="700" letter-spacing=".25">${meetingNotice}</text>
-<rect x="776" y="445" width="384" height="293" rx="14" fill="#03050b" fill-opacity=".94" stroke="#e7bd68" stroke-width="3"/><rect x="787" y="456" width="362" height="271" rx="10" fill="none" stroke="#b99350" stroke-width="1.5"/><text x="968" y="490" text-anchor="middle" fill="url(#gold)" stroke="#100b08" stroke-width="1.5" paint-order="stroke" font-size="25" font-family="DejaVu Serif" font-weight="700" letter-spacing="1.4">LISTA OBECNOŚCI</text><path d="M801 510H1135" stroke="#b99350" stroke-width="1.5"/>
-${attendeeSvg}
-<text x="42" y="779" fill="url(#gold)" stroke="#1c0d0a" stroke-width="2" paint-order="stroke" font-size="29" font-family="DejaVu Serif" font-style="italic">Razem po zwycięstwo!</text>
+<rect x="776" y="445" width="384" height="293" rx="14" fill="#03050b" fill-opacity=".94" stroke="#e7bd68" stroke-width="3"/><rect x="787" y="456" width="362" height="271" rx="10" fill="none" stroke="#b99350" stroke-width="1.5"/><text x="968" y="490" text-anchor="middle" fill="url(#gold)" stroke="#100b08" stroke-width="1.5" paint-order="stroke" font-size="25" font-family="DejaVu Serif" font-weight="700" letter-spacing="1.4">DOŁĄCZ DO EKIPY</text><path d="M801 510H1135" stroke="#b99350" stroke-width="1.5"/>
+${rallySvg}
 </svg>`;
 const fontDir=new URL('../node_modules/dejavu-fonts-ttf/ttf/',import.meta.url).pathname;
 const fontFiles=['DejaVuSans.ttf','DejaVuSans-Bold.ttf','DejaVuSerif.ttf','DejaVuSerif-Bold.ttf','DejaVuSerif-Italic.ttf'].map(p=>fontDir+p);
