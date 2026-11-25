@@ -1,0 +1,19 @@
+
+.third-class-quests{margin-block:36px;padding:24px;border:1px solid #634b28;background:#0c1011;color:#f3e9d6}
+.third-class-quests h2,.third-class-quests h3{font-family:Georgia,serif;color:#f6dc9e}
+.third-class-filters{display:flex;flex-wrap:wrap;gap:16px;margin:17px 0}
+.third-class-filters label{display:grid;gap:5px;color:#e7dbc6}
+.third-class-filters input,.third-class-filters select{padding:10px;background:#151819;color:inherit;border:1px solid #a08048;border-radius:5px;font:inherit;max-width:100%}
+.third-class-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,245px),1fr));gap:9px}
+.third-class-card{display:grid;gap:4px;min-height:58px;padding:10px;background:#181814;border:1px solid #665234;border-radius:6px;color:#f4e5c8;text-align:left;font:inherit;cursor:pointer}
+.third-class-card:hover,.third-class-card:focus-visible{border-color:#efc675}
+.third-class-card small{color:#c9b695}
+.third-class-quests dialog{width:min(820px,calc(100vw - 28px));max-height:86dvh;padding:20px;background:#101516;color:#ece4d4;border:1px solid #a0824b}
+.third-class-quests dialog::backdrop{background:#040506ce}
+.third-class-quests dialog form{display:flex;justify-content:flex-end}
+.third-class-quests dialog button{padding:8px 12px;color:#fae1a9;background:#2e2313;border:1px solid #9b753e;cursor:pointer}
+.third-class-guide li{margin-bottom:14px;padding-left:4px}
+.third-class-guide a{color:#f7d78d}
+.third-class-maps{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.third-class-maps img{display:block;width:132px;max-height:92px;object-fit:contain;border:1px solid #6b5431;background:#16191a}
+@media(max-width:600px){.third-class-quests{padding:15px}.third-class-filters label{width:100%}.third-class-quests dialog{padding:12px}}

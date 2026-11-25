@@ -1,0 +1,5346 @@
+[
+  {
+    "from": "Gladiator",
+    "name": "Duelist",
+    "alias": "Glad",
+    "race": 0,
+    "url": "https://la2wiki.com/interlude/quest/saga-of-the-duelist",
+    "steps": [
+      {
+        "text": "Town of Aden. Gildia wojowników. Odbierz sagę u NPC: Grand Master Sedrick.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/sedrick.webp",
+            "Grand Master Sedrick · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-aden.webp",
+            "Gdzie znaleźć Grand Master Sedrick · Town of Aden"
+          ]
+        ]
+      },
+      {
+        "text": "Coliseum (teleport z Town of Aden). Porozmawiaj z NPC: Arena Director.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/arena-director.webp",
+            "Arena Director · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Hot Springs (teleport z Town of Goddard). Zanieś Ice Crystal i Top Quality Meat do NPC Master Chef Donath. Następnie wróć do NPC Arena Director po Resonance Amulet 1.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/donath.webp",
+            "Master Chef Donath · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-57.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Plains of Glory. Użyj amuletu przy pierwszej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Valley of Saints (teleport z Rune Township). Pokonaj Guardian of Forbidden Knowledge, zdobądź Resonance Amulet 2 i aktywuj drugą tablicę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-72.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Pilgrim's Temple. Aktywuj trzecią tablicę, pokonaj Ancient Sword Master Iron i użyj przy niej Resonance Amulet 3.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/npc/ancient-sword-master-iron.webp",
+            "Ancient Sword Master Iron in Lineage 2 Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Rune Township. Gildia magów. Porozmawiaj z NPC Grand Magister Valdis i przynieś Divine Stone of Wisdom. Odbierz Resonance Amulet 4.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/valdis.webp",
+            "Grand Magister Valdis · portret"
+          ],
+          [
+            "https://la2wiki.com/town/rune.webp",
+            "Gdzie znaleźć Grand Magister Valdis · Rune Township"
+          ]
+        ]
+      },
+      {
+        "text": "Monastery of Silence (teleport z Town of Goddard). Aktywuj czwartą Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC Master Felix. W Shrine of Loyalty zdobądź 700 Halisha’s Mark i pokonaj przywołanego Archon of Halisha. Możesz też pokonać go w Four Sepulchers.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/felix.webp",
+            "Master Felix · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Master Felix · Town of Goddard"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-93.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-109.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Wróć z Resonance Amulet 5 do piątej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Forest of the Dead. Aktywuj szóstą tablicę. Pomóż sojusznikowi w walce, odbierz Resonance Amulet 6 i ponownie użyj tablicy.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-86.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-87.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-102.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-103.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-104.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Aden. Gildia wojowników. Wróć do NPC Grand Master Sedrick i zakończ zmianę profesji.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/sedrick.webp",
+            "Grand Master Sedrick · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-aden.webp",
+            "Gdzie znaleźć Grand Master Sedrick · Town of Aden"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "from": "Warlord",
+    "name": "Dreadnought",
+    "race": 0,
+    "url": "https://la2wiki.com/interlude/quest/saga-of-the-dreadnoughts",
+    "steps": [
+      {
+        "text": "Town of Aden. Gildia wojowników. Odbierz sagę u NPC: Master Aiken.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/aiken.webp",
+            "Master Aiken · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-aden.webp",
+            "Gdzie znaleźć Master Aiken · Town of Aden"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC: Guard Ulrich.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Guard Ulrich · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Hot Springs (teleport z Town of Goddard). Zanieś Ice Crystal i Big White Nimble Fish do NPC Master Chef Donath. Następnie wróć do NPC Guard Ulrich po Resonance Amulet 1.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/donath.webp",
+            "Master Chef Donath · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-57.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Plains of Glory. Użyj amuletu przy pierwszej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Valley of Saints (teleport z Rune Township). Pokonaj Guardian of Forbidden Knowledge, zdobądź Resonance Amulet 2 i aktywuj drugą tablicę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-72.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-87.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Shrine of Loyalty. Aktywuj trzecią tablicę, pokonaj White Wing Commander i użyj przy niej Resonance Amulet 3.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-93.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-109.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC Grand Master Bernhard i przynieś Divine Stone of Wisdom. Odbierz Resonance Amulet 4.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/bernhard.webp",
+            "Grand Master Bernhard · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Grand Master Bernhard · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Monastery of Silence (teleport z Town of Goddard). Aktywuj czwartą Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-106.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Forest of the Dead (teleport z Rune Township). Porozmawiaj z NPC Mysterious Wizard. W Shrine of Loyalty zdobądź 700 Halisha’s Mark i pokonaj przywołanego Archon of Halisha. Możesz też pokonać go w Four Sepulchers.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/mysterious-wizard.webp",
+            "Mysterious Wizard · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-87.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-93.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-109.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Wróć z Resonance Amulet 5 do piątej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-106.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Rune Harbor. Aktywuj szóstą tablicę. Pomóż sojusznikowi w walce, odbierz Resonance Amulet 6 i ponownie użyj tablicy.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-102.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-118.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-119.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-120.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Aden. Gildia wojowników. Wróć do NPC Master Aiken i zakończ zmianę profesji.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/aiken.webp",
+            "Master Aiken · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-aden.webp",
+            "Gdzie znaleźć Master Aiken · Town of Aden"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "from": "Paladin",
+    "name": "Phoenix Knight",
+    "race": 0,
+    "url": "https://la2wiki.com/interlude/quest/saga-of-the-phoenix-knight",
+    "steps": [
+      {
+        "text": "Town of Aden. Gildia wojowników. Odbierz sagę u NPC: Grand Master Sedrick.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/sedrick.webp",
+            "Grand Master Sedrick · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-aden.webp",
+            "Gdzie znaleźć Grand Master Sedrick · Town of Aden"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC: Master Felix.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/felix.webp",
+            "Master Felix · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Master Felix · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Hot Springs (teleport z Town of Goddard). Zanieś Ice Crystal i Big White Fat Fish do NPC Master Chef Donath. Następnie wróć do NPC Master Felix po Resonance Amulet 1.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/donath.webp",
+            "Master Chef Donath · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-57.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Plains of Glory. Użyj amuletu przy pierwszej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Valley of Saints (teleport z Rune Township). Pokonaj Guardian of Forbidden Knowledge, zdobądź Resonance Amulet 2 i aktywuj drugą tablicę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-72.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Shrine of Loyalty. Aktywuj trzecią tablicę, pokonaj Fallen Knight Adhil i użyj przy niej Resonance Amulet 3.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Aden. Gildia wojowników. Porozmawiaj z NPC Grand Master Sedrick i przynieś Divine Stone of Wisdom. Odbierz Resonance Amulet 4.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/sedrick.webp",
+            "Grand Master Sedrick · portret"
+          ]
+        ]
+      },
+      {
+        "text": "Monastery of Silence (teleport z Town of Goddard). Aktywuj czwartą Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-105.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-106.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC Master Felix. W Shrine of Loyalty zdobądź 700 Halisha’s Mark i pokonaj przywołanego Archon of Halisha. Możesz też pokonać go w Four Sepulchers.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/felix.webp",
+            "Master Felix · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Wróć z Resonance Amulet 5 do piątej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-106.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Rune Harbor. Aktywuj szóstą tablicę. Pomóż sojusznikowi w walce, odbierz Resonance Amulet 6 i ponownie użyj tablicy.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-102.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-103.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-104.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-118.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-119.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-120.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Aden. Gildia wojowników. Wróć do NPC Grand Master Sedrick i zakończ zmianę profesji.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/sedrick.webp",
+            "Grand Master Sedrick · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-aden.webp",
+            "Gdzie znaleźć Grand Master Sedrick · Town of Aden"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "from": "Dark Avenger",
+    "name": "Hell Knight",
+    "race": 0,
+    "url": "https://la2wiki.com/interlude/quest/saga-of-the-hell-knight",
+    "steps": [
+      {
+        "text": "Hardin's Academy. Odbierz sagę u NPC: Dark Knight Mordred.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/mordred.webp",
+            "Dark Knight Mordred · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-168.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC: Guard Bayard.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/bayard.webp",
+            "Guard Bayard · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Guard Bayard · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Hot Springs (teleport z Town of Goddard). Zanieś Ice Crystal do NPC Information Broker Bavarin. Następnie wróć do NPC Guard Bayard po Resonance Amulet 1.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/bavarin.webp",
+            "Information Broker Bavarin · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-58.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Plains of Glory. Użyj amuletu przy pierwszej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Valley of Saints (teleport z Rune Township). Pokonaj Guardian of Forbidden Knowledge, zdobądź Resonance Amulet 2 i aktywuj drugą tablicę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-72.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Pilgrim's Temple. Aktywuj trzecią tablicę, pokonaj Archangel Iconoclasis i użyj przy niej Resonance Amulet 3.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC Guard Bayard i przynieś Divine Stone of Wisdom. Odbierz Resonance Amulet 4.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/bayard.webp",
+            "Guard Bayard · portret"
+          ]
+        ]
+      },
+      {
+        "text": "Monastery of Silence (teleport z Town of Goddard). Aktywuj czwartą Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC Guard Bayard. W Shrine of Loyalty zdobądź 700 Halisha’s Mark i pokonaj przywołanego Archon of Halisha. Możesz też pokonać go w Four Sepulchers.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/bayard.webp",
+            "Guard Bayard · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Wróć z Resonance Amulet 5 do piątej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Forest of the Dead (teleport z Rune Township). Aktywuj szóstą tablicę. Pomóż sojusznikowi w walce, odbierz Resonance Amulet 6 i ponownie użyj tablicy.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-104.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Hardin's Academy. Wróć do NPC Dark Knight Mordred i zakończ zmianę profesji.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/mordred.webp",
+            "Dark Knight Mordred · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-168.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "from": "Hawkeye",
+    "name": "Sagittarius",
+    "race": 0,
+    "url": "https://la2wiki.com/interlude/quest/saga-of-the-sagittarius",
+    "steps": [
+      {
+        "text": "Hunters Village. Gildia wojowników. Odbierz sagę u NPC: Guild President Bernard.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/bernard.webp",
+            "Guild President Bernard · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-hunters.webp",
+            "Gdzie znaleźć Guild President Bernard · Hunters Village"
+          ]
+        ]
+      },
+      {
+        "text": "Hunters Village. Porozmawiaj z NPC: Information Broker Grimst.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/grimst.webp",
+            "Information Broker Grimst · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-hunters.webp",
+            "Gdzie znaleźć Information Broker Grimst · Hunters Village"
+          ]
+        ]
+      },
+      {
+        "text": "Hot Springs (teleport z Town of Goddard). Zanieś Ice Crystal do NPC Information Broker Mist. Następnie wróć do NPC Information Broker Grimst po Resonance Amulet 1.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/mist.webp",
+            "Information Broker Mist · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-73.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Plains of Glory. Użyj amuletu przy pierwszej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Valley of Saints (teleport z Rune Township). Pokonaj Guardian of Forbidden Knowledge, zdobądź Resonance Amulet 2 i aktywuj drugą tablicę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-72.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-73.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Shrine of Loyalty. Aktywuj trzecią tablicę, pokonaj Monument Watcher Ezekiel i użyj przy niej Resonance Amulet 3.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Porozmawiaj z NPC Pilgrim of Darkness i przynieś Divine Stone of Wisdom. Odbierz Resonance Amulet 4.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/pilgrim-of-darkness.webp",
+            "Pilgrim of Darkness · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Monastery of Silence (teleport z Town of Goddard). Aktywuj czwartą Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Ketra Orc Outpost (teleport z Town of Goddard). Porozmawiaj z NPC Pilgrim of Darkness. W Shrine of Loyalty zdobądź 700 Halisha’s Mark i pokonaj przywołanego Archon of Halisha. Możesz też pokonać go w Four Sepulchers.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/pilgrim-of-darkness.webp",
+            "Pilgrim of Darkness · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Wróć z Resonance Amulet 5 do piątej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Forest of the Dead. Aktywuj szóstą tablicę. Pomóż sojusznikowi w walce, odbierz Resonance Amulet 6 i ponownie użyj tablicy.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-104.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-118.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-119.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-120.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Hunters Village. Gildia wojowników. Wróć do NPC Guild President Bernard i zakończ zmianę profesji.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/bernard.webp",
+            "Guild President Bernard · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-hunters.webp",
+            "Gdzie znaleźć Guild President Bernard · Hunters Village"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "from": "Treasure Hunter",
+    "name": "Adventurer",
+    "alias": "TH",
+    "race": 0,
+    "url": "https://la2wiki.com/interlude/quest/saga-of-the-adventurer",
+    "steps": [
+      {
+        "text": "Hunters Village. Odbierz sagę u NPC: Hunter Guild Member Black Cat.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/black-cat.webp",
+            "Hunter Guild Member Black Cat · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-hunters.webp",
+            "Gdzie znaleźć Hunter Guild Member Black Cat · Hunters Village"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Sklep magiczny. Porozmawiaj z NPC: Fishing Guild Member Klaus.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/klaus.webp",
+            "Fishing Guild Member Klaus · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Fishing Guild Member Klaus · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Sklep magiczny. Zanieś Ice Crystal do NPC Brewer Valentine. Następnie wróć do NPC Fishing Guild Member Klaus po Resonance Amulet 1.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/valentine.webp",
+            "Brewer Valentine · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Brewer Valentine · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Plains of Glory. Użyj amuletu przy pierwszej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Valley of Saints (teleport z Rune Township). Pokonaj Guardian of Forbidden Knowledge, zdobądź Resonance Amulet 2 i aktywuj drugą tablicę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-72.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Varka Silenos Barracks (teleport z Town of Goddard). Aktywuj trzecią tablicę, pokonaj Monument Watcher Ezekiel i użyj przy niej Resonance Amulet 3.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-105.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Ketra Orc Outpost (teleport z Town of Goddard). Porozmawiaj z NPC Hermit i przynieś Divine Stone of Wisdom. Odbierz Resonance Amulet 4.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/hermit.webp",
+            "Hermit · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-105.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Monastery of Silence (teleport z Town of Goddard). Aktywuj czwartą Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-105.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Porozmawiaj z NPC Hermit. W Shrine of Loyalty zdobądź 700 Halisha’s Mark i pokonaj przywołanego Archon of Halisha. Możesz też pokonać go w Four Sepulchers.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/hermit.webp",
+            "Hermit · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-109.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Wróć z Resonance Amulet 5 do piątej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Forsaken Plains. Aktywuj szóstą tablicę. Pomóż sojusznikowi w walce, odbierz Resonance Amulet 6 i ponownie użyj tablicy.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-140.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-156.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Hunters Village. Wróć do NPC Hunter Guild Member Black Cat i zakończ zmianę profesji.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/black-cat.webp",
+            "Hunter Guild Member Black Cat · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-hunters.webp",
+            "Gdzie znaleźć Hunter Guild Member Black Cat · Hunters Village"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "from": "Sorcerer",
+    "name": "Archmage",
+    "alias": "Sorc",
+    "race": 0,
+    "url": "https://la2wiki.com/interlude/quest/saga-of-the-archmage",
+    "steps": [
+      {
+        "text": "Ivory Tower. Piętro ludzi. Odbierz sagę u NPC: Grand Magister Valleria.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/valleria.webp",
+            "Grand Magister Valleria · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-120.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Gildia magów. Porozmawiaj z NPC: Magister Justin.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/justin.webp",
+            "Magister Justin · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Magister Justin · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Hot Springs (teleport z Town of Goddard). Zanieś Ice Crystal do NPC Information Broker Mist. Następnie wróć do NPC Magister Justin po Resonance Amulet 1.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/mist.webp",
+            "Information Broker Mist · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-73.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Plains of Glory. Użyj amuletu przy pierwszej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Valley of Saints (teleport z Rune Township). Pokonaj Guardian of Forbidden Knowledge, zdobądź Resonance Amulet 2 i aktywuj drugą tablicę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-72.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-73.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Shrine of Loyalty. Aktywuj trzecią tablicę, pokonaj Fallen Angel Allector i użyj przy niej Resonance Amulet 3.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/npc/fallen-angel-allector.webp",
+            "Fallen Angel Allector in Lineage 2 Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Gildia magów. Porozmawiaj z NPC Magister Justin i przynieś Divine Stone of Wisdom. Odbierz Resonance Amulet 4.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/justin.webp",
+            "Magister Justin · portret"
+          ]
+        ]
+      },
+      {
+        "text": "Monastery of Silence (teleport z Town of Goddard). Aktywuj czwartą Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-105.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-106.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Gildia magów. Porozmawiaj z NPC Magister Justin. W Shrine of Loyalty zdobądź 700 Halisha’s Mark i pokonaj przywołanego Archon of Halisha. Możesz też pokonać go w Four Sepulchers.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/justin.webp",
+            "Magister Justin · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Wróć z Resonance Amulet 5 do piątej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-106.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Rune Harbor. Aktywuj szóstą tablicę. Pomóż sojusznikowi w walce, odbierz Resonance Amulet 6 i ponownie użyj tablicy.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-102.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-103.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-104.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-118.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-119.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-120.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Ivory Tower. Piętro ludzi. Wróć do NPC Grand Magister Valleria i zakończ zmianę profesji.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/valleria.webp",
+            "Grand Magister Valleria · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-120.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "from": "Necromancer",
+    "name": "Soultaker",
+    "race": 0,
+    "url": "https://la2wiki.com/interlude/quest/saga-of-the-soultaker",
+    "steps": [
+      {
+        "text": "Hardin's Academy. Odbierz sagę u NPC: Hardin.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/hardin.webp",
+            "Hardin · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-168.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Gildia magów. Porozmawiaj z NPC: High Priest Gregory.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/gregory.webp",
+            "High Priest Gregory · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć High Priest Gregory · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Hot Springs (teleport z Town of Goddard). Zanieś Ice Crystal do NPC Information Broker Bavarin. Następnie wróć do NPC High Priest Gregory po Resonance Amulet 1.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/bavarin.webp",
+            "Information Broker Bavarin · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-58.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Plains of Glory. Użyj amuletu przy pierwszej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Valley of Saints (teleport z Rune Township). Pokonaj Guardian of Forbidden Knowledge, zdobądź Resonance Amulet 2 i aktywuj drugą tablicę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-72.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-87.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Shrine of Loyalty. Aktywuj trzecią tablicę, pokonaj Archangel Iconoclasis i użyj przy niej Resonance Amulet 3.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Gildia magów. Porozmawiaj z NPC High Priest Gregory i przynieś Divine Stone of Wisdom. Odbierz Resonance Amulet 4.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/gregory.webp",
+            "High Priest Gregory · portret"
+          ]
+        ]
+      },
+      {
+        "text": "Monastery of Silence (teleport z Town of Goddard). Aktywuj czwartą Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Gildia magów. Porozmawiaj z NPC High Priest Gregory. W Shrine of Loyalty zdobądź 700 Halisha’s Mark i pokonaj przywołanego Archon of Halisha. Możesz też pokonać go w Four Sepulchers.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/gregory.webp",
+            "High Priest Gregory · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Wróć z Resonance Amulet 5 do piątej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Rune Harbor. Aktywuj szóstą tablicę. Pomóż sojusznikowi w walce, odbierz Resonance Amulet 6 i ponownie użyj tablicy.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-118.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-119.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-120.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Hardin's Academy. Wróć do NPC Hardin i zakończ zmianę profesji.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/hardin.webp",
+            "Hardin · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-168.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "from": "Warlock",
+    "name": "Arcana Lord",
+    "race": 0,
+    "url": "https://la2wiki.com/interlude/quest/saga-of-the-arcana-lord",
+    "steps": [
+      {
+        "text": "Ivory Tower. Piętro ludzi. Odbierz sagę u NPC: Head Summoner Kinsley.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-120.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Gildia magów. Porozmawiaj z NPC: Keats Servitor Sparky the Cat.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Keats Servitor Sparky the Cat · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Hot Springs (teleport z Town of Goddard). Zanieś Ice Crystal do NPC Cursed Summoner Keats. Następnie wróć do NPC Keats Servitor Sparky the Cat po Resonance Amulet 1.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-57.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Plains of Glory. Użyj amuletu przy pierwszej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Valley of Saints (teleport z Rune Township). Pokonaj Guardian of Forbidden Knowledge, zdobądź Resonance Amulet 2 i aktywuj drugą tablicę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-72.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Varka Silenos Barracks (teleport z Town of Goddard). Aktywuj trzecią tablicę, pokonaj Vision Guardian Shakiel i użyj przy niej Resonance Amulet 3.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-123.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Gildia magów. Porozmawiaj z NPC Summoner Belinda i przynieś Divine Stone of Wisdom. Odbierz Resonance Amulet 4.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Summoner Belinda · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Monastery of Silence (teleport z Town of Goddard). Aktywuj czwartą Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Gildia magów. Porozmawiaj z NPC Summoner Belinda. W Shrine of Loyalty zdobądź 700 Halisha’s Mark i pokonaj przywołanego Archon of Halisha. Możesz też pokonać go w Four Sepulchers.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-92.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-93.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-109.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Wróć z Resonance Amulet 5 do piątej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-92.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Forsaken Plains. Aktywuj szóstą tablicę. Pomóż sojusznikowi w walce, odbierz Resonance Amulet 6 i ponownie użyj tablicy.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-140.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-156.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Ivory Tower. Piętro ludzi. Wróć do NPC Head Summoner Kinsley i zakończ zmianę profesji.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-120.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "from": "Bishop",
+    "name": "Cardinal",
+    "race": 0,
+    "url": "https://la2wiki.com/interlude/quest/saga-of-the-cardinal",
+    "steps": [
+      {
+        "text": "Town of Oren. Świątynia. Odbierz sagę u NPC: High Priest Hollint.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/hollint.webp",
+            "High Priest Hollint · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-oren.webp",
+            "Gdzie znaleźć High Priest Hollint · Town of Oren"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC: Saint of Light Agnes.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/agnes.webp",
+            "Saint of Light Agnes · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Saint of Light Agnes · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Hot Springs (teleport z Town of Goddard). Zanieś Ice Crystal do NPC Chef Duncan. Następnie wróć do NPC Saint of Light Agnes po Resonance Amulet 1.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/duncan.webp",
+            "Chef Duncan · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-57.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Plains of Glory. Użyj amuletu przy pierwszej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Valley of Saints (teleport z Rune Township). Pokonaj Guardian of Forbidden Knowledge, zdobądź Resonance Amulet 2 i aktywuj drugą tablicę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-72.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Varka Silenos Barracks (teleport z Town of Goddard). Aktywuj trzecią tablicę, pokonaj Fallen Angel Haures i użyj przy niej Resonance Amulet 3.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-105.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Gildia magów. Porozmawiaj z NPC Priest Bastian i przynieś Divine Stone of Wisdom. Odbierz Resonance Amulet 4.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Priest Bastian · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Monastery of Silence (teleport z Town of Goddard). Aktywuj czwartą Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-105.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Gildia magów. Porozmawiaj z NPC Priest Bastian. W Shrine of Loyalty zdobądź 700 Halisha’s Mark i pokonaj przywołanego Archon of Halisha. Możesz też pokonać go w Four Sepulchers.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-92.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-93.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-109.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Wróć z Resonance Amulet 5 do piątej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-92.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Forsaken Plains. Aktywuj szóstą tablicę. Pomóż sojusznikowi w walce, odbierz Resonance Amulet 6 i ponownie użyj tablicy.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-140.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-156.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Oren. Świątynia. Wróć do NPC High Priest Hollint i zakończ zmianę profesji.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/hollint.webp",
+            "High Priest Hollint · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-oren.webp",
+            "Gdzie znaleźć High Priest Hollint · Town of Oren"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "from": "Prophet",
+    "name": "Hierophant",
+    "race": 0,
+    "url": "https://la2wiki.com/interlude/quest/saga-of-the-hierophant",
+    "steps": [
+      {
+        "text": "Town of Oren. Świątynia. Odbierz sagę u NPC: High Priest Hollint.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/hollint.webp",
+            "High Priest Hollint · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-oren.webp",
+            "Gdzie znaleźć High Priest Hollint · Town of Oren"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC: Saint of Light Agnes.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/agnes.webp",
+            "Saint of Light Agnes · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Saint of Light Agnes · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Hot Springs (teleport z Town of Goddard). Zanieś Ice Crystal do NPC Chef Duncan. Następnie wróć do NPC Saint of Light Agnes po Resonance Amulet 1.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/duncan.webp",
+            "Chef Duncan · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-57.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Plains of Glory. Użyj amuletu przy pierwszej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Valley of Saints (teleport z Rune Township). Pokonaj Guardian of Forbidden Knowledge, zdobądź Resonance Amulet 2 i aktywuj drugą tablicę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-72.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-87.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Pilgrim's Temple. Aktywuj trzecią tablicę, pokonaj Fallen Angel Naverius i użyj przy niej Resonance Amulet 3.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-92.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Gildia magów. Porozmawiaj z NPC Priest Bastian i przynieś Divine Stone of Wisdom. Odbierz Resonance Amulet 4.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Priest Bastian · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Monastery of Silence (teleport z Town of Goddard). Aktywuj czwartą Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-106.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Gildia magów. Porozmawiaj z NPC Priest Bastian. W Shrine of Loyalty zdobądź 700 Halisha’s Mark i pokonaj przywołanego Archon of Halisha. Możesz też pokonać go w Four Sepulchers.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-92.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-93.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-109.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Wróć z Resonance Amulet 5 do piątej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-92.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-106.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Hunters Village. Aktywuj szóstą tablicę. Pomóż sojusznikowi w walce, odbierz Resonance Amulet 6 i ponownie użyj tablicy.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-169.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-170.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-171.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Oren. Świątynia. Wróć do NPC High Priest Hollint i zakończ zmianę profesji.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/hollint.webp",
+            "High Priest Hollint · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-oren.webp",
+            "Gdzie znaleźć High Priest Hollint · Town of Oren"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "from": "Temple Knight",
+    "name": "Eva's Templar",
+    "race": 1,
+    "url": "https://la2wiki.com/interlude/quest/saga-of-evas-templar",
+    "steps": [
+      {
+        "text": "Town of Aden. Gildia wojowników. Odbierz sagę u NPC: Master Sinden.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-aden.webp",
+            "Gdzie znaleźć Master Sinden · Town of Aden"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Gildia wojowników. Porozmawiaj z NPC: Master Bronwyn.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Master Bronwyn · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Hot Springs (teleport z Town of Goddard). Zanieś Ice Crystal i Big White Fat Fish do NPC Master Chef Donath. Następnie wróć do NPC Master Bronwyn po Resonance Amulet 1.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/donath.webp",
+            "Master Chef Donath · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-57.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Plains of Glory. Użyj amuletu przy pierwszej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Valley of Saints (teleport z Rune Township). Pokonaj Guardian of Forbidden Knowledge, zdobądź Resonance Amulet 2 i aktywuj drugą tablicę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-72.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-87.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Varka Silenos Barracks (teleport z Town of Goddard). Aktywuj trzecią tablicę, pokonaj Bound Elf Panacea i użyj przy niej Resonance Amulet 3.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-121.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-122.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-123.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Aden. Gildia wojowników. Porozmawiaj z NPC Master Sinden i przynieś Divine Stone of Wisdom. Odbierz Resonance Amulet 4.",
+        "images": []
+      },
+      {
+        "text": "Monastery of Silence (teleport z Town of Goddard). Aktywuj czwartą Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Świątynia. Porozmawiaj z NPC Priest Cerenas. W Shrine of Loyalty zdobądź 700 Halisha’s Mark i pokonaj przywołanego Archon of Halisha. Możesz też pokonać go w Four Sepulchers.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Priest Cerenas · Town of Goddard"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-92.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-93.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-109.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Wróć z Resonance Amulet 5 do piątej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-92.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Forsaken Plains. Aktywuj szóstą tablicę. Pomóż sojusznikowi w walce, odbierz Resonance Amulet 6 i ponownie użyj tablicy.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-140.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-156.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Aden. Gildia wojowników. Wróć do NPC Master Sinden i zakończ zmianę profesji.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-aden.webp",
+            "Gdzie znaleźć Master Sinden · Town of Aden"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "from": "Swordsinger",
+    "name": "Sword Muse",
+    "race": 1,
+    "url": "https://la2wiki.com/interlude/quest/saga-of-the-sword-muse",
+    "steps": [
+      {
+        "text": "Town of Aden. Gildia wojowników. Odbierz sagę u NPC: Master Raien.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-aden.webp",
+            "Gdzie znaleźć Master Raien · Town of Aden"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Kuźnia. Porozmawiaj z NPC: Blacksmith Feynn.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Blacksmith Feynn · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Hot Springs (teleport z Town of Goddard). Zanieś Ice Crystal i Big White Fat Fish do NPC Master Chef Donath. Następnie wróć do NPC Blacksmith Feynn po Resonance Amulet 1.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/donath.webp",
+            "Master Chef Donath · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-57.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Plains of Glory. Użyj amuletu przy pierwszej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Valley of Saints (teleport z Rune Township). Pokonaj Guardian of Forbidden Knowledge, zdobądź Resonance Amulet 2 i aktywuj drugą tablicę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-72.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-71.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Pilgrim's Temple. Aktywuj trzecią tablicę, pokonaj Sword Player Biel i użyj przy niej Resonance Amulet 3.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wild Beast Reserve (teleport z Rune Township). Porozmawiaj z NPC Beast Herder Tunatun i przynieś Divine Stone of Wisdom. Odbierz Resonance Amulet 4.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/tunatun.webp",
+            "Beast Herder Tunatun · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-71.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-72.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Monastery of Silence (teleport z Town of Goddard). Aktywuj czwartą Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-106.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Świątynia. Porozmawiaj z NPC Priest Cerenas. W Shrine of Loyalty zdobądź 700 Halisha’s Mark i pokonaj przywołanego Archon of Halisha. Możesz też pokonać go w Four Sepulchers.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Priest Cerenas · Town of Goddard"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-93.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-109.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Wróć z Resonance Amulet 5 do piątej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-106.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Hunters Village. Aktywuj szóstą tablicę. Pomóż sojusznikowi w walce, odbierz Resonance Amulet 6 i ponownie użyj tablicy.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-169.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-170.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-171.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Aden. Gildia wojowników. Wróć do NPC Master Raien i zakończ zmianę profesji.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-aden.webp",
+            "Gdzie znaleźć Master Raien · Town of Aden"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "from": "Plains Walker",
+    "name": "Wind Rider",
+    "alias": "PW",
+    "race": 1,
+    "url": "https://la2wiki.com/interlude/quest/saga-of-the-wind-rider",
+    "steps": [
+      {
+        "text": "Hunters Village. Odbierz sagę u NPC: Hunter Guild Member Black Cat.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/black-cat.webp",
+            "Hunter Guild Member Black Cat · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-hunters.webp",
+            "Gdzie znaleźć Hunter Guild Member Black Cat · Hunters Village"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC: Spellbook Seller Elena.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/elena.webp",
+            "Spellbook Seller Elena · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Spellbook Seller Elena · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Hot Springs (teleport z Town of Goddard). Zanieś Ice Crystal do NPC Master Chef Donath. Następnie wróć do NPC Spellbook Seller Elena po Resonance Amulet 1.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/donath.webp",
+            "Master Chef Donath · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-57.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Plains of Glory. Użyj amuletu przy pierwszej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Valley of Saints (teleport z Rune Township). Pokonaj Guardian of Forbidden Knowledge, zdobądź Resonance Amulet 2 i aktywuj drugą tablicę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-72.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-87.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Pilgrim's Temple. Aktywuj trzecią tablicę, pokonaj Monument Watcher Ezekiel i użyj przy niej Resonance Amulet 3.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-92.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Ketra Orc Outpost (teleport z Town of Goddard). Porozmawiaj z NPC Hermit i przynieś Divine Stone of Wisdom. Odbierz Resonance Amulet 4.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/hermit.webp",
+            "Hermit · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-106.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Monastery of Silence (teleport z Town of Goddard). Aktywuj czwartą Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-106.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Porozmawiaj z NPC Hermit. W Shrine of Loyalty zdobądź 700 Halisha’s Mark i pokonaj przywołanego Archon of Halisha. Możesz też pokonać go w Four Sepulchers.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/hermit.webp",
+            "Hermit · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-92.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-106.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-93.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-109.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Wróć z Resonance Amulet 5 do piątej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-92.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-106.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Hunters Village. Aktywuj szóstą tablicę. Pomóż sojusznikowi w walce, odbierz Resonance Amulet 6 i ponownie użyj tablicy.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-169.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-170.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-171.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wróć do NPC Hunter Guild Member Black Cat i zakończ zmianę profesji.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/black-cat.webp",
+            "Hunter Guild Member Black Cat · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-hunters.webp",
+            "Gdzie znaleźć Hunter Guild Member Black Cat · Hunters Village"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "from": "Silver Ranger",
+    "name": "Moonlight Sentinel",
+    "race": 1,
+    "url": "https://la2wiki.com/interlude/quest/saga-of-the-moonlight-sentinel",
+    "steps": [
+      {
+        "text": "Hunters Village. Gildia wojowników. Odbierz sagę u NPC: Guild President Bernard.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/bernard.webp",
+            "Guild President Bernard · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-hunters.webp",
+            "Gdzie znaleźć Guild President Bernard · Hunters Village"
+          ]
+        ]
+      },
+      {
+        "text": "Hunters Village. Porozmawiaj z NPC: Information Broker Grimst.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/grimst.webp",
+            "Information Broker Grimst · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-hunters.webp",
+            "Gdzie znaleźć Information Broker Grimst · Hunters Village"
+          ]
+        ]
+      },
+      {
+        "text": "Hot Springs (teleport z Town of Goddard). Zanieś Ice Crystal do NPC Information Broker Mist. Następnie wróć do NPC Information Broker Grimst po Resonance Amulet 1.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/mist.webp",
+            "Information Broker Mist · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-73.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Plains of Glory. Użyj amuletu przy pierwszej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Valley of Saints (teleport z Rune Township). Pokonaj Guardian of Forbidden Knowledge, zdobądź Resonance Amulet 2 i aktywuj drugą tablicę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-72.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-73.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-87.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Pilgrim's Temple. Aktywuj trzecią tablicę, pokonaj Monument Watcher Ezekiel i użyj przy niej Resonance Amulet 3.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Porozmawiaj z NPC Pilgrim of Darkness i przynieś Divine Stone of Wisdom. Odbierz Resonance Amulet 4.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/pilgrim-of-darkness.webp",
+            "Pilgrim of Darkness · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Monastery of Silence (teleport z Town of Goddard). Aktywuj czwartą Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Ketra Orc Outpost (teleport z Town of Goddard). Porozmawiaj z NPC Pilgrim of Darkness. W Shrine of Loyalty zdobądź 700 Halisha’s Mark i pokonaj przywołanego Archon of Halisha. Możesz też pokonać go w Four Sepulchers.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/pilgrim-of-darkness.webp",
+            "Pilgrim of Darkness · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-93.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-109.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Wróć z Resonance Amulet 5 do piątej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Forsaken Plains. Aktywuj szóstą tablicę. Pomóż sojusznikowi w walce, odbierz Resonance Amulet 6 i ponownie użyj tablicy.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-140.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-156.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Hunters Village. Gildia wojowników. Wróć do NPC Guild President Bernard i zakończ zmianę profesji.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/bernard.webp",
+            "Guild President Bernard · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-hunters.webp",
+            "Gdzie znaleźć Guild President Bernard · Hunters Village"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "from": "Spellsinger",
+    "name": "Mystic Muse",
+    "alias": "SPS",
+    "race": 1,
+    "url": "https://la2wiki.com/interlude/quest/saga-of-the-mystic-muse",
+    "steps": [
+      {
+        "text": "Ivory Tower. Piętro elfów. Odbierz sagę u NPC: Grand Magister Arkenias.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-120.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Gildia magów. Porozmawiaj z NPC: Magister Alminas.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/alminas.webp",
+            "Magister Alminas · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Magister Alminas · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Hot Springs (teleport z Town of Goddard). Zanieś Ice Crystal do NPC Information Broker Mist. Następnie wróć do NPC Magister Alminas po Resonance Amulet 1.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/mist.webp",
+            "Information Broker Mist · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-73.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Plains of Glory. Użyj amuletu przy pierwszej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Valley of Saints (teleport z Rune Township). Pokonaj Guardian of Forbidden Knowledge, zdobądź Resonance Amulet 2 i aktywuj drugą tablicę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-72.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-73.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-87.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Varka Silenos Barracks (teleport z Town of Goddard). Aktywuj trzecią tablicę, pokonaj Fallen Angel Allector i użyj przy niej Resonance Amulet 3.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-123.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/npc/fallen-angel-allector.webp",
+            "Fallen Angel Allector in Lineage 2 Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Gildia magów. Porozmawiaj z NPC Magister Alminas i przynieś Divine Stone of Wisdom. Odbierz Resonance Amulet 4.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/alminas.webp",
+            "Magister Alminas · portret"
+          ]
+        ]
+      },
+      {
+        "text": "Monastery of Silence (teleport z Town of Goddard). Aktywuj czwartą Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Gildia magów. Porozmawiaj z NPC Magister Alminas. W Shrine of Loyalty zdobądź 700 Halisha’s Mark i pokonaj przywołanego Archon of Halisha. Możesz też pokonać go w Four Sepulchers.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/alminas.webp",
+            "Magister Alminas · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-92.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-93.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-109.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Wróć z Resonance Amulet 5 do piątej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-92.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Forsaken Plains. Aktywuj szóstą tablicę. Pomóż sojusznikowi w walce, odbierz Resonance Amulet 6 i ponownie użyj tablicy.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-140.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-156.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Ivory Tower. Piętro elfów. Wróć do NPC Grand Magister Arkenias i zakończ zmianę profesji.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-120.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "from": "Elemental Summoner",
+    "name": "Elemental Master",
+    "race": 1,
+    "url": "https://la2wiki.com/interlude/quest/saga-of-the-elemental-master",
+    "steps": [
+      {
+        "text": "Ivory Tower. Piętro elfów. Odbierz sagę u NPC: Grand Magister Arkenias.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-120.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Aden. Gildia magów. Porozmawiaj z NPC: Head Summoner Radyss.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-aden.webp",
+            "Gdzie znaleźć Head Summoner Radyss · Town of Aden"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Świątynia. Zanieś Ice Crystal do NPC Priest Cerenas. Następnie wróć do NPC Head Summoner Radyss po Resonance Amulet 1.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Priest Cerenas · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Plains of Glory. Użyj amuletu przy pierwszej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Valley of Saints (teleport z Rune Township). Pokonaj Guardian of Forbidden Knowledge, zdobądź Resonance Amulet 2 i aktywuj drugą tablicę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-72.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-87.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Pilgrim's Temple. Aktywuj trzecią tablicę, pokonaj Vision Guardian Shakiel i użyj przy niej Resonance Amulet 3.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-92.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Aden. Gildia magów. Porozmawiaj z NPC Head Summoner Radyss i przynieś Divine Stone of Wisdom. Odbierz Resonance Amulet 4.",
+        "images": []
+      },
+      {
+        "text": "Monastery of Silence (teleport z Town of Goddard). Aktywuj czwartą Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-106.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Aden. Gildia magów. Porozmawiaj z NPC Head Summoner Radyss. W Shrine of Loyalty zdobądź 700 Halisha’s Mark i pokonaj przywołanego Archon of Halisha. Możesz też pokonać go w Four Sepulchers.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-92.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-93.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-109.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Wróć z Resonance Amulet 5 do piątej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-92.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-106.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Hunters Village. Aktywuj szóstą tablicę. Pomóż sojusznikowi w walce, odbierz Resonance Amulet 6 i ponownie użyj tablicy.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-169.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-170.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-171.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Ivory Tower. Piętro elfów. Wróć do NPC Grand Magister Arkenias i zakończ zmianę profesji.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-120.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "from": "Elven Elder",
+    "name": "Eva's Saint",
+    "race": 1,
+    "url": "https://la2wiki.com/interlude/quest/saga-of-evas-saint",
+    "steps": [
+      {
+        "text": "Town of Oren. Świątynia. Odbierz sagę u NPC: High Priest Hollint.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/hollint.webp",
+            "High Priest Hollint · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-oren.webp",
+            "Gdzie znaleźć High Priest Hollint · Town of Oren"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC: Saint of Light Agnes.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/agnes.webp",
+            "Saint of Light Agnes · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Saint of Light Agnes · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Hot Springs (teleport z Town of Goddard). Zanieś Ice Crystal do NPC Chef Duncan. Następnie wróć do NPC Saint of Light Agnes po Resonance Amulet 1.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/duncan.webp",
+            "Chef Duncan · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-57.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Plains of Glory. Użyj amuletu przy pierwszej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Valley of Saints (teleport z Rune Township). Pokonaj Guardian of Forbidden Knowledge, zdobądź Resonance Amulet 2 i aktywuj drugą tablicę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-72.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-71.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Pilgrim's Temple. Aktywuj trzecią tablicę, pokonaj Fallen Angel Haures i użyj przy niej Resonance Amulet 3.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Gildia magów. Porozmawiaj z NPC Priest Bastian i przynieś Divine Stone of Wisdom. Odbierz Resonance Amulet 4.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Priest Bastian · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Monastery of Silence (teleport z Town of Goddard). Aktywuj czwartą Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Gildia magów. Porozmawiaj z NPC Priest Bastian. W Shrine of Loyalty zdobądź 700 Halisha’s Mark i pokonaj przywołanego Archon of Halisha. Możesz też pokonać go w Four Sepulchers.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Wróć z Resonance Amulet 5 do piątej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Forest of the Dead. Aktywuj szóstą tablicę. Pomóż sojusznikowi w walce, odbierz Resonance Amulet 6 i ponownie użyj tablicy.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-102.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Oren. Świątynia. Wróć do NPC High Priest Hollint i zakończ zmianę profesji.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/hollint.webp",
+            "High Priest Hollint · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-oren.webp",
+            "Gdzie znaleźć High Priest Hollint · Town of Oren"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "from": "Shillien Knight",
+    "name": "Shillien Templar",
+    "race": 2,
+    "url": "https://la2wiki.com/interlude/quest/saga-of-the-shillien-templar",
+    "steps": [
+      {
+        "text": "Hardin's Academy. Odbierz sagę u NPC: Master Galadrid.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-168.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC: Grand Master Samael.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Grand Master Samael · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Hot Springs (teleport z Town of Goddard). Zanieś Ice Crystal do NPC Information Broker Bavarin. Następnie wróć do NPC Grand Master Samael po Resonance Amulet 1.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/bavarin.webp",
+            "Information Broker Bavarin · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-58.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Plains of Glory. Użyj amuletu przy pierwszej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-153.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Valley of Saints (teleport z Rune Township). Pokonaj Guardian of Forbidden Knowledge, zdobądź Resonance Amulet 2 i aktywuj drugą tablicę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-72.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-87.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Pilgrim's Temple. Aktywuj trzecią tablicę, pokonaj Chimera Golem i użyj przy niej Resonance Amulet 3.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC Grand Master Samael i przynieś Divine Stone of Wisdom. Odbierz Resonance Amulet 4.",
+        "images": []
+      },
+      {
+        "text": "Monastery of Silence (teleport z Town of Goddard). Aktywuj czwartą Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC Grand Master Samael. W Shrine of Loyalty zdobądź 700 Halisha’s Mark i pokonaj przywołanego Archon of Halisha. Możesz też pokonać go w Four Sepulchers.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Wróć z Resonance Amulet 5 do piątej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Hunters Village. Aktywuj szóstą tablicę. Pomóż sojusznikowi w walce, odbierz Resonance Amulet 6 i ponownie użyj tablicy.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-153.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Hardin's Academy. Wróć do NPC Master Galadrid i zakończ zmianę profesji.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-168.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "from": "Bladedancer",
+    "name": "Spectral Dancer",
+    "race": 2,
+    "url": "https://la2wiki.com/interlude/quest/saga-of-the-spectral-dancer",
+    "steps": [
+      {
+        "text": "Hardin's Academy. Odbierz sagę u NPC: Dark Knight Mordred.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/mordred.webp",
+            "Dark Knight Mordred · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-168.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC: Spellbook Seller Elena.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/elena.webp",
+            "Spellbook Seller Elena · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Spellbook Seller Elena · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Hot Springs (teleport z Town of Goddard). Zanieś Ice Crystal do NPC Information Broker Bavarin. Następnie wróć do NPC Spellbook Seller Elena po Resonance Amulet 1.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/bavarin.webp",
+            "Information Broker Bavarin · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-58.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Plains of Glory. Użyj amuletu przy pierwszej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Valley of Saints (teleport z Rune Township). Pokonaj Guardian of Forbidden Knowledge, zdobądź Resonance Amulet 2 i aktywuj drugą tablicę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-72.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-71.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Pilgrim's Temple. Aktywuj trzecią tablicę, pokonaj Hallate's Dancer Lillian i użyj przy niej Resonance Amulet 3.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC Spellbook Seller Elena i przynieś Divine Stone of Wisdom. Odbierz Resonance Amulet 4.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/elena.webp",
+            "Spellbook Seller Elena · portret"
+          ]
+        ]
+      },
+      {
+        "text": "Monastery of Silence (teleport z Town of Goddard). Aktywuj czwartą Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC Spellbook Seller Elena. W Shrine of Loyalty zdobądź 700 Halisha’s Mark i pokonaj przywołanego Archon of Halisha. Możesz też pokonać go w Four Sepulchers.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/elena.webp",
+            "Spellbook Seller Elena · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Wróć z Resonance Amulet 5 do piątej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Forest of the Dead. Aktywuj szóstą tablicę. Pomóż sojusznikowi w walce, odbierz Resonance Amulet 6 i ponownie użyj tablicy.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-103.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-104.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Hardin's Academy. Wróć do NPC Dark Knight Mordred i zakończ zmianę profesji.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/mordred.webp",
+            "Dark Knight Mordred · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-168.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "from": "Abyss Walker",
+    "name": "Ghost Hunter",
+    "alias": "AW",
+    "race": 2,
+    "url": "https://la2wiki.com/interlude/quest/saga-of-the-ghost-hunter",
+    "steps": [
+      {
+        "text": "Hunters Village. Odbierz sagę u NPC: Hunter Guild Member Black Cat.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/black-cat.webp",
+            "Hunter Guild Member Black Cat · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-hunters.webp",
+            "Gdzie znaleźć Hunter Guild Member Black Cat · Hunters Village"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC: Master Drakon.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Master Drakon · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Hot Springs (teleport z Town of Goddard). Zanieś Ice Crystal do NPC Master Chef Donath. Następnie wróć do NPC Master Drakon po Resonance Amulet 1.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/donath.webp",
+            "Master Chef Donath · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-57.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Plains of Glory. Użyj amuletu przy pierwszej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Valley of Saints (teleport z Rune Township). Pokonaj Guardian of Forbidden Knowledge, zdobądź Resonance Amulet 2 i aktywuj drugą tablicę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-72.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-71.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Pilgrim's Temple. Aktywuj trzecią tablicę, pokonaj Monument Watcher Ezekiel i użyj przy niej Resonance Amulet 3.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Ketra Orc Outpost (teleport z Town of Goddard). Porozmawiaj z NPC Hermit i przynieś Divine Stone of Wisdom. Odbierz Resonance Amulet 4.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/hermit.webp",
+            "Hermit · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-106.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Monastery of Silence (teleport z Town of Goddard). Aktywuj czwartą Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-106.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Porozmawiaj z NPC Hermit. W Shrine of Loyalty zdobądź 700 Halisha’s Mark i pokonaj przywołanego Archon of Halisha. Możesz też pokonać go w Four Sepulchers.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/hermit.webp",
+            "Hermit · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-106.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-93.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-109.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Wróć z Resonance Amulet 5 do piątej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-106.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Forest of the Dead. Aktywuj szóstą tablicę. Pomóż sojusznikowi w walce, odbierz Resonance Amulet 6 i ponownie użyj tablicy.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-86.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-102.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-103.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-104.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Hunters Village. Wróć do NPC Hunter Guild Member Black Cat i zakończ zmianę profesji.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/black-cat.webp",
+            "Hunter Guild Member Black Cat · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-hunters.webp",
+            "Gdzie znaleźć Hunter Guild Member Black Cat · Hunters Village"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "from": "Phantom Ranger",
+    "name": "Ghost Sentinel",
+    "race": 2,
+    "url": "https://la2wiki.com/interlude/quest/saga-of-the-ghost-sentinel",
+    "steps": [
+      {
+        "text": "Hunters Village. Gildia wojowników. Odbierz sagę u NPC: Guild President Bernard.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/bernard.webp",
+            "Guild President Bernard · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-hunters.webp",
+            "Gdzie znaleźć Guild President Bernard · Hunters Village"
+          ]
+        ]
+      },
+      {
+        "text": "Hunters Village. Porozmawiaj z NPC: Information Broker Grimst.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/grimst.webp",
+            "Information Broker Grimst · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-hunters.webp",
+            "Gdzie znaleźć Information Broker Grimst · Hunters Village"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Kuźnia. Zanieś Ice Crystal do NPC Gemcutter Gedrik. Następnie wróć do NPC Information Broker Grimst po Resonance Amulet 1.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Gemcutter Gedrik · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Plains of Glory. Użyj amuletu przy pierwszej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Valley of Saints (teleport z Rune Township). Pokonaj Guardian of Forbidden Knowledge, zdobądź Resonance Amulet 2 i aktywuj drugą tablicę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-72.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-71.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Pilgrim's Temple. Aktywuj trzecią tablicę, pokonaj Monument Watcher Ezekiel i użyj przy niej Resonance Amulet 3.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Porozmawiaj z NPC Pilgrim of Darkness i przynieś Divine Stone of Wisdom. Odbierz Resonance Amulet 4.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/pilgrim-of-darkness.webp",
+            "Pilgrim of Darkness · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Monastery of Silence (teleport z Town of Goddard). Aktywuj czwartą Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Ketra Orc Outpost (teleport z Town of Goddard). Porozmawiaj z NPC Pilgrim of Darkness. W Shrine of Loyalty zdobądź 700 Halisha’s Mark i pokonaj przywołanego Archon of Halisha. Możesz też pokonać go w Four Sepulchers.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/pilgrim-of-darkness.webp",
+            "Pilgrim of Darkness · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-93.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-109.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Wróć z Resonance Amulet 5 do piątej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Hunters Village. Aktywuj szóstą tablicę. Pomóż sojusznikowi w walce, odbierz Resonance Amulet 6 i ponownie użyj tablicy.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-169.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-170.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-171.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Gildia wojowników. Wróć do NPC Guild President Bernard i zakończ zmianę profesji.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/bernard.webp",
+            "Guild President Bernard · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-hunters.webp",
+            "Gdzie znaleźć Guild President Bernard · Hunters Village"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "from": "Spellhowler",
+    "name": "Storm Screamer",
+    "race": 2,
+    "url": "https://la2wiki.com/interlude/quest/saga-of-the-storm-screamer",
+    "steps": [
+      {
+        "text": "Ivory Tower. Piętro mrocznych elfów. Odbierz sagę u NPC: Grand Magister Fairen.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/fairen.webp",
+            "Grand Magister Fairen · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-120.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC: Magister Kamilen.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Magister Kamilen · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Hot Springs (teleport z Town of Goddard). Zanieś Ice Crystal do NPC Information Broker Mist. Następnie wróć do NPC Magister Kamilen po Resonance Amulet 1.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/mist.webp",
+            "Information Broker Mist · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-73.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Plains of Glory. Użyj amuletu przy pierwszej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Valley of Saints (teleport z Rune Township). Pokonaj Guardian of Forbidden Knowledge, zdobądź Resonance Amulet 2 i aktywuj drugą tablicę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-72.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-73.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-71.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Pilgrim's Temple. Aktywuj trzecią tablicę, pokonaj Fallen Angel Allector i użyj przy niej Resonance Amulet 3.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/npc/fallen-angel-allector.webp",
+            "Fallen Angel Allector in Lineage 2 Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC Magister Kamilen i przynieś Divine Stone of Wisdom. Odbierz Resonance Amulet 4.",
+        "images": []
+      },
+      {
+        "text": "Monastery of Silence (teleport z Town of Goddard). Aktywuj czwartą Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-105.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-106.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC Magister Kamilen. W Shrine of Loyalty zdobądź 700 Halisha’s Mark i pokonaj przywołanego Archon of Halisha. Możesz też pokonać go w Four Sepulchers.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-93.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-109.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Wróć z Resonance Amulet 5 do piątej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-106.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Hunters Village. Aktywuj szóstą tablicę. Pomóż sojusznikowi w walce, odbierz Resonance Amulet 6 i ponownie użyj tablicy.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-169.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-170.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-171.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Ivory Tower. Piętro mrocznych elfów. Wróć do NPC Grand Magister Fairen i zakończ zmianę profesji.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/fairen.webp",
+            "Grand Magister Fairen · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-120.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "from": "Phantom Summoner",
+    "name": "Spectral Master",
+    "race": 2,
+    "url": "https://la2wiki.com/interlude/quest/saga-of-the-spectral-master",
+    "steps": [
+      {
+        "text": "Ivory Tower. Piętro mrocznych elfów. Odbierz sagę u NPC: Grand Magister Fairen.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/fairen.webp",
+            "Grand Magister Fairen · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-120.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Aden. Porozmawiaj z NPC: Summoner Noctisse.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-aden.webp",
+            "Gdzie znaleźć Summoner Noctisse · Town of Aden"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Zanieś Ice Crystal do NPC Magister Kamilen. Następnie wróć do NPC Summoner Noctisse po Resonance Amulet 1.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Magister Kamilen · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Plains of Glory. Użyj amuletu przy pierwszej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Valley of Saints (teleport z Rune Township). Pokonaj Guardian of Forbidden Knowledge, zdobądź Resonance Amulet 2 i aktywuj drugą tablicę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-72.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-71.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Pilgrim's Temple. Aktywuj trzecią tablicę, pokonaj Vision Guardian Shakiel i użyj przy niej Resonance Amulet 3.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Ivory Tower. Piętro mrocznych elfów. Porozmawiaj z NPC Grand Magister Fairen i przynieś Divine Stone of Wisdom. Odbierz Resonance Amulet 4.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/fairen.webp",
+            "Grand Magister Fairen · portret"
+          ]
+        ]
+      },
+      {
+        "text": "Monastery of Silence (teleport z Town of Goddard). Aktywuj czwartą Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-105.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-106.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Aden. Porozmawiaj z NPC Summoner Noctisse. W Shrine of Loyalty zdobądź 700 Halisha’s Mark i pokonaj przywołanego Archon of Halisha. Możesz też pokonać go w Four Sepulchers.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-93.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-109.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Wróć z Resonance Amulet 5 do piątej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-106.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-107.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Forest of the Dead. Aktywuj szóstą tablicę. Pomóż sojusznikowi w walce, odbierz Resonance Amulet 6 i ponownie użyj tablicy.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-86.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-102.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-103.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-104.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Ivory Tower. Piętro mrocznych elfów. Wróć do NPC Grand Magister Fairen i zakończ zmianę profesji.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/fairen.webp",
+            "Grand Magister Fairen · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-120.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "from": "Shillien Elder",
+    "name": "Shillien Saint",
+    "race": 2,
+    "url": "https://la2wiki.com/interlude/quest/saga-of-the-shillien-saint",
+    "steps": [
+      {
+        "text": "Hardin's Academy. Odbierz sagę u NPC: Magister Anastia.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-168.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC: Saint of Light Agnes.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/agnes.webp",
+            "Saint of Light Agnes · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Saint of Light Agnes · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Hot Springs (teleport z Town of Goddard). Zanieś Ice Crystal do NPC Chef Duncan. Następnie wróć do NPC Saint of Light Agnes po Resonance Amulet 1.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/duncan.webp",
+            "Chef Duncan · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-57.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Plains of Glory. Użyj amuletu przy pierwszej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-138.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Valley of Saints (teleport z Rune Township). Pokonaj Guardian of Forbidden Knowledge, zdobądź Resonance Amulet 2 i aktywuj drugą tablicę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-72.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Varka Silenos Barracks (teleport z Town of Goddard). Aktywuj trzecią tablicę, pokonaj Fallen Angel Naverius i użyj przy niej Resonance Amulet 3.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-105.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC Magister Kamilen i przynieś Divine Stone of Wisdom. Odbierz Resonance Amulet 4.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Magister Kamilen · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Monastery of Silence (teleport z Town of Goddard). Aktywuj czwartą Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-105.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC Magister Kamilen. W Shrine of Loyalty zdobądź 700 Halisha’s Mark i pokonaj przywołanego Archon of Halisha. Możesz też pokonać go w Four Sepulchers.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Wróć z Resonance Amulet 5 do piątej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "The Giant's Cave. Aktywuj szóstą tablicę. Pomóż sojusznikowi w walce, odbierz Resonance Amulet 6 i ponownie użyj tablicy.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-138.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Hardin's Academy. Wróć do NPC Magister Anastia i zakończ zmianę profesji.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-168.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "from": "Destroyer",
+    "name": "Titan",
+    "race": 3,
+    "url": "https://la2wiki.com/interlude/quest/saga-of-the-titan",
+    "steps": [
+      {
+        "text": "Rune Township. Świątynia. Odbierz sagę u NPC: Prefect Tazki.",
+        "images": [
+          [
+            "https://la2wiki.com/town/rune.webp",
+            "Gdzie znaleźć Prefect Tazki · Rune Township"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC: Prefect Lakan.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Prefect Lakan · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Hot Springs (teleport z Town of Goddard). Zanieś Ice Crystal do NPC Master Chef Donath. Następnie wróć do NPC Prefect Lakan po Resonance Amulet 1.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/donath.webp",
+            "Master Chef Donath · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-57.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Plains of Glory. Użyj amuletu przy pierwszej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Valley of Saints (teleport z Rune Township). Pokonaj Guardian of Forbidden Knowledge, zdobądź Resonance Amulet 2 i aktywuj drugą tablicę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-72.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-71.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Varka Silenos Barracks (teleport z Town of Goddard). Aktywuj trzecią tablicę, pokonaj Fallen Noble Orc Muhark i użyj przy niej Resonance Amulet 3.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-122.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-123.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC Seer Skahi i przynieś Divine Stone of Wisdom. Odbierz Resonance Amulet 4.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Seer Skahi · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Monastery of Silence (teleport z Town of Goddard). Aktywuj czwartą Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC Seer Skahi. W Shrine of Loyalty zdobądź 700 Halisha’s Mark i pokonaj przywołanego Archon of Halisha. Możesz też pokonać go w Four Sepulchers.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-92.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-93.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-109.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Wróć z Resonance Amulet 5 do piątej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-92.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Forsaken Plains. Aktywuj szóstą tablicę. Pomóż sojusznikowi w walce, odbierz Resonance Amulet 6 i ponownie użyj tablicy.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-140.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-156.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Rune Township. Świątynia. Wróć do NPC Prefect Tazki i zakończ zmianę profesji.",
+        "images": [
+          [
+            "https://la2wiki.com/town/rune.webp",
+            "Gdzie znaleźć Prefect Tazki · Rune Township"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "from": "Tyrant",
+    "name": "Grand Khavatari",
+    "race": 3,
+    "url": "https://la2wiki.com/interlude/quest/saga-of-the-grand-khavatari",
+    "steps": [
+      {
+        "text": "Rune Township. Świątynia. Odbierz sagę u NPC: Amulet Seller Hakran.",
+        "images": [
+          [
+            "https://la2wiki.com/town/rune.webp",
+            "Gdzie znaleźć Amulet Seller Hakran · Rune Township"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC: Duda-Mara Totem Spirit.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Duda-Mara Totem Spirit · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Hot Springs (teleport z Town of Goddard). Zanieś Ice Crystal do NPC Master Chef Donath. Następnie wróć do NPC Duda-Mara Totem Spirit po Resonance Amulet 1.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/donath.webp",
+            "Master Chef Donath · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-57.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Plains of Glory. Użyj amuletu przy pierwszej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Valley of Saints (teleport z Rune Township). Pokonaj Guardian of Forbidden Knowledge, zdobądź Resonance Amulet 2 i aktywuj drugą tablicę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-72.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Pilgrim's Temple. Aktywuj trzecią tablicę, pokonaj Khavatari Uruz i użyj przy niej Resonance Amulet 3.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC Seer Skahi i przynieś Divine Stone of Wisdom. Odbierz Resonance Amulet 4.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Seer Skahi · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Monastery of Silence (teleport z Town of Goddard). Aktywuj czwartą Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC Seer Skahi. W Shrine of Loyalty zdobądź 700 Halisha’s Mark i pokonaj przywołanego Archon of Halisha. Możesz też pokonać go w Four Sepulchers.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-93.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-109.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Wróć z Resonance Amulet 5 do piątej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Hunters Village. Aktywuj szóstą tablicę. Pomóż sojusznikowi w walce, odbierz Resonance Amulet 6 i ponownie użyj tablicy.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-169.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-170.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-171.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Rune Township. Świątynia. Wróć do NPC Amulet Seller Hakran i zakończ zmianę profesji.",
+        "images": [
+          [
+            "https://la2wiki.com/town/rune.webp",
+            "Gdzie znaleźć Amulet Seller Hakran · Rune Township"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "from": "Overlord",
+    "name": "Dominator",
+    "race": 3,
+    "url": "https://la2wiki.com/interlude/quest/saga-of-the-dominator",
+    "steps": [
+      {
+        "text": "Rune Township. Świątynia. Odbierz sagę u NPC: Grand Seer Rahorakti.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/rahorakti.webp",
+            "Grand Seer Rahorakti · portret"
+          ],
+          [
+            "https://la2wiki.com/town/rune.webp",
+            "Gdzie znaleźć Grand Seer Rahorakti · Rune Township"
+          ]
+        ]
+      },
+      {
+        "text": "Ketra Orc Outpost (teleport z Town of Goddard). Porozmawiaj z NPC: Ketra's Messenger Wahkan.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Hot Springs (teleport z Town of Goddard). Zanieś Ice Crystal do NPC Master Chef Donath. Następnie wróć do NPC Ketra's Messenger Wahkan po Resonance Amulet 1.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/donath.webp",
+            "Master Chef Donath · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-57.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Plains of Glory. Użyj amuletu przy pierwszej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Valley of Saints (teleport z Rune Township). Pokonaj Guardian of Forbidden Knowledge, zdobądź Resonance Amulet 2 i aktywuj drugą tablicę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-72.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-87.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Pilgrim's Temple. Aktywuj trzecią tablicę, pokonaj Overlord Atrus i użyj przy niej Resonance Amulet 3.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-76.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-92.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC Seer Skahi i przynieś Divine Stone of Wisdom. Odbierz Resonance Amulet 4.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Seer Skahi · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Monastery of Silence (teleport z Town of Goddard). Aktywuj czwartą Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC Seer Skahi. W Shrine of Loyalty zdobądź 700 Halisha’s Mark i pokonaj przywołanego Archon of Halisha. Możesz też pokonać go w Four Sepulchers.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-92.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-93.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-109.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Wróć z Resonance Amulet 5 do piątej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-92.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Forest of the Dead. Aktywuj szóstą tablicę. Pomóż sojusznikowi w walce, odbierz Resonance Amulet 6 i ponownie użyj tablicy.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-86.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-87.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-102.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Rune Township. Świątynia. Wróć do NPC Grand Seer Rahorakti i zakończ zmianę profesji.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/rahorakti.webp",
+            "Grand Seer Rahorakti · portret"
+          ],
+          [
+            "https://la2wiki.com/town/rune.webp",
+            "Gdzie znaleźć Grand Seer Rahorakti · Rune Township"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "from": "Warcryer",
+    "name": "Doomcryer",
+    "race": 3,
+    "url": "https://la2wiki.com/interlude/quest/saga-of-the-doomcryer",
+    "steps": [
+      {
+        "text": "Rune Township. Świątynia. Odbierz sagę u NPC: Grand Seer Rahorakti.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/rahorakti.webp",
+            "Grand Seer Rahorakti · portret"
+          ],
+          [
+            "https://la2wiki.com/town/rune.webp",
+            "Gdzie znaleźć Grand Seer Rahorakti · Rune Township"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC: Duda-Mara Totem Spirit.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Duda-Mara Totem Spirit · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Hot Springs (teleport z Town of Goddard). Zanieś Ice Crystal do NPC Master Chef Donath. Następnie wróć do NPC Duda-Mara Totem Spirit po Resonance Amulet 1.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/donath.webp",
+            "Master Chef Donath · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-57.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Plains of Glory. Użyj amuletu przy pierwszej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Valley of Saints (teleport z Rune Township). Pokonaj Guardian of Forbidden Knowledge, zdobądź Resonance Amulet 2 i aktywuj drugą tablicę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-72.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-71.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Shrine of Loyalty. Aktywuj trzecią tablicę, pokonaj Sharuhi Mouth Mudaha i użyj przy niej Resonance Amulet 3.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-109.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC Seer Skahi i przynieś Divine Stone of Wisdom. Odbierz Resonance Amulet 4.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Seer Skahi · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Monastery of Silence (teleport z Town of Goddard). Aktywuj czwartą Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-105.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-106.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC Seer Skahi. W Shrine of Loyalty zdobądź 700 Halisha’s Mark i pokonaj przywołanego Archon of Halisha. Możesz też pokonać go w Four Sepulchers.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-109.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Wróć z Resonance Amulet 5 do piątej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-106.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Forest of the Dead. Aktywuj szóstą tablicę. Pomóż sojusznikowi w walce, odbierz Resonance Amulet 6 i ponownie użyj tablicy.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-102.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-103.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-104.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-118.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-119.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-120.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Rune Township. Świątynia. Wróć do NPC Grand Seer Rahorakti i zakończ zmianę profesji.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/rahorakti.webp",
+            "Grand Seer Rahorakti · portret"
+          ],
+          [
+            "https://la2wiki.com/town/rune.webp",
+            "Gdzie znaleźć Grand Seer Rahorakti · Rune Township"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "from": "Bounty Hunter",
+    "name": "Fortune Seeker",
+    "race": 4,
+    "url": "https://la2wiki.com/interlude/quest/saga-of-the-fortune-seeker",
+    "steps": [
+      {
+        "text": "Rune Township. Odbierz sagę u NPC: Chief Inspector Mond.",
+        "images": [
+          [
+            "https://la2wiki.com/town/rune.webp",
+            "Gdzie znaleźć Chief Inspector Mond · Rune Township"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC: Pamela Aprodia.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Pamela Aprodia · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Hot Springs (teleport z Town of Goddard). Zanieś Ice Crystal do NPC Information Broker Bavarin. Następnie wróć do NPC Pamela Aprodia po Resonance Amulet 1.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/bavarin.webp",
+            "Information Broker Bavarin · portret"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-58.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Plains of Glory. Użyj amuletu przy pierwszej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Valley of Saints (teleport z Rune Township). Pokonaj Guardian of Forbidden Knowledge, zdobądź Resonance Amulet 2 i aktywuj drugą tablicę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-72.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-71.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Shrine of Loyalty. Aktywuj trzecią tablicę, pokonaj Archangel Iconoclasis i użyj przy niej Resonance Amulet 3.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC Pamela Aprodia i przynieś Divine Stone of Wisdom. Odbierz Resonance Amulet 4.",
+        "images": []
+      },
+      {
+        "text": "Monastery of Silence (teleport z Town of Goddard). Aktywuj czwartą Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Porozmawiaj z NPC Pamela Aprodia. W Shrine of Loyalty zdobądź 700 Halisha’s Mark i pokonaj przywołanego Archon of Halisha. Możesz też pokonać go w Four Sepulchers.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Wróć z Resonance Amulet 5 do piątej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-91.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Forest of the Dead. Aktywuj szóstą tablicę. Pomóż sojusznikowi w walce, odbierz Resonance Amulet 6 i ponownie użyj tablicy.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-102.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Rune Township. Wróć do NPC Chief Inspector Mond i zakończ zmianę profesji.",
+        "images": [
+          [
+            "https://la2wiki.com/town/rune.webp",
+            "Gdzie znaleźć Chief Inspector Mond · Rune Township"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "from": "Warsmith",
+    "name": "Maestro",
+    "race": 4,
+    "url": "https://la2wiki.com/interlude/quest/saga-of-the-maestro",
+    "steps": [
+      {
+        "text": "Rune Township. Kuźnia. Odbierz sagę u NPC: Chief Golem Crafter Telson.",
+        "images": [
+          [
+            "https://la2wiki.com/town/rune.webp",
+            "Gdzie znaleźć Chief Golem Crafter Telson · Rune Township"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Kuźnia. Porozmawiaj z NPC: Master Tobald.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Master Tobald · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Kuźnia. Zanieś Ice Crystal do NPC Blueprint Seller Borodin. Następnie wróć do NPC Master Tobald po Resonance Amulet 1.",
+        "images": [
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Gdzie znaleźć Blueprint Seller Borodin · Town of Goddard"
+          ]
+        ]
+      },
+      {
+        "text": "Plains of Glory. Użyj amuletu przy pierwszej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-137.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Valley of Saints (teleport z Rune Township). Pokonaj Guardian of Forbidden Knowledge, zdobądź Resonance Amulet 2 i aktywuj drugą tablicę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-72.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-87.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Pilgrim's Temple. Aktywuj trzecią tablicę, pokonaj Archangel Iconoclasis i użyj przy niej Resonance Amulet 3.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-74.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Kuźnia. Porozmawiaj z NPC Master Tobald i przynieś Divine Stone of Wisdom. Odbierz Resonance Amulet 4.",
+        "images": []
+      },
+      {
+        "text": "Monastery of Silence (teleport z Town of Goddard). Aktywuj czwartą Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Town of Goddard. Kuźnia. Porozmawiaj z NPC Master Tobald. W Shrine of Loyalty zdobądź 700 Halisha’s Mark i pokonaj przywołanego Archon of Halisha. Możesz też pokonać go w Four Sepulchers.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-93.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-109.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Wall of Argos (teleport z Town of Goddard). Wróć z Resonance Amulet 5 do piątej Tablet of Vision.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-108.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Forest of the Dead. Aktywuj szóstą tablicę. Pomóż sojusznikowi w walce, odbierz Resonance Amulet 6 i ponownie użyj tablicy.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-86.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-87.jpg",
+            "Fragment mapy Interlude"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-102.jpg",
+            "Fragment mapy Interlude"
+          ]
+        ]
+      },
+      {
+        "text": "Rune Township. Kuźnia. Wróć do NPC Chief Golem Crafter Telson i zakończ zmianę profesji.",
+        "images": [
+          [
+            "https://la2wiki.com/town/rune.webp",
+            "Gdzie znaleźć Chief Golem Crafter Telson · Rune Township"
+          ]
+        ]
+      }
+    ]
+  }
+]
