@@ -146,11 +146,6 @@ export function installThirdClassQuests() {
     event.preventDefault();
     openCatalogue();
   });
-  function openCatalogueFromHash() {
-    if (location.hash === '#przydatne-questy') openCatalogue();
-  }
-  window.addEventListener('hashchange', openCatalogueFromHash);
-  openCatalogueFromHash();
 
   function mapImage(url, label) {
     const img = element('img');
