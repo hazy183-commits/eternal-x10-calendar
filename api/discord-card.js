@@ -3,36 +3,55 @@ import { Resvg } from '@resvg/resvg-js';
 const ASSETS={antharas:'/images/bosses/antharas.webp',baium:'/images/bosses/baium.webp',core:'/images/bosses/core.webp',frintezza:'/images/bosses/frintezza.webp',orfen:'/images/bosses/orfen.webp','queen-ant':'/images/bosses/queen-ant.webp',valakas:'/images/bosses/valakas.webp',zaken:'/images/bosses/zaken.webp',rb:'/images/eternal-hero-approved.webp',aden:'/images/castles/aden.jpg',dion:'/images/castles/dion.jpg',giran:'/images/castles/giran.jpg',gludio:'/images/castles/gludio.jpg',goddard:'/images/castles/goddard.jpg',innadril:'/images/castles/innadril.jpg',oren:'/images/castles/oren.jpg',rune:'/images/castles/rune.jpg',schuttgart:'/images/castles/schuttgart.jpg','fortress-of-resistance':'/images/fortress-of-resistance.jpg','devastated-castle':'/images/devastated-castle.jpg','bandit-stronghold':'/images/bandit-stronghold.jpg','rainbow-spring-chateau':'/images/Rainbow%20Springs%20Chateau.jpg','wild-beast-reserve':'/images/Wild%20Beast%20Reserve.jpg','fortress-of-the-dead':'/images/fortress-of-the-dead.jpg',pvp:'/images/events/clan-pvp.webp',colloseum:'/images/events/colloseum-training.webp',olympiad:'/images/events/olympiad.jpg',default:'/images/eternal-hero-approved.webp'};
 function dec(v=''){try{return new TextDecoder().decode(Uint8Array.from(atob(v.replace(/-/g,'+').replace(/_/g,'/').padEnd(Math.ceil(v.length/4)*4,'=')),c=>c.charCodeAt(0)))}catch{return ''}}
 function esc(s=''){return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
-const RALLY_LINES = {
-  'queen-ant': ['Ruszamy po pierścień QA!|Widzimy się na zbiórce.', 'Szykuj postać na QA.|Cała ekipa do mrowiska!', 'Królowa czeka w mrowisku.|Zbierzmy pełną ekipę!', 'Kto leci z nami na QA?|Wskakuj do party!'],
-  baium: ['Baium czeka na szczycie.|Wchodzimy całą ekipą!', 'Szykuj wejściówkę.|Ruszamy na Baiuma!'],
-  antharas: ['Ruszamy do smoczej jamy.|Dołącz do wyprawy!', 'Antharas czeka pod ziemią.|Chodź z nami na smoka!'],
-  valakas: ['Czas ruszyć do kuźni.|Widzimy się na Valakasie!', 'Szykuje się gorące starcie.|Dołącz do ekipy!'],
-  frintezza: ['Czas przerwać koncert.|Widzimy się na Frintezzie!', 'Zbierzmy ekipę na Frintezzę.|Każda para rąk się przyda!'],
-  orfen: ['Ruszamy na Orfen.|Dołącz do wyprawy!', 'Na Orfen idziemy razem.|Kto wpada na zbiórkę?'],
-  core: ['Ruszamy do wieży Cruma.|Widzimy się na Core!', 'Czas ruszyć po Core.|Zbierzmy pełną ekipę!'],
-  zaken: ['Wszyscy na pokład!|Ruszamy na Zakena.', 'Zaken czeka na statku.|Wpadnij na zbiórkę!'],
-  siege: ['Pod bramą liczy się każdy.|Widzimy się na oblężeniu!', 'Zbierzmy pełny skład.|Ruszamy pod zamek!'],
-  'clan hall': ['Ruszamy po siedzibę klanu.|Dołącz do ekipy!', 'Wpadnij na zbiórkę.|Razem po Clan Hall!'],
-  pvp: ['Wskakuj na głosowy.|Ruszamy na klanowe PvP!', 'Zbierzmy pełne party.|Czas na wspólne PvP!'],
-  colloseum: ['Wpadnij na trening.|Zgrajmy się przed walką!', 'Widzimy się na arenie.|Poćwiczymy grę w party!'],
-  olympiad: ['Wpadaj kibicować naszym.|Widzimy się na Olympiadzie!', 'Czas na pojedynki.|Wspieramy naszych!'],
-  rb: ['Każda rola się przyda.|Wpadaj na wspólnego rajda!', 'Zbieramy party na bossa.|Dołącz do nas na zbiórce!'],
-  epic: ['Czas na klanową wyprawę.|Zbierzmy pełny skład!', 'Szykuj postać na epika.|Widzimy się na zbiórce!'],
-  default: ['Wpadaj na zbiórkę.|Zróbmy to całą ekipą!', 'Wskakuj do party.|Fajnie będzie zagrać razem!', 'Zbierzmy pełny skład.|Do zobaczenia w grze!', 'Masz czas na wspólną grę?|Ekipa czeka na zbiórce!'],
-};
+const RALLY_OPENERS = [
+  "Z tobą łatwiej domknąć party.",
+  "Każdy z nas dokłada coś od siebie.",
+  "Pełny skład robi różnicę.",
+  "Z tobą mamy więcej opcji w walce.",
+  "Najlepiej gramy, gdy gramy razem.",
+  "Dobra ekipa zaczyna się od ciebie.",
+  "Z tobą party ma więcej siły.",
+  "Jeden dobry ruch zmienia walkę.",
+  "Na takie akcje warto się zebrać.",
+  "Każda klasa ma tu swoje miejsce.",
+  "W party jest miejsce i dla ciebie.",
+  "Najlepsze akcje robimy razem.",
+  "Twoje wsparcie przyda się ekipie.",
+  "Zgraną ekipą możemy więcej.",
+  "Każdy z nas może odwrócić walkę.",
+  "Z tobą jest z kim świętować.",
+];
 
-function rallyLines(key, kind, date, time) {
-  const poolKey = key !== 'default' && Object.hasOwn(RALLY_LINES, key) ? key : kind;
-  const phrases = Object.hasOwn(RALLY_LINES, poolKey) ? RALLY_LINES[poolKey] : RALLY_LINES.default;
+const RALLY_INVITES = [
+  "Wbij do party i zagraj z nami.",
+  "Zbierzmy się w pełnym składzie!",
+  "Widzimy się na zbiórce!",
+  "Wpadaj na głosowy. Ruszamy razem!",
+  "Dołącz i pomóż nam dowieźć akcję.",
+  "Wskakuj do gry. Ekipa czeka!",
+  "Wpadnij, choćby na samą akcję.",
+  "Zagrajmy dziś pod jednym herbem.",
+  "Chodź, zróbmy to całą ekipą.",
+  "Dołącz do nas na miejscu zbiórki.",
+  "Złap ekipę na głosowym i ruszamy!",
+  "Wpadaj. Zróbmy dobrą akcję!",
+  "Daj ekipie znać, że lecisz.",
+  "Wpadaj i dorzuć swoje do walki.",
+  "Chodź z nami. Będzie co wspominać!",
+  "Zajmij miejsce w party i ruszamy!",
+];
+
+function rallyLines(name, date, time) {
   const isoDate = date.replace(/^(\d{1,2})[.\/-](\d{1,2})[.\/-](\d{4})$/, (_, day, month, year) =>
     [year, month.padStart(2, '0'), day.padStart(2, '0')].join('-'));
   const day = Math.floor(Date.parse(isoDate + 'T00:00:00Z') / 86400000) || 0;
   const [hour, minute] = time.split(':').map(Number);
-  // Repeated requests for the same card should show the same phrase.
-  const slot = day + (hour || 0) + Math.floor((minute || 0) / 5);
-  const index = ((slot % phrases.length) + phrases.length) % phrases.length;
-  return phrases[index].split('|');
+  const eventOffset = Array.from(name.toLowerCase()).reduce((sum, letter) => sum * 31 + letter.charCodeAt(0) | 0, 0);
+  const combinations = RALLY_OPENERS.length * RALLY_INVITES.length;
+  // The event's details keep the choice stable when Discord fetches the card again.
+  const slot = day * 17 + (hour || 0) * 7 + (minute || 0) + eventOffset;
+  const index = ((slot % combinations) + combinations) % combinations;
+  return [RALLY_OPENERS[index % RALLY_OPENERS.length], RALLY_INVITES[Math.floor(index / RALLY_OPENERS.length)]];
 }
 
 export default async function handler(req,res){
@@ -64,8 +83,8 @@ const isEpicBoss=['antharas','baium','core','frintezza','orfen','queen-ant','val
 const eventSubtitle=kind==='siege'?'CASTLE SIEGE':kind==='clan hall'?'CLAN HALL':kind==='rb'?'RAID BOSS':kind==='olympiad'?'OLYMPIAD':(kind==='epic'||isEpicBoss)?'EPIC BOSS':'WYDARZENIE KLANOWE';
 const subtitleHalfWidth=Math.min(220,Array.from(eventSubtitle).length*10);
 const gatheringPlace='HUNTER VILLAGE',meetingNotice='ZBIÓRKA 30 MINUT PRZED STARTEM';
-const rallySvg = rallyLines(key, kind, date, time).map((line, index) =>
-  `<text x="968" y="${580 + index * 40}" text-anchor="middle" fill="#fff4db" font-size="20" font-family="DejaVu Sans" font-weight="700">${esc(line)}</text>`
+const rallySvg = rallyLines(name, date, time).map((line, index) =>
+  `<text x="968" y="${580 + index * 44}" text-anchor="middle" fill="#fff4db" font-size="17" font-family="DejaVu Sans" font-weight="700">${esc(line)}</text>`
 ).join('');
 const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
 <defs><linearGradient id="metal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff"/><stop offset=".42" stop-color="#dce7f4"/><stop offset=".72" stop-color="#8296b0"/><stop offset="1" stop-color="#f4f5f7"/></linearGradient><linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff1ad"/><stop offset=".52" stop-color="#ffd45c"/><stop offset="1" stop-color="#a87525"/></linearGradient><linearGradient id="panel"><stop stop-color="#02040a" stop-opacity=".90"/><stop offset=".84" stop-color="#02040a" stop-opacity=".56"/><stop offset="1" stop-color="#02040a" stop-opacity=".12"/></linearGradient><linearGradient id="blue" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#75d8ff"/><stop offset=".55" stop-color="#315e8e"/><stop offset="1" stop-color="#0b182b"/></linearGradient></defs>
