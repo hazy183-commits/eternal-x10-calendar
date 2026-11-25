@@ -179,7 +179,7 @@ if (animated) {
   const frameCount = 18;
   const fixedLayers = await Promise.all(layers.map(async ({ input, left = 0, top = 0 }) => {
     const resized = await sharp(input).resize({ width: Math.round((await sharp(input).metadata()).width * 0.75) }).png().toBuffer();
-    return { input: resized, left: Math.round(left * 0.75), top: Math.round(top * 0.75) };
+    return { input: resized, left: Math.floor(left * 0.75), top: Math.floor(top * 0.75) };
   }));
   const frames = [];
   for (let index = 0; index < frameCount; index++) {
