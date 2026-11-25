@@ -981,6 +981,16 @@
               }
             ]
           ]
+        ],
+        "waypoints": [
+          [
+            "Wahkan",
+            "146980, -67483, -3656"
+          ],
+          [
+            "Naran Ashanuk",
+            "125440, -40944, -3701"
+          ]
         ]
       },
       {
@@ -1050,7 +1060,7 @@
           ],
           [
             "https://la2wiki.com/map/il/4-89.jpg",
-            "Mapa regionu · okolice Goddard",
+            "Mapa świata · Varka’s Hero Shadith",
             null,
             [
               {
@@ -1064,6 +1074,12 @@
                 "label": "Varka’s Hero Shadith"
               }
             ]
+          ]
+        ],
+        "waypoints": [
+          [
+            "Varka’s Hero Shadith",
+            "115552, -39200, -2480"
           ]
         ]
       },
@@ -1083,7 +1099,7 @@
           ],
           [
             "https://la2wiki.com/map/il/4-89.jpg",
-            "Mapa regionu · okolice Goddard",
+            "Mapa świata · Varka’s Commander Mos",
             null,
             [
               {
@@ -1092,11 +1108,17 @@
                 "label": "Ketra Orc Village · Kadun Zu Ketra"
               },
               {
-                "x": 60.400390625,
-                "y": 39.63414634146341,
-                "label": "Varka Silenos Village · Ashas Varka Durai"
+                "x": 60.80603966346154,
+                "y": 42.76046740309152,
+                "label": "Varka’s Commander Mos"
               }
             ]
+          ]
+        ],
+        "waypoints": [
+          [
+            "Varka’s Commander Mos",
+            "109216, -36160, -938"
           ]
         ]
       }
@@ -1137,6 +1159,16 @@
                 "label": "Ketra Orc Outpost · Wahkan"
               }
             ]
+          ]
+        ],
+        "waypoints": [
+          [
+            "Wahkan",
+            "146980, -67483, -3656"
+          ],
+          [
+            "Naran Ashanuk",
+            "125440, -40944, -3701"
           ]
         ]
       },
@@ -1207,7 +1239,7 @@
           ],
           [
             "https://la2wiki.com/map/il/4-89.jpg",
-            "Mapa regionu · okolice Goddard",
+            "Mapa świata · Ketra’s Hero Hekaton",
             null,
             [
               {
@@ -1216,11 +1248,17 @@
                 "label": "Varka Silenos Village · Ashas Varka Durai"
               },
               {
-                "x": 67.7734375,
-                "y": 36.99186991869919,
-                "label": "Ketra Orc Outpost · Wahkan"
+                "x": 67.91658319978633,
+                "y": 35.507398710950184,
+                "label": "Ketra’s Hero Hekaton"
               }
             ]
+          ]
+        ],
+        "waypoints": [
+          [
+            "Ketra’s Hero Hekaton",
+            "148160, -73808, -4919"
           ]
         ]
       },
@@ -1240,7 +1278,7 @@
           ],
           [
             "https://la2wiki.com/map/il/4-89.jpg",
-            "Mapa regionu · okolice Goddard",
+            "Mapa świata · Ketra’s Commander Tayr",
             null,
             [
               {
@@ -1254,6 +1292,12 @@
                 "label": "Ketra’s Commander Tayr"
               }
             ]
+          ]
+        ],
+        "waypoints": [
+          [
+            "Ketra’s Commander Tayr",
+            "145504, -81664, -6016"
           ]
         ]
       }
