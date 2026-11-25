@@ -15,6 +15,9 @@ const scrollIcons = {
   blessed: 'https://l2db.info/uploads/images/icons/etc_blessed_scrl_of_ench_wp_s_i05.png'
 };
 
+const averageRuns = 10;
+const simulationLimit = 1_000_000;
+
 const formatter = new Intl.NumberFormat('pl-PL', { maximumFractionDigits: 2 });
 const percent = (value) => formatter.format(value * 100) + '%';
 
@@ -71,11 +74,13 @@ dialog.innerHTML = `
     <div><dt>Do celu bez porażki</dt><dd data-enchant-odds></dd></div>
     <div><dt>Zużyte zwoje</dt><dd data-enchant-scrolls></dd></div>
     <div><dt>Rozbite bronie</dt><dd data-enchant-broken></dd></div>
+    <div><dt>Średnia z ${averageRuns} serii</dt><dd data-enchant-average-result>—</dd></div>
   </dl>
   <p class="enchant-feedback" role="status"></p>
   <div class="enchant-actions">
     <button class="primary-btn" type="button" data-enchant-roll>Enchantuj</button>
     <button class="primary-btn" type="button" data-enchant-auto>Automat do celu</button>
+    <button class="secondary-btn" type="button" data-enchant-average>Policz średnią z ${averageRuns} serii</button>
     <button class="secondary-btn" type="button" data-enchant-reset>Nowa seria</button>
   </div>
 `;
@@ -92,6 +97,9 @@ let level = start.valueAsNumber;
 let scrolls = 0;
 let broken = 0;
 let autoFrame = null;
+let averageFrame = null;
+const averageButton = view('average');
+const averageResult = view('average-result');
 const inputs = dialog.querySelectorAll('input, select');
 const autoButton = view('auto');
 
@@ -124,11 +132,15 @@ function render() {
   updateIcon(view('scroll-icon'), scrollIcons[field('scroll').value] || '', '▤');
   view('next').textContent = active ? percent(nextChance(level, chance())) : '—';
   view('odds').textContent = valid && hasWeapon && hasScroll && level !== null ? percent(streakChance(level, target.valueAsNumber, chance())) : '—';
-  const running = autoFrame !== null;
-  view('roll').disabled = !active || running;
-  autoButton.disabled = !running && (!valid || !hasWeapon || !hasScroll || (level !== null && level >= target.valueAsNumber) || (target.valueAsNumber > 3 && chance() === 0));
-  autoButton.textContent = running ? 'Zatrzymaj automat' : 'Automat do +' + (target.validity.valid ? target.valueAsNumber : '…');
-  inputs.forEach(input => { input.disabled = running; });
+  const autoRunning = autoFrame !== null;
+  const averageRunning = averageFrame !== null;
+  const canSimulate = valid && hasWeapon && hasScroll && (target.valueAsNumber <= 3 || chance() > 0);
+  view('roll').disabled = !active || autoRunning || averageRunning;
+  autoButton.disabled = averageRunning || (!autoRunning && (!canSimulate || (level !== null && level >= target.valueAsNumber)));
+  autoButton.textContent = autoRunning ? 'Zatrzymaj automat' : 'Automat do +' + (target.validity.valid ? target.valueAsNumber : '…');
+  averageButton.disabled = autoRunning || (!averageRunning && (!canSimulate || start.valueAsNumber >= target.valueAsNumber));
+  averageButton.textContent = averageRunning ? 'Zatrzymaj liczenie średniej' : `Policz średnią z ${averageRuns} serii`;
+  inputs.forEach(input => { input.disabled = autoRunning || averageRunning; });
   if (!valid) feedback.textContent = 'Wpisz poprawny poziom początkowy, cel i szansę.';
 }
 
@@ -137,8 +149,15 @@ function stopAuto() {
   autoFrame = null;
 }
 
+function stopAverage() {
+  if (averageFrame !== null) cancelAnimationFrame(averageFrame);
+  averageFrame = null;
+}
+
 function reset() {
   stopAuto();
+  stopAverage();
+  averageResult.textContent = '—';
   broken = 0;
   level = start.valueAsNumber;
   scrolls = 0;
@@ -147,7 +166,8 @@ function reset() {
 }
 
 dialog.querySelector('.enchant-settings').addEventListener('input', (event) => {
-  if (event.target === start || event.target === field('weapon')) reset();
+  averageResult.textContent = '—';
+  if (event.target === start) reset();
   else {
     feedback.textContent = '';
     render();
@@ -157,7 +177,10 @@ field('weapon').addEventListener('change', () => {
   chanceInput.value = baseChanceForWeapon(field('weapon').value);
   reset();
 });
-field('scroll').addEventListener('change', render);
+field('scroll').addEventListener('change', () => {
+  averageResult.textContent = '—';
+  render();
+});
 view('reset').addEventListener('click', reset);
 function rollEnchant() {
   level = enchant(level, chance(), field('scroll').value === 'blessed', Math.random());
@@ -183,7 +206,7 @@ autoButton.addEventListener('click', () => {
   }
 
   const goal = target.valueAsNumber;
-  const limit = scrolls + 1_000_000;
+  const limit = scrolls + simulationLimit;
   feedback.textContent = 'Automat w toku. Po rozbiciu bierze nową broń +0.';
   const runBatch = () => {
     const batchLimit = Math.min(scrolls + 250, limit);
@@ -206,7 +229,66 @@ autoButton.addEventListener('click', () => {
   autoFrame = requestAnimationFrame(runBatch);
   render();
 });
+averageButton.addEventListener('click', () => {
+  if (averageFrame !== null) {
+    stopAverage();
+    feedback.textContent = 'Liczenie średniej zatrzymane.';
+    render();
+    return;
+  }
+
+  const initialLevel = start.valueAsNumber;
+  const goal = target.valueAsNumber;
+  const baseChance = chance();
+  const blessed = field('scroll').value === 'blessed';
+  let runLevel = initialLevel;
+  let completed = 0;
+  let used = 0;
+  averageResult.textContent = '—';
+  feedback.textContent = `Cel +${goal} · ukończono 0/${averageRuns} serii.`;
+
+  function runBatch() {
+    const batchLimit = Math.min(used + 2500, simulationLimit);
+    while (used < batchLimit && completed < averageRuns) {
+      runLevel = enchant(runLevel, baseChance, blessed, Math.random()) ?? 0;
+      used += 1;
+      if (runLevel === goal) {
+        completed += 1;
+        runLevel = initialLevel;
+      }
+    }
+
+    if (completed === averageRuns) {
+      averageFrame = null;
+      averageResult.textContent = `${formatter.format(used / averageRuns)} zwojów`;
+      feedback.textContent = `Cel +${goal} osiągnięty w każdej z ${averageRuns} serii. Łącznie zużyto ${formatter.format(used)} zwojów.`;
+      render();
+      return;
+    }
+
+    if (used === simulationLimit) {
+      averageFrame = null;
+      feedback.textContent = `Limit miliona zwojów. Cel +${goal} osiągnięto w ${completed}/${averageRuns} serii. Brak pełnej średniej.`;
+      render();
+      return;
+    }
+
+    const progress = `Cel +${goal} · ukończono ${completed}/${averageRuns} serii.`;
+    if (feedback.textContent !== progress) feedback.textContent = progress;
+    averageFrame = requestAnimationFrame(runBatch);
+  }
+
+  averageFrame = requestAnimationFrame(runBatch);
+  render();
+});
+
 dialog.addEventListener('close', () => {
+  if (averageFrame !== null) {
+    stopAverage();
+    feedback.textContent = 'Liczenie średniej zatrzymane.';
+    render();
+    return;
+  }
   if (autoFrame === null) return;
   stopAuto();
   feedback.textContent = 'Automat zatrzymany. Możesz wznowić serię.';
