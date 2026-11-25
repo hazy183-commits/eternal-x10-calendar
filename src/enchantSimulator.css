@@ -27,3 +27,85 @@
 .enchant-slot-icon img{display:block;width:32px;height:32px;border-radius:3px}
 .enchant-stats{grid-template-columns:repeat(4,minmax(0,1fr))}
 @media(max-width:460px){.enchant-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.enchant-odds-reference {
+  margin: 14px 0;
+  overflow: hidden;
+  border: 1px solid #725636;
+  border-radius: 10px;
+  background: #211b16;
+  font: 500 14px/1.4 system-ui, sans-serif;
+}
+
+.enchant-odds-reference summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  background: #2c2218;
+  color: #ffe1ae;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+
+.enchant-odds-reference summary::-webkit-details-marker { display: none; }
+.enchant-odds-reference summary:focus-visible { outline: 2px solid #ffcf80; outline-offset: -3px; }
+.enchant-odds-reference summary::before { content: '▸'; color: #ffcf80; }
+.enchant-odds-reference[open] summary::before { transform: rotate(90deg); }
+
+.enchant-odds-range {
+  margin-left: auto;
+  flex-shrink: 0;
+  border-radius: 5px;
+  padding: 3px 7px;
+  background: #453321;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.enchant-odds-body { padding: 0 10px 10px; }
+.enchant-odds-body p { margin: 10px 2px; color: #e2d1bb; font-size: 12px; }
+
+.enchant-odds-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.enchant-odds-table th, .enchant-odds-table td {
+  padding: 8px 4px;
+  border-bottom: 1px solid #4c3b2e;
+}
+
+.enchant-odds-table thead th { background: #34291f; font-size: 12px; }
+.enchant-odds-table thead th:first-child { width: 26%; border-radius: 6px 0 0; }
+.enchant-odds-table thead th:last-child { border-radius: 0 6px 0 0; }
+.enchant-odds-table :is(th,td):nth-child(2) { --odds-accent: #ffce83; }
+.enchant-odds-table :is(th,td):nth-child(3) { --odds-accent: #c9b7ff; }
+.enchant-odds-table thead th, .enchant-odds-step { color: var(--odds-accent, #f5e7d5); }
+
+.enchant-odds-table tbody tr:nth-child(even) { background: #2a221b; }
+.enchant-odds-table tbody tr.enchant-odds-safe { background: #232820; }
+.enchant-odds-table tbody tr.enchant-odds-final { background: #36281d; }
+.enchant-odds-table tbody tr.enchant-odds-final > * { border-top: 1px solid #997045; }
+.enchant-odds-table tbody th { white-space: nowrap; font-size: clamp(11px, 2.8vw, 14px); }
+.enchant-odds-table tbody th span { color: #c7aa88; }
+.enchant-odds-step { display: block; font-size: clamp(15px, 3.7vw, 18px); }
+.enchant-odds-total { display: block; color: #e2d1bb; font-size: 11px; }
+.enchant-odds-total b { color: #fff0df; white-space: nowrap; }
+
+.enchant-odds-track {
+  display: block;
+  max-width: 110px;
+  height: 3px;
+  margin: 5px auto 0;
+  overflow: hidden;
+  border-radius: 3px;
+  background: #4c3b2e;
+}
+
+.enchant-odds-track span { display: block; height: 100%; background: var(--odds-accent); }
