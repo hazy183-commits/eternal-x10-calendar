@@ -380,16 +380,20 @@ export function installThirdClassQuests() {
         row.append(coordinates);
       }
       const images = element('div', '', 'third-class-maps');
-      for (const [url, label, point, worldPoints] of step.images) {
+      for (const [url, label, point, worldPoints, allianceMap] of step.images) {
         const link = element('button');
         link.type = 'button';
         link.setAttribute('aria-label', 'Powiększ: ' + label);
-        if (worldPoints?.length) {
+        if (worldPoints?.length || allianceMap) {
           link.setAttribute('aria-label', 'Otwórz pełną mapę świata: ' + label);
           link.dataset.mapLabel = label;
           link.dataset.mapWorldSrc = '/quest-maps/world.jpg';
           link.dataset.mapFocus = 'true';
           link.dataset.mapWorldPoints = JSON.stringify(worldPoints);
+          if (allianceMap) {
+            link.dataset.allianceArea = allianceMap.area;
+            link.dataset.allianceTier = String(allianceMap.tier);
+          }
           link.addEventListener('click', () => openQuestMap(link));
         } else {
           link.addEventListener('click', () => showImage(url, label, step, point));

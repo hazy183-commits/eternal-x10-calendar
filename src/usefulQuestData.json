@@ -966,23 +966,16 @@
           ],
           [
             "/quest-maps/world.jpg",
-            "Pola farmy · Soldier",
+            "Spawny mobów · Varka Silenos Outpost",
             [
               1310,
               827.9999999999999
             ],
-            [
-              {
-                "x": 63.96484375,
-                "y": 42.073170731707314,
-                "label": "Soldier · okolice teleportu, Recruit i Footman",
-                "zone": {
-                  "w": 2.34375,
-                  "h": 1.5752032520325203,
-                  "tier": "soldier"
-                }
-              }
-            ]
+            [],
+            {
+              "area": "varka",
+              "tier": 1
+            }
           ]
         ],
         "waypoints": [
@@ -1008,79 +1001,35 @@
           ],
           [
             "/quest-maps/world.jpg",
-            "Pola farmy · Soldier, Captain",
+            "Spawny mobów · Varka Silenos Outpost",
             [
               1286,
               799
             ],
-            [
-              {
-                "x": 63.96484375,
-                "y": 42.073170731707314,
-                "label": "Soldier · okolice teleportu, Recruit i Footman",
-                "zone": {
-                  "w": 2.34375,
-                  "h": 1.5752032520325203,
-                  "tier": "soldier"
-                }
-              },
-              {
-                "x": 62.79296875,
-                "y": 40.59959349593496,
-                "label": "Captain · północny zachód, Priest, Warrior i Medium",
-                "zone": {
-                  "w": 2.099609375,
-                  "h": 1.9817073170731707,
-                  "tier": "captain"
-                }
-              }
-            ]
+            [],
+            {
+              "area": "varka",
+              "tier": 2
+            }
           ]
         ]
       },
       {
         "title": "Poziom 3 · 300 Soldier, 200 Captain, 100 General",
-        "text": "Zbierz nowe odznaki trzech typów. Odznaki General wypadają m.in. z: Varka Silenos General, Great Magus, Great Seer, Prophet i Head Magus. Szukaj tych mobów głębiej na terenie wroga. Oddaj 300 Soldier, 200 Captain, 100 General oraz poprzednią odznakę posłańcowi. Kolorowe pola pokazują orientacyjne rejony farmy. Grupy różnych rang mogą się mieszać. Na kolejnych poziomach wróć do tych samych rejonów po odznaki.",
+        "text": "Zbierz nowe odznaki trzech typów. Odznaki General wypadają m.in. z: Varka Silenos General, Great Magus, Great Seer, Prophet i Head Magus. Szukaj tych mobów głębiej na terenie wroga. Oddaj 300 Soldier, 200 Captain, 100 General oraz poprzednią odznakę posłańcowi.",
         "images": [
           [
             "/quest-maps/world.jpg",
-            "Pola farmy · Soldier, Captain, General",
+            "Spawny mobów · Varka Silenos Outpost",
             [
               1255,
               790
             ],
-            [
-              {
-                "x": 63.96484375,
-                "y": 42.073170731707314,
-                "label": "Soldier · okolice teleportu, Recruit i Footman",
-                "zone": {
-                  "w": 2.34375,
-                  "h": 1.5752032520325203,
-                  "tier": "soldier"
-                }
-              },
-              {
-                "x": 62.79296875,
-                "y": 40.59959349593496,
-                "label": "Captain · północny zachód, Priest, Warrior i Medium",
-                "zone": {
-                  "w": 2.099609375,
-                  "h": 1.9817073170731707,
-                  "tier": "captain"
-                }
-              },
-              {
-                "x": 61.279296875,
-                "y": 40.142276422764226,
-                "label": "General · dalej na zachód i północny zachód, General i Great Magus",
-                "zone": {
-                  "w": 2.5390625,
-                  "h": 2.4390243902439024,
-                  "tier": "general"
-                }
-              }
-            ]
+            [],
+            {
+              "area": "varka",
+              "tier": 3
+            }
           ]
         ]
       },
@@ -1111,7 +1060,11 @@
                 "y": 42.17479674796748,
                 "label": "Raid boss · Varka’s Hero Shadith"
               }
-            ]
+            ],
+            {
+              "area": "varka",
+              "tier": 3
+            }
           ]
         ],
         "waypoints": [
@@ -1148,7 +1101,11 @@
                 "y": 42.76046740309152,
                 "label": "Raid boss · Varka’s Commander Mos"
               }
-            ]
+            ],
+            {
+              "area": "varka",
+              "tier": 3
+            }
           ]
         ],
         "waypoints": [
@@ -1181,23 +1138,16 @@
           ],
           [
             "/quest-maps/world.jpg",
-            "Pola farmy · Soldier",
+            "Spawny mobów · Ketra Orc Outpost",
             [
               1366,
               682
             ],
-            [
-              {
-                "x": 66.69921875,
-                "y": 34.65447154471545,
-                "label": "Soldier · polany na północ od teleportu, Footman, Raider i Scout",
-                "zone": {
-                  "w": 2.685546875,
-                  "h": 2.184959349593496,
-                  "tier": "soldier"
-                }
-              }
-            ]
+            [],
+            {
+              "area": "ketra",
+              "tier": 1
+            }
           ]
         ],
         "waypoints": [
@@ -1223,79 +1173,35 @@
           ],
           [
             "/quest-maps/world.jpg",
-            "Pola farmy · Soldier, Captain",
+            "Spawny mobów · Ketra Orc Outpost",
             [
               1385,
               708.9999999999999
             ],
-            [
-              {
-                "x": 66.69921875,
-                "y": 34.65447154471545,
-                "label": "Soldier · polany na północ od teleportu, Footman, Raider i Scout",
-                "zone": {
-                  "w": 2.685546875,
-                  "h": 2.184959349593496,
-                  "tier": "soldier"
-                }
-              },
-              {
-                "x": 67.626953125,
-                "y": 36.02642276422764,
-                "label": "Captain · pierwsza polana na północ, White Captain i Seer",
-                "zone": {
-                  "w": 1.7578125,
-                  "h": 1.4735772357723578,
-                  "tier": "captain"
-                }
-              }
-            ]
+            [],
+            {
+              "area": "ketra",
+              "tier": 2
+            }
           ]
         ]
       },
       {
         "title": "Poziom 3 · 300 Soldier, 200 Captain, 100 General",
-        "text": "Zbierz nowe odznaki trzech typów. Odznaki General wypadają m.in. z: Ketra Orc General, Battalion Commander, Grand Seer, Head Shaman i Prophet. Szukaj tych mobów głębiej na terenie wroga. Oddaj 300 Soldier, 200 Captain, 100 General oraz poprzednią odznakę posłańcowi. Kolorowe pola pokazują orientacyjne rejony farmy. Grupy różnych rang mogą się mieszać. Na kolejnych poziomach wróć do tych samych rejonów po odznaki.",
+        "text": "Zbierz nowe odznaki trzech typów. Odznaki General wypadają m.in. z: Ketra Orc General, Battalion Commander, Grand Seer, Head Shaman i Prophet. Szukaj tych mobów głębiej na terenie wroga. Oddaj 300 Soldier, 200 Captain, 100 General oraz poprzednią odznakę posłańcowi.",
         "images": [
           [
             "/quest-maps/world.jpg",
-            "Pola farmy · Soldier, Captain, General",
+            "Spawny mobów · Ketra Orc Outpost",
             [
               1401,
               673
             ],
-            [
-              {
-                "x": 66.69921875,
-                "y": 34.65447154471545,
-                "label": "Soldier · polany na północ od teleportu, Footman, Raider i Scout",
-                "zone": {
-                  "w": 2.685546875,
-                  "h": 2.184959349593496,
-                  "tier": "soldier"
-                }
-              },
-              {
-                "x": 67.626953125,
-                "y": 36.02642276422764,
-                "label": "Captain · pierwsza polana na północ, White Captain i Seer",
-                "zone": {
-                  "w": 1.7578125,
-                  "h": 1.4735772357723578,
-                  "tier": "captain"
-                }
-              },
-              {
-                "x": 68.408203125,
-                "y": 34.197154471544714,
-                "label": "General · głębiej na północ, General, Battalion Commander i Grand Seer",
-                "zone": {
-                  "w": 2.24609375,
-                  "h": 2.4898373983739837,
-                  "tier": "general"
-                }
-              }
-            ]
+            [],
+            {
+              "area": "ketra",
+              "tier": 3
+            }
           ]
         ]
       },
@@ -1326,7 +1232,11 @@
                 "y": 35.507398710950184,
                 "label": "Raid boss · Ketra’s Hero Hekaton"
               }
-            ]
+            ],
+            {
+              "area": "ketra",
+              "tier": 3
+            }
           ]
         ],
         "waypoints": [
@@ -1363,7 +1273,11 @@
                 "y": 33.993902439024396,
                 "label": "Raid boss · Ketra’s Commander Tayr"
               }
-            ]
+            ],
+            {
+              "area": "ketra",
+              "tier": 3
+            }
           ]
         ],
         "waypoints": [

@@ -1,3 +1,5 @@
+import { allianceSpawns } from './allianceSpawns.js';
+
 const INTERLUDE_WORLD_MAP = '/quest-maps/epic-world.jpg';
 const worldPin = (x, y, label) => ({ x, y, label });
 const worldPointsForMap = (mapLabel = '') => {
@@ -237,7 +239,7 @@ function ensureQuestMapModal() {
   modal.id = 'questMapLightbox';
   modal.className = 'quest-map-lightbox';
   modal.setAttribute('aria-hidden', 'true');
-  modal.innerHTML = `<div class="quest-map-lightbox-backdrop" data-quest-map-close></div><section class="quest-map-lightbox-dialog" role="dialog" aria-modal="true" aria-labelledby="questMapLightboxTitle" tabindex="-1"><header class="quest-map-lightbox-header"><div><span class="quest-map-lightbox-kicker">PEŁNA MAPA ŚWIATA · INTERLUDE</span><h3 class="quest-map-lightbox-title" id="questMapLightboxTitle"></h3></div><div class="quest-map-lightbox-actions"><div class="quest-map-lightbox-tools" aria-label="Powiększenie mapy"><button type="button" class="quest-map-lightbox-tool" data-map-zoom="out" aria-label="Pomniejsz mapę">−</button><button type="button" class="quest-map-lightbox-tool quest-map-lightbox-zoom-reset" data-map-zoom="reset" aria-label="Dopasuj mapę do ekranu">100%</button><button type="button" class="quest-map-lightbox-tool" data-map-zoom="in" aria-label="Powiększ mapę">+</button></div><button class="quest-map-lightbox-close" type="button" data-quest-map-close aria-label="Zamknij mapę">×</button></div></header><div class="quest-map-lightbox-stage"><div class="quest-map-lightbox-image-wrap"></div></div><div class="quest-map-lightbox-legend"><span class="quest-map-lightbox-legend-dot" aria-hidden="true"></span><span class="quest-map-lightbox-legend-text"></span></div></section>`;
+  modal.innerHTML = `<div class="quest-map-lightbox-backdrop" data-quest-map-close></div><section class="quest-map-lightbox-dialog" role="dialog" aria-modal="true" aria-labelledby="questMapLightboxTitle" tabindex="-1"><header class="quest-map-lightbox-header"><div><span class="quest-map-lightbox-kicker">PEŁNA MAPA ŚWIATA · INTERLUDE</span><h3 class="quest-map-lightbox-title" id="questMapLightboxTitle"></h3></div><div class="quest-map-lightbox-actions"><div class="quest-map-lightbox-tools" aria-label="Powiększenie mapy"><button type="button" class="quest-map-lightbox-tool" data-map-zoom="out" aria-label="Pomniejsz mapę">−</button><button type="button" class="quest-map-lightbox-tool quest-map-lightbox-zoom-reset" data-map-zoom="reset" aria-label="Dopasuj mapę do ekranu">100%</button><button type="button" class="quest-map-lightbox-tool" data-map-zoom="in" aria-label="Powiększ mapę">+</button></div><button class="quest-map-lightbox-close" type="button" data-quest-map-close aria-label="Zamknij mapę">×</button></div></header><div class="quest-map-spawn-controls" hidden><label>Cel na mapie <select></select></label><small>Spawny z bazy aCis Interlude. Rozmieszczenie na Reborn Eternal niepotwierdzone.</small></div><div class="quest-map-lightbox-stage"><div class="quest-map-lightbox-image-wrap"></div></div><div class="quest-map-lightbox-legend"><span class="quest-map-lightbox-legend-dot" aria-hidden="true"></span><span class="quest-map-lightbox-legend-text"></span></div></section>`;
   document.body.appendChild(modal);
   const close = () => {
     if (!modal.classList.contains('open')) return;
@@ -258,7 +260,7 @@ function ensureQuestMapModal() {
   modal.querySelectorAll('[data-map-zoom]').forEach((control) => control.addEventListener('click', () => {
     if (!modal._mapSize) return;
     if (control.dataset.mapZoom === 'reset') modal._mapZoom = 1;
-    else if (control.dataset.mapZoom === 'in') modal._mapZoom = Math.min(4, (modal._mapZoom || 1) * 1.35);
+    else if (control.dataset.mapZoom === 'in') modal._mapZoom = Math.min(modal._maxMapZoom || 4, (modal._mapZoom || 1) * 1.35);
     else modal._mapZoom = Math.max(1, (modal._mapZoom || 1) / 1.35);
     modal._applyMapZoom?.();
   }));
@@ -277,19 +279,22 @@ export function openQuestMap(link) {
   const label = link.dataset.mapLabel || 'Mapa questa';
   let points = [];
   try { points = JSON.parse(link.dataset.mapWorldPoints || '[]'); } catch { points = []; }
-  if (!points.length) points = [{ x: 50, y: 55, label: 'Lokalizacja orientacyjna' }];
+  const spawnControls = modal.querySelector('.quest-map-spawn-controls');
+  const spawnSelect = spawnControls.querySelector('select');
+  const mobs = allianceSpawns[link.dataset.allianceArea]?.filter(mob => mob.tier <= Number(link.dataset.allianceTier)) || [];
+  if (!points.length && !mobs.length) points = [{ x: 50, y: 55, label: 'Lokalizacja orientacyjna' }];
+  const basePoints = points;
   const wrap = modal.querySelector('.quest-map-lightbox-image-wrap');
   const stage = modal.querySelector('.quest-map-lightbox-stage');
   const focused = link.dataset.mapFocus === 'true';
-  const center = {
-    x: (Math.min(...points.map(point => point.x)) + Math.max(...points.map(point => point.x))) / 200,
-    y: (Math.min(...points.map(point => point.y)) + Math.max(...points.map(point => point.y))) / 200
-  };
+  let center = { x: .5, y: .5 };
   const reset = modal.querySelector('.quest-map-lightbox-zoom-reset');
   modal.classList.toggle('quest-map-focus', focused);
   wrap.replaceChildren();
-  modal._mapZoom = focused ? (points.some(point => point.zone) ? 4 : 3) : 1;
+  modal._maxMapZoom = mobs.length ? 10 : 4;
+  modal._mapZoom = focused ? 3 : 1;
   modal._mapSize = null;
+  modal._applyMapZoom = null;
   reset.textContent = focused ? 'Cały świat' : '100%';
   reset.setAttribute('aria-label', focused ? 'Pokaż całą mapę świata' : 'Dopasuj mapę do ekranu');
   const image = document.createElement('img');
@@ -333,55 +338,95 @@ export function openQuestMap(link) {
   image.src = link.dataset.mapWorldSrc || INTERLUDE_WORLD_MAP;
   modal._mapResizeHandler = fitImage;
   window.addEventListener('resize', fitImage);
-  points.forEach((point, index) => {
-    if (point.zone) {
-      const field = document.createElement('span');
-      field.className = 'quest-map-farm-zone quest-map-farm-zone--' + point.zone.tier;
-      field.style.left = `${point.x}%`;
-      field.style.top = `${point.y}%`;
-      field.style.width = `${point.zone.w}%`;
-      field.style.height = `${point.zone.h}%`;
-      field.title = point.label;
-      field.setAttribute('aria-hidden', 'true');
-      field.textContent = String(index + 1);
-      wrap.append(field);
-      return;
+  const legend = modal.querySelector('.quest-map-lightbox-legend-text');
+  const renderPoints = (mob) => {
+    wrap.querySelectorAll('.quest-map-pin, .quest-map-spawn').forEach(pin => pin.remove());
+    points = mob ? mob.spawns.map(([x, y, z]) => ({
+      // Use the existing world map's pixel calibration from the raid boss markers.
+      x: (1269 + (x - 115552) * (1269 - 1245.3076923076924) / (115552 - 109216)) / 2048 * 100,
+      y: (830 + (y + 39200) * (841.525998492841 - 830) / 3040) / 1968 * 100,
+      coordinates: [x, y, z].join(', ')
+    })) : basePoints;
+    center = {
+      x: (Math.min(...points.map(point => point.x)) + Math.max(...points.map(point => point.x))) / 200,
+      y: (Math.min(...points.map(point => point.y)) + Math.max(...points.map(point => point.y))) / 200
+    };
+    const description = mob ? `${mob.badge} · ${mob.name} · ${points.length} pkt. Wybierz punkt, aby zobaczyć współrzędne.` : '';
+    legend.textContent = description || points.map((point, index) => `${index + 1}. ${point.label || label}`).join(' · ');
+    points.forEach((point, index) => {
+      if (mob) {
+        const marker = document.createElement('button');
+        marker.type = 'button';
+        marker.className = 'quest-map-spawn quest-map-spawn--' + mob.badge.toLowerCase();
+        marker.style.left = `${point.x}%`;
+        marker.style.top = `${point.y}%`;
+        marker.title = `${mob.name} · ${point.coordinates}`;
+        marker.setAttribute('aria-label', marker.title);
+        marker.addEventListener('click', () => {
+          wrap.querySelector('.quest-map-spawn[aria-pressed="true"]')?.setAttribute('aria-pressed', 'false');
+          marker.setAttribute('aria-pressed', 'true');
+          legend.textContent = `${mob.badge} · ${mob.name} · XYZ: ${point.coordinates}`;
+        });
+        marker.setAttribute('aria-pressed', 'false');
+        wrap.append(marker);
+        return;
+      }
+      const pin = document.createElement('span');
+      pin.className = 'quest-map-pin';
+      pin.style.setProperty('--pin-x', `${Math.max(3, Math.min(97, Number(point.x) || 50))}%`);
+      pin.style.setProperty('--pin-y', `${Math.max(3, Math.min(97, Number(point.y) || 55))}%`);
+      pin.setAttribute('aria-hidden', 'true');
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('viewBox', '0 0 24 34');
+      svg.setAttribute('focusable', 'false');
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', 'M12 33S2 20.6 2 11a10 10 0 1 1 20 0c0 9.6-10 22-10 22Z');
+      path.setAttribute('fill', '#e32932');
+      path.setAttribute('stroke', '#fff');
+      path.setAttribute('stroke-width', '1.5');
+      const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      circle.setAttribute('cx', '12');
+      circle.setAttribute('cy', '11');
+      circle.setAttribute('r', '5');
+      circle.setAttribute('fill', '#fff');
+      const number = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      number.setAttribute('x', '12');
+      number.setAttribute('y', '14');
+      number.setAttribute('text-anchor', 'middle');
+      number.setAttribute('fill', '#b51c26');
+      number.setAttribute('font-size', '8');
+      number.setAttribute('font-weight', '800');
+      number.setAttribute('font-family', 'Arial, sans-serif');
+      number.textContent = String(index + 1);
+      svg.append(path, circle, number);
+      pin.append(svg);
+      wrap.append(pin);
+    });
+    modal._applyMapZoom?.();
+  };
+  spawnControls.hidden = !mobs.length;
+  spawnSelect.replaceChildren();
+  spawnSelect.onchange = null;
+  if (mobs.length) {
+    if (basePoints.length) spawnSelect.add(new Option('Raid boss', 'boss'));
+    for (const badge of ['Soldier', 'Captain', 'General']) {
+      const group = document.createElement('optgroup');
+      group.label = badge;
+      mobs.forEach((mob, index) => {
+        if (mob.badge === badge) group.append(new Option(mob.name, String(index)));
+      });
+      if (group.children.length) spawnSelect.append(group);
     }
-    const pin = document.createElement('span');
-    pin.className = 'quest-map-pin';
-    pin.style.setProperty('--pin-x', `${Math.max(3, Math.min(97, Number(point.x) || 50))}%`);
-    pin.style.setProperty('--pin-y', `${Math.max(3, Math.min(97, Number(point.y) || 55))}%`);
-    pin.setAttribute('aria-hidden', 'true');
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.setAttribute('viewBox', '0 0 24 34');
-    svg.setAttribute('focusable', 'false');
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    path.setAttribute('d', 'M12 33S2 20.6 2 11a10 10 0 1 1 20 0c0 9.6-10 22-10 22Z');
-    path.setAttribute('fill', '#e32932');
-    path.setAttribute('stroke', '#fff');
-    path.setAttribute('stroke-width', '1.5');
-    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    circle.setAttribute('cx', '12');
-    circle.setAttribute('cy', '11');
-    circle.setAttribute('r', '5');
-    circle.setAttribute('fill', '#fff');
-    const number = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    number.setAttribute('x', '12');
-    number.setAttribute('y', '14');
-    number.setAttribute('text-anchor', 'middle');
-    number.setAttribute('fill', '#b51c26');
-    number.setAttribute('font-size', '8');
-    number.setAttribute('font-weight', '800');
-    number.setAttribute('font-family', 'Arial, sans-serif');
-    number.textContent = String(index + 1);
-    svg.append(path, circle, number);
-    pin.append(svg);
-    wrap.append(pin);
-  });
+    spawnSelect.onchange = () => {
+      const mob = mobs[Number(spawnSelect.value)];
+      modal._mapZoom = mob ? 8 : 3;
+      renderPoints(mob);
+    };
+    spawnSelect.onchange();
+  } else {
+    renderPoints();
+  }
   modal.querySelector('.quest-map-lightbox-title').textContent = label;
-  const locations = points.map((point, index) => `${index + 1}. ${point.label || label}`).join(' · ');
-  modal.querySelector('.quest-map-lightbox-legend-text').textContent =
-    locations;
   modal._previousOverflow = document.body.style.overflow;
   modal._returnFocus = link;
   modal.classList.add('open');

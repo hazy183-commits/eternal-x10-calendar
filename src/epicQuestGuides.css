@@ -841,7 +841,15 @@
 .quest-map-focus .quest-map-lightbox-image-wrap .quest-map-pin{width:18px;filter:drop-shadow(0 1px 2px #000c)}
 .quest-map-focus .quest-map-lightbox-zoom-reset{white-space:nowrap}
 
-.quest-map-farm-zone{position:absolute;z-index:2;display:grid;place-items:center;min-width:13px;min-height:13px;border:2px dashed var(--farm-color);border-radius:50%;background:color-mix(in srgb,var(--farm-color) 22%,transparent);color:#fff;font:800 12px/1 Inter,sans-serif;text-shadow:0 1px 3px #000,0 0 4px #000;transform:translate(-50%,-50%)}
-.quest-map-farm-zone--soldier{--farm-color:#78e5a1}
-.quest-map-farm-zone--captain{--farm-color:#79c7ff}
-.quest-map-farm-zone--general{--farm-color:#ffc46d}
+
+.quest-map-spawn-controls{padding:8px 16px;background:#201b16;color:#fff}
+.quest-map-spawn-controls label{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.quest-map-spawn-controls select{max-width:100%;min-width:0;background:#302820;color:#fff;padding:4px;border:1px solid #a38a6a;border-radius:4px}
+.quest-map-spawn-controls small{display:block;margin-top:4px;color:#e1d3c2}
+.quest-map-spawn{position:absolute;z-index:2;width:10px;height:10px;padding:0;border:1px solid #171411;border-radius:50%;background:var(--spawn-color);box-shadow:0 0 0 1px #fff9;transform:translate(-50%,-50%);cursor:pointer}
+.quest-map-spawn--soldier{--spawn-color:#78e5a1}
+.quest-map-spawn--captain{--spawn-color:#79c7ff}
+.quest-map-spawn--general{--spawn-color:#ffc46d}
+.quest-map-spawn:is(:focus-visible,[aria-pressed="true"]){z-index:3;outline:2px solid white;outline-offset:2px}
+
+.quest-map-lightbox-dialog:has(.quest-map-spawn-controls:not([hidden])){grid-template-rows:auto auto minmax(0,1fr) auto}
