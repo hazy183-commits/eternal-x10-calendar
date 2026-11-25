@@ -280,10 +280,18 @@ export function openQuestMap(link) {
   if (!points.length) points = [{ x: 50, y: 55, label: 'Lokalizacja orientacyjna' }];
   const wrap = modal.querySelector('.quest-map-lightbox-image-wrap');
   const stage = modal.querySelector('.quest-map-lightbox-stage');
+  const focused = link.dataset.mapFocus === 'true';
+  const center = {
+    x: (Math.min(...points.map(point => point.x)) + Math.max(...points.map(point => point.x))) / 200,
+    y: (Math.min(...points.map(point => point.y)) + Math.max(...points.map(point => point.y))) / 200
+  };
+  const reset = modal.querySelector('.quest-map-lightbox-zoom-reset');
+  modal.classList.toggle('quest-map-focus', focused);
   wrap.replaceChildren();
-  modal._mapZoom = 1;
+  modal._mapZoom = focused ? 3 : 1;
   modal._mapSize = null;
-  modal.querySelector('.quest-map-lightbox-zoom-reset').textContent = '100%';
+  reset.textContent = focused ? 'Cały świat' : '100%';
+  reset.setAttribute('aria-label', focused ? 'Pokaż całą mapę świata' : 'Dopasuj mapę do ekranu');
   const image = document.createElement('img');
   image.alt = `Pełna mapa świata Interlude — ${label}`;
   image.decoding = 'async';
@@ -302,9 +310,12 @@ export function openQuestMap(link) {
       const zoom = modal._mapZoom || 1;
       wrap.style.width = `${modal._mapSize.width * zoom}px`;
       wrap.style.height = `${modal._mapSize.height * zoom}px`;
-      modal.querySelector('.quest-map-lightbox-zoom-reset').textContent = `${Math.round(zoom * 100)}%`;
-      stage.scrollTop = Math.max(0, (wrap.offsetHeight - stage.clientHeight) / 2);
-      stage.scrollLeft = Math.max(0, (wrap.offsetWidth - stage.clientWidth) / 2);
+      if (!focused) reset.textContent = `${Math.round(zoom * 100)}%`;
+      const target = focused && zoom > 1 ? center : { x: .5, y: .5 };
+      const imageBox = wrap.getBoundingClientRect();
+      const stageBox = stage.getBoundingClientRect();
+      stage.scrollTop += imageBox.top - stageBox.top + imageBox.height * target.y - stage.clientHeight / 2;
+      stage.scrollLeft += imageBox.left - stageBox.left + imageBox.width * target.x - stage.clientWidth / 2;
     };
     modal._applyMapZoom();
   };
@@ -320,7 +331,6 @@ export function openQuestMap(link) {
   wrap.style.removeProperty('height');
   wrap.append(image);
   image.src = link.dataset.mapWorldSrc || INTERLUDE_WORLD_MAP;
-  if (image.complete && image.naturalWidth) fitImage();
   modal._mapResizeHandler = fitImage;
   window.addEventListener('resize', fitImage);
   points.forEach((point, index) => {
@@ -364,6 +374,7 @@ export function openQuestMap(link) {
   modal.classList.add('open');
   modal.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
+  if (image.complete && image.naturalWidth) fitImage();
   requestAnimationFrame(() => modal.querySelector('.quest-map-lightbox-close').focus({ preventScroll: true }));
 }
 function setGuideToggleLabel(guide, open) {

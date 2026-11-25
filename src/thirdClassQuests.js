@@ -388,6 +388,7 @@ export function installThirdClassQuests() {
           link.setAttribute('aria-label', 'Otwórz pełną mapę świata: ' + label);
           link.dataset.mapLabel = label;
           link.dataset.mapWorldSrc = '/quest-maps/world.jpg';
+          link.dataset.mapFocus = 'true';
           link.dataset.mapWorldPoints = JSON.stringify(worldPoints);
           link.addEventListener('click', () => openQuestMap(link));
         } else {

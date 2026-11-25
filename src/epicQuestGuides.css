@@ -837,3 +837,6 @@
   .quest-map-lightbox-tool { min-width: 30px; height: 32px; }
   .quest-map-lightbox-zoom-reset { min-width: 42px; font-size: 9px; }
 }
+
+.quest-map-focus .quest-map-lightbox-image-wrap .quest-map-pin{width:18px;filter:drop-shadow(0 1px 2px #000c)}
+.quest-map-focus .quest-map-lightbox-zoom-reset{white-space:nowrap}
