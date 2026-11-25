@@ -50,3 +50,9 @@
 .third-class-full-viewport{overflow:auto;max-height:65dvh;background:#090d0f;text-align:center;margin-top:8px}
 .third-class-full-viewport img{display:block;width:auto;max-width:100%;height:auto;max-height:65dvh;margin:0 auto;object-fit:contain}
 .third-class-full-viewport.is-zoomed img{width:150%;max-width:none;max-height:none;margin:0}
+
+.third-class-catalogue{width:min(1180px,calc(100vw - 24px));max-height:90dvh;padding:0;overflow:auto;background:#0c1011;color:#f3e9d6;border:1px solid #a0824b}
+.third-class-catalogue::backdrop{background:#040506c9}
+.third-class-catalogue .third-class-quests{margin:0;width:auto;border:0}
+.third-class-catalogue-close{position:sticky;top:0;float:right;z-index:1;min-width:44px;min-height:44px;color:#fae1a9;background:#2e2313;border:1px solid #9b753e;font-size:24px;cursor:pointer}
+.third-class-maps img{width:132px;height:92px}

@@ -27,37 +27,37 @@ function element(tag, text, className) {
 }
 
 const classArt = {
-  "Duelist": "dual_sword",
-  "Dreadnought": "saint_spear",
-  "Phoenix Knight": "forgotten_blade",
-  "Hell Knight": "dark_legions_edge",
-  "Sagittarius": "draconic_bow",
-  "Adventurer": "angel_slayer",
-  "Archmage": "arcana_mace",
-  "Soultaker": "demon_splinter",
-  "Arcana Lord": "imperial_staff",
-  "Cardinal": "elysian",
-  "Hierophant": "meteor_shower",
-  "Eva's Templar": "sword_of_miracle",
-  "Sword Muse": "tallum_blade",
-  "Wind Rider": "bloody_orchid",
-  "Moonlight Sentinel": "soul_bow",
-  "Mystic Muse": "worldtrees_branch",
-  "Elemental Master": "elemental_sword",
-  "Eva's Saint": "dasparions_staff",
-  "Shillien Templar": "sword_of_ipos",
-  "Spectral Dancer": "sirr_blade",
-  "Ghost Hunter": "naga_storm",
-  "Ghost Sentinel": "shyid_bow",
-  "Storm Screamer": "dragon_flame_head",
-  "Spectral Master": "hand_of_cabrio",
-  "Shillien Saint": "tongue_of_themis",
-  "Titan": "heavens_divider",
-  "Grand Khavatari": "blood_tornado",
-  "Dominator": "eye_of_soul",
-  "Doomcryer": "basalt_battlehammer",
-  "Fortune Seeker": "barakiel_axe",
-  "Maestro": "doom_crusher"
+  "Duelist": "0297",
+  "Dreadnought": "0130",
+  "Phoenix Knight": "0406",
+  "Hell Knight": "0086",
+  "Sagittarius": "0313",
+  "Adventurer": "0445",
+  "Archmage": "1191",
+  "Soultaker": "0270",
+  "Arcana Lord": "eternal_bless_queen",
+  "Cardinal": "1307",
+  "Hierophant": "1356",
+  "Eva's Templar": "0341",
+  "Sword Muse": "0364",
+  "Wind Rider": "0446",
+  "Moonlight Sentinel": "0413",
+  "Mystic Muse": "1182",
+  "Elemental Master": "eternal_bless_seraphim",
+  "Eva's Saint": "1355",
+  "Shillien Templar": "0351",
+  "Spectral Dancer": "0365",
+  "Ghost Hunter": "0447",
+  "Ghost Sentinel": "0414",
+  "Storm Screamer": "1189",
+  "Spectral Master": "1268",
+  "Shillien Saint": "1357",
+  "Titan": "0176",
+  "Grand Khavatari": "0420",
+  "Dominator": "eternal_victory_paagrio",
+  "Doomcryer": "1363",
+  "Fortune Seeker": "0111",
+  "Maestro": "1040"
 };
 const stepTitles = [
   'Odbierz sagę', 'Pierwsza rozmowa', 'Zdobądź pierwszy amulet',
@@ -75,7 +75,7 @@ const addedSupplies = {
 
 function illustration(quest) {
   const image = element('img', '', 'third-class-emblem');
-  image.src = '/assets/interlude/icons/weapon_' + classArt[quest.name] + '_i00.png';
+  image.src = '/assets/interlude/buff-icons/skill' + classArt[quest.name] + '.png';
   image.alt = '';
   image.loading = 'lazy';
   return image;
@@ -112,10 +112,34 @@ export function installThirdClassQuests() {
   preview.append(header, previewContent);
   section.append(preview);
 
+  const catalogue = element('dialog', '', 'third-class-catalogue');
+  catalogue.setAttribute('aria-labelledby', 'thirdClassTitle');
+  const catalogueClose = element('button', '×', 'third-class-catalogue-close');
+  catalogueClose.type = 'button';
+  catalogueClose.setAttribute('aria-label', 'Zamknij przydatne questy');
+  catalogueClose.addEventListener('click', () => catalogue.close());
+  const originalPosition = document.createComment('Przydatne questy');
+  section.before(originalPosition);
+  document.body.append(catalogue);
+  catalogue.append(catalogueClose);
+  catalogue.addEventListener('close', () => originalPosition.after(section));
+  document.addEventListener('click', (event) => {
+    const trigger = event.target.closest?.('a[href$="#przydatne-questy"]');
+    const clanOpen = document.querySelector('#memberZoneLayer.open');
+    if (!trigger || !clanOpen || event.defaultPrevented || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    if (catalogue.open) return;
+    catalogue.append(section);
+    catalogue.showModal();
+    search.focus({ preventScroll: true });
+  });
+
   function mapImage(url, label) {
     const img = element('img');
     img.alt = label;
     img.addEventListener('error', () => img.replaceWith(element('p', 'Nie udało się wczytać obrazu.')));
+    img.decoding = 'async';
+    img.fetchPriority = 'high';
     img.src = url;
     return img;
   }
@@ -179,6 +203,15 @@ export function installThirdClassQuests() {
   };
 
   function openGuide(quest) {
+    if (!document.querySelector('link[data-quest-image-origin]')) {
+      for (const origin of ['https://forum.l2mad.net', 'https://la2wiki.com']) {
+        const connection = element('link');
+        connection.rel = 'preconnect';
+        connection.href = origin;
+        connection.dataset.questImageOrigin = '';
+        document.head.append(connection);
+      }
+    }
     dialog.querySelector('h3').textContent = quest.from + ' → ' + quest.name;
     const introduction = element('header', '', 'third-class-intro');
     const heading = element('div');
@@ -202,10 +235,13 @@ export function installThirdClassQuests() {
         link.setAttribute('aria-label', 'Powiększ: ' + label);
         link.addEventListener('click', () => showImage(url, label, step));
         const picture = element('img');
-        picture.src = url;
         picture.alt = label;
-        picture.loading = 'lazy';
-        picture.addEventListener('error', () => link.replaceChildren(element('span', label)));
+        picture.width = 132;
+        picture.height = 92;
+        picture.decoding = 'async';
+        picture.loading = index < 2 ? 'eager' : 'lazy';
+        picture.addEventListener('error', () => link.replaceChildren(element('span', 'Otwórz: ' + label)), { once: true });
+        picture.src = url;
         link.append(picture);
         images.append(link);
       }
