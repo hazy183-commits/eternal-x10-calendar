@@ -47,6 +47,8 @@ export function installMemberAuth(supabase) {
         <button class="zone-nav" data-zone-view="events">▣ <span>Wydarzenia</span></button>
         <button class="zone-nav" data-zone-view="signups">✓ <span>Moje zapisy</span></button>
         <button class="zone-nav" data-zone-view="announcements">◆ <span>Ogłoszenia</span></button>
+        <button class="zone-nav" type="button" data-zone-action="quests" aria-controls="usefulQuestCatalogue" aria-haspopup="dialog"><span>Przydatne questy</span></button>
+        <button class="zone-nav" type="button" data-zone-action="enchant" aria-controls="enchantSimulator" aria-haspopup="dialog"><span>Symulator enchantu S</span></button>
         <div class="zone-side-spacer"></div>
         <button class="zone-logout">↪ <span>WYLOGUJ SIĘ</span></button>
         <div class="zone-side-foot"><small>ETERNAL X10</small><b>LINEAGE 2 REBORN</b></div>
@@ -54,7 +56,7 @@ export function installMemberAuth(supabase) {
       <main class="member-zone-main">
         <header><div><span class="member-kicker">PANEL CZŁONKA KLANU</span><h2>Witaj, <strong id="memberZoneNick">—</strong>!</h2><p>Dobrze, że jesteś z nami.</p><em>„Siła klanu tkwi w ludziach, nie w pixelach.”</em></div><small id="memberZoneRole">MEMBER</small></header>
         <section class="zone-view active" data-zone-panel="home">
-          <button class="secondary-btn" type="button" data-open-enchant-simulator aria-controls="enchantSimulator" aria-haspopup="dialog">⚒ <span>Symulator enchantu S</span></button>
+
           <div class="member-zone-grid"><div><b>⚔ KLAN</b><span>Orzeł Biały</span></div><div><b>✦ SERWER</b><span>Eternal x10</span></div><div><b>♛ RANGA</b><span id="memberRankCard">Member</span></div><div><b>● STATUS</b><span class="status-active">Aktywny</span></div></div>
           <div class="zone-columns"><section class="zone-card"><div class="zone-card-title"><div><small>▣ W KOLEJCE</small><h3>NAJBLIŻSZE WYDARZENIA</h3></div><button class="zone-link" data-zone-go="events">Zobacz wszystkie →</button></div><div id="memberUpcomingEvents" class="zone-event-list"><p class="zone-muted">Ładowanie wydarzeń…</p></div></section><section class="zone-card"><div class="zone-card-title"><div><small>📣 KLAN</small><h3>OGŁOSZENIA KLANOWE</h3></div><button class="zone-link" data-zone-go="announcements">Zobacz wszystkie →</button></div><div class="zone-announcement"><b>Witaj w Strefie Klanu</b><p>Najważniejsze informacje dla członków będą pojawiać się właśnie tutaj.</p></div><div class="zone-announcement"><b>Discord</b><p>Pamiętaj, aby być na Discordzie podczas wspólnych akcji i PvP.</p></div></section></div>
           <div class="zone-bottom"><section class="zone-card"><div class="zone-card-title"><div><small>TWÓJ UDZIAŁ</small><h3>MOJE ZAPISY</h3></div></div><p class="zone-muted">Twoje deklaracje wydarzeń znajdziesz w zakładce „Moje zapisy”.</p></section><section class="zone-stack"><a href="https://discord.gg/HtTrJpp7K" target="_blank">◉ Discord klanu <b>↗</b></a><a href="https://www.youtube.com/@orzelbialyfirstofight" target="_blank">▶ YouTube klanu <b>↗</b></a><a href="https://l2reborn.org" target="_blank">◎ Strona serwera <b>↗</b></a></section></div>
@@ -79,9 +81,10 @@ export function installMemberAuth(supabase) {
         button.prepend(icon);
       }
       const icon = button.querySelector(':scope > .zone-nav-icon');
-      if (icon.dataset.clanIcon !== button.dataset.zoneView) {
-        icon.dataset.clanIcon = button.dataset.zoneView;
-        icon.innerHTML = clanZoneIcon(button.dataset.zoneView);
+      const iconKey = button.dataset.zoneView || button.dataset.zoneAction || 'home';
+      if (icon.dataset.clanIcon !== iconKey) {
+        icon.dataset.clanIcon = iconKey;
+        icon.innerHTML = clanZoneIcon(iconKey);
       }
     }
     for (const icon of zone.querySelectorAll('.ob-menu-group-icon')) {

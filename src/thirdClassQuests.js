@@ -122,18 +122,6 @@ export function installThirdClassQuests() {
   section.hidden = false;
   closeOnBackdrop(catalogue);
 
-  function mountPanelShortcut() {
-    const sidebar = document.querySelector('#memberZoneLayer .member-zone-side');
-    if (!sidebar || sidebar.querySelector('[data-open-useful-quests]')) return;
-    const link = element('a', 'Przydatne questy', 'zone-nav quest-catalogue-shortcut');
-    link.href = '#przydatne-questy';
-    link.dataset.openUsefulQuests = '';
-    link.setAttribute('aria-controls', catalogue.id);
-    sidebar.append(link);
-  }
-  mountPanelShortcut();
-  new MutationObserver(mountPanelShortcut).observe(document.body, { childList: true, subtree: true });
-
   function openCatalogue() {
     if (catalogue.open) return;
     catalogue.showModal();
@@ -141,7 +129,7 @@ export function installThirdClassQuests() {
   }
 
   document.addEventListener('click', (event) => {
-    const trigger = event.target.closest?.('a[href$="#przydatne-questy"]');
+    const trigger = event.target.closest?.('a[href$="#przydatne-questy"], #memberZoneLayer.open [data-zone-action="quests"]');
     if (!trigger || event.defaultPrevented || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
     openCatalogue();

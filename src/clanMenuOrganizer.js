@@ -125,7 +125,7 @@ export function installClanMenuOrganizer() {
       const directNavs = [...side.children].filter(child => child.matches?.('.zone-nav'));
       for (const nav of directNavs) {
         const view = nav.dataset.zoneView;
-        const groupKey = VIEW_TO_GROUP.get(view);
+        const groupKey = nav.dataset.zoneAction ? 'tools' : VIEW_TO_GROUP.get(view);
         if (!groupKey) continue;
         const items = groups.get(groupKey)?.querySelector('.ob-menu-group-items');
         if (items) items.appendChild(nav);

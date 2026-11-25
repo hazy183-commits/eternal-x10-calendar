@@ -119,7 +119,7 @@ view('roll').addEventListener('click', () => {
   render();
 });
 document.addEventListener('click', (event) => {
-  const trigger = event.target.closest?.('#memberZoneLayer.open [data-open-enchant-simulator]');
+  const trigger = event.target.closest?.('#memberZoneLayer.open [data-zone-action="enchant"]');
   if (trigger && !dialog.open) dialog.showModal();
 });
 render();
