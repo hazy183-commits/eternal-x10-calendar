@@ -239,7 +239,7 @@ export function installThirdClassQuests() {
       if (quest.race !== undefined) button.dataset.race = quest.race;
       const copy = element('span', '', 'third-class-card-copy');
       copy.append(element('small', quest.from || quest.level), element('strong', quest.name));
-      if (quest.title) copy.append(element('small', quest.title));
+      if (quest.title && !quest.image) copy.append(element('small', quest.title));
       if (quest.image) {
         const art = element('img', '', 'quest-epic-card-art');
         art.src = quest.image;

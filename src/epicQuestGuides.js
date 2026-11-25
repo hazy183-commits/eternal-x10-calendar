@@ -1,45 +1,3 @@
-const INTERLUDE_WORLD_MAP = 'https://lineage.pmfun.com/data/maps/world/Aden%20World%20Map%20Interlude%20%28big%29.png';
-const worldPin = (x, y, label) => ({ x, y, label });
-const worldPointsForMap = (mapLabel = '') => {
-  const label = mapLabel.toLowerCase();
-  if (label.includes('forest of mirrors') && label.includes('anghel waterfall')) {
-    return [
-      worldPin(80.4, 64.5, 'Forest of Mirrors'),
-      worldPin(89.4, 67.9, 'Anghel Waterfall')
-    ];
-  }
-  if (label.includes('imperial tomb') && label.includes('four sepulchers')) {
-    return [
-      worldPin(87.4, 35.5, 'Imperial Tomb'),
-      worldPin(82.6, 34.3, 'Four Sepulchers')
-    ];
-  }
-  if (label.includes('dragon valley')) return [worldPin(64.5, 72.5, 'Dragon Valley · polana przed wejściem do Lair of Antharas')];
-  if (label.includes('antharas')) return [worldPin(76.5, 70.5, 'Lair of Antharas · Theodric')];
-  if (label.includes('giant')) return [worldPin(88.2, 61.7, 'The Giant’s Cave')];
-  if (label.includes('cemetery')) return [worldPin(83.8, 54.6, 'The Cemetery · Holy Ark')];
-  if (label.includes('forsaken plains')) return [worldPin(85.5, 57.4, 'Forsaken Plains')];
-  if (label.includes('giran')) return [worldPin(61.4, 77.6, 'Town of Giran')];
-  if (label.includes('tanor canyon')) return [worldPin(51.1, 81.1, 'Tanor Canyon')];
-  if (label.includes('dark elf village')) return [worldPin(38.6, 52.8, 'Dark Elf Village')];
-  if (label.includes('undine waterfall')) return [worldPin(32.2, 57.2, 'Swampland · Undine Waterfall')];
-  if (label.includes('blood queen')) return [worldPin(90.8, 54.8, 'The Forbidden Gateway · Seal of Shilen')];
-  if (label.includes('seal of shilen')) return [worldPin(90.8, 54.8, 'The Forbidden Gateway · Seal of Shilen')];
-  if (label.includes('hunter village')) return [worldPin(67.8, 63.9, 'Hunters Village')];
-  if (label.includes('gludin')) return [worldPin(14.2, 78.6, 'Gludin Village')];
-  if (label.includes('windy hill')) return [worldPin(12.8, 65.5, 'Windy Hill')];
-  if (label.includes('oren')) return [worldPin(60.8, 59.1, 'Town of Oren')];
-  if (label.includes('sea of spores')) return [worldPin(48.7, 54.6, 'Sea of Spores')];
-  if (label.includes('hall of flames')) return [worldPin(88.2, 28.5, 'Hall of Flames')];
-  if (label.includes('goddard')) return [worldPin(77.1, 38.9, 'Town of Goddard')];
-  if (label.includes('garden of beasts')) return [worldPin(70.5, 38.9, 'Garden of Beasts')];
-  if (label.includes('four sepulchers')) return [worldPin(82.6, 34.3, 'Four Sepulchers')];
-  if (label.includes('rune township')) return [worldPin(45.7, 40.0, 'Rune Township')];
-  if (label.includes('wall of argos')) return [worldPin(84.8, 40.7, 'Wall of Argos')];
-  if (label.includes('aden')) return [worldPin(78.2, 54.6, 'Town of Aden')];
-  return [worldPin(50, 55, 'Obszar questa · lokalizacja orientacyjna')];
-};
-
 const mapImage = (file, label, points = null) => ({
   src: `https://la2wiki.com/${file}`,
   label,
@@ -48,9 +6,7 @@ const mapImage = (file, label, points = null) => ({
     x: Math.max(3, Math.min(97, Number(point.x) || 50)),
     y: Math.max(3, Math.min(97, Number(point.y) || 50)),
     label: point.label || label
-  })),
-  worldSrc: INTERLUDE_WORLD_MAP,
-  worldPoints: worldPointsForMap(label)
+  }))
 });
 const mobImage = (slug, name, level) => ({
   src: `https://la2wiki.com/npc/${slug}.webp`,
@@ -169,7 +125,6 @@ function pinMarkup(point, index) {
 
 function mapMarkup(map) {
   const src = escapeHtml(map.src);
-  const worldSrc = escapeHtml(map.worldSrc || INTERLUDE_WORLD_MAP);
   const label = escapeHtml(map.label);
   const points = map.points?.length ? map.points : [{ x: 50, y: 50, label: 'Obszar wskazany w kroku' }];
   const safePoints = points.map((point) => ({
@@ -177,12 +132,10 @@ function mapMarkup(map) {
     y: Math.max(3, Math.min(97, Number(point.y) || 50)),
     label: String(point.label || map.label)
   }));
-  const worldPoints = map.worldPoints?.length ? map.worldPoints : worldPointsForMap(map.label);
   const pins = safePoints.map(pinMarkup).join('');
   const pointData = escapeHtml(JSON.stringify(safePoints));
-  const worldPointData = escapeHtml(JSON.stringify(worldPoints));
   const mapRatio = map.aspectRatio || 1;
-  return `<figure class="quest-map-card"><button type="button" class="quest-map-link" aria-label="Otwórz pełną mapę świata Interlude z zaznaczonym regionem: ${label}" data-quest-map data-map-src="${src}" data-map-world-src="${worldSrc}" data-map-label="${label}" data-map-ratio="${mapRatio}" data-map-points="${pointData}" data-map-world-points="${worldPointData}"><span class="quest-map-image-frame" style="--map-ratio:${mapRatio}"><img src="${src}" alt="Wycinek mapy Interlude: ${label}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.hidden=true;this.closest('.quest-map-link').classList.add('is-image-missing')" />${pins}</span><span class="quest-map-open" aria-hidden="true">⌕</span></button><figcaption><span>${label}</span><span class="quest-map-mark-count">${safePoints.length} ${safePoints.length === 1 ? 'CEL' : 'CELE'}</span></figcaption></figure>`;
+  return `<figure class="quest-map-card"><button type="button" class="quest-map-link" aria-label="Powiększ mapę: ${label}" data-quest-map data-map-src="${src}" data-map-label="${label}" data-map-ratio="${mapRatio}" data-map-points="${pointData}"><span class="quest-map-image-frame" style="--map-ratio:${mapRatio}"><img src="${src}" alt="Wycinek mapy Interlude: ${label}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.hidden=true;this.closest('.quest-map-link').classList.add('is-image-missing')" />${pins}</span><span class="quest-map-open" aria-hidden="true">⌕</span></button><figcaption><span>${label}</span><span class="quest-map-mark-count">${safePoints.length} ${safePoints.length === 1 ? 'CEL' : 'CELE'}</span></figcaption></figure>`;
 }
 
 function mobMarkup(mob) {
@@ -237,7 +190,7 @@ function ensureQuestMapModal() {
   modal.id = 'questMapLightbox';
   modal.className = 'quest-map-lightbox';
   modal.setAttribute('aria-hidden', 'true');
-  modal.innerHTML = `<div class="quest-map-lightbox-backdrop" data-quest-map-close></div><section class="quest-map-lightbox-dialog" role="dialog" aria-modal="true" aria-labelledby="questMapLightboxTitle" tabindex="-1"><header class="quest-map-lightbox-header"><div><span class="quest-map-lightbox-kicker">PEŁNA MAPA ŚWIATA · INTERLUDE</span><h3 class="quest-map-lightbox-title" id="questMapLightboxTitle"></h3></div><div class="quest-map-lightbox-actions"><div class="quest-map-lightbox-tools" aria-label="Powiększenie mapy"><button type="button" class="quest-map-lightbox-tool" data-map-zoom="out" aria-label="Pomniejsz mapę">−</button><button type="button" class="quest-map-lightbox-tool quest-map-lightbox-zoom-reset" data-map-zoom="reset" aria-label="Dopasuj mapę do ekranu">100%</button><button type="button" class="quest-map-lightbox-tool" data-map-zoom="in" aria-label="Powiększ mapę">+</button></div><button class="quest-map-lightbox-close" type="button" data-quest-map-close aria-label="Zamknij mapę">×</button></div></header><div class="quest-map-lightbox-stage"><div class="quest-map-lightbox-image-wrap"></div></div><div class="quest-map-lightbox-legend"><span class="quest-map-lightbox-legend-dot" aria-hidden="true"></span><span class="quest-map-lightbox-legend-text"></span></div></section>`;
+  modal.innerHTML = `<div class="quest-map-lightbox-backdrop" data-quest-map-close></div><section class="quest-map-lightbox-dialog" role="dialog" aria-modal="true" aria-labelledby="questMapLightboxTitle" tabindex="-1"><header class="quest-map-lightbox-header"><div><span class="quest-map-lightbox-kicker">MAPA QUESTA</span><h3 class="quest-map-lightbox-title" id="questMapLightboxTitle"></h3></div><div class="quest-map-lightbox-actions"><div class="quest-map-lightbox-tools" aria-label="Powiększenie mapy"><button type="button" class="quest-map-lightbox-tool" data-map-zoom="out" aria-label="Pomniejsz mapę">−</button><button type="button" class="quest-map-lightbox-tool quest-map-lightbox-zoom-reset" data-map-zoom="reset" aria-label="Dopasuj mapę do ekranu">100%</button><button type="button" class="quest-map-lightbox-tool" data-map-zoom="in" aria-label="Powiększ mapę">+</button></div><button class="quest-map-lightbox-close" type="button" data-quest-map-close aria-label="Zamknij mapę">×</button></div></header><div class="quest-map-lightbox-stage"><div class="quest-map-lightbox-image-wrap"></div></div><div class="quest-map-lightbox-legend"><span class="quest-map-lightbox-legend-dot" aria-hidden="true"></span><span class="quest-map-lightbox-legend-text"></span></div></section>`;
   document.body.appendChild(modal);
   const close = () => {
     if (!modal.classList.contains('open')) return;
@@ -276,7 +229,7 @@ function openQuestMap(link) {
   (link.closest('.third-class-catalogue') || document.body).append(modal);
   const label = link.dataset.mapLabel || 'Mapa questa';
   let points = [];
-  try { points = JSON.parse(link.dataset.mapWorldPoints || '[]'); } catch { points = []; }
+  try { points = JSON.parse(link.dataset.mapPoints || '[]'); } catch { points = []; }
   if (!points.length) points = [{ x: 50, y: 55, label: 'Lokalizacja orientacyjna' }];
   const wrap = modal.querySelector('.quest-map-lightbox-image-wrap');
   const stage = modal.querySelector('.quest-map-lightbox-stage');
@@ -285,8 +238,7 @@ function openQuestMap(link) {
   modal._mapSize = null;
   modal.querySelector('.quest-map-lightbox-zoom-reset').textContent = '100%';
   const image = document.createElement('img');
-  image.src = link.dataset.mapWorldSrc || INTERLUDE_WORLD_MAP;
-  image.alt = `Pełna mapa świata Lineage II Interlude — ${label}`;
+  image.alt = label;
   image.decoding = 'async';
   image.referrerPolicy = 'no-referrer';
   const fitImage = () => {
@@ -310,7 +262,17 @@ function openQuestMap(link) {
     modal._applyMapZoom();
   };
   image.addEventListener('load', fitImage, { once: true });
+  image.addEventListener('error', () => {
+    wrap.style.removeProperty('width');
+    wrap.style.removeProperty('height');
+    const message = document.createElement('p');
+    message.textContent = 'Nie udało się wczytać mapy. Zamknij podgląd i spróbuj ponownie.';
+    wrap.replaceChildren(message);
+  }, { once: true });
+  wrap.style.removeProperty('width');
+  wrap.style.removeProperty('height');
   wrap.append(image);
+  image.src = link.dataset.mapSrc;
   if (image.complete && image.naturalWidth) fitImage();
   modal._mapResizeHandler = fitImage;
   window.addEventListener('resize', fitImage);
@@ -349,7 +311,7 @@ function openQuestMap(link) {
   modal.querySelector('.quest-map-lightbox-title').textContent = label;
   const locations = points.map((point, index) => `${index + 1}. ${point.label || label}`).join(' · ');
   modal.querySelector('.quest-map-lightbox-legend-text').textContent =
-    `Pinezka wskazuje położenie obszaru na pełnej mapie świata: ${locations}. Dokładny punkt zaznaczono na miniaturze mapy w tym kroku.`;
+    locations;
   modal._previousOverflow = document.body.style.overflow;
   modal._returnFocus = link;
   modal.classList.add('open');

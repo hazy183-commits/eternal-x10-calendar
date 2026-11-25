@@ -58,7 +58,8 @@
 .third-class-maps img{width:132px;height:92px}
 
 .third-class-cards.useful-quest-groups{display:grid;grid-template-columns:minmax(0,1fr);gap:20px}
-.useful-quest-group h3{margin:0 0 10px}
+.useful-quest-group{min-width:0;padding:14px;border:1px solid #59442b;border-radius:10px;background:#131617}
+.useful-quest-group h3{margin:0 0 12px;padding:0 0 9px;border-bottom:1px solid #6c522e;color:#f3d79c}
 
 .third-class-emblem[src*='/useful-quests/']{image-rendering:auto;box-shadow:0 0 14px #bf905435,inset 0 1px #fff3}
 
@@ -82,7 +83,7 @@
 .quest-dependencies summary{padding:6px 0;cursor:pointer}
 .quest-dependencies p{margin:4px 0 8px}
 
-.third-class-card.quest-epic-card{min-height:100px}
+.third-class-card.quest-epic-card{grid-template-columns:88px minmax(0,1fr);min-height:94px}
 .quest-epic-card .quest-epic-card-art{width:88px;height:66px;object-fit:cover;border:1px solid #8b713c;border-radius:4px}
 #memberZoneLayer .quest-catalogue-shortcut{text-decoration:none}
 @media(max-width:700px){#memberZoneLayer .quest-catalogue-shortcut.zone-nav{white-space:normal;text-align:center;font-size:9px}}
