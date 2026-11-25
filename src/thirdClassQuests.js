@@ -26,6 +26,61 @@ function element(tag, text, className) {
   return node;
 }
 
+const classArt = {
+  "Duelist": "dual_sword",
+  "Dreadnought": "saint_spear",
+  "Phoenix Knight": "forgotten_blade",
+  "Hell Knight": "dark_legions_edge",
+  "Sagittarius": "draconic_bow",
+  "Adventurer": "angel_slayer",
+  "Archmage": "arcana_mace",
+  "Soultaker": "demon_splinter",
+  "Arcana Lord": "imperial_staff",
+  "Cardinal": "elysian",
+  "Hierophant": "meteor_shower",
+  "Eva's Templar": "sword_of_miracle",
+  "Sword Muse": "tallum_blade",
+  "Wind Rider": "bloody_orchid",
+  "Moonlight Sentinel": "soul_bow",
+  "Mystic Muse": "worldtrees_branch",
+  "Elemental Master": "elemental_sword",
+  "Eva's Saint": "dasparions_staff",
+  "Shillien Templar": "sword_of_ipos",
+  "Spectral Dancer": "sirr_blade",
+  "Ghost Hunter": "naga_storm",
+  "Ghost Sentinel": "shyid_bow",
+  "Storm Screamer": "dragon_flame_head",
+  "Spectral Master": "hand_of_cabrio",
+  "Shillien Saint": "tongue_of_themis",
+  "Titan": "heavens_divider",
+  "Grand Khavatari": "blood_tornado",
+  "Dominator": "eye_of_soul",
+  "Doomcryer": "basalt_battlehammer",
+  "Fortune Seeker": "barakiel_axe",
+  "Maestro": "doom_crusher"
+};
+const stepTitles = [
+  'Odbierz sagę', 'Pierwsza rozmowa', 'Zdobądź pierwszy amulet',
+  'Tablet of Vision I', 'Tablet of Vision II', 'Tablet of Vision III',
+  'Zdobądź czwarty amulet', 'Tablet of Vision IV', 'Pokonaj Archon of Halisha',
+  'Tablet of Vision V', 'Tablet of Vision VI', 'Oddaj quest',
+];
+const addedSupplies = {
+  Duelist: 'Top Quality Meat',
+  Dreadnought: 'Big White Nimble Fish',
+  'Phoenix Knight': 'Big White Fat Fish',
+  "Eva's Templar": 'Big White Fat Fish',
+  'Sword Muse': 'Big White Fat Fish',
+};
+
+function illustration(quest) {
+  const image = element('img', '', 'third-class-emblem');
+  image.src = '/assets/interlude/icons/weapon_' + classArt[quest.name] + '_i00.png';
+  image.alt = '';
+  image.loading = 'lazy';
+  return image;
+}
+
 function externalLink(label, url) {
   const link = element('a', label);
   link.href = url;
@@ -102,7 +157,10 @@ export function installThirdClassQuests() {
     cards.replaceChildren(...results.map((quest) => {
       const button = element('button', '', 'third-class-card');
       button.type = 'button';
-      button.append(element('strong', quest.from + ' → ' + quest.name), element('small', races[quest.race]));
+      button.dataset.race = quest.race;
+      const copy = element('span', '', 'third-class-card-copy');
+      copy.append(element('small', quest.from), element('strong', quest.name));
+      button.append(illustration(quest), copy);
       button.addEventListener('click', () => openGuide(quest));
       return button;
     }));
@@ -110,10 +168,18 @@ export function installThirdClassQuests() {
 
   function openGuide(quest) {
     dialog.querySelector('h3').textContent = quest.from + ' → ' + quest.name;
-    const steps = element('ol');
-    for (const step of quest.steps) {
+    const introduction = element('header', '', 'third-class-intro');
+    const heading = element('div');
+    heading.append(element('strong', 'Saga of the ' + (quest.name === 'Dreadnought' ? 'Dreadnoughts' : quest.name)),
+      element('p', races[quest.race] + ' · poziom 76'));
+    introduction.append(illustration(quest), heading);
+    const supplies = element('p', 'Przygotuj: ' +
+      ['Ice Crystal', 'Divine Stone of Wisdom', addedSupplies[quest.name]].filter(Boolean).join(' · '),
+      'third-class-supplies');
+    const steps = element('ol', '', 'third-class-steps');
+    for (const [index, step] of quest.steps.entries()) {
       const row = element('li');
-      row.append(element('p', step.text));
+      row.append(element('h4', stepTitles[index]), element('p', step.text));
       const images = element('div', '', 'third-class-maps');
       for (const [url, label] of step.images) {
         const link = element('button');
@@ -131,7 +197,7 @@ export function installThirdClassQuests() {
       if (images.children.length) row.append(images);
       steps.append(row);
     }
-    content.replaceChildren(steps, externalLink('Źródło i dodatkowe mapy oraz zdjęcia NPC', quest.url));
+    content.replaceChildren(introduction, supplies, steps, externalLink('Źródło i dodatkowe mapy oraz zdjęcia NPC', quest.url));
     dialog.showModal();
     dialog.scrollTop = 0;
   }
