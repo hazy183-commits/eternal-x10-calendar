@@ -17,3 +17,14 @@
 .third-class-maps{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
 .third-class-maps img{display:block;width:132px;max-height:92px;object-fit:contain;border:1px solid #6b5431;background:#16191a}
 @media(max-width:600px){.third-class-quests{padding:15px}.third-class-filters label{width:100%}.third-class-quests dialog{padding:12px}}
+
+.third-class-maps button{padding:2px}
+.third-class-quests .third-class-map-preview{width:min(960px,calc(100vw - 24px))}
+.third-class-map-preview header{position:sticky;top:-20px;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:12px;background:#101516;padding:7px 0}
+.third-class-map-preview header h3{margin:0}
+.third-class-map-preview header button{min-width:44px;min-height:44px;font-size:24px}
+.third-class-map-preview img{display:block;max-width:100%;height:auto;margin-block:12px}
+.third-class-map-frame{position:relative;width:fit-content;max-width:100%}
+.third-class-map-pin{position:absolute;transform:translate(-50%,-50%);color:#ff4343;text-shadow:0 0 3px white,0 0 8px black;font-size:28px;line-height:1}
+.third-class-map-pin[hidden]{display:none}
+@media(max-width:600px){.third-class-map-preview header{top:-12px}}
