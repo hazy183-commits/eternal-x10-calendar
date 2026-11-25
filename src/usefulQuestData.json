@@ -1,7 +1,7 @@
 [
   {
     "name": "Subclassa",
-    "title": "Fate’s Whisper",
+    "title": "Fate’s Whisper · Mimir’s Elixir",
     "category": "Rozwój postaci",
     "level": "75+",
     "icon": "subclass",
@@ -55,14 +55,34 @@
         "images": []
       },
       {
-        "title": "Oddaj quest",
-        "text": "Oddaj Reorinowi broń B i 984 kryształy B albo wybierz dostępny na Eternal wariant z kuponem na broń A. Kupon wymienisz później u Marii, dostarczając broń B i 984 kryształy B. Po zakończeniu Fate’s Whisper wybierz subclassę u mistrza odpowiedniej gildii.",
+        "title": "Zakończ Fate’s Whisper i odbierz Star of Destiny",
+        "text": "Oddaj Reorinowi broń B i 984 kryształy B albo wybierz dostępny na Eternal wariant z kuponem na broń A. Kupon wymienisz później u Marii za broń B i 984 kryształy B. Odbierz Star of Destiny i sprawdź opcję dodania subclassy u Grand Mastera, High Priesta lub innego mistrza odpowiedniej gildii.",
         "images": [
           [
             "https://la2wiki.com/npc/reorin.webp",
             "Reorin · portret"
           ]
         ]
+      },
+      {
+        "title": "Jeśli mistrz wymaga eliksiru, zacznij u Ladda",
+        "text": "Oficjalny opis Eternal wymienia Fate’s Whisper jako warunek subclassy. W klasycznym Interlude dochodzi Mimir’s Elixir. Gdy opcja dodania subclassy nadal jest zablokowana, zabierz Star of Destiny do Magister Ladd na 4. piętrze Ivory Tower i sprawdź, czy oferuje quest.",
+        "images": []
+      },
+      {
+        "title": "Mimir’s Elixir · Pure Silver",
+        "text": "W podziemiach Ivory Tower odbierz Supplier of Reagents od Wesley’a. W urnie na temperaturze 1 (Salamander) połącz 10 Moonstone Shard z 1 Volcanic Ash, aby uzyskać Moon Dust. Połącz 10 Moon Dust z 1 Quicksilver na Lunargent, a następnie 1 Lunargent z 1 Quicksilver na Pure Silver. Jeśli kupisz Lunargent, wystarczy ostatnia mieszanka. Pokaż Pure Silver Laddowi.",
+        "images": []
+      },
+      {
+        "title": "Mimir’s Elixir · True Gold i Blood Fire",
+        "text": "Porozmawiaj z Magister Joan na 3. piętrze. Zdobądź Sage’s Stone z Chimera Piece w Silent Valley i zanieś go Joan po True Gold. Wróć do Ladda po Mixing Stone. W Lair of Antharas zdobądź Blood Fire z Bloody Guardian.",
+        "images": []
+      },
+      {
+        "title": "Mimir’s Elixir · mieszanie i wybór klasy",
+        "text": "W podziemiach Ivory Tower użyj Mixing Stone w Alchemist’s Mixing Urn. Połącz Pure Silver, True Gold i Blood Fire na temperaturze 3 (Phoenix). Wróć do Ladda i wypij eliksir przez opcję w dialogu. Następnie wybierz subclassę u mistrza właściwej gildii.",
+        "images": []
       }
     ]
   },
@@ -150,7 +170,7 @@
       },
       {
         "title": "Barakiel na Eternal",
-        "text": "Zdobądź Rain Song z Barakiela. Na Eternal możesz też uzbierać 15 fragmentów Rain Song, które automatycznie połączą się w laskę. Oddaj ją Ossianowi, a Relic Box zanieś Laddowi w Ivory Tower.",
+        "text": "Zdobądź Rain Song z Barakiela. Na Eternal jeśli Twoja grupa nie zada ostatniego ciosu, możesz uzbierać 15 fragmentów Rain Song, które automatycznie połączą się w laskę. Oddaj ją Ossianowi, a Relic Box zanieś Laddowi w Ivory Tower.",
         "images": []
       },
       {
@@ -202,7 +222,7 @@
       },
       {
         "title": "Pagan’s Mark",
-        "text": "Weź Through the Gate Once More. W Forest of the Dead zbierz 10 Necromancer’s Heart, m.in. z Bone Animatorów. Oddaj serca i Faded Visitor’s Mark Flauronowi, żeby dostać Pagan’s Mark.",
+        "text": "Weź Through the Gate Once More. W Forest of the Dead zbierz 10 Necromancer’s Heart, m.in. z Bone Animatorów. Oddaj serca i Faded Visitor’s Mark Flauronowi, żeby dostać Pagan’s Mark. Pagan’s Mark pozwala wracać do świątyni, ale niektóre wewnętrzne drzwi nadal wymagają osobnego klucza.",
         "images": [
           [
             "https://la2wiki.com/npc/flauron.webp",
@@ -287,7 +307,7 @@
       },
       {
         "title": "Zbierz wodę z Graala",
-        "text": "Na najwyższym poziomie klasztoru wejdź do Room of Splendor, używając Key of Splendor Room. Kliknij Holy Grail i zanieś Gremory’emu butelkę z wodą. W pomieszczeniu może stać agresywny Anays.",
+        "text": "Na najwyższym poziomie klasztoru wejdź do Room of Splendor, używając Key of Splendor Room. Kliknij Holy Grail i zanieś Gremory’emu butelkę z wodą. W pomieszczeniu może stać agresywny Anays. Po wejściu skup się na zebraniu wody. Do tej czynności nie musisz pokonywać Anaysa.",
         "images": [
           [
             "https://la2wiki.com/npc/gremory.webp",
@@ -331,7 +351,7 @@
       },
       {
         "title": "Wybierz receptę u Dinna",
-        "text": "Oddaj 150 tkanek i jajko przez opcję wymiany zestawu. Wybierz receptę broni A (60%). Opcja oddania samych tkanek wypłaca adenę.",
+        "text": "Oddaj 150 tkanek i jajko przez opcję wymiany zestawu. Wybierz receptę broni A (60%). Opcja oddania samych tkanek wypłaca adenę. Quest jest powtarzalny. Przygotuj osobny komplet materiałów na każdą receptę.",
         "images": [
           [
             "https://la2wiki.com/npc/dinn.webp",
@@ -365,7 +385,7 @@
       },
       {
         "title": "Wymiana u Karakawei",
-        "text": "Odszukaj Orahochin i przejdź do wioski Elroki. Oddaj kości Karakawei, żeby odebrać części do broni A. U Singsinga kości możesz oddać za adenę.",
+        "text": "Odszukaj Orahochin i przejdź do wioski Elroki. Oddaj kości Karakawei, żeby odebrać części do broni A. U Singsinga kości możesz oddać za adenę. Wybierz części, których potrzebujesz do recepty.",
         "images": [
           [
             "https://la2wiki.com/npc/singsing.webp",
@@ -409,7 +429,7 @@
       },
       {
         "title": "Oddaj Bone Powder",
-        "text": "Zanieś Bone Powder do Shilen’s Stone Statue. Wróć do Asamaha, a następnie do Mushiki. Standardowa nagroda to jednorazowy EWA. Ten etap otwiera też dalszy quest do Sailrena.",
+        "text": "Zanieś Bone Powder do Shilen’s Stone Statue. Wróć do Asamaha, a następnie do Mushiki. Standardowa nagroda to jednorazowy EWA. Ten etap otwiera też dalszy quest do Sailrena. Nagroda EWA jest jednorazowa na postać; do powtarzalnej farmy na wyspie służą osobne questy u Dinna i Singsinga.",
         "images": [
           [
             "https://la2wiki.com/npc/asamah.webp",
