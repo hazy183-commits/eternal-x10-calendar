@@ -965,26 +965,17 @@
             "Wahkan · zdjęcie NPC"
           ],
           [
-            "https://la2wiki.com/map/il/4-89.jpg",
-            "Rozmowa i oddanie odznak · Ketra Orc Outpost · Wahkan",
-            null,
+            "/quest-maps/world.jpg",
+            "Rejon farmy · Varka Silenos Barracks",
             [
-              {
-                "x": 67.7734375,
-                "y": 36.99186991869919,
-                "label": "Rozmowa i oddanie odznak · Ketra Orc Outpost · Wahkan"
-              }
-            ]
-          ],
-          [
-            "https://la2wiki.com/map/il/4-89.jpg",
-            "Farma odznak · Varka Silenos Barracks · Naran Ashanuk",
-            null,
+              1307,
+              827.9999999999999
+            ],
             [
               {
                 "x": 63.818359375,
                 "y": 42.073170731707314,
-                "label": "Farma odznak · Varka Silenos Barracks · Naran Ashanuk"
+                "label": "Rejon farmy · Varka Silenos Barracks"
               }
             ]
           ]
@@ -993,10 +984,6 @@
           [
             "Wahkan",
             "146980, -67483, -3656"
-          ],
-          [
-            "Naran Ashanuk",
-            "125440, -40944, -3701"
           ]
         ]
       },
@@ -1015,26 +1002,17 @@
             "Wahkan · zdjęcie NPC"
           ],
           [
-            "https://la2wiki.com/map/il/4-89.jpg",
-            "Rozmowa i oddanie odznak · Ketra Orc Outpost · Wahkan",
-            null,
+            "/quest-maps/world.jpg",
+            "Rejon farmy · Varka Silenos Barracks",
             [
-              {
-                "x": 67.7734375,
-                "y": 36.99186991869919,
-                "label": "Rozmowa i oddanie odznak · Ketra Orc Outpost · Wahkan"
-              }
-            ]
-          ],
-          [
-            "https://la2wiki.com/map/il/4-89.jpg",
-            "Farma odznak · Varka Silenos Barracks · Naran Ashanuk",
-            null,
+              1307,
+              827.9999999999999
+            ],
             [
               {
                 "x": 63.818359375,
                 "y": 42.073170731707314,
-                "label": "Farma odznak · Varka Silenos Barracks · Naran Ashanuk"
+                "label": "Rejon farmy · Varka Silenos Barracks"
               }
             ]
           ]
@@ -1045,14 +1023,17 @@
         "text": "Zbierz nowe odznaki trzech typów. Odznaki General wypadają m.in. z: Varka Silenos General, Great Magus, Great Seer, Prophet i Head Magus. Szukaj tych mobów głębiej na terenie wroga. Oddaj 300 Soldier, 200 Captain, 100 General oraz poprzednią odznakę posłańcowi.",
         "images": [
           [
-            "https://la2wiki.com/map/il/4-89.jpg",
-            "Farma odznak · Varka Silenos Barracks · Naran Ashanuk",
-            null,
+            "/quest-maps/world.jpg",
+            "Rejon farmy · Varka Silenos Barracks",
+            [
+              1307,
+              827.9999999999999
+            ],
             [
               {
                 "x": 63.818359375,
                 "y": 42.073170731707314,
-                "label": "Farma odznak · Varka Silenos Barracks · Naran Ashanuk"
+                "label": "Rejon farmy · Varka Silenos Barracks"
               }
             ]
           ]
@@ -1073,21 +1054,12 @@
             "Kadun Zu Ketra · zdjęcie NPC"
           ],
           [
-            "https://la2wiki.com/map/il/4-89.jpg",
-            "Rozmowa z przywódcą · Ketra Orc Village · Kadun Zu Ketra",
-            null,
-            [
-              {
-                "x": 68.310546875,
-                "y": 34.197154471544714,
-                "label": "Rozmowa z przywódcą · Ketra Orc Village · Kadun Zu Ketra"
-              }
-            ]
-          ],
-          [
-            "https://la2wiki.com/map/il/4-89.jpg",
+            "/quest-maps/world.jpg",
             "Raid boss · Varka’s Hero Shadith",
-            null,
+            [
+              1269,
+              829.9999999999999
+            ],
             [
               {
                 "x": 61.962890625,
@@ -1119,21 +1091,12 @@
             "Kadun Zu Ketra · zdjęcie NPC"
           ],
           [
-            "https://la2wiki.com/map/il/4-89.jpg",
-            "Rozmowa z przywódcą · Ketra Orc Village · Kadun Zu Ketra",
-            null,
-            [
-              {
-                "x": 68.310546875,
-                "y": 34.197154471544714,
-                "label": "Rozmowa z przywódcą · Ketra Orc Village · Kadun Zu Ketra"
-              }
-            ]
-          ],
-          [
-            "https://la2wiki.com/map/il/4-89.jpg",
+            "/quest-maps/world.jpg",
             "Raid boss · Varka’s Commander Mos",
-            null,
+            [
+              1245.3076923076924,
+              841.525998492841
+            ],
             [
               {
                 "x": 60.80603966346154,
@@ -1172,35 +1135,22 @@
             "Naran Ashanuk · zdjęcie NPC"
           ],
           [
-            "https://la2wiki.com/map/il/4-89.jpg",
-            "Rozmowa i oddanie odznak · Varka Silenos Barracks · Naran Ashanuk",
-            null,
+            "/quest-maps/world.jpg",
+            "Rejon farmy · Ketra Orc Outpost",
             [
-              {
-                "x": 63.818359375,
-                "y": 42.073170731707314,
-                "label": "Rozmowa i oddanie odznak · Varka Silenos Barracks · Naran Ashanuk"
-              }
-            ]
-          ],
-          [
-            "https://la2wiki.com/map/il/4-89.jpg",
-            "Farma odznak · Ketra Orc Outpost · Wahkan",
-            null,
+              1388,
+              728
+            ],
             [
               {
                 "x": 67.7734375,
                 "y": 36.99186991869919,
-                "label": "Farma odznak · Ketra Orc Outpost · Wahkan"
+                "label": "Rejon farmy · Ketra Orc Outpost"
               }
             ]
           ]
         ],
         "waypoints": [
-          [
-            "Wahkan",
-            "146980, -67483, -3656"
-          ],
           [
             "Naran Ashanuk",
             "125440, -40944, -3701"
@@ -1222,26 +1172,17 @@
             "Naran Ashanuk · zdjęcie NPC"
           ],
           [
-            "https://la2wiki.com/map/il/4-89.jpg",
-            "Rozmowa i oddanie odznak · Varka Silenos Barracks · Naran Ashanuk",
-            null,
+            "/quest-maps/world.jpg",
+            "Rejon farmy · Ketra Orc Outpost",
             [
-              {
-                "x": 63.818359375,
-                "y": 42.073170731707314,
-                "label": "Rozmowa i oddanie odznak · Varka Silenos Barracks · Naran Ashanuk"
-              }
-            ]
-          ],
-          [
-            "https://la2wiki.com/map/il/4-89.jpg",
-            "Farma odznak · Ketra Orc Outpost · Wahkan",
-            null,
+              1388,
+              728
+            ],
             [
               {
                 "x": 67.7734375,
                 "y": 36.99186991869919,
-                "label": "Farma odznak · Ketra Orc Outpost · Wahkan"
+                "label": "Rejon farmy · Ketra Orc Outpost"
               }
             ]
           ]
@@ -1252,14 +1193,17 @@
         "text": "Zbierz nowe odznaki trzech typów. Odznaki General wypadają m.in. z: Ketra Orc General, Battalion Commander, Grand Seer, Head Shaman i Prophet. Szukaj tych mobów głębiej na terenie wroga. Oddaj 300 Soldier, 200 Captain, 100 General oraz poprzednią odznakę posłańcowi.",
         "images": [
           [
-            "https://la2wiki.com/map/il/4-89.jpg",
-            "Farma odznak · Ketra Orc Outpost · Wahkan",
-            null,
+            "/quest-maps/world.jpg",
+            "Rejon farmy · Ketra Orc Outpost",
+            [
+              1388,
+              728
+            ],
             [
               {
                 "x": 67.7734375,
                 "y": 36.99186991869919,
-                "label": "Farma odznak · Ketra Orc Outpost · Wahkan"
+                "label": "Rejon farmy · Ketra Orc Outpost"
               }
             ]
           ]
@@ -1280,21 +1224,12 @@
             "Ashas Varka Durai · zdjęcie NPC"
           ],
           [
-            "https://la2wiki.com/map/il/4-89.jpg",
-            "Rozmowa z przywódcą · Varka Silenos Village · Ashas Varka Durai",
-            null,
-            [
-              {
-                "x": 60.400390625,
-                "y": 39.63414634146341,
-                "label": "Rozmowa z przywódcą · Varka Silenos Village · Ashas Varka Durai"
-              }
-            ]
-          ],
-          [
-            "https://la2wiki.com/map/il/4-89.jpg",
+            "/quest-maps/world.jpg",
             "Raid boss · Ketra’s Hero Hekaton",
-            null,
+            [
+              1390.931623931624,
+              698.7856066314996
+            ],
             [
               {
                 "x": 67.91658319978633,
@@ -1326,21 +1261,12 @@
             "Ashas Varka Durai · zdjęcie NPC"
           ],
           [
-            "https://la2wiki.com/map/il/4-89.jpg",
-            "Rozmowa z przywódcą · Varka Silenos Village · Ashas Varka Durai",
-            null,
-            [
-              {
-                "x": 60.400390625,
-                "y": 39.63414634146341,
-                "label": "Rozmowa z przywódcą · Varka Silenos Village · Ashas Varka Durai"
-              }
-            ]
-          ],
-          [
-            "https://la2wiki.com/map/il/4-89.jpg",
+            "/quest-maps/world.jpg",
             "Raid boss · Ketra’s Commander Tayr",
-            null,
+            [
+              1381,
+              669.0000000000001
+            ],
             [
               {
                 "x": 67.431640625,
