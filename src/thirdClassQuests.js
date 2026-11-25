@@ -81,14 +81,6 @@ function illustration(quest) {
   return image;
 }
 
-function externalLink(label, url) {
-  const link = element('a', label);
-  link.href = url;
-  link.target = '_blank';
-  link.rel = 'noopener noreferrer';
-  return link;
-}
-
 export function installThirdClassQuests() {
   const section = document.getElementById('przydatne-questy');
   if (!section) return;
@@ -226,7 +218,7 @@ export function installThirdClassQuests() {
       const row = element('li');
       row.append(element('h4', stepTitles[index]), element('p', step.text));
       if (step.forumRoute) {
-        row.append(element('p', 'Dojście wg L2Mad: ' + step.forumRoute, 'third-class-forum-route'));
+        row.append(element('p', 'Dojście: ' + step.forumRoute, 'third-class-forum-route'));
       }
       const images = element('div', '', 'third-class-maps');
       for (const [url, label] of step.images) {
@@ -248,8 +240,7 @@ export function installThirdClassQuests() {
       if (images.children.length) row.append(images);
       steps.append(row);
     }
-    const sourceLabel = quest.url.includes('forum.l2mad.ws') ? 'Poradnik źródłowy · Forum L2Mad' : 'Poradnik źródłowy · La2Wiki';
-    content.replaceChildren(introduction, supplies, steps, externalLink(sourceLabel, quest.url));
+    content.replaceChildren(introduction, supplies, steps);
     dialog.showModal();
     dialog.scrollTop = 0;
   }
