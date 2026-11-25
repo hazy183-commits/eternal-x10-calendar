@@ -215,6 +215,22 @@ export function installThirdClassQuests() {
     }));
   };
 
+  function addInstructionList(container, text) {
+    const instructions = text.match(/[^.!?]+(?:[.!?](?!\d)|$)/g)?.map((part) => part.trim()).filter(Boolean) || [text];
+    // Keep short standalone location labels and ordinal numbers with their sentence.
+    const combined = [];
+    for (const part of instructions) {
+      if (combined.length && (/^\d{1,2}\.$/.test(combined.at(-1)) || /\b\d{1,2}\.$/.test(combined.at(-1)))) {
+        combined[combined.length - 1] += ' ' + part;
+      } else {
+        combined.push(part);
+      }
+    }
+    const list = element('ul', '', 'quest-actions');
+    list.append(...combined.map((part) => element('li', part)));
+    container.append(list);
+  }
+
   function openGuide(quest) {
     if (!document.querySelector('link[data-quest-image-origin]')) {
       for (const origin of ['https://forum.l2mad.net', 'https://la2wiki.com']) {
@@ -231,13 +247,22 @@ export function installThirdClassQuests() {
     heading.append(element('strong', quest.title || 'Saga of the ' + (quest.name === 'Dreadnought' ? 'Dreadnoughts' : quest.name)),
       element('p', quest.level ? 'Poziom ' + quest.level : races[quest.race] + ' · poziom 76'));
     introduction.append(illustration(quest), heading);
-    const supplies = element('p', 'Przygotuj: ' +
-      ['Ice Crystal', 'Divine Stone of Wisdom', addedSupplies[quest.name]].filter(Boolean).join(' · '),
-      'third-class-supplies');
+    const quick = element('dl', '', 'quest-quick-info');
+    const fields = [
+      ['Start', quest.quickStart || quest.steps[0]?.text],
+      ['Przygotuj', quest.prepare || 'Ice Crystal i Divine Stone of Wisdom' + (addedSupplies[quest.name] ? ' oraz ' + addedSupplies[quest.name] : '')],
+      ['Nagroda', quest.outcome || 'Zmiana profesji na ' + quest.name],
+    ];
+    for (const [label, value] of fields) {
+      const field = element('div');
+      field.append(element('dt', label), element('dd', value));
+      quick.append(field);
+    }
     const steps = element('ol', '', 'third-class-steps');
     for (const [index, step] of quest.steps.entries()) {
       const row = element('li');
-      row.append(element('h4', step.title || stepTitles[index]), element('p', step.text));
+      row.append(element('h4', step.title || stepTitles[index]));
+      addInstructionList(row, step.text);
       if (step.forumRoute) {
         row.append(element('p', 'Dojście: ' + step.forumRoute, 'third-class-forum-route'));
       }
@@ -256,12 +281,15 @@ export function installThirdClassQuests() {
         picture.addEventListener('error', () => link.replaceChildren(element('span', 'Otwórz: ' + label)), { once: true });
         picture.src = url;
         link.append(picture);
+        if (!url.includes('/npc/') && !label.endsWith(' · zdjęcie NPC')) {
+          link.append(element('span', label, 'quest-map-caption'));
+        }
         images.append(link);
       }
       if (images.children.length) row.append(images);
       steps.append(row);
     }
-    content.replaceChildren(introduction, ...(quest.category ? [] : [supplies]), steps);
+    content.replaceChildren(introduction, quick, steps);
     dialog.showModal();
     dialog.scrollTop = 0;
   }

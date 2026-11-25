@@ -61,3 +61,10 @@
 .useful-quest-group h3{margin:0 0 10px}
 
 .third-class-emblem[src*='/useful-quests/']{image-rendering:auto;box-shadow:0 0 14px #bf905435,inset 0 1px #fff3}
+
+.quest-quick-info{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,195px),1fr));gap:8px;margin:12px 0 20px}
+.quest-quick-info div{padding:10px;border:1px solid #6a5433;border-radius:6px;background:#211c16}
+.quest-quick-info dt{color:#f5db9f;font-weight:700}.quest-quick-info dd{margin:3px 0 0;line-height:1.45}
+.third-class-steps .quest-actions{margin:5px 0 10px;padding-inline-start:1.2rem;list-style:disc}
+.third-class-steps .quest-actions li{padding:0;margin:3px 0;border:0;line-height:1.5}
+.quest-map-caption{display:block;width:132px;padding:4px;font-size:12px;line-height:1.35;text-align:left}

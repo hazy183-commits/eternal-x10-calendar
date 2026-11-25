@@ -84,7 +84,10 @@
         "text": "W podziemiach Ivory Tower użyj Mixing Stone w Alchemist’s Mixing Urn. Połącz Pure Silver, True Gold i Blood Fire na temperaturze 3 (Phoenix). Wróć do Ladda i wypij eliksir przez opcję w dialogu. Następnie wybierz subclassę u mistrza właściwej gildii.",
         "images": []
       }
-    ]
+    ],
+    "quickStart": "Oren → Skyshadow Meadow",
+    "prepare": "Poziom 75. Na Eternal przygotuj miejsce w ekwipunku na przedmioty z czterech bossów.",
+    "outcome": "Możliwość dodania subclassy"
   },
   {
     "name": "Noblesse",
@@ -207,7 +210,10 @@
           ]
         ]
       }
-    ]
+    ],
+    "quickStart": "Aden → schody do świątyni Einhasad",
+    "prepare": "Aktywuj subclassę. Do części I przygotuj 5 × Lunargent i 1 × Hellfire Oil.",
+    "outcome": "Status Noblesse i umiejętności noblesse"
   },
   {
     "name": "Wejście do Pagan’s Temple",
@@ -220,6 +226,14 @@
         "title": "Visitor’s Mark",
         "text": "W Rune, na dolnym poziomie świątyni, odbierz quest od Eliyah. Wejdź wyżej do Flaurona po Visitor’s Mark.",
         "images": [
+          [
+            "https://lineage2dex.com/template/site/dex/storage/images/paganstemple1.jpg",
+            "Podejście do Eliyah · dolna część świątyni"
+          ],
+          [
+            "https://lineage2dex.com/template/site/dex/storage/images/paganstemple2.jpg",
+            "Podejście do Flaurona · poziom wyżej"
+          ],
           [
             "https://la2wiki.com/npc/eliyah.webp",
             "Eliyah · portret"
@@ -235,6 +249,14 @@
         "text": "Zejdź wejściem za Flauronem. Przejdź przez Triol’s Mirror i podejdź do Temple Gatekeepera. Użyj Visitor’s Mark w dialogu. Gdy otrzymasz Faded Visitor’s Mark, wróć do Flaurona.",
         "images": [
           [
+            "https://lineage2dex.com/template/site/dex/storage/images/paganstemple3.jpg",
+            "Triol’s Mirror · punkt teleportacji"
+          ],
+          [
+            "https://lineage2dex.com/template/site/dex/storage/images/paganstemple4.jpg",
+            "Temple Gatekeeper · brama do świątyni"
+          ],
+          [
             "https://la2wiki.com/npc/flauron.webp",
             "Flauron · portret"
           ]
@@ -245,6 +267,10 @@
         "text": "Weź Through the Gate Once More. W Forest of the Dead zbierz 10 Necromancer’s Heart, m.in. z Bone Animatorów. Oddaj serca i Faded Visitor’s Mark Flauronowi, żeby dostać Pagan’s Mark. Pagan’s Mark pozwala wracać do świątyni, ale niektóre wewnętrzne drzwi nadal wymagają osobnego klucza.",
         "images": [
           [
+            "https://lineage2dex.com/template/site/dex/storage/images/paganstemple6.jpg",
+            "Forest of the Dead · miejsce polowania"
+          ],
+          [
             "https://la2wiki.com/npc/flauron.webp",
             "Flauron · portret"
           ],
@@ -254,7 +280,10 @@
           ]
         ]
       }
-    ]
+    ],
+    "quickStart": "Rune → dolny poziom świątyni",
+    "prepare": "Poziom 73. Zacznij u Eliyah, a po pierwszej wizycie wróć do Flaurona.",
+    "outcome": "Pagan’s Mark i stały dostęp"
   },
   {
     "name": "Pagan’s Temple · enchanty S",
@@ -292,7 +321,10 @@
           ]
         ]
       }
-    ]
+    ],
+    "quickStart": "Rune → High Priest Innocentin",
+    "prepare": "Poziom 73. Zrób wcześniej wejście do Pagan’s Temple.",
+    "outcome": "Szansa na enchant S za 2 000 Pagan Totem"
   },
   {
     "name": "MoS · enchanty S",
@@ -345,7 +377,10 @@
           ]
         ]
       }
-    ]
+    ],
+    "quickStart": "Rune → Priest Dominic",
+    "prepare": "Poziom 73. Zabierz klucz do Room of Splendor, gdy już go zdobędziesz. Skrypty zbierasz po przyjęciu questa.",
+    "outcome": "Wymiana skryptów na enchanty S"
   },
   {
     "name": "Primeval Isle · recepty A",
@@ -379,7 +414,10 @@
           ]
         ]
       }
-    ]
+    ],
+    "quickStart": "Primeval Isle Wharf → Dinn",
+    "prepare": "Poziom 75. Na jedną receptę zbierz 150 × Dinosaur Tissue i 1 × Dinosaur Egg.",
+    "outcome": "Recepta broni A (60%)"
   },
   {
     "name": "Primeval Isle · części broni A",
@@ -413,7 +451,10 @@
           ]
         ]
       }
-    ]
+    ],
+    "quickStart": "Primeval Isle Wharf → Singsing",
+    "prepare": "Poziom 75. Jedna wymiana wymaga 300 × Bones of a Plains Dinosaur.",
+    "outcome": "Części do craftu broni A"
   },
   {
     "name": "Primeval Isle · enchant broni A",
@@ -457,6 +498,9 @@
           ]
         ]
       }
-    ]
+    ],
+    "quickStart": "Primeval Isle Wharf → Marquez",
+    "prepare": "Zacznij od Meeting the Elroki na poziomie 75. Następne części odblokują się na 76 i 77.",
+    "outcome": "Jednorazowy enchant broni A i kolejny quest do Sailrena"
   }
 ]
