@@ -90,13 +90,14 @@ export default async function handler(req, res) {
     const date = textWidthSafe(payload.date || '--.--.----', 24);
     const events = Array.isArray(payload.events) ? payload.events.slice(0, 16) : [];
     const cinematic = url.searchParams.get('layout') === 'cinematic';
+    const quest = url.searchParams.get('layout') === 'quest';
     const newspaper = url.searchParams.get('layout') === 'newspaper';
     const board = url.searchParams.get('layout') === 'board';
     const refined = url.searchParams.get('layout') === 'refined';
     const width = 1200;
     const rowHeight = cinematic ? 90 : 104;
     const top = cinematic ? 274 : 242;
-    const height = newspaper ? 362 + Math.max(1, events.length) * 105 : board ? Math.max(500, 359 + Math.ceil(events.length / 2) * 165) : Math.max(590, top + Math.max(events.length, 1) * rowHeight + 112);
+    const height = quest ? 287 + Math.max(1, events.length) * 132 : newspaper ? 362 + Math.max(1, events.length) * 105 : board ? Math.max(500, 359 + Math.ceil(events.length / 2) * 165) : Math.max(590, top + Math.max(events.length, 1) * rowHeight + 112);
 
     const imageHost = 'https://orzelbialy.eu';
     const artworkPath = artworkForDate(date);
@@ -221,7 +222,48 @@ export default async function handler(req, res) {
       <text x="1121" y="317" text-anchor="end" fill="#575049" font-size="19">Czas polski</text>
       ${paperRows || '<text x="78" y="397" fill="#575049" font-size="29">Brak zaplanowanych wydarzeń</text>'}
     </svg>` : '';
-    const svg = newspaper ? paperSvg : board ? boardSvg : cinematic ? `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+    const questPinY = index => 325 + index * 132;
+    const questPinX = index => [130, 180, 117, 151][index % 4];
+    const route = events.map((_, index) => {
+      const x = questPinX(index), y = questPinY(index);
+      return index === 0 ? `M${x} ${y}` : `C${questPinX(index - 1)} ${y - 66},${x} ${y - 66},${x} ${y}`;
+    }).join(' ');
+    const questRows = quest ? events.map((event, index) => {
+      const x = questPinX(index), y = questPinY(index);
+      const name = textWidthSafe(event.name || 'Wydarzenie', 44);
+      const type = textWidthSafe(event.type || 'Wydarzenie', 28);
+      const accent = eventAccent(name, type.toUpperCase());
+      return `<g>
+        <path d="M${x+28} ${y}H242" stroke="${accent}" stroke-opacity=".55" stroke-dasharray="3 7"/>
+        <circle cx="${x}" cy="${y}" r="24" fill="#102226" stroke="${accent}" stroke-width="2"/>
+        <path d="M${x} ${y-12}l9 12-9 12-9-12Z" fill="${accent}"/>
+        <path d="M249 ${y-47}H1100l25 22v77H249Z" fill="#081b21" fill-opacity=".88" stroke="${accent}" stroke-opacity=".58"/>
+        <path d="M249 ${y-47}h117" stroke="${accent}" stroke-width="3"/>
+        <text x="275" y="${y-14}" fill="${accent}" font-size="16" font-weight="700" letter-spacing="1.4">${esc(type.toUpperCase())}</text>
+        <text x="275" y="${y+22}" fill="#fff3d0" font-family="DejaVu Serif" font-size="${Math.min(33, Math.floor(870 / name.length))}" font-weight="700">${esc(name)}</text>
+        <text x="276" y="${y+43}" fill="#ded3b3" font-size="16">${esc(textWidthSafe(event.location || 'Miejsce do ustalenia', 48))}</text>
+        <text x="1092" y="${y+19}" text-anchor="end" fill="${accent}" font-size="47" font-weight="700">${esc(textWidthSafe(event.time || '--:--', 8))}</text>
+      </g>`;
+    }).join('') : '';
+    const questSvg = quest ? `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" font-family="DejaVu Sans">
+      <defs>
+        <linearGradient id="quest-shade" x2="0" y2="1"><stop stop-color="#081519" stop-opacity=".65"/><stop offset=".35" stop-color="#10282d" stop-opacity=".68"/><stop offset="1" stop-color="#061214" stop-opacity=".98"/></linearGradient>
+        <pattern id="contours" width="310" height="195" patternUnits="userSpaceOnUse">
+          <path d="M-40 56Q66-9 142 50T323 49M-40 72Q64 5 142 67T323 65M-40 88Q64 21 142 83T323 81M-40 146Q69 89 154 137T323 130M-40 163Q69 106 154 154T323 147" fill="none" stroke="#ddc992" stroke-opacity=".18"/>
+        </pattern>
+      </defs>
+      <rect width="1200" height="${height}" fill="url(#quest-shade)"/>
+      <rect x="40" y="236" width="1120" height="${height-276}" fill="url(#contours)"/>
+      <path d="M27 91V27H169M1031 27H1173V91M27 ${height-91}V${height-27}H169M1031 ${height-27}H1173V${height-91}" fill="none" stroke="#d8b977" stroke-width="2"/>
+      <text x="159" y="78" fill="#f0d8a4" font-size="20" font-weight="700" letter-spacing="3">ORZEŁ BIAŁY</text>
+      <text x="1124" y="78" text-anchor="end" fill="#f0d8a4" font-size="25" font-weight="700">${esc(date)}</text>
+      <text x="600" y="177" text-anchor="middle" fill="#fff0bc" stroke="#071418" stroke-width="5" paint-order="stroke" font-family="DejaVu Serif" font-size="72" font-weight="700">DZIENNIK WYPRAW</text>
+      <text x="600" y="220" text-anchor="middle" fill="#efddb1" font-size="20" letter-spacing="3">NAJBLIŻSZE 24 GODZINY · CZAS POLSKI</text>
+      <path d="M249 243H564L600 252L636 243H1125" fill="none" stroke="#c4a66c"/>
+      <path d="${route}" fill="none" stroke="#d7b879" stroke-width="3" stroke-dasharray="4 9"/>
+      ${questRows || '<text x="600" y="336" text-anchor="middle" fill="#fff0bc" font-size="30">Brak zaplanowanych wydarzeń</text>'}
+    </svg>` : '';
+    const svg = quest ? questSvg : newspaper ? paperSvg : board ? boardSvg : cinematic ? `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
       <defs>
         <linearGradient id="veil" x2="0" y2="1"><stop stop-color="#080a12" stop-opacity=".30"/><stop offset=".42" stop-color="#080a12" stop-opacity=".64"/><stop offset="1" stop-color="#080a12" stop-opacity=".94"/></linearGradient>
         <linearGradient id="title" x2="0" y2="1"><stop stop-color="#fff8e6"/><stop offset="1" stop-color="#e1ad75"/></linearGradient>
@@ -246,14 +288,14 @@ export default async function handler(req, res) {
       fitTo: { mode: 'width', value: width },
       font: { fontFiles, fontDirs: [fontDir], loadSystemFonts: true, defaultFontFamily: 'DejaVu Sans' }
     }).render().asPng();
-    const verified = (svg.includes('PLAN DNIA') || svg.includes('Plan dnia')) && svg.includes(esc(date));
+    const verified = (svg.includes('PLAN DNIA') || svg.includes('Plan dnia') || svg.includes('DZIENNIK WYPRAW')) && svg.includes(esc(date));
     const layers = [{ input: overlay }];
     if (!newspaper) try {
       const crestResponse = await fetch(imageHost + '/images/discord/clan-crest.svg', { signal: AbortSignal.timeout(4500) });
       if (!crestResponse.ok) throw new Error('Clan crest HTTP ' + crestResponse.status);
       const crest = await sharp(Buffer.from(await crestResponse.arrayBuffer()), { density: 180 })
-        .resize(board ? 86 : cinematic ? 108 : 150, board ? 54 : cinematic ? 68 : 94, { fit: 'contain' }).png().toBuffer();
-      layers.push({ input: crest, left: board ? 48 : cinematic ? 49 : 52, top: board ? 46 : cinematic ? 59 : 43 });
+         .resize(quest || board ? 86 : cinematic ? 108 : 150, quest || board ? 54 : cinematic ? 68 : 94, { fit: 'contain' }).png().toBuffer();
+      layers.push({ input: crest, left: quest || board ? 48 : cinematic ? 49 : 52, top: quest || board ? 46 : cinematic ? 59 : 43 });
     } catch (error) {
       console.warn('Daily plan clan crest unavailable', String(error));
     }
@@ -262,7 +304,7 @@ export default async function handler(req, res) {
     res.setHeader('Content-Type', 'image/png');
     res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=300');
     res.setHeader('X-Daily-Plan-Events', String(events.length));
-    res.setHeader('X-Daily-Plan-Style', newspaper ? 'newspaper-preview' : board ? 'clan-board-preview' : cinematic ? 'cinematic-series-preview' : refined ? 'classic-refined-preview' : 'fixed-clan-art-daily-rotation-v2');
+    res.setHeader('X-Daily-Plan-Style', quest ? 'quest-journal-preview' : newspaper ? 'newspaper-preview' : board ? 'clan-board-preview' : cinematic ? 'cinematic-series-preview' : refined ? 'classic-refined-preview' : 'fixed-clan-art-daily-rotation-v2');
     res.setHeader('X-Daily-Plan-Artwork', artworkPath);
     res.setHeader('X-Daily-Plan-Size', String(png.length));
     res.setHeader('X-Daily-Plan-Text-Verified', verified ? 'true' : 'false');
