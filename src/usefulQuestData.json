@@ -4,7 +4,7 @@
     "title": "Fate’s Whisper",
     "category": "Rozwój postaci",
     "level": "75+",
-    "icon": "0297",
+    "icon": "subclass",
     "steps": [
       {
         "title": "Odbierz quest u Reorina",
@@ -71,7 +71,7 @@
     "title": "Possessor of a Precious Soul I–IV",
     "category": "Rozwój postaci",
     "level": "50 / 60 / 65 / 75 na subclassie",
-    "icon": "1356",
+    "icon": "noblesse",
     "steps": [
       {
         "title": "Część I — Talien · poziom 50",
@@ -174,7 +174,7 @@
     "title": "Truth Beyond the Gate · Through the Gate Once More",
     "category": "Dostęp do lokacji",
     "level": "73+",
-    "icon": "0270",
+    "icon": "pagan-entry",
     "steps": [
       {
         "title": "Visitor’s Mark",
@@ -221,7 +221,7 @@
     "title": "Seekers of the Holy Grail",
     "category": "Farm i wymiany",
     "level": "73+",
-    "icon": "0351",
+    "icon": "pagan-totem",
     "steps": [
       {
         "title": "Innocentin w Rune",
@@ -259,7 +259,7 @@
     "title": "Guardians of the Holy Grail",
     "category": "Farm i wymiany",
     "level": "73+",
-    "icon": "0341",
+    "icon": "mos-grail",
     "steps": [
       {
         "title": "Dominic w Rune",
@@ -312,7 +312,7 @@
     "title": "A Powerful Primeval Creature",
     "category": "Farm i wymiany",
     "level": "75+",
-    "icon": "1191",
+    "icon": "pi-recipe",
     "steps": [
       {
         "title": "Dinn na przystani",
@@ -346,7 +346,7 @@
     "title": "Rise and Fall of the Elroki Tribe",
     "category": "Farm i wymiany",
     "level": "75+",
-    "icon": "1268",
+    "icon": "pi-bones",
     "steps": [
       {
         "title": "Singsing na przystani",
@@ -380,7 +380,7 @@
     "title": "Meeting the Elroki · The Name of Evil I–II",
     "category": "Farm i wymiany",
     "level": "75 / 76 / 77",
-    "icon": "1307",
+    "icon": "pi-enchant",
     "steps": [
       {
         "title": "Meeting the Elroki · poziom 75",

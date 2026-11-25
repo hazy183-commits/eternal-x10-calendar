@@ -76,7 +76,7 @@ const addedSupplies = {
 
 function illustration(quest) {
   const image = element('img', '', 'third-class-emblem');
-  image.src = '/assets/interlude/buff-icons/skill' + (quest.icon || classArt[quest.name]) + '.png';
+  image.src = quest.icon ? '/images/useful-quests/' + quest.icon + '.svg' : '/assets/interlude/buff-icons/skill' + classArt[quest.name] + '.png';
   image.alt = '';
   image.loading = 'lazy';
   return image;
