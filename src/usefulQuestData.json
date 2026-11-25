@@ -966,7 +966,20 @@
           ],
           [
             "https://la2wiki.com/map/il/4-89.jpg",
-            "Mapa regionu · okolice Goddard"
+            "Mapa regionu · okolice Goddard",
+            null,
+            [
+              {
+                "x": 67.7734375,
+                "y": 36.99186991869919,
+                "label": "Ketra Orc Outpost · Wahkan"
+              },
+              {
+                "x": 63.818359375,
+                "y": 42.073170731707314,
+                "label": "Varka Silenos Barracks · Naran Ashanuk"
+              }
+            ]
           ]
         ]
       },
@@ -983,6 +996,23 @@
           [
             "https://la2wiki.com/npc/wahkan.webp",
             "Wahkan · zdjęcie NPC"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Mapa regionu · okolice Goddard",
+            null,
+            [
+              {
+                "x": 67.7734375,
+                "y": 36.99186991869919,
+                "label": "Ketra Orc Outpost · Wahkan"
+              },
+              {
+                "x": 63.818359375,
+                "y": 42.073170731707314,
+                "label": "Varka Silenos Barracks · Naran Ashanuk"
+              }
+            ]
           ]
         ]
       },
@@ -992,7 +1022,15 @@
         "images": [
           [
             "https://la2wiki.com/map/il/4-89.jpg",
-            "Mapa regionu · okolice Goddard"
+            "Mapa regionu · okolice Goddard",
+            null,
+            [
+              {
+                "x": 63.818359375,
+                "y": 42.073170731707314,
+                "label": "Varka Silenos Barracks · Naran Ashanuk"
+              }
+            ]
           ]
         ]
       },
@@ -1012,7 +1050,20 @@
           ],
           [
             "https://la2wiki.com/map/il/4-89.jpg",
-            "Mapa regionu · okolice Goddard"
+            "Mapa regionu · okolice Goddard",
+            null,
+            [
+              {
+                "x": 68.310546875,
+                "y": 34.197154471544714,
+                "label": "Ketra Orc Village · Kadun Zu Ketra"
+              },
+              {
+                "x": 61.962890625,
+                "y": 42.17479674796748,
+                "label": "Varka’s Hero Shadith"
+              }
+            ]
           ]
         ]
       },
@@ -1032,7 +1083,20 @@
           ],
           [
             "https://la2wiki.com/map/il/4-89.jpg",
-            "Mapa regionu · okolice Goddard"
+            "Mapa regionu · okolice Goddard",
+            null,
+            [
+              {
+                "x": 68.310546875,
+                "y": 34.197154471544714,
+                "label": "Ketra Orc Village · Kadun Zu Ketra"
+              },
+              {
+                "x": 60.400390625,
+                "y": 39.63414634146341,
+                "label": "Varka Silenos Village · Ashas Varka Durai"
+              }
+            ]
           ]
         ]
       }
@@ -1059,7 +1123,20 @@
           ],
           [
             "https://la2wiki.com/map/il/4-89.jpg",
-            "Mapa regionu · okolice Goddard"
+            "Mapa regionu · okolice Goddard",
+            null,
+            [
+              {
+                "x": 63.818359375,
+                "y": 42.073170731707314,
+                "label": "Varka Silenos Barracks · Naran Ashanuk"
+              },
+              {
+                "x": 67.7734375,
+                "y": 36.99186991869919,
+                "label": "Ketra Orc Outpost · Wahkan"
+              }
+            ]
           ]
         ]
       },
@@ -1076,6 +1153,23 @@
           [
             "https://la2wiki.com/npc/naran-ashanuk.webp",
             "Naran Ashanuk · zdjęcie NPC"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Mapa regionu · okolice Goddard",
+            null,
+            [
+              {
+                "x": 63.818359375,
+                "y": 42.073170731707314,
+                "label": "Varka Silenos Barracks · Naran Ashanuk"
+              },
+              {
+                "x": 67.7734375,
+                "y": 36.99186991869919,
+                "label": "Ketra Orc Outpost · Wahkan"
+              }
+            ]
           ]
         ]
       },
@@ -1085,7 +1179,15 @@
         "images": [
           [
             "https://la2wiki.com/map/il/4-89.jpg",
-            "Mapa regionu · okolice Goddard"
+            "Mapa regionu · okolice Goddard",
+            null,
+            [
+              {
+                "x": 67.7734375,
+                "y": 36.99186991869919,
+                "label": "Ketra Orc Outpost · Wahkan"
+              }
+            ]
           ]
         ]
       },
@@ -1105,7 +1207,20 @@
           ],
           [
             "https://la2wiki.com/map/il/4-89.jpg",
-            "Mapa regionu · okolice Goddard"
+            "Mapa regionu · okolice Goddard",
+            null,
+            [
+              {
+                "x": 60.400390625,
+                "y": 39.63414634146341,
+                "label": "Varka Silenos Village · Ashas Varka Durai"
+              },
+              {
+                "x": 67.7734375,
+                "y": 36.99186991869919,
+                "label": "Ketra Orc Outpost · Wahkan"
+              }
+            ]
           ]
         ]
       },
@@ -1125,7 +1240,20 @@
           ],
           [
             "https://la2wiki.com/map/il/4-89.jpg",
-            "Mapa regionu · okolice Goddard"
+            "Mapa regionu · okolice Goddard",
+            null,
+            [
+              {
+                "x": 60.400390625,
+                "y": 39.63414634146341,
+                "label": "Varka Silenos Village · Ashas Varka Durai"
+              },
+              {
+                "x": 67.431640625,
+                "y": 33.993902439024396,
+                "label": "Ketra’s Commander Tayr"
+              }
+            ]
           ]
         ]
       }

@@ -1,4 +1,4 @@
-import { epicQuestEntries } from './epicQuestGuides.js';
+import { epicQuestEntries, openQuestMap } from './epicQuestGuides.js';
 import usefulQuests from './usefulQuestData.json';
 import quests from './thirdClassQuestData.json';
 import './thirdClassQuests.css';
@@ -380,11 +380,19 @@ export function installThirdClassQuests() {
         row.append(coordinates);
       }
       const images = element('div', '', 'third-class-maps');
-      for (const [url, label, point] of step.images) {
+      for (const [url, label, point, worldPoints] of step.images) {
         const link = element('button');
         link.type = 'button';
         link.setAttribute('aria-label', 'Powiększ: ' + label);
-        link.addEventListener('click', () => showImage(url, label, step, point));
+        if (worldPoints?.length) {
+          link.setAttribute('aria-label', 'Otwórz pełną mapę świata: ' + label);
+          link.dataset.mapLabel = label;
+          link.dataset.mapWorldSrc = '/quest-maps/world.jpg';
+          link.dataset.mapWorldPoints = JSON.stringify(worldPoints);
+          link.addEventListener('click', () => openQuestMap(link));
+        } else {
+          link.addEventListener('click', () => showImage(url, label, step, point));
+        }
         if (point) {
           link.append(locationMap(url, label, point, true), element('span', label, 'quest-map-caption'));
           images.append(link);

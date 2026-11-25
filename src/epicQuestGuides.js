@@ -271,9 +271,9 @@ function ensureQuestMapModal() {
   return modal;
 }
 
-function openQuestMap(link) {
+export function openQuestMap(link) {
   const modal = ensureQuestMapModal();
-  (link.closest('.third-class-catalogue') || document.body).append(modal);
+  (link.closest('dialog') || document.body).append(modal);
   const label = link.dataset.mapLabel || 'Mapa questa';
   let points = [];
   try { points = JSON.parse(link.dataset.mapWorldPoints || '[]'); } catch { points = []; }
