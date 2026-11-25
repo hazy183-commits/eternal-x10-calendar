@@ -88,7 +88,6 @@ const gatheringMinutes = startMinutes === null ? null : (startMinutes + 1410) % 
 const gatheringTime = gatheringMinutes === null ? '' :
   String(Math.floor(gatheringMinutes / 60)).padStart(2, '0') + ':' + String(gatheringMinutes % 60).padStart(2, '0');
 const gatheringLabel = gatheringTime ? 'Zbiórka ' + gatheringTime + ' · Hunter Village' : 'Zbiórka w Hunter Village';
-const gatheringNote = startMinutes !== null && startMinutes < 30 ? 'Zbiórka poprzedniego dnia' : 'Zbiórka 30 minut przed startem';
 const rallySvg = rallyLines(name, date, time).map((line, index) =>
   `<text x="600" y="${687 + index * 39}" text-anchor="middle" fill="${index === 0 ? 'url(#gold)' : '#f6f0e6'}" stroke="#100b08" stroke-width="3" paint-order="stroke" font-size="${index === 0 ? 35 : 26}" font-family="DejaVu Serif" font-weight="${index === 0 ? 700 : 400}" font-style="${index === 0 ? 'normal' : 'italic'}">${esc(line)}</text>`
 ).join('');
@@ -100,8 +99,10 @@ const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" vie
 <g transform="translate(210 0)"><text x="390" y="271" text-anchor="middle" fill="#06142a" stroke="#02040a" stroke-width="9" paint-order="stroke" font-size="${titleSize}" font-family="DejaVu Serif" font-weight="700" letter-spacing="-2">${esc(displayName.toUpperCase())}</text><text x="390" y="267" text-anchor="middle" fill="url(#metal)" stroke="#263d5c" stroke-width="2" paint-order="stroke" font-size="${titleSize}" font-family="DejaVu Serif" font-weight="700" letter-spacing="-2">${esc(displayName.toUpperCase())}</text><path d="M125 291Q390 307 655 289" fill="none" stroke="url(#blue)" stroke-width="4" opacity=".95"/><path d="M52 310H${390-subtitleHalfWidth-20}M${390+subtitleHalfWidth+20} 310H735" stroke="#d4b574" stroke-width="2"/><text x="390" y="318" text-anchor="middle" fill="#f5f2ef" stroke="#11131a" stroke-width="2" paint-order="stroke" font-size="27" font-family="DejaVu Serif" font-weight="700" letter-spacing="3">${esc(eventSubtitle)}</text><path d="M52 337H735" stroke="#c6a775" stroke-width="2" opacity=".9"/></g>
 <rect x="170" y="363" width="860" height="226" fill="url(#panel)"/>
 <text x="600" y="443" text-anchor="middle" fill="url(#gold)" stroke="#100b08" stroke-width="3" paint-order="stroke" font-size="43" font-family="DejaVu Serif" font-weight="700">${esc(gatheringLabel)}</text>
-<text x="600" y="502" text-anchor="middle" fill="#f6f0e6" font-size="31" font-family="DejaVu Serif" font-weight="700">Start ${esc(time)} · ${esc(date)}</text>
-<text x="600" y="549" text-anchor="middle" fill="#ded2bb" font-size="21" font-family="DejaVu Sans">${esc(gatheringNote)}</text>
+<text x="600" y="548" text-anchor="middle" fill="#f6f0e6" font-size="31" font-family="DejaVu Serif" font-weight="700">Start ${esc(time)} · ${esc(date)}</text>
+${gatheringTime ? `<g fill="none" stroke="#c6a775" stroke-width="2" opacity=".85"><path d="M359 482H489M711 482H841"/><circle cx="353" cy="482" r="5"/><circle cx="847" cy="482" r="5"/></g>
+<text x="600" y="489" text-anchor="middle" fill="#ded2bb" font-size="19" font-family="DejaVu Sans">30 min do startu</text>` : ''}
+${startMinutes !== null && startMinutes < 30 ? `<text x="600" y="580" text-anchor="middle" fill="#ded2bb" font-size="18" font-family="DejaVu Sans">Zbiórka poprzedniego dnia</text>` : ''}
 <rect x="160" y="637" width="880" height="118" fill="url(#panel)"/><path d="M385 648H815" fill="none" stroke="#c6a775" stroke-width="2" opacity=".75"/>
 ${rallySvg}
 </svg>`;
