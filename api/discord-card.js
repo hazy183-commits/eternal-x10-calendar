@@ -122,7 +122,91 @@ const RALLY_EVENT_OPENERS = {
   "event": ["Każda wspólna walka nas wzmacnia.","W drużynie możemy sięgnąć po więcej.","Mamy ekipę, która potrafi zaskoczyć.","Razem potrafimy przechylić szalę."],
 };
 
-function rallyLines(name, date, time, kind) {
+const SCHEDULED_QUOTES = [
+  [
+    "Na arenie każdy ruch ma znaczenie.",
+    "Wpadnij. Dziś ćwiczymy pod wygraną."
+  ],
+  [
+    "Rywal już dopisał sobie wygraną.",
+    "Chodźmy mu, do cholery, poprawić statystyki."
+  ],
+  [
+    "Pod jednym herbem możemy więcej.",
+    "Trzymajmy szyk i zagrajmy do końca."
+  ],
+  [
+    "Healer powiedział, że da radę.",
+    "Uszanujmy to. Nie właźmy wszyscy w AoE."
+  ],
+  [
+    "W tym składzie jest siła.",
+    "Wbijaj, Orle. Zawalczmy o swoje!"
+  ],
+  [
+    "Plan jest zajebiście prosty.",
+    "Trzymamy asystę i wracamy z wygraną."
+  ],
+  [
+    "Warto wbić choćby na jedną akcję.",
+    "Tak właśnie buduje się zgrane party."
+  ],
+  [
+    "Jak padniesz, wołaj po resa.",
+    "Jak padnie healer, zaczyna się modlitwa."
+  ],
+  [
+    "Dzisiaj gramy odważnie.",
+    "Każdy z nas może przechylić szalę."
+  ],
+  [
+    "Mamy plan. Nawet ktoś go przeczytał.",
+    "Chodźcie, zobaczymy, co z tego wyjdzie."
+  ],
+  [
+    "Ostatnio dostaliśmy w dupę.",
+    "Dzisiaj wracamy po rewanż."
+  ],
+  [
+    "Razem potrafimy odwrócić walkę.",
+    "Wbijaj. Drużyna liczy na ciebie."
+  ],
+  [
+    "Ktoś właśnie powiedział: znam skrót.",
+    "Dajcie mu asystę. I, dla pewności, mapę."
+  ],
+  [
+    "Dajmy im powód, żeby nas pamiętali.",
+    "Pokażmy, na co stać Orła Białego!"
+  ],
+  [
+    "Mamy skład, żeby zrobić rozpierdol.",
+    "Tylko tym razem na właściwym celu."
+  ],
+  [
+    "Jak wygramy, będzie co wspominać.",
+    "Jak przegramy, będzie z czego zrobić mema."
+  ],
+  [
+    "To starcie jest do wygrania.",
+    "Zbierzmy się i zróbmy to razem."
+  ],
+  [
+    "Wbijasz tylko na chwilę?",
+    "Jasne. Za godzinę będziesz dowodzić obroną."
+  ],
+  [
+    "Żaden plan nie przeżywa pierwszej szarży.",
+    "Dlatego mamy zgrany skład i pełen plecak resów."
+  ],
+  [
+    "Wygrana zaczyna się od zbiórki.",
+    "Widzimy się w Hunter Village, Orły."
+  ]
+];
+
+function rallyLines(name, date, time, kind, quote) {
+  if (/^[0-9]{1,15}$/.test(quote ?? '')) return SCHEDULED_QUOTES[Number(quote) % SCHEDULED_QUOTES.length];
   const openers = Object.hasOwn(RALLY_EVENT_OPENERS, kind) ? RALLY_EVENT_OPENERS[kind] : RALLY_OPENERS;
   const isoDate = date.replace(/^(\d{1,2})[.\/-](\d{1,2})[.\/-](\d{4})$/, (_, day, month, year) =>
     [year, month.padStart(2, '0'), day.padStart(2, '0')].join('-'));
@@ -173,7 +257,7 @@ const gatheringMinutes = startMinutes === null ? null : (startMinutes + 1410) % 
 const gatheringTime = gatheringMinutes === null ? '' :
   String(Math.floor(gatheringMinutes / 60)).padStart(2, '0') + ':' + String(gatheringMinutes % 60).padStart(2, '0');
 const gatheringLabel = gatheringTime ? 'Zbiórka ' + gatheringTime + ' · Hunter Village' : 'Zbiórka w Hunter Village';
-const rallySvg = rallyLines(name, date, time, kind).map((line, index) =>
+const rallySvg = rallyLines(name, date, time, kind, u.searchParams.get('q')).map((line, index) =>
   `<text x="600" y="${687 + index * 39}" text-anchor="middle" fill="${index === 0 ? 'url(#gold)' : '#f6f0e6'}" stroke="#100b08" stroke-width="3" paint-order="stroke" font-size="${index === 0 ? 35 : 26}" font-family="DejaVu Serif" font-weight="${index === 0 ? 700 : 400}" font-style="${index === 0 ? 'normal' : 'italic'}">${esc(line)}</text>`
 ).join('');
 const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
@@ -194,7 +278,7 @@ ${rallySvg}
 const fontDir=new URL('../node_modules/dejavu-fonts-ttf/ttf/',import.meta.url).pathname;
 const fontFiles=['DejaVuSans.ttf','DejaVuSans-Bold.ttf','DejaVuSerif.ttf','DejaVuSerif-Bold.ttf','DejaVuSerif-Italic.ttf'].map(p=>fontDir+p);
 const cinematic = u.searchParams.get('layout') !== 'classic';
-const [headline, invitation] = rallyLines(name, date, time, kind);
+const [headline, invitation] = rallyLines(name, date, time, kind, u.searchParams.get('q'));
 const [glow, particle, intensity, shape, count, rightGlow = glow] = await sceneEffects(sceneKey, eventSceneImage);
 const cinematicSvg = cinematic ? `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
 <defs>
