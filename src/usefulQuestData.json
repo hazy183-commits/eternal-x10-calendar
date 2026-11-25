@@ -944,5 +944,191 @@
         ]
       }
     ]
+  },
+  {
+    "name": "Sojusz z Ketrą",
+    "title": "Alliance with Ketra Orcs",
+    "alias": "ally allay alliance Ketra Varka Wahkan",
+    "category": "Sojusze",
+    "level": "74+ · bossy od 75",
+    "icon": "ketra-alliance",
+    "quickStart": "Wahkan · Ketra Orc Outpost · teleport z Town of Goddard.",
+    "prepare": "Farmisz odznaki po stronie Varka. Każdy poziom zużywa podaną liczbę odznak.",
+    "outcome": "Mark of Ketra’s Alliance do poziomu 5. Poziom 2 otwiera quest po Divine Stone of Wisdom.",
+    "steps": [
+      {
+        "title": "Poziom 1 · 100 Soldier",
+        "text": "Teleportuj się z Town of Goddard do Ketra Orc Outpost. Weź Alliance with Ketra Orcs u Wahkan, w pobliżu punktu teleportu. Na farmę teleportuj się z Goddard do Varka Silenos Barracks. Zbieraj Varka’s Badge – Soldier z następujących mobów: Varka Silenos Recruit, Footman, Scout, Hunter i Shaman. Oddaj 100 odznak u posłańca i odbierz Mark of Ketra’s Alliance – Level 1. Nie atakuj mobów po sprzymierzonej stronie i pilnuj, żeby party też ich nie biło. Możesz przez to stracić rangę sojuszu.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/wahkan.webp",
+            "Wahkan · zdjęcie NPC"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Mapa regionu · okolice Goddard"
+          ]
+        ]
+      },
+      {
+        "title": "Poziom 2 · 200 Soldier i 100 Captain",
+        "text": "Weź kolejny etap u tego samego posłańca. Zbierz od nowa 200 Soldier i 100 Captain. Captain wypada m.in. z: Varka Silenos Priest, Warrior, Medium, Magus i Officer. Oddaj komplet wraz z odznaką sojuszu pierwszego poziomu. Jeśli robisz tylko trzecią profesję, poziom 2 wystarczy, żeby rozpocząć quest po kamień.",
+        "dependencies": [
+          {
+            "title": "Magical Power of Water – Part 1 · Divine Stone of Wisdom",
+            "text": "Po zdobyciu drugiej rangi weź quest u Wahkan. Porozmawiaj z NPC Asefa w wiosce sojusznika. Kup Thief Key w sklepie w Goddard i idź do Varka Silenos Village po totem ze skrzyni NPC Udan Mardui. Omiń strażników. Jeśli dostaniesz klątwę, wróć do szamana po ponowną próbę. Oddaj totem szamanowi po kamień. Wystarczy jedna ścieżka i tylko część pierwsza."
+          }
+        ],
+        "images": [
+          [
+            "https://la2wiki.com/npc/wahkan.webp",
+            "Wahkan · zdjęcie NPC"
+          ]
+        ]
+      },
+      {
+        "title": "Poziom 3 · 300 Soldier, 200 Captain, 100 General",
+        "text": "Zbierz nowe odznaki trzech typów. Odznaki General wypadają m.in. z: Varka Silenos General, Great Magus, Great Seer, Prophet i Head Magus. Szukaj tych mobów głębiej na terenie wroga. Oddaj 300 Soldier, 200 Captain, 100 General oraz poprzednią odznakę posłańcowi.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Mapa regionu · okolice Goddard"
+          ]
+        ]
+      },
+      {
+        "title": "Poziom 4 · odznaki i raid boss",
+        "text": "Zbierz 300 Soldier, 300 Captain i 200 General. Zrób Prove Your Courage, żeby zdobyć Totem of Valor. Oddaj przedmiot, odznaki oraz poprzedni znak sojuszu u Wahkan.",
+        "dependencies": [
+          {
+            "title": "Prove Your Courage · Varka’s Hero Shadith",
+            "text": "Od poziomu 75 weź zadanie u Kadun Zu Ketra w Ketra Orc Village, po zdobyciu 3. rangi sojuszu. Dołącz do party na Varka’s Hero Shadith po stronie wroga. Sprawdź, czy po walce masz Head of Shadith w ekwipunku questowym. Wróć z głową do NPC Kadun Zu Ketra i odbierz Totem of Valor."
+          }
+        ],
+        "images": [
+          [
+            "https://la2wiki.com/npc/kadun-zu-ketra.webp",
+            "Kadun Zu Ketra · zdjęcie NPC"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Mapa regionu · okolice Goddard"
+          ]
+        ]
+      },
+      {
+        "title": "Poziom 5 · odznaki i raid boss",
+        "text": "Zbierz 400 Soldier, 400 Captain i 200 General. Zrób Slay the Enemy Commander, żeby zdobyć Totem of Wisdom. Oddaj przedmiot, odznaki oraz poprzedni znak sojuszu u Wahkan.",
+        "dependencies": [
+          {
+            "title": "Slay the Enemy Commander · Varka’s Commander Mos",
+            "text": "Od poziomu 75 weź zadanie u Kadun Zu Ketra w Ketra Orc Village, po zdobyciu 4. rangi sojuszu. Dołącz do party na Varka’s Commander Mos po stronie wroga. Sprawdź, czy po walce masz Head of Mos w ekwipunku questowym. Wróć z głową do NPC Kadun Zu Ketra i odbierz Totem of Wisdom."
+          }
+        ],
+        "images": [
+          [
+            "https://la2wiki.com/npc/kadun-zu-ketra.webp",
+            "Kadun Zu Ketra · zdjęcie NPC"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Mapa regionu · okolice Goddard"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Sojusz z Varką",
+    "title": "Alliance with Varka Silenos",
+    "alias": "ally allay alliance Varka Ketra Naran Ashanuk",
+    "category": "Sojusze",
+    "level": "74+ · bossy od 75",
+    "icon": "varka-alliance",
+    "quickStart": "Naran Ashanuk · Varka Silenos Barracks · teleport z Town of Goddard.",
+    "prepare": "Farmisz odznaki po stronie Ketra. Każdy poziom zużywa podaną liczbę odznak.",
+    "outcome": "Mark of Varka’s Alliance do poziomu 5. Poziom 2 otwiera quest po Divine Stone of Wisdom.",
+    "steps": [
+      {
+        "title": "Poziom 1 · 100 Soldier",
+        "text": "Teleportuj się z Town of Goddard do Varka Silenos Barracks. Weź Alliance with Varka Silenos u Naran Ashanuk, w pobliżu punktu teleportu. Na farmę teleportuj się z Goddard do Ketra Orc Outpost. Zbieraj Ketra’s Badge – Soldier z następujących mobów: Ketra Orc Footman, Raider, Scout, Shaman i Ketra’s War Hound. Oddaj 100 odznak u posłańca i odbierz Mark of Varka’s Alliance – Level 1. Nie atakuj mobów po sprzymierzonej stronie i pilnuj, żeby party też ich nie biło. Możesz przez to stracić rangę sojuszu.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/naran-ashanuk.webp",
+            "Naran Ashanuk · zdjęcie NPC"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Mapa regionu · okolice Goddard"
+          ]
+        ]
+      },
+      {
+        "title": "Poziom 2 · 200 Soldier i 100 Captain",
+        "text": "Weź kolejny etap u tego samego posłańca. Zbierz od nowa 200 Soldier i 100 Captain. Captain wypada m.in. z: Ketra Orc Warrior, Lieutenant, Medium, Elite Soldier, White Captain i Seer. Oddaj komplet wraz z odznaką sojuszu pierwszego poziomu. Jeśli robisz tylko trzecią profesję, poziom 2 wystarczy, żeby rozpocząć quest po kamień.",
+        "dependencies": [
+          {
+            "title": "Magical Power of Fire – Part 1 · Divine Stone of Wisdom",
+            "text": "Po zdobyciu drugiej rangi weź quest u Naran Ashanuk. Porozmawiaj z NPC Udan Mardui w wiosce sojusznika. Kup Thief Key w sklepie w Goddard i idź do Ketra Orc Village po totem ze skrzyni NPC Asefa. Omiń strażników. Jeśli dostaniesz klątwę, wróć do szamana po ponowną próbę. Oddaj totem szamanowi po kamień. Wystarczy jedna ścieżka i tylko część pierwsza."
+          }
+        ],
+        "images": [
+          [
+            "https://la2wiki.com/npc/naran-ashanuk.webp",
+            "Naran Ashanuk · zdjęcie NPC"
+          ]
+        ]
+      },
+      {
+        "title": "Poziom 3 · 300 Soldier, 200 Captain, 100 General",
+        "text": "Zbierz nowe odznaki trzech typów. Odznaki General wypadają m.in. z: Ketra Orc General, Battalion Commander, Grand Seer, Head Shaman i Prophet. Szukaj tych mobów głębiej na terenie wroga. Oddaj 300 Soldier, 200 Captain, 100 General oraz poprzednią odznakę posłańcowi.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Mapa regionu · okolice Goddard"
+          ]
+        ]
+      },
+      {
+        "title": "Poziom 4 · odznaki i raid boss",
+        "text": "Zbierz 300 Soldier, 300 Captain i 200 General. Zrób Prove Your Courage, żeby zdobyć Feather of Valor. Oddaj przedmiot, odznaki oraz poprzedni znak sojuszu u Naran Ashanuk.",
+        "dependencies": [
+          {
+            "title": "Prove Your Courage · Ketra’s Hero Hekaton",
+            "text": "Od poziomu 75 weź zadanie u Ashas Varka Durai w Varka Silenos Village, po zdobyciu 3. rangi sojuszu. Dołącz do party na Ketra’s Hero Hekaton po stronie wroga. Sprawdź, czy po walce masz Head of Hekaton w ekwipunku questowym. Wróć z głową do NPC Ashas Varka Durai i odbierz Feather of Valor."
+          }
+        ],
+        "images": [
+          [
+            "https://la2wiki.com/npc/ashas-varka-durai.webp",
+            "Ashas Varka Durai · zdjęcie NPC"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Mapa regionu · okolice Goddard"
+          ]
+        ]
+      },
+      {
+        "title": "Poziom 5 · odznaki i raid boss",
+        "text": "Zbierz 400 Soldier, 400 Captain i 200 General. Zrób Slay the Enemy Commander, żeby zdobyć Feather of Wisdom. Oddaj przedmiot, odznaki oraz poprzedni znak sojuszu u Naran Ashanuk.",
+        "dependencies": [
+          {
+            "title": "Slay the Enemy Commander · Ketra’s Commander Tayr",
+            "text": "Od poziomu 75 weź zadanie u Ashas Varka Durai w Varka Silenos Village, po zdobyciu 4. rangi sojuszu. Dołącz do party na Ketra’s Commander Tayr po stronie wroga. Sprawdź, czy po walce masz Head of Tayr w ekwipunku questowym. Wróć z głową do NPC Ashas Varka Durai i odbierz Feather of Wisdom."
+          }
+        ],
+        "images": [
+          [
+            "https://la2wiki.com/npc/ashas-varka-durai.webp",
+            "Ashas Varka Durai · zdjęcie NPC"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Mapa regionu · okolice Goddard"
+          ]
+        ]
+      }
+    ]
   }
 ]

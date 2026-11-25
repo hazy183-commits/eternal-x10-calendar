@@ -205,7 +205,7 @@ export function installThirdClassQuests() {
   const filters = section.querySelector('.third-class-filters');
   const categoryLabel = element('label', 'Kategoria');
   const category = element('select');
-  for (const name of ['Wszystkie questy', 'Rozwój postaci', 'Dostęp do lokacji', 'Farm i wymiany', 'Wejścia na epiki', 'Trzecia profesja']) {
+  for (const name of ['Wszystkie questy', 'Rozwój postaci', 'Dostęp do lokacji', 'Farm i wymiany', 'Wejścia na epiki', 'Sojusze', 'Trzecia profesja']) {
     category.add(new Option(name, name));
   }
   categoryLabel.append(category);
@@ -288,10 +288,12 @@ export function installThirdClassQuests() {
     },
     {
       "title": "Magical Power of Water – Part 1 · ścieżka Ketra",
+      "guide": "Sojusz z Ketrą",
       "text": "W sojuszu Alliance with Ketra Orcs osiągnij poziom 2. Weź Magical Power of Water u Wakhana w Ketra Orc Outpost. Asefa wyśle Cię po totem ze skrzyni Udan Mardui w Varka Silenos Stronghold. Wróć po Divine Stone of Wisdom."
     },
     {
       "title": "Magical Power of Fire – Part 1 · ścieżka Varka",
+      "guide": "Sojusz z Varką",
       "text": "Jeśli masz sojusz Alliance with Varka Silenos na poziomie 2, wybierz Magical Power of Fire u Naharan Ashanuka w Varka Silenos Outpost. Udan Mardui wyśle Cię po totem ze skrzyni Asefy w Ketra Orc Outpost. Ta ścieżka daje ten sam kamień co sojusz Ketra. Zrób jedną z nich."
     }
   ];
