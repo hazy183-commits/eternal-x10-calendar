@@ -953,7 +953,7 @@
     "level": "74+ · bossy od 75",
     "icon": "ketra-alliance",
     "quickStart": "Wahkan · Ketra Orc Outpost · teleport z Town of Goddard.",
-    "prepare": "Farmisz odznaki po stronie Varka. Każdy poziom zużywa podaną liczbę odznak.",
+    "prepare": "Zbieraj odznaki wyłącznie z mobów Varki. U Ketry bierzesz zadanie i oddajesz odznaki.",
     "outcome": "Mark of Ketra’s Alliance do poziomu 5. Poziom 2 otwiera quest po Divine Stone of Wisdom.",
     "steps": [
       {
@@ -966,18 +966,25 @@
           ],
           [
             "https://la2wiki.com/map/il/4-89.jpg",
-            "Mapa regionu · okolice Goddard",
+            "Rozmowa i oddanie odznak · Ketra Orc Outpost · Wahkan",
             null,
             [
               {
                 "x": 67.7734375,
                 "y": 36.99186991869919,
-                "label": "Ketra Orc Outpost · Wahkan"
-              },
+                "label": "Rozmowa i oddanie odznak · Ketra Orc Outpost · Wahkan"
+              }
+            ]
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Farma odznak · Varka Silenos Barracks · Naran Ashanuk",
+            null,
+            [
               {
                 "x": 63.818359375,
                 "y": 42.073170731707314,
-                "label": "Varka Silenos Barracks · Naran Ashanuk"
+                "label": "Farma odznak · Varka Silenos Barracks · Naran Ashanuk"
               }
             ]
           ]
@@ -1009,18 +1016,25 @@
           ],
           [
             "https://la2wiki.com/map/il/4-89.jpg",
-            "Mapa regionu · okolice Goddard",
+            "Rozmowa i oddanie odznak · Ketra Orc Outpost · Wahkan",
             null,
             [
               {
                 "x": 67.7734375,
                 "y": 36.99186991869919,
-                "label": "Ketra Orc Outpost · Wahkan"
-              },
+                "label": "Rozmowa i oddanie odznak · Ketra Orc Outpost · Wahkan"
+              }
+            ]
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Farma odznak · Varka Silenos Barracks · Naran Ashanuk",
+            null,
+            [
               {
                 "x": 63.818359375,
                 "y": 42.073170731707314,
-                "label": "Varka Silenos Barracks · Naran Ashanuk"
+                "label": "Farma odznak · Varka Silenos Barracks · Naran Ashanuk"
               }
             ]
           ]
@@ -1032,13 +1046,13 @@
         "images": [
           [
             "https://la2wiki.com/map/il/4-89.jpg",
-            "Mapa regionu · okolice Goddard",
+            "Farma odznak · Varka Silenos Barracks · Naran Ashanuk",
             null,
             [
               {
                 "x": 63.818359375,
                 "y": 42.073170731707314,
-                "label": "Varka Silenos Barracks · Naran Ashanuk"
+                "label": "Farma odznak · Varka Silenos Barracks · Naran Ashanuk"
               }
             ]
           ]
@@ -1060,18 +1074,25 @@
           ],
           [
             "https://la2wiki.com/map/il/4-89.jpg",
-            "Mapa świata · Varka’s Hero Shadith",
+            "Rozmowa z przywódcą · Ketra Orc Village · Kadun Zu Ketra",
             null,
             [
               {
                 "x": 68.310546875,
                 "y": 34.197154471544714,
-                "label": "Ketra Orc Village · Kadun Zu Ketra"
-              },
+                "label": "Rozmowa z przywódcą · Ketra Orc Village · Kadun Zu Ketra"
+              }
+            ]
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Raid boss · Varka’s Hero Shadith",
+            null,
+            [
               {
                 "x": 61.962890625,
                 "y": 42.17479674796748,
-                "label": "Varka’s Hero Shadith"
+                "label": "Raid boss · Varka’s Hero Shadith"
               }
             ]
           ]
@@ -1099,18 +1120,25 @@
           ],
           [
             "https://la2wiki.com/map/il/4-89.jpg",
-            "Mapa świata · Varka’s Commander Mos",
+            "Rozmowa z przywódcą · Ketra Orc Village · Kadun Zu Ketra",
             null,
             [
               {
                 "x": 68.310546875,
                 "y": 34.197154471544714,
-                "label": "Ketra Orc Village · Kadun Zu Ketra"
-              },
+                "label": "Rozmowa z przywódcą · Ketra Orc Village · Kadun Zu Ketra"
+              }
+            ]
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Raid boss · Varka’s Commander Mos",
+            null,
+            [
               {
                 "x": 60.80603966346154,
                 "y": 42.76046740309152,
-                "label": "Varka’s Commander Mos"
+                "label": "Raid boss · Varka’s Commander Mos"
               }
             ]
           ]
@@ -1132,7 +1160,7 @@
     "level": "74+ · bossy od 75",
     "icon": "varka-alliance",
     "quickStart": "Naran Ashanuk · Varka Silenos Barracks · teleport z Town of Goddard.",
-    "prepare": "Farmisz odznaki po stronie Ketra. Każdy poziom zużywa podaną liczbę odznak.",
+    "prepare": "Zbieraj odznaki wyłącznie z orków Ketra. U Varki bierzesz zadanie i oddajesz odznaki.",
     "outcome": "Mark of Varka’s Alliance do poziomu 5. Poziom 2 otwiera quest po Divine Stone of Wisdom.",
     "steps": [
       {
@@ -1145,18 +1173,25 @@
           ],
           [
             "https://la2wiki.com/map/il/4-89.jpg",
-            "Mapa regionu · okolice Goddard",
+            "Rozmowa i oddanie odznak · Varka Silenos Barracks · Naran Ashanuk",
             null,
             [
               {
                 "x": 63.818359375,
                 "y": 42.073170731707314,
-                "label": "Varka Silenos Barracks · Naran Ashanuk"
-              },
+                "label": "Rozmowa i oddanie odznak · Varka Silenos Barracks · Naran Ashanuk"
+              }
+            ]
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Farma odznak · Ketra Orc Outpost · Wahkan",
+            null,
+            [
               {
                 "x": 67.7734375,
                 "y": 36.99186991869919,
-                "label": "Ketra Orc Outpost · Wahkan"
+                "label": "Farma odznak · Ketra Orc Outpost · Wahkan"
               }
             ]
           ]
@@ -1188,18 +1223,25 @@
           ],
           [
             "https://la2wiki.com/map/il/4-89.jpg",
-            "Mapa regionu · okolice Goddard",
+            "Rozmowa i oddanie odznak · Varka Silenos Barracks · Naran Ashanuk",
             null,
             [
               {
                 "x": 63.818359375,
                 "y": 42.073170731707314,
-                "label": "Varka Silenos Barracks · Naran Ashanuk"
-              },
+                "label": "Rozmowa i oddanie odznak · Varka Silenos Barracks · Naran Ashanuk"
+              }
+            ]
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Farma odznak · Ketra Orc Outpost · Wahkan",
+            null,
+            [
               {
                 "x": 67.7734375,
                 "y": 36.99186991869919,
-                "label": "Ketra Orc Outpost · Wahkan"
+                "label": "Farma odznak · Ketra Orc Outpost · Wahkan"
               }
             ]
           ]
@@ -1211,13 +1253,13 @@
         "images": [
           [
             "https://la2wiki.com/map/il/4-89.jpg",
-            "Mapa regionu · okolice Goddard",
+            "Farma odznak · Ketra Orc Outpost · Wahkan",
             null,
             [
               {
                 "x": 67.7734375,
                 "y": 36.99186991869919,
-                "label": "Ketra Orc Outpost · Wahkan"
+                "label": "Farma odznak · Ketra Orc Outpost · Wahkan"
               }
             ]
           ]
@@ -1239,18 +1281,25 @@
           ],
           [
             "https://la2wiki.com/map/il/4-89.jpg",
-            "Mapa świata · Ketra’s Hero Hekaton",
+            "Rozmowa z przywódcą · Varka Silenos Village · Ashas Varka Durai",
             null,
             [
               {
                 "x": 60.400390625,
                 "y": 39.63414634146341,
-                "label": "Varka Silenos Village · Ashas Varka Durai"
-              },
+                "label": "Rozmowa z przywódcą · Varka Silenos Village · Ashas Varka Durai"
+              }
+            ]
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Raid boss · Ketra’s Hero Hekaton",
+            null,
+            [
               {
                 "x": 67.91658319978633,
                 "y": 35.507398710950184,
-                "label": "Ketra’s Hero Hekaton"
+                "label": "Raid boss · Ketra’s Hero Hekaton"
               }
             ]
           ]
@@ -1278,18 +1327,25 @@
           ],
           [
             "https://la2wiki.com/map/il/4-89.jpg",
-            "Mapa świata · Ketra’s Commander Tayr",
+            "Rozmowa z przywódcą · Varka Silenos Village · Ashas Varka Durai",
             null,
             [
               {
                 "x": 60.400390625,
                 "y": 39.63414634146341,
-                "label": "Varka Silenos Village · Ashas Varka Durai"
-              },
+                "label": "Rozmowa z przywódcą · Varka Silenos Village · Ashas Varka Durai"
+              }
+            ]
+          ],
+          [
+            "https://la2wiki.com/map/il/4-89.jpg",
+            "Raid boss · Ketra’s Commander Tayr",
+            null,
+            [
               {
                 "x": 67.431640625,
                 "y": 33.993902439024396,
-                "label": "Ketra’s Commander Tayr"
+                "label": "Raid boss · Ketra’s Commander Tayr"
               }
             ]
           ]
