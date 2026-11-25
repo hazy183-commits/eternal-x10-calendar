@@ -125,7 +125,7 @@ const cinematicSvg = cinematic ? `<svg xmlns="http://www.w3.org/2000/svg" width=
   const y = 144 + (i * 103) % 489;
   return `<path d="M${x} ${y}l${4+i%9} -${4+i%5}" stroke-width="${1+i%3}"/>`;
 }).join('')}</g>
-<text x="189" y="90" fill="#fff3e3" font-size="26" font-family="DejaVu Sans" font-weight="700" letter-spacing="4">ORZEŁ BIAŁY</text>
+<text x="106" y="38" text-anchor="middle" fill="#f6dfcd" stroke="#16090b" stroke-width="2" paint-order="stroke" font-size="15" font-family="DejaVu Sans" font-weight="700" letter-spacing="1.7">ORZEŁ BIAŁY</text>
 <text x="600" y="385" text-anchor="middle" fill="#ffd4a9" stroke="#280e0e" stroke-width="5" paint-order="stroke" font-size="22" font-family="DejaVu Sans" font-weight="700" letter-spacing="6">${esc(eventSubtitle)}</text>
 <text x="600" y="492" text-anchor="middle" fill="url(#steel)" stroke="#2e0e13" stroke-width="9" paint-order="stroke" font-size="${Math.min(titleSize, 114, Math.floor(1040 / Math.max(1, displayName.length * 0.85)))}" font-family="DejaVu Serif" font-weight="700">${esc(displayName.toUpperCase())}</text>
 <path d="M196 522H550L600 529L650 522H1004" fill="none" stroke="#ff9b70" stroke-width="2"/>
@@ -184,7 +184,7 @@ try{
      }
    }
    crest = await sharp(data, { raw: { width: info.width, height: info.height, channels: 4 } }).png().toBuffer();
-   layers.push({ input: crest, left: 33, top: 33 });
+   layers.push({ input: crest, left: 33, top: 43 });
  } else {
    crest = await sharp(crestBytes, { density: 180 }).resize(180, 112, { fit: 'fill' }).png().toBuffer();
    layers.push({ input: crest, left: 27, top: 29 });
