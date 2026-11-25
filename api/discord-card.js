@@ -171,34 +171,7 @@ try{
  crest=await sharp(crestBytes,{density:180}).resize(180,112,{fit:'fill'}).png().toBuffer();
  layers.push({input:crest,left:27,top:29});
 }catch(error){console.warn('Clan crest could not be rendered',String(error));}
-const animated = cinematic && key === 'zaken' && u.searchParams.get('format') === 'gif';
-let card;
-if (animated) {
-  const width = 900;
-  const height = 600;
-  const frameCount = 18;
-  const fixedLayers = await Promise.all(layers.map(async ({ input, left = 0, top = 0 }) => {
-    const resized = await sharp(input).resize({ width: Math.round((await sharp(input).metadata()).width * 0.75) }).png().toBuffer();
-    return { input: resized, left: Math.floor(left * 0.75), top: Math.floor(top * 0.75) };
-  }));
-  const frames = [];
-  for (let index = 0; index < frameCount; index++) {
-    const progress = (1 - Math.cos(2 * Math.PI * index / frameCount)) / 2;
-    const movement = Math.round(progress * 15);
-    const shifted = await sharp(eventScene).resize(width + movement * 3, height + movement * 2).png().toBuffer();
-    const frame = await sharp(shifted).extract({ left: movement, top: movement, width, height }).png().toBuffer();
-    frames.push(await sharp(frame).composite(fixedLayers).removeAlpha().raw().toBuffer());
-  }
-  card = await sharp(Buffer.concat(frames), {
-    raw: { width, height: height * frameCount, channels: 3, pageHeight: height },
-  }).gif({ loop: 0, delay: Array(frameCount).fill(120), keepDuplicateFrames: true, effort: 2, colours: 128, dither: 0 }).toBuffer();
-  const { pages, delay } = await sharp(card, { animated: true }).metadata();
-  res.setHeader('X-Card-Frames', String(pages));
-  res.setHeader('X-Card-Loop-Ms', String(delay.reduce((sum, value) => sum + value, 0)));
-  res.setHeader('Content-Disposition', 'inline; filename="zaken.gif"');
-} else {
-  card = await sharp(cinematic ? eventScene : background).composite(layers).png().toBuffer();
-}
-res.statusCode=200;res.setHeader('Content-Type',animated ? 'image/gif' : 'image/png');res.setHeader('Cache-Control','public, max-age=60, s-maxage=300');res.setHeader('X-Card-Image-Source',key);res.setHeader('X-Card-Template',cinematic ? 'cinematic-embers' : templateArtwork ? 'core-style-crest-v6' : 'dynamic-event-v4');res.setHeader('X-Card-Size',String(card.length));res.setHeader('X-Card-Text-Pixels',String(textPixels));res.setHeader('X-Card-Text-Verified',textPixels>1500?'true':'false');res.end(card);
+const card = await sharp(cinematic ? eventScene : background).composite(layers).png().toBuffer();
+res.statusCode=200;res.setHeader('Content-Type','image/png');res.setHeader('Cache-Control','public, max-age=60, s-maxage=300');res.setHeader('X-Card-Image-Source',key);res.setHeader('X-Card-Template',cinematic ? 'cinematic-embers' : templateArtwork ? 'core-style-crest-v6' : 'dynamic-event-v4');res.setHeader('X-Card-Size',String(card.length));res.setHeader('X-Card-Text-Pixels',String(textPixels));res.setHeader('X-Card-Text-Verified',textPixels>1500?'true':'false');res.end(card);
 }catch(e){console.error('Discord card render failed',e);res.statusCode=500;res.setHeader('Content-Type','text/plain');res.end(String(e?.stack||e))}
 }
