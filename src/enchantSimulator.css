@@ -16,3 +16,10 @@
 .enchant-feedback{min-height:1.5em}
 .enchant-actions{justify-content:flex-start;flex-wrap:wrap}
 .enchant-actions button:disabled{opacity:.5;cursor:default}
+
+.enchant-slots{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:10px;margin-top:16px}
+.enchant-slot{display:grid;justify-items:center;gap:8px;min-width:0;padding:10px;background:#211910;border:1px solid #765736;border-radius:8px}
+.enchant-slot-label{font-size:13px;color:#f2d5aa}
+.enchant-slot-icon{display:grid;place-items:center;width:42px;height:42px;border:1px solid #957047;border-radius:6px;background:#302315;color:#ffcf80;font-size:24px}
+.enchant-plus{font-size:24px;color:#ffcf80}
+.enchant-slot select{width:100%;min-width:0;background:#261e18;color:#f2e7d4;border:1px solid #8c6943;border-radius:5px;padding:6px}

@@ -24,15 +24,27 @@ function enchant(level, chance, blessed, roll) {
 
 const dialog = document.createElement('dialog');
 dialog.className = 'enchant-simulator';
+dialog.id = 'enchantSimulator';
 dialog.setAttribute('aria-labelledby', 'enchantSimulatorTitle');
 dialog.innerHTML = `
   <div class="enchant-heading">
     <h2 id="enchantSimulatorTitle">Symulator enchantu S</h2>
     <form method="dialog"><button type="submit" aria-label="Zamknij symulator">×</button></form>
   </div>
+  <div class="enchant-slots">
+    <label class="enchant-slot">
+      <span class="enchant-slot-label">Broń S</span>
+      <span class="enchant-slot-icon" aria-hidden="true">⚔</span>
+      <select name="weapon"><option value="">Wybierz broń</option>${weapons.map(name => `<option>${name}</option>`).join('')}</select>
+    </label>
+    <span class="enchant-plus" aria-hidden="true">+</span>
+    <label class="enchant-slot">
+      <span class="enchant-slot-label">Zwój S</span>
+      <span class="enchant-slot-icon" aria-hidden="true">▤</span>
+      <select name="scroll"><option value="">Wybierz zwój</option><option value="regular">EWS · zwykły</option><option value="blessed">BEWS · Blessed</option></select>
+    </label>
+  </div>
   <div class="enchant-settings">
-    <label>Broń <select name="weapon">${weapons.map(name => `<option>${name}</option>`).join('')}</select></label>
-    <label>Zwój <select name="scroll"><option value="regular">EWS · zwykły</option><option value="blessed">BEWS · Blessed</option></select></label>
     <label>Start <input name="start" type="number" min="0" max="15" value="3" required></label>
     <label>Cel <input name="target" type="number" min="1" max="16" value="8" required></label>
     <label>Szansa powyżej +3 (%) <input name="chance" type="number" min="0" max="100" step="any" value="66.67" required></label>
@@ -67,12 +79,14 @@ let scrolls = 0;
 
 function render() {
   const valid = start.validity.valid && target.validity.valid && chanceInput.validity.valid;
-  const active = valid && level !== null && level < target.valueAsNumber;
-  view('weapon').textContent = field('weapon').value;
-  view('level').textContent = level === null ? 'Rozbita' : Number.isInteger(level) ? '+' + level : '—';
+  const hasWeapon = Boolean(field('weapon').value);
+  const hasScroll = Boolean(field('scroll').value);
+  const active = valid && hasWeapon && hasScroll && level !== null && level < target.valueAsNumber;
+  view('weapon').textContent = field('weapon').value || 'Włóż broń i zwój';
+  view('level').textContent = !hasWeapon ? '—' : level === null ? 'Rozbita' : Number.isInteger(level) ? '+' + level : '—';
   view('scrolls').textContent = scrolls;
   view('next').textContent = active ? percent(nextChance(level, chance())) : '—';
-  view('odds').textContent = valid && level !== null ? percent(streakChance(level, target.valueAsNumber, chance())) : '—';
+  view('odds').textContent = valid && hasWeapon && hasScroll && level !== null ? percent(streakChance(level, target.valueAsNumber, chance())) : '—';
   view('roll').disabled = !active;
   if (!valid) feedback.textContent = 'Wpisz poprawny poziom początkowy, cel i szansę.';
 }
@@ -91,6 +105,8 @@ dialog.querySelector('.enchant-settings').addEventListener('input', (event) => {
     render();
   }
 });
+field('weapon').addEventListener('change', reset);
+field('scroll').addEventListener('change', render);
 view('reset').addEventListener('click', reset);
 view('roll').addEventListener('click', () => {
   if (view('roll').disabled) return;
@@ -102,9 +118,22 @@ view('roll').addEventListener('click', () => {
   else feedback.textContent = `Sukces: +${previous} → +${level}.` + (level >= target.valueAsNumber ? ' Cel osiągnięty!' : '');
   render();
 });
-document.getElementById('openEnchantSimulator').addEventListener('click', (event) => {
-  event.preventDefault();
-  dialog.showModal();
-});
-if (location.hash === '#enchant-s') dialog.showModal();
+function mountPanelShortcut() {
+  const sidebar = document.querySelector('#memberZoneLayer .member-zone-side');
+  if (!sidebar || sidebar.querySelector('[data-open-enchant-simulator]')) return;
+  const shortcut = document.createElement('a');
+  shortcut.className = 'zone-nav quest-catalogue-shortcut';
+  shortcut.href = '#enchant-s';
+  shortcut.textContent = 'Enchant S';
+  shortcut.dataset.openEnchantSimulator = '';
+  shortcut.setAttribute('aria-controls', dialog.id);
+  shortcut.addEventListener('click', (event) => {
+    event.preventDefault();
+    if (!dialog.open) dialog.showModal();
+  });
+  sidebar.append(shortcut);
+}
+
+mountPanelShortcut();
+new MutationObserver(mountPanelShortcut).observe(document.body, { childList: true, subtree: true });
 render();
