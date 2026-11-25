@@ -83,9 +83,20 @@ const isEpicBoss=['antharas','baium','core','frintezza','orfen','queen-ant','val
 const eventSubtitle=kind==='siege'?'CASTLE SIEGE':kind==='clan hall'?'CLAN HALL':kind==='rb'?'RAID BOSS':kind==='olympiad'?'OLYMPIAD':(kind==='epic'||isEpicBoss)?'EPIC BOSS':'WYDARZENIE KLANOWE';
 const subtitleHalfWidth=Math.min(220,Array.from(eventSubtitle).length*10);
 const gatheringPlace='HUNTER VILLAGE',meetingNotice='ZBIÓRKA 30 MINUT PRZED STARTEM';
-const rallySvg = rallyLines(name, date, time).map((line, index) =>
-  `<text x="968" y="${580 + index * 44}" text-anchor="middle" fill="#fff4db" font-size="17" font-family="DejaVu Sans" font-weight="700">${esc(line)}</text>`
-).join('');
+const rallySvg = rallyLines(name, date, time).map((phrase, index) => {
+  const lines = [];
+  for (const word of phrase.split(' ')) {
+    const current = lines.at(-1);
+    if (current && current.length + word.length + 1 <= 22) {
+      lines[lines.length - 1] += ' ' + word;
+    } else {
+      lines.push(word);
+    }
+  }
+  return lines.map((line, row) =>
+    `<text x="968" y="${540 + index * 112 + row * 37}" text-anchor="middle" fill="${index === 0 ? 'url(#gold)' : '#fff4db'}" stroke="#100b08" stroke-width="5" stroke-linejoin="round" paint-order="stroke" font-size="${index === 0 ? 32 : 28}" font-family="DejaVu Serif" font-weight="700">${esc(line)}</text>`
+  ).join('');
+}).join('');
 const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
 <defs><linearGradient id="metal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff"/><stop offset=".42" stop-color="#dce7f4"/><stop offset=".72" stop-color="#8296b0"/><stop offset="1" stop-color="#f4f5f7"/></linearGradient><linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff1ad"/><stop offset=".52" stop-color="#ffd45c"/><stop offset="1" stop-color="#a87525"/></linearGradient><linearGradient id="panel"><stop stop-color="#02040a" stop-opacity=".90"/><stop offset=".84" stop-color="#02040a" stop-opacity=".56"/><stop offset="1" stop-color="#02040a" stop-opacity=".12"/></linearGradient><linearGradient id="blue" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#75d8ff"/><stop offset=".55" stop-color="#315e8e"/><stop offset="1" stop-color="#0b182b"/></linearGradient></defs>
 <rect x="20" y="20" width="740" height="146" fill="#03050b" fill-opacity=".54"/>
@@ -94,7 +105,6 @@ const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" vie
 <rect x="38" y="349" width="704" height="288" fill="url(#panel)"/>
 <g stroke="#e8b65d" fill="none" stroke-width="4"><rect x="66" y="374" width="43" height="39" rx="2"/><path d="M66 385H109M76 367V381M99 367V381M76 394H99M76 403H99"/><circle cx="87" cy="456" r="22"/><path d="M87 441V456L100 464"/></g><text x="129" y="410" fill="#f5f2ef" font-size="32" font-family="DejaVu Serif" font-weight="700">DATA:</text><text x="350" y="410" fill="url(#gold)" font-size="42" font-family="DejaVu Serif" font-weight="700">${esc(date)}</text><text x="129" y="474" fill="#f5f2ef" font-size="32" font-family="DejaVu Serif" font-weight="700">GODZINA:</text><text x="350" y="474" fill="url(#gold)" font-size="48" font-family="DejaVu Serif" font-weight="700">${esc(time)}</text>
 <g fill="#dcb15e"><circle cx="72" cy="530" r="10"/><circle cx="102" cy="522" r="13"/><circle cx="133" cy="530" r="10"/><path d="M54 554Q54 537 72 537Q90 537 90 554ZM81 560Q81 539 102 539Q123 539 123 560ZM115 554Q115 537 133 537Q151 537 151 554Z"/></g><text x="181" y="535" fill="#f6f0e6" font-size="27" font-family="DejaVu Serif" font-weight="700">MIEJSCE ZBIÓRKI:</text><text x="181" y="577" fill="url(#gold)" font-size="38" font-family="DejaVu Serif" font-weight="700">${gatheringPlace}</text><rect x="181" y="593" width="450" height="36" rx="5" fill="#1b160d" fill-opacity=".94" stroke="#d6ad5e" stroke-width="1.5"/><text x="406" y="617" text-anchor="middle" fill="url(#gold)" font-size="18" font-family="DejaVu Serif" font-weight="700" letter-spacing=".25">${meetingNotice}</text>
-<rect x="776" y="445" width="384" height="293" rx="14" fill="#03050b" fill-opacity=".94" stroke="#e7bd68" stroke-width="3"/><rect x="787" y="456" width="362" height="271" rx="10" fill="none" stroke="#b99350" stroke-width="1.5"/><text x="968" y="490" text-anchor="middle" fill="url(#gold)" stroke="#100b08" stroke-width="1.5" paint-order="stroke" font-size="25" font-family="DejaVu Serif" font-weight="700" letter-spacing="1.4">DOŁĄCZ DO EKIPY</text><path d="M801 510H1135" stroke="#b99350" stroke-width="1.5"/>
 ${rallySvg}
 </svg>`;
 const fontDir=new URL('../node_modules/dejavu-fonts-ttf/ttf/',import.meta.url).pathname;
