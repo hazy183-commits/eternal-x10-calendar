@@ -205,8 +205,136 @@ const SCHEDULED_QUOTES = [
   ]
 ];
 
+const ROTATING_LEADS = [
+  "Dziś gramy o swoje.",
+  "Drużyna zaczyna się na zbiórce.",
+  "Mamy skład, który potrafi zaskoczyć.",
+  "Na tej ekipie można polegać.",
+  "Przed nami dobra okazja do rewanżu.",
+  "Hej, Orły. Czas się zebrać.",
+  "Wspólna walka ma swój ciężar.",
+  "Spróbujmy dziś czegoś odważnego.",
+  "Healer wciąż w nas wierzy.",
+  "Wpadamy jak po swoje.",
+  "Znamy już drogę do celu.",
+  "Ktoś nawet przeczytał plan.",
+  "Plecak pełny, bojowy duch też.",
+  "Wreszcie mamy okazję się wykazać.",
+  "Dziś każde miejsce w party ma sens.",
+  "Zapowiada się niezła rozróba.",
+  "Najlepsze akcje rodzą się na głosowym.",
+  "Dziś może być głośno.",
+  "Jeszcze będzie o czym opowiadać.",
+  "Zgrany skład to nasza przewaga.",
+  "Zaimponujmy dziś sami sobie.",
+  "Ostatnio życie dało nam w dupę.",
+  "Niech to będzie nasz wieczór.",
+  "Dobrze znów grać w tym składzie.",
+  "Damy radę nawet po trudnym starcie.",
+  "Orły potrafią wracać do gry.",
+  "Warto zawalczyć do ostatniej sekundy.",
+  "Ktoś już odpalił buffy.",
+  "To będzie próba dla całej ekipy.",
+  "Liczy się każdy, kto dziś wpadnie.",
+  "Czas pokazać charakter.",
+  "Zbiórka to najlepszy moment na żarty.",
+  "Mamy więcej serca niż rozsądku.",
+  "Rozgrzewka poszła podejrzanie dobrze.",
+  "Ktoś na głosowym obiecał spokój.",
+  "Przewaga zaczyna się od zaufania.",
+  "Mamy cholernie dobry skład.",
+  "Gramy dla tych, co stoją obok.",
+  "Dziś się okaże, kto trenował.",
+  "Na tę akcję warto znaleźć czas.",
+  "Ten klan umie się podnieść.",
+  "Spokój, oddech i pełne skupienie.",
+  "Dzisiaj każdy może błysnąć.",
+  "Tym składem można sięgać wysoko.",
+  "Znowu ktoś powiedział: znam skrót.",
+  "Z takim party aż chce się grać.",
+  "Do diabła, mamy w sobie ogień.",
+  "Pora dokończyć, co zaczęliśmy."
+];
+const ROTATING_ENDINGS = [
+  "Widzimy się w Hunter Village.",
+  "Wbijaj. Razem damy radę!",
+  "Zróbmy akcję, którą zapamiętamy.",
+  "Trzymajmy asystę i jedziemy po swoje.",
+  "Niech rywale poprawią sobie prognozy.",
+  "Chodź, w party czeka miejsce.",
+  "Pierwszy krok to pojawić się na zbiórce.",
+  "Dajmy z siebie wszystko do końca.",
+  "Kto ma resy, niech się nimi nie chwali.",
+  "W razie wtopy powstanie przynajmniej mem.",
+  "Tylko błagam, nie stójcie wszyscy w AoE.",
+  "Healer już przeklina, czyli jest gotowy.",
+  "Zagrajmy ramię w ramię, jak jeden klan.",
+  "Zafundujmy rywalom niespodziankę.",
+  "Wskakuj na głosowy i ruszamy.",
+  "Ustalmy tylko, kto dziś czyta mapę.",
+  "Pokażmy, jak gra Orzeł Biały.",
+  "Zaufaj ekipie i graj swoją rolę.",
+  "Wygraną świętujemy razem.",
+  "Tym razem nie wpierdalajmy się pod AoE.",
+  "Skupienie, asysta i robimy robotę.",
+  "Czas wywalczyć powód do dumy.",
+  "Wbijaj po dobrą grę i lepsze towarzystwo.",
+  "Zabierz buffy i dobry humor.",
+  "A jak padniemy, wracamy po rewanż.",
+  "Dziś strach zostawiamy w mieście.",
+  "Niech to będzie zajebiście dobra akcja.",
+  "Do końca walczymy o każdy ruch.",
+  "Rywale też mogą się dziś czegoś nauczyć.",
+  "Nikt nie musi dźwigać tej walki sam.",
+  "Zostawmy wymówki na wycieczkę do Giran.",
+  "Gdy zrobi się gorąco, trzymaj się party.",
+  "Plecak resów też jest formą optymizmu.",
+  "Pokażmy, że warto było wbić.",
+  "Dajmy healerowi choć jeden powód do dumy.",
+  "Zagrajmy tak, żeby wracać z uśmiechem.",
+  "Chodź, ogarniemy ten cholerny chaos.",
+  "Po akcji dowiemy się, czyj to był pomysł.",
+  "Trzymamy szyk, nawet jak plan się sypie.",
+  "Zróbmy im niezłą zagwozdkę na starcie.",
+  "Niech przeciwnicy się dziwią, nie healer.",
+  "Zaczynamy od zbiórki, kończymy z historią.",
+  "Dajmy wszystkim dobry powód do rewanżu.",
+  "Wpadnij choć na jedną akcję.",
+  "Miejmy odwagę pójść po więcej.",
+  "Healer w razie czego zna drogę na cmentarz.",
+  "Wbijaj, zanim ktoś zacznie śpiewać na DC.",
+  "Jak trzymamy się razem, mamy szansę.",
+  "Sprawdź buffy, nie cierpliwość healera.",
+  "Zdobywamy przewagę ruchem całej drużyny.",
+  "Czas przetestować plan na kimś innym.",
+  "Niech zostanie po nas niezły rozpierdol.",
+  "Dobre akcje zaczynają się od obecności.",
+  "Wrzuć resy do plecaka. Tak na wszelki.",
+  "Dzisiaj stawiamy na odwagę i asystę.",
+  "Idziemy po wygraną z podniesioną głową.",
+  "Wpadnij, przyda nam się twoja klasa.",
+  "Niech rywal się zastanawia, co poszło źle.",
+  "Jak będzie ciężko, tym bardziej warto.",
+  "Tylko nie zapierdalaj przed tankiem.",
+  "Daj sygnał na głosowym i ruszamy.",
+  "Zróbmy coś, o czym jutro będzie głośno.",
+  "Pamiętaj, zawsze masz obok kogoś z klanu.",
+  "W najgorszym razie zrzucimy winę na lag."
+];
+
+function rotatingQuote(index) {
+  const leadCount = ROTATING_LEADS.length;
+  const slot = index % (leadCount * ROTATING_ENDINGS.length);
+  const leadIndex = slot % leadCount;
+  const endingIndex = (Math.floor(slot / leadCount) + leadIndex) % ROTATING_ENDINGS.length;
+  return [ROTATING_LEADS[leadIndex], ROTATING_ENDINGS[endingIndex]];
+}
+
 function rallyLines(name, date, time, kind, quote) {
-  if (/^[0-9]{1,15}$/.test(quote ?? '')) return SCHEDULED_QUOTES[Number(quote) % SCHEDULED_QUOTES.length];
+  if (/^[0-9]{1,15}$/.test(quote ?? '')) {
+    const index = Number(quote);
+    return index < SCHEDULED_QUOTES.length ? SCHEDULED_QUOTES[index] : rotatingQuote(index - SCHEDULED_QUOTES.length);
+  }
   const openers = Object.hasOwn(RALLY_EVENT_OPENERS, kind) ? RALLY_EVENT_OPENERS[kind] : RALLY_OPENERS;
   const isoDate = date.replace(/^(\d{1,2})[.\/-](\d{1,2})[.\/-](\d{4})$/, (_, day, month, year) =>
     [year, month.padStart(2, '0'), day.padStart(2, '0')].join('-'));
@@ -315,7 +443,7 @@ const cinematicSvg = cinematic ? `<svg xmlns="http://www.w3.org/2000/svg" width=
 <text x="838" y="651" fill="#f5d9c7" font-size="20">${esc(date)}</text>
 </g>
 <path d="M68 689V761" stroke="#ed785a" stroke-width="4" stroke-linecap="round"/>
-<text x="90" y="719" fill="#fff0d5" stroke="#190a0d" stroke-width="2" paint-order="stroke" font-size="31" font-family="DejaVu Serif" font-weight="700" letter-spacing=".35">„${esc(headline)}”</text>
+<text x="90" y="719" fill="#fff0d5" stroke="#190a0d" stroke-width="2" paint-order="stroke" font-size="${Math.min(31, Math.floor(1200 / (headline.length + 2)))}" font-family="DejaVu Serif" font-weight="700" letter-spacing=".35">„${esc(headline)}”</text>
 <text x="90" y="754" fill="#efb59a" font-size="22" font-family="DejaVu Sans">${esc(invitation)}</text>
 </svg>` : svg;
 const overlay=new Resvg(cinematicSvg,{fitTo:{mode:'width',value:1200},font:{fontFiles,fontDirs:[fontDir],loadSystemFonts:true,defaultFontFamily:'DejaVu Sans'}}).render().asPng();
