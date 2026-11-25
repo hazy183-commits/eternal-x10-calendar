@@ -19,7 +19,7 @@
             "Mapa miasta · Town of Oren"
           ],
           [
-            "https://linedia.ru/img/wikimap.jpg",
+            "/quest-maps/world.jpg",
             "Zaznaczony punkt · Maestro Reorin, Skyshadow Meadow",
             [
               1184,
@@ -39,7 +39,7 @@
         "text": "Teleportuj się z Aden w okolice Seal of Shilen. Podejdź do północnej części The Cemetery, do ogrodzonej polany zaznaczonej na mapie. Po śmierci Cabrio kliknij skrzynię Coffer of the Dead, odbierz Reiria’s Soul Orb i wróć do Reorina.",
         "images": [
           [
-            "https://linedia.ru/img/wikimap.jpg",
+            "/quest-maps/world.jpg",
             "Zaznaczony punkt · Cabrio, północna część The Cemetery",
             [
               1513,
@@ -63,7 +63,7 @@
             "Reorin · portret"
           ],
           [
-            "https://linedia.ru/img/wikimap.jpg",
+            "/quest-maps/world.jpg",
             "Death Lord Hallate · Tower of Insolence, piętro 3",
             [
               1261,
@@ -71,7 +71,7 @@
             ]
           ],
           [
-            "https://linedia.ru/img/wikimap.jpg",
+            "/quest-maps/world.jpg",
             "Kernon · Tower of Insolence, piętro 8",
             [
               1261,
@@ -79,7 +79,7 @@
             ]
           ],
           [
-            "https://linedia.ru/img/wikimap.jpg",
+            "/quest-maps/world.jpg",
             "Longhorn Golkonda · Tower of Insolence, piętro 11",
             [
               1272,
@@ -107,7 +107,7 @@
             "Mapa miasta · Town of Oren"
           ],
           [
-            "https://linedia.ru/img/wikimap.jpg",
+            "/quest-maps/world.jpg",
             "Cliff · magazyn w Oren",
             [
               1141,
@@ -115,7 +115,7 @@
             ]
           ],
           [
-            "https://linedia.ru/img/wikimap.jpg",
+            "/quest-maps/world.jpg",
             "Ferris · kuźnia w Aden",
             [
               1400,
@@ -123,7 +123,7 @@
             ]
           ],
           [
-            "https://linedia.ru/img/wikimap.jpg",
+            "/quest-maps/world.jpg",
             "Zenkin · sklep w Oren",
             [
               1133,
@@ -137,7 +137,7 @@
         "text": "Porozmawiaj z Kasparem w Hardin’s Academy. Z otrzymaną Pipette udaj się do Marii po Red Pipette. Oddaj ją Kasparowi w zamian za formę i zanieś ją do Reorina.",
         "images": [
           [
-            "https://linedia.ru/img/wikimap.jpg",
+            "/quest-maps/world.jpg",
             "Kaspar · Hardin’s Academy",
             [
               1230,
@@ -161,7 +161,7 @@
             "Reorin · portret"
           ],
           [
-            "https://linedia.ru/img/wikimap.jpg",
+            "/quest-maps/world.jpg",
             "Zaznaczony punkt · powrót do Reorina",
             [
               1184,
@@ -175,7 +175,7 @@
         "text": "Oficjalny opis Eternal wymienia Fate’s Whisper jako warunek subclassy. W klasycznym Interlude dochodzi Mimir’s Elixir. Gdy opcja dodania subclassy nadal jest zablokowana, zabierz Star of Destiny do Magister Ladd na 4. piętrze Ivory Tower i sprawdź, czy oferuje quest.",
         "images": [
           [
-            "https://linedia.ru/img/wikimap.jpg",
+            "/quest-maps/world.jpg",
             "Ladd · Ivory Tower, piętro mrocznych elfów",
             [
               1155,
@@ -201,7 +201,7 @@
         "text": "W podziemiach Ivory Tower odbierz Supplier of Reagents od Wesley’a. W urnie na temperaturze 1 (Salamander) połącz 10 Moonstone Shard z 1 Volcanic Ash, aby uzyskać Moon Dust. Połącz 10 Moon Dust z 1 Quicksilver na Lunargent, a następnie 1 Lunargent z 1 Quicksilver na Pure Silver. Jeśli kupisz Lunargent, wystarczy ostatnia mieszanka. Pokaż Pure Silver Laddowi.",
         "images": [
           [
-            "https://linedia.ru/img/wikimap.jpg",
+            "/quest-maps/world.jpg",
             "Wesley · podziemia Ivory Tower",
             [
               1157,
@@ -209,7 +209,7 @@
             ]
           ],
           [
-            "https://linedia.ru/img/wikimap.jpg",
+            "/quest-maps/world.jpg",
             "Alchemist’s Mixing Urn · naprzeciwko Wesley’a",
             [
               1157,
@@ -235,7 +235,7 @@
         "text": "Porozmawiaj z Magister Joan na 3. piętrze. Zdobądź Sage’s Stone z Chimera Piece w Silent Valley i zanieś go Joan po True Gold. Wróć do Ladda po Mixing Stone. W Lair of Antharas zdobądź Blood Fire z Bloody Guardian.",
         "images": [
           [
-            "https://linedia.ru/img/wikimap.jpg",
+            "/quest-maps/world.jpg",
             "Joan · trzecie piętro Ivory Tower",
             [
               1155,
@@ -243,7 +243,7 @@
             ]
           ],
           [
-            "https://linedia.ru/img/wikimap.jpg",
+            "/quest-maps/world.jpg",
             "Chimera Piece · Silent Valley",
             [
               1487,
@@ -251,7 +251,7 @@
             ]
           ],
           [
-            "https://linedia.ru/img/wikimap.jpg",
+            "/quest-maps/world.jpg",
             "Bloody Guardian · Lair of Antharas",
             [
               1406,
@@ -271,7 +271,7 @@
         "text": "W podziemiach Ivory Tower użyj Mixing Stone w Alchemist’s Mixing Urn. Połącz Pure Silver, True Gold i Blood Fire na temperaturze 3 (Phoenix). Wróć do Ladda i wypij eliksir przez opcję w dialogu. Następnie wybierz subclassę u mistrza właściwej gildii.",
         "images": [
           [
-            "https://linedia.ru/img/wikimap.jpg",
+            "/quest-maps/world.jpg",
             "Alchemist’s Mixing Urn · podziemia Ivory Tower",
             [
               1157,
@@ -279,7 +279,7 @@
             ]
           ],
           [
-            "https://linedia.ru/img/wikimap.jpg",
+            "/quest-maps/world.jpg",
             "Ladd · oddanie eliksiru",
             [
               1155,
@@ -380,7 +380,7 @@
             "Virgil · portret"
           ],
           [
-            "https://la2wiki.com/town/c-rune.webp",
+            "/quest-maps/rune.webp",
             "Mapa miasta · Rune Township"
           ]
         ]
@@ -467,7 +467,7 @@
             "Eliyah · portret"
           ],
           [
-            "https://la2wiki.com/town/c-rune.webp",
+            "/quest-maps/rune.webp",
             "Mapa miasta · Rune Township"
           ]
         ]
@@ -503,7 +503,7 @@
             "Flauron · portret"
           ],
           [
-            "https://la2wiki.com/town/c-rune.webp",
+            "/quest-maps/rune.webp",
             "Mapa miasta · Rune Township"
           ]
         ],
@@ -535,7 +535,7 @@
             "Innocentin · portret"
           ],
           [
-            "https://la2wiki.com/town/c-rune.webp",
+            "/quest-maps/rune.webp",
             "Mapa miasta · Rune Township"
           ],
           [
@@ -591,7 +591,7 @@
             "Dominic · portret"
           ],
           [
-            "https://la2wiki.com/town/c-rune.webp",
+            "/quest-maps/rune.webp",
             "Mapa miasta · Rune Township"
           ]
         ]
@@ -688,7 +688,7 @@
             "Singsing · portret"
           ],
           [
-            "https://linedia.ru/img/wikimap.jpg",
+            "/quest-maps/world.jpg",
             "Singsing · przystań Primeval Isle",
             [
               874,
@@ -711,7 +711,7 @@
             "Singsing · portret"
           ],
           [
-            "https://linedia.ru/img/wikimap.jpg",
+            "/quest-maps/world.jpg",
             "Orahochin · teleport do wioski Elroki",
             [
               863,
