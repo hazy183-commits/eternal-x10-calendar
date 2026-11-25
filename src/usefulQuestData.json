@@ -8,7 +8,7 @@
     "steps": [
       {
         "title": "Odbierz quest u Reorina",
-        "text": "Z Oren teleportuj się do Skyshadow Meadow. Porozmawiaj z Maestro Reorin.",
+        "text": "Z Town of Oren kieruj się na wschód do Skyshadow Meadow. Maestro Reorin stoi na polanie. Sprawdź punkt na minimapie na zrzucie i weź Fate’s Whisper.",
         "images": [
           [
             "https://la2wiki.com/npc/reorin.webp",
@@ -17,13 +17,34 @@
           [
             "https://la2wiki.com/town/c-oren.webp",
             "Mapa miasta · Town of Oren"
+          ],
+          [
+            "https://l2-servera.com/wp-content/uploads/2025/02/maestro-reorin.jpg",
+            "Zaznaczony punkt · Maestro Reorin, Skyshadow Meadow"
+          ]
+        ],
+        "waypoints": [
+          [
+            "Maestro Reorin",
+            "92743, 55523, -3370"
           ]
         ]
       },
       {
         "title": "Cabrio na cmentarzu",
-        "text": "Idź do The Cemetery. Po śmierci Cabrio porozmawiaj ze skrzynią Coffer of the Dead, odbierz Reiria’s Soul Orb i wróć do Reorina.",
-        "images": []
+        "text": "Teleportuj się z Aden w okolice Seal of Shilen. Podejdź do północnej części The Cemetery, do ogrodzonej polany zaznaczonej na zrzucie. Po śmierci Cabrio kliknij skrzynię Coffer of the Dead, odbierz Reiria’s Soul Orb i wróć do Reorina.",
+        "images": [
+          [
+            "https://l2-servera.com/wp-content/uploads/2025/02/shilens-messenger-cabrio1.jpg",
+            "Zaznaczony punkt · Cabrio, północna część The Cemetery"
+          ]
+        ],
+        "waypoints": [
+          [
+            "Shilen’s Messenger Cabrio",
+            "180986, 11919, -2580"
+          ]
+        ]
       },
       {
         "title": "Trzy berła z Tower of Insolence",
@@ -32,6 +53,24 @@
           [
             "https://la2wiki.com/npc/reorin.webp",
             "Reorin · portret"
+          ],
+          [
+            "https://l2-servera.com/wp-content/uploads/2025/02/death-lord-hallate.jpg",
+            "Death Lord Hallate · Tower of Insolence, piętro 3"
+          ],
+          [
+            "https://l2-servera.com/wp-content/uploads/2025/02/kernon.jpg",
+            "Kernon · Tower of Insolence, piętro 8"
+          ],
+          [
+            "https://l2-servera.com/wp-content/uploads/2025/02/longhorn-golkonda.jpg",
+            "Longhorn Golkonda · Tower of Insolence, piętro 11"
+          ]
+        ],
+        "waypoints": [
+          [
+            "Tower of Insolence · wejście",
+            "121168, 15968, -4993"
           ]
         ]
       },
@@ -46,13 +85,30 @@
           [
             "https://la2wiki.com/town/c-oren.webp",
             "Mapa miasta · Town of Oren"
+          ],
+          [
+            "https://l2-servera.com/wp-content/uploads/2025/01/warehouse-freightman-cliff.jpg",
+            "Cliff · magazyn w Oren"
+          ],
+          [
+            "https://l2-servera.com/wp-content/uploads/2025/02/head-blacksmith-ferris.jpg",
+            "Ferris · kuźnia w Aden"
+          ],
+          [
+            "https://l2-servera.com/wp-content/uploads/2025/02/trader-zenkin.jpg",
+            "Zenkin · sklep w Oren"
           ]
         ]
       },
       {
         "title": "Pipette na Eternal",
         "text": "Porozmawiaj z Kasparem w Hardin’s Academy. Z otrzymaną Pipette udaj się do Marii po Red Pipette. Oddaj ją Kasparowi w zamian za formę i zanieś ją do Reorina.",
-        "images": []
+        "images": [
+          [
+            "https://l2-servera.com/wp-content/uploads/2025/02/magister-kaspar.jpg",
+            "Kaspar · Hardin’s Academy"
+          ]
+        ]
       },
       {
         "title": "Zakończ Fate’s Whisper i odbierz Star of Destiny",
@@ -61,28 +117,86 @@
           [
             "https://la2wiki.com/npc/reorin.webp",
             "Reorin · portret"
+          ],
+          [
+            "https://l2-servera.com/wp-content/uploads/2025/02/maestro-reorin.jpg",
+            "Zaznaczony punkt · powrót do Reorina"
           ]
         ]
       },
       {
         "title": "Jeśli mistrz wymaga eliksiru, zacznij u Ladda",
         "text": "Oficjalny opis Eternal wymienia Fate’s Whisper jako warunek subclassy. W klasycznym Interlude dochodzi Mimir’s Elixir. Gdy opcja dodania subclassy nadal jest zablokowana, zabierz Star of Destiny do Magister Ladd na 4. piętrze Ivory Tower i sprawdź, czy oferuje quest.",
-        "images": []
+        "images": [
+          [
+            "https://l2-servera.com/wp-content/uploads/2024/09/magister-ladd.jpg",
+            "Ladd · Ivory Tower, piętro mrocznych elfów"
+          ]
+        ],
+        "waypoints": [
+          [
+            "Magister Ladd",
+            "84985, 15991, -1769"
+          ]
+        ]
       },
       {
         "title": "Mimir’s Elixir · Pure Silver",
         "text": "W podziemiach Ivory Tower odbierz Supplier of Reagents od Wesley’a. W urnie na temperaturze 1 (Salamander) połącz 10 Moonstone Shard z 1 Volcanic Ash, aby uzyskać Moon Dust. Połącz 10 Moon Dust z 1 Quicksilver na Lunargent, a następnie 1 Lunargent z 1 Quicksilver na Pure Silver. Jeśli kupisz Lunargent, wystarczy ostatnia mieszanka. Pokaż Pure Silver Laddowi.",
-        "images": []
+        "images": [
+          [
+            "https://l2-servera.com/wp-content/uploads/2025/02/magic-trader-wesley.jpg",
+            "Wesley · podziemia Ivory Tower"
+          ],
+          [
+            "https://l2-servera.com/wp-content/uploads/2025/02/alchemists-mixing-urn.jpg",
+            "Alchemist’s Mixing Urn · naprzeciwko Wesley’a"
+          ]
+        ],
+        "waypoints": [
+          [
+            "Magic Trader Wesley",
+            "85655, 16767, -4271"
+          ]
+        ]
       },
       {
         "title": "Mimir’s Elixir · True Gold i Blood Fire",
         "text": "Porozmawiaj z Magister Joan na 3. piętrze. Zdobądź Sage’s Stone z Chimera Piece w Silent Valley i zanieś go Joan po True Gold. Wróć do Ladda po Mixing Stone. W Lair of Antharas zdobądź Blood Fire z Bloody Guardian.",
-        "images": []
+        "images": [
+          [
+            "https://l2-servera.com/wp-content/uploads/2024/04/magister-joan-1.jpg",
+            "Joan · trzecie piętro Ivory Tower"
+          ],
+          [
+            "https://l2-servera.com/wp-content/uploads/2025/02/chimera-piece.jpg",
+            "Chimera Piece · Silent Valley"
+          ],
+          [
+            "https://l2-servera.com/wp-content/uploads/2025/02/bloody-guardian.jpg",
+            "Bloody Guardian · Lair of Antharas"
+          ]
+        ],
+        "waypoints": [
+          [
+            "Magister Joan",
+            "84985, 15991, -2285"
+          ]
+        ]
       },
       {
         "title": "Mimir’s Elixir · mieszanie i wybór klasy",
         "text": "W podziemiach Ivory Tower użyj Mixing Stone w Alchemist’s Mixing Urn. Połącz Pure Silver, True Gold i Blood Fire na temperaturze 3 (Phoenix). Wróć do Ladda i wypij eliksir przez opcję w dialogu. Następnie wybierz subclassę u mistrza właściwej gildii.",
-        "images": []
+        "images": [
+          [
+            "https://l2-servera.com/wp-content/uploads/2025/02/alchemists-mixing-urn.jpg",
+            "Alchemist’s Mixing Urn · podziemia Ivory Tower"
+          ],
+          [
+            "https://l2-servera.com/wp-content/uploads/2024/09/magister-ladd.jpg",
+            "Ladd · oddanie eliksiru"
+          ]
+        ]
       }
     ],
     "quickStart": "Oren → Skyshadow Meadow",
@@ -194,7 +308,18 @@
       {
         "title": "Barakiel na Eternal",
         "text": "Zdobądź Rain Song z Barakiela. Na Eternal jeśli Twoja grupa nie zada ostatniego ciosu, możesz uzbierać 15 fragmentów Rain Song, które automatycznie połączą się w laskę. Oddaj ją Ossianowi, a Relic Box zanieś Laddowi w Ivory Tower.",
-        "images": []
+        "images": [
+          [
+            "https://masterwork.wiki/upload/25-Flame-of-Splendor-Barakiel-63bea54136010.jpg",
+            "Barakiel · wygląd bossa"
+          ]
+        ],
+        "waypoints": [
+          [
+            "Flame of Splendor Barakiel",
+            "91532, -86872, -2800"
+          ]
+        ]
       },
       {
         "title": "Część IV — Caradine · poziom 75",
@@ -303,6 +428,10 @@
           [
             "https://la2wiki.com/town/c-rune.webp",
             "Mapa miasta · Rune Township"
+          ],
+          [
+            "https://masterwork.wiki/upload/Innocentin-6648c50b8b04f.jpg",
+            "Innocentin · świątynia w Rune"
           ]
         ]
       },
@@ -318,6 +447,10 @@
           [
             "https://la2wiki.com/npc/innocentin.webp",
             "Innocentin · portret"
+          ],
+          [
+            "https://masterwork.wiki/upload/Innocentin-6648c50b8b04f.jpg",
+            "Innocentin · miejsce oddania totemów"
           ]
         ]
       }
@@ -354,6 +487,10 @@
           [
             "https://la2wiki.com/npc/gremory.webp",
             "Gremory · portret"
+          ],
+          [
+            "https://masterwork.wiki/upload/secret-room-64644fcd88b27.jpg",
+            "Plan ukrytego pomieszczenia w Monastery of Silence"
           ]
         ]
       },
@@ -433,6 +570,10 @@
           [
             "https://la2wiki.com/npc/singsing.webp",
             "Singsing · portret"
+          ],
+          [
+            "https://l2-servera.com/wp-content/uploads/2025/01/singsing.jpg",
+            "Singsing · przystań Primeval Isle"
           ]
         ]
       },
@@ -443,11 +584,19 @@
       },
       {
         "title": "Wymiana u Karakawei",
-        "text": "Odszukaj Orahochin i przejdź do wioski Elroki. Oddaj kości Karakawei, żeby odebrać części do broni A. U Singsinga kości możesz oddać za adenę. Wybierz części, których potrzebujesz do recepty.",
+        "text": "Odszukaj Orahochin i przejdź do wioski Elroki. Oddaj kości Karakawei, żeby odebrać części do broni A. U Singsinga kości możesz oddać za adenę. W standardowym Interlude Karakawei daje pięć losowych części. Przed oddaniem kości sprawdź nagrodę w dialogu na Eternal.",
         "images": [
           [
             "https://la2wiki.com/npc/singsing.webp",
             "Singsing · portret"
+          ],
+          [
+            "https://l2-servera.com/wp-content/uploads/2025/01/orahochin.jpg",
+            "Orahochin · teleport do wioski Elroki"
+          ],
+          [
+            "https://l2-servera.com/wp-content/uploads/2025/01/karakawei.jpg",
+            "Karakawei · miejsce wymiany kości"
           ]
         ]
       }
@@ -476,7 +625,25 @@
       {
         "title": "The Name of Evil I · poziom 76",
         "text": "Weź quest od Mushiki, potem porozmawiaj z Karakawei. Zdobądź 2 Deinonychus Bone Fragment i 2 Ornithomimus Claw. Oddaj je Karakawei, następnie odwiedź kolejno Ulu Kaimu, Balu Kaimu i Chuta Kaimu. Zanieś Epitaph of Wisdom do Mushiki.",
-        "images": []
+        "images": [],
+        "waypoints": [
+          [
+            "Mushika",
+            "6568, -2500, -2944"
+          ],
+          [
+            "Ulu Kaimu",
+            "23707, -19108, -2820"
+          ],
+          [
+            "Balu Kaimu",
+            "27723, -11684, -2302"
+          ],
+          [
+            "Chuta Kaimu",
+            "18714, -9635, -2795"
+          ]
+        ]
       },
       {
         "title": "The Name of Evil II · poziom 77",
@@ -485,6 +652,28 @@
           [
             "https://la2wiki.com/npc/asamah.webp",
             "Asamah · portret"
+          ]
+        ],
+        "waypoints": [
+          [
+            "Asamah",
+            "6375, -2527, -2944"
+          ],
+          [
+            "Ulu Kaimu",
+            "23707, -19108, -2820"
+          ],
+          [
+            "Balu Kaimu",
+            "27723, -11684, -2302"
+          ],
+          [
+            "Chuta Kaimu",
+            "18714, -9635, -2795"
+          ],
+          [
+            "Warrior’s Grave",
+            "13123, -8895, -3122"
           ]
         ]
       },

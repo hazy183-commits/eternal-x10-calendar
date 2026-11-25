@@ -146,7 +146,7 @@ export function installThirdClassQuests() {
     const forumImage = url.startsWith('https://forum.l2mad.net/');
     title.textContent = label;
     previewContent.replaceChildren();
-    if (!portrait && !forumImage && !label.startsWith('Zaznaczony punkt')) {
+    if (!portrait && !forumImage && !label.startsWith('Zaznaczony punkt') && !/l2-servera\.com|masterwork\.wiki|lineage2dex\.com/.test(url)) {
       previewContent.append(element('p', 'Mapa poglądowa. Kierunek i cel znajdziesz w opisie kroku.'));
     }
     const viewport = element('div', '', 'third-class-full-viewport');
@@ -265,6 +265,16 @@ export function installThirdClassQuests() {
       addInstructionList(row, step.text);
       if (step.forumRoute) {
         row.append(element('p', 'Dojście: ' + step.forumRoute, 'third-class-forum-route'));
+      }
+      if (step.waypoints?.length) {
+        const coordinates = element('details');
+        coordinates.append(element('summary', 'Współrzędne w grze (X, Y, Z)'));
+        const list = element('ul', '', 'quest-actions');
+        for (const [name, position] of step.waypoints) {
+          list.append(element('li', name + ' · ' + position));
+        }
+        coordinates.append(list);
+        row.append(coordinates);
       }
       const images = element('div', '', 'third-class-maps');
       for (const [url, label] of step.images) {
