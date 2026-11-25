@@ -11,6 +11,46 @@ const BACKGROUNDS = [
 ];
 const FALLBACK_BG = '/images/eternal-hero-approved.webp';
 
+const EVENT_ACCENTS = {
+  "zaken": "#ffad6e",
+  "antharas": "#cad297",
+  "baium": "#c6dcff",
+  "core": "#98eaff",
+  "frintezza": "#dec3ff",
+  "orfen": "#bce28f",
+  "queen-ant": "#f2ca80",
+  "valakas": "#ffd090",
+  "aden": "#efda9b",
+  "dion": "#e4dfa1",
+  "giran": "#efc998",
+  "gludio": "#d3dbb6",
+  "goddard": "#c3d9ef",
+  "innadril": "#b1dfe4",
+  "oren": "#a9cde6",
+  "rune": "#d6c0e4",
+  "schuttgart": "#edf8ff",
+  "fortress-of-resistance": "#e3c49b",
+  "devastated-castle": "#d7cdba",
+  "bandit-stronghold": "#d6dc9c",
+  "rainbow-spring-chateau": "#bbf0df",
+  "wild-beast-reserve": "#dbe8a4",
+  "fortress-of-the-dead": "#b7cde0",
+  "pvp": "#dbbdf4",
+  "colloseum": "#efcf91",
+  "olympiad": "#c7e2ff"
+};
+const TYPE_ACCENTS = { 'EPIC RB': '#a8cdff', SIEGE: '#ffae82', 'CLAN HALL': '#cbdb9b', OLYMPIAD: '#c7b6f6', RB: '#dfc6a4' };
+
+function eventAccent(name, type) {
+  const words = ' ' + String(name).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim() + ' ';
+  const has = key => words.includes(' ' + key.replaceAll('-', ' ') + ' ');
+  if (has('qa')) return EVENT_ACCENTS['queen-ant'];
+  if (has('forest-of-the-dead')) return EVENT_ACCENTS['fortress-of-the-dead'];
+  if (has('colosseum') || has('koloseum')) return EVENT_ACCENTS.colloseum;
+  const key = Object.keys(EVENT_ACCENTS).find(has);
+  return EVENT_ACCENTS[key] ?? TYPE_ACCENTS[type] ?? '#e9c887';
+}
+
 function artworkForDate(dateText = '') {
   const match = String(dateText).match(/^\s*(\d{1,2})\.(\d{1,2})\.(\d{4})/);
   if (!match) return BG;
@@ -78,9 +118,11 @@ export default async function handler(req, res) {
       const location = esc(textWidthSafe(event.location || 'Miejsce do ustalenia', 52));
       const time = esc(textWidthSafe(event.time || '--:--', 8));
       if (cinematic) {
-        const accent = ({ 'EPIC RB': '#a8cdff', 'SIEGE': '#ffae82', 'CLAN HALL': '#cbdb9b', 'OLYMPIAD': '#c7b6f6' })[type] || '#e9c887';
+        const accent = eventAccent(event.name, type);
         return `
           <rect x="72" y="${y}" width="1056" height="77" rx="6" fill="#080b14" fill-opacity=".89"/>
+          <defs><linearGradient id="eventGlow${index}"><stop stop-color="${accent}" stop-opacity=".24"/><stop offset=".72" stop-color="${accent}" stop-opacity="0"/></linearGradient></defs>
+          <rect x="72" y="${y}" width="1056" height="77" rx="6" fill="url(#eventGlow${index})"/>
           <path d="M78 ${y+76}H1122" stroke="${accent}" stroke-opacity=".32"/>
           <rect x="72" y="${y+9}" width="4" height="59" rx="2" fill="${accent}"/>
           <text x="168" y="${y+51}" text-anchor="middle" fill="${accent}" font-size="43" font-family="DejaVu Sans" font-weight="700">${time}</text>
@@ -150,7 +192,7 @@ export default async function handler(req, res) {
     res.setHeader('Content-Type', 'image/png');
     res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=300');
     res.setHeader('X-Daily-Plan-Events', String(events.length));
-    res.setHeader('X-Daily-Plan-Style', cinematic ? 'cinematic-preview' : 'fixed-clan-art-daily-rotation-v2');
+    res.setHeader('X-Daily-Plan-Style', cinematic ? 'cinematic-series-preview' : 'fixed-clan-art-daily-rotation-v2');
     res.setHeader('X-Daily-Plan-Artwork', artworkPath);
     res.setHeader('X-Daily-Plan-Size', String(png.length));
     res.setHeader('X-Daily-Plan-Text-Verified', verified ? 'true' : 'false');
