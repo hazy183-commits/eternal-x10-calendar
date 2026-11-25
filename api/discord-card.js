@@ -138,8 +138,9 @@ const cinematicSvg = cinematic ? `<svg xmlns="http://www.w3.org/2000/svg" width=
 <text x="838" y="622" fill="#fff5e7" font-size="53" font-weight="700">${esc(time)}</text>
 <text x="838" y="651" fill="#f5d9c7" font-size="20">${esc(date)}</text>
 </g>
-<text x="68" y="715" fill="#ffce9d" font-size="29" font-family="DejaVu Serif" font-weight="700">${esc(headline)}</text>
-<text x="68" y="755" fill="#fff0df" font-size="24" font-family="DejaVu Serif" font-style="italic">${esc(invitation)}</text>
+<path d="M68 689V761" stroke="#ed785a" stroke-width="4" stroke-linecap="round"/>
+<text x="90" y="719" fill="#fff0d5" stroke="#190a0d" stroke-width="2" paint-order="stroke" font-size="31" font-family="DejaVu Serif" font-weight="700" letter-spacing=".35">„${esc(headline)}”</text>
+<text x="90" y="754" fill="#efb59a" font-size="22" font-family="DejaVu Sans">${esc(invitation)}</text>
 </svg>` : svg;
 const overlay=new Resvg(cinematicSvg,{fitTo:{mode:'width',value:1200},font:{fontFiles,fontDirs:[fontDir],loadSystemFonts:true,defaultFontFamily:'DejaVu Sans'}}).render().asPng();
 const overlayPixels=await sharp(overlay).raw().toBuffer({resolveWithObject:true});
