@@ -1,4 +1,4 @@
-const INTERLUDE_WORLD_MAP = 'https://lineage.pmfun.com/data/maps/world/Aden%20World%20Map%20Interlude%20%28big%29.png';
+const INTERLUDE_WORLD_MAP = '/quest-maps/epic-world.jpg';
 const worldPin = (x, y, label) => ({ x, y, label });
 const worldPointsForMap = (mapLabel = '') => {
   const label = mapLabel.toLowerCase();
@@ -155,6 +155,10 @@ const guides = [
   }
 ];
 
+export const epicQuestEntries = guides.map(({ slug, name, quest, level, image }) => ({
+  slug, name, title: quest, level, image, category: 'Wejścia na epiki',
+}));
+
 function escapeHtml(value = '') {
   return String(value).replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
 }
@@ -269,6 +273,7 @@ function ensureQuestMapModal() {
 
 function openQuestMap(link) {
   const modal = ensureQuestMapModal();
+  (link.closest('.third-class-catalogue') || document.body).append(modal);
   const label = link.dataset.mapLabel || 'Mapa questa';
   let points = [];
   try { points = JSON.parse(link.dataset.mapWorldPoints || '[]'); } catch { points = []; }
@@ -280,8 +285,7 @@ function openQuestMap(link) {
   modal._mapSize = null;
   modal.querySelector('.quest-map-lightbox-zoom-reset').textContent = '100%';
   const image = document.createElement('img');
-  image.src = link.dataset.mapWorldSrc || INTERLUDE_WORLD_MAP;
-  image.alt = `Pełna mapa świata Lineage II Interlude — ${label}`;
+  image.alt = `Pełna mapa świata Interlude — ${label}`;
   image.decoding = 'async';
   image.referrerPolicy = 'no-referrer';
   const fitImage = () => {
@@ -305,7 +309,17 @@ function openQuestMap(link) {
     modal._applyMapZoom();
   };
   image.addEventListener('load', fitImage, { once: true });
+  image.addEventListener('error', () => {
+    wrap.style.removeProperty('width');
+    wrap.style.removeProperty('height');
+    const message = document.createElement('p');
+    message.textContent = 'Nie udało się wczytać mapy. Zamknij podgląd i spróbuj ponownie.';
+    wrap.replaceChildren(message);
+  }, { once: true });
+  wrap.style.removeProperty('width');
+  wrap.style.removeProperty('height');
   wrap.append(image);
+  image.src = link.dataset.mapWorldSrc || INTERLUDE_WORLD_MAP;
   if (image.complete && image.naturalWidth) fitImage();
   modal._mapResizeHandler = fitImage;
   window.addEventListener('resize', fitImage);
@@ -344,7 +358,7 @@ function openQuestMap(link) {
   modal.querySelector('.quest-map-lightbox-title').textContent = label;
   const locations = points.map((point, index) => `${index + 1}. ${point.label || label}`).join(' · ');
   modal.querySelector('.quest-map-lightbox-legend-text').textContent =
-    `Pinezka wskazuje położenie obszaru na pełnej mapie świata: ${locations}. Dokładny punkt zaznaczono na miniaturze mapy w tym kroku.`;
+    locations;
   modal._previousOverflow = document.body.style.overflow;
   modal._returnFocus = link;
   modal.classList.add('open');
@@ -400,6 +414,7 @@ function openQuestGuide(slug, trigger, list) {
   const modal = ensureQuestModal(list);
   if (modal._activeGuide === guide && modal.classList.contains('open')) return;
   if (modal.classList.contains('open')) modal._closeQuestGuide();
+  (trigger?.closest('.third-class-catalogue') || document.body).append(modal);
   const scroll = modal.querySelector('.quest-guide-modal-scroll');
   modal._previousOverflow = document.body.style.overflow;
   modal._returnFocus = trigger || document.activeElement;
