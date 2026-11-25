@@ -90,15 +90,17 @@ export default async function handler(req, res) {
     const date = textWidthSafe(payload.date || '--.--.----', 24);
     const events = Array.isArray(payload.events) ? payload.events.slice(0, 16) : [];
     const cinematic = url.searchParams.get('layout') === 'cinematic';
+    const newspaper = url.searchParams.get('layout') === 'newspaper';
     const board = url.searchParams.get('layout') === 'board';
     const refined = url.searchParams.get('layout') === 'refined';
     const width = 1200;
     const rowHeight = cinematic ? 90 : 104;
     const top = cinematic ? 274 : 242;
-    const height = board ? Math.max(500, 359 + Math.ceil(events.length / 2) * 165) : Math.max(590, top + Math.max(events.length, 1) * rowHeight + 112);
+    const height = newspaper ? 362 + Math.max(1, events.length) * 105 : board ? Math.max(500, 359 + Math.ceil(events.length / 2) * 165) : Math.max(590, top + Math.max(events.length, 1) * rowHeight + 112);
 
     const imageHost = 'https://orzelbialy.eu';
     const artworkPath = artworkForDate(date);
+    const background = newspaper ? null : await (async () => {
     let backgroundResponse;
     try {
       backgroundResponse = await fetch(imageHost + artworkPath, { signal: AbortSignal.timeout(7000) });
@@ -108,10 +110,11 @@ export default async function handler(req, res) {
       backgroundResponse = await fetch(imageHost + FALLBACK_BG, { signal: AbortSignal.timeout(7000) });
       if (!backgroundResponse.ok) throw new Error('Daily plan fallback background fetch failed: ' + backgroundResponse.status);
     }
-    const background = await sharp(Buffer.from(await backgroundResponse.arrayBuffer()))
+    return sharp(Buffer.from(await backgroundResponse.arrayBuffer()))
       .resize(width, height, { fit: 'cover', position: 'right' })
       .modulate({ brightness: 0.86, saturation: 1.12 })
       .png().toBuffer();
+    })();
 
     const rows = events.length ? events.map((event, index) => {
       const y = top + index * rowHeight;
@@ -189,7 +192,36 @@ export default async function handler(req, res) {
       </g>
     </svg>` : '';
 
-    const svg = board ? boardSvg : cinematic ? `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+    const paperRows = newspaper ? events.map((event, index) => {
+      const y = 338 + index * 105;
+      const name = textWidthSafe(event.name || 'Wydarzenie', 48);
+      const location = textWidthSafe(event.location || 'Miejsce do ustalenia', 54);
+      const type = textWidthSafe(event.type || 'Wydarzenie', 26);
+      return `<g transform="translate(0 ${y})">
+        <text x="78" y="49" fill="#9c242d" font-weight="700" font-size="49">${esc(textWidthSafe(event.time || '--:--', 8))}</text>
+        <text x="322" y="42" fill="#211e1b" font-family="DejaVu Serif" font-weight="700" font-size="${Math.min(36, Math.floor(1030 / name.length))}">${esc(name)}</text>
+        <text x="324" y="74" fill="#575049" font-size="20">${esc(type)} · ${esc(location)}</text>
+        <path d="M78 98H1122" stroke="#b8a995"/>
+      </g>`;
+    }).join('') : '';
+    const paperSvg = newspaper ? `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" font-family="DejaVu Sans">
+      <defs>
+        <linearGradient id="paper" x2="0" y2="1"><stop stop-color="#fff6e4"/><stop offset="1" stop-color="#eadeca"/></linearGradient>
+        <pattern id="grain" width="13" height="11" patternUnits="userSpaceOnUse"><circle cx="2" cy="3" r=".7" fill="#776757" opacity=".16"/><circle cx="9" cy="7" r=".55" fill="#776757" opacity=".12"/></pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#paper)"/>
+      <rect width="100%" height="100%" fill="url(#grain)"/>
+      <rect width="1200" height="16" fill="#9c242d"/>
+      <path d="M78 109H1122M78 116H1122" stroke="#29241f" stroke-width="2"/>
+      <text x="78" y="81" fill="#29241f" font-size="23" font-weight="700" letter-spacing="4">ORZEŁ BIAŁY</text>
+      <text x="1122" y="81" text-anchor="end" fill="#29241f" font-size="23" font-weight="700">${esc(date)}</text>
+      <text x="71" y="246" fill="#211e1b" font-family="DejaVu Serif" font-weight="700" font-size="120" letter-spacing="-5">Plan dnia</text>
+      <path d="M78 277H1122" stroke="#9c242d" stroke-width="4"/>
+      <text x="79" y="317" fill="#575049" font-size="19" font-weight="700" letter-spacing="2">NAJBLIŻSZE 24 GODZINY</text>
+      <text x="1121" y="317" text-anchor="end" fill="#575049" font-size="19">Czas polski</text>
+      ${paperRows || '<text x="78" y="397" fill="#575049" font-size="29">Brak zaplanowanych wydarzeń</text>'}
+    </svg>` : '';
+    const svg = newspaper ? paperSvg : board ? boardSvg : cinematic ? `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
       <defs>
         <linearGradient id="veil" x2="0" y2="1"><stop stop-color="#080a12" stop-opacity=".30"/><stop offset=".42" stop-color="#080a12" stop-opacity=".64"/><stop offset="1" stop-color="#080a12" stop-opacity=".94"/></linearGradient>
         <linearGradient id="title" x2="0" y2="1"><stop stop-color="#fff8e6"/><stop offset="1" stop-color="#e1ad75"/></linearGradient>
@@ -214,9 +246,9 @@ export default async function handler(req, res) {
       fitTo: { mode: 'width', value: width },
       font: { fontFiles, fontDirs: [fontDir], loadSystemFonts: true, defaultFontFamily: 'DejaVu Sans' }
     }).render().asPng();
-    const verified = svg.includes('PLAN DNIA') && svg.includes(date);
+    const verified = (svg.includes('PLAN DNIA') || svg.includes('Plan dnia')) && svg.includes(esc(date));
     const layers = [{ input: overlay }];
-    try {
+    if (!newspaper) try {
       const crestResponse = await fetch(imageHost + '/images/discord/clan-crest.svg', { signal: AbortSignal.timeout(4500) });
       if (!crestResponse.ok) throw new Error('Clan crest HTTP ' + crestResponse.status);
       const crest = await sharp(Buffer.from(await crestResponse.arrayBuffer()), { density: 180 })
@@ -225,12 +257,12 @@ export default async function handler(req, res) {
     } catch (error) {
       console.warn('Daily plan clan crest unavailable', String(error));
     }
-    const png = await sharp(background).composite(layers).png().toBuffer();
+    const png = newspaper ? overlay : await sharp(background).composite(layers).png().toBuffer();
     res.statusCode = 200;
     res.setHeader('Content-Type', 'image/png');
     res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=300');
     res.setHeader('X-Daily-Plan-Events', String(events.length));
-    res.setHeader('X-Daily-Plan-Style', board ? 'clan-board-preview' : cinematic ? 'cinematic-series-preview' : refined ? 'classic-refined-preview' : 'fixed-clan-art-daily-rotation-v2');
+    res.setHeader('X-Daily-Plan-Style', newspaper ? 'newspaper-preview' : board ? 'clan-board-preview' : cinematic ? 'cinematic-series-preview' : refined ? 'classic-refined-preview' : 'fixed-clan-art-daily-rotation-v2');
     res.setHeader('X-Daily-Plan-Artwork', artworkPath);
     res.setHeader('X-Daily-Plan-Size', String(png.length));
     res.setHeader('X-Daily-Plan-Text-Verified', verified ? 'true' : 'false');
