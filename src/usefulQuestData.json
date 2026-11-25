@@ -827,5 +827,127 @@
     "quickStart": "Primeval Isle Wharf → Marquez",
     "prepare": "Zacznij od Meeting the Elroki na poziomie 75. Następne części odblokują się na 76 i 77.",
     "outcome": "Jednorazowy enchant broni A i kolejny quest do Sailrena"
+  },
+  {
+    "name": "Stakato Nest · materiały",
+    "title": "The Zero Hour · wymiana Fang of Stakato",
+    "alias": "stakato fang kły matsy Kahman",
+    "category": "Farm i wymiany",
+    "level": "66+",
+    "icon": "pi-bones",
+    "quickStart": "Mercenary Kahman przy punkcie teleportu Swamp of Screams (teleport z Rune Township).",
+    "prepare": "Hunt of the Golden Ram Mercenary Force → In Search of the Nest → The Zero Hour.",
+    "outcome": "Powtarzalna wymiana Fang of Stakato na wybrane materiały u Kahmana.",
+    "steps": [
+      {
+        "title": "1. Dołącz do Golden Ram u Kahmana",
+        "text": "Z Rune Township teleportuj się do Swamp of Screams. W obozie obok punktu teleportu porozmawiaj z Mercenary Kahman i weź Hunt of the Golden Ram Mercenary Force. Upoluj Splinter Stakato, Walker, Soldier lub Drone w bagnie. Oddaj pierwsze 100 Splinter Stakato Chitin Kahmanowi, aby dostać Golden Ram Badge – Recruit. Podejdź do Pierce’a i sprawdź, czy oferuje In Search of the Nest.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/kahman.webp",
+            "Mercenary Kahman · zdjęcie NPC"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-87.jpg",
+            "Mapa regionu · Swamp of Screams"
+          ],
+          [
+            "https://mxtqtlphmsjbkwiwsmvj.supabase.co/storage/v1/object/public/site-assets/blog/stakato-drone-swamp-of-screams-map-1bce5ef4.webp",
+            "Zaznaczony punkt · Splinter Stakato Drone · Swamp of Screams"
+          ]
+        ],
+        "dependencies": [
+          {
+            "title": "Jeśli Pierce wymaga rangi Soldier",
+            "text": "Wróć do Kahmana, przyjmij awans i zbierz kolejne 100 Splinter Stakato Chitin oraz 100 Needle Stakato Chitin. Needle Stakato znajdziesz dalej w bagnie. Oddaj komplet Kahmanowi, odbierz Golden Ram Badge – Soldier i wróć do Pierce’a."
+          }
+        ]
+      },
+      {
+        "title": "2. Znajdź zwiadowcę i odblokuj farmę",
+        "text": "Weź In Search of the Nest od Mercenary Captain Pierce w tym samym obozie. Podążaj za znacznikiem questa do wejścia do Stakato Nest. Kliknij Scout’s Corpse przy wejściu i odbierz Scout’s Memo. Zanieś notatkę Pierce’owi, a po rozmowie przejdź do stojącego obok Kahmana, żeby zamknąć zadanie.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/pierce.webp",
+            "Mercenary Captain Pierce · zdjęcie NPC"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Mapa regionu · okolice Stakato Nest"
+          ]
+        ]
+      },
+      {
+        "title": "3. Weź The Zero Hour i zbieraj kły w gnieździe",
+        "text": "U Kahmana wybierz The Zero Hour przed powrotem do gniazda. W Stakato Nest poluj na Spiked Stakato, ich Workerów, Guardów, Soldierów, Drone’y, Captainów, Nurse’y, Shamanów, Sorcererów, samce, samice i Cannibalistic Stakato Leader. Fang of Stakato wpada do ekwipunku questowego. Farm w grupie i zacznij od komnat bliżej wejścia. Zbieraj tyle kłów, ile potrzebujesz na wybraną wymianę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Mapa regionu · okolice Stakato Nest"
+          ],
+          [
+            "https://la2wiki.com/npc/spiked-stakato-drone.webp",
+            "Spiked Stakato Drone · zdjęcie NPC"
+          ]
+        ]
+      },
+      {
+        "title": "4. Wymień Fang of Stakato u Kahmana",
+        "text": "Wróć do Kahmana w Swamp of Screams, wybierz The Zero Hour w dialogu i wskaż materiał. Po wymianie możesz wrócić do farmy z aktywnym questem. Tabela pokazuje stawki Interlude. Przed zatwierdzeniem sprawdź koszt i ilość w dialogu na Eternal.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/kahman.webp",
+            "Mercenary Kahman · zdjęcie NPC"
+          ]
+        ],
+        "exchange": [
+          [
+            "Asofe",
+            1,
+            6
+          ],
+          [
+            "Thons",
+            1,
+            6
+          ],
+          [
+            "Enria",
+            1,
+            12
+          ],
+          [
+            "Compound Braid",
+            10,
+            30
+          ],
+          [
+            "Synthetic Cokes",
+            5,
+            33
+          ],
+          [
+            "Varnish of Purity",
+            10,
+            81
+          ],
+          [
+            "Oriharukon",
+            5,
+            123
+          ],
+          [
+            "Mithril Alloy",
+            10,
+            131
+          ],
+          [
+            "Durable Metal Plate",
+            10,
+            150
+          ]
+        ]
+      }
+    ]
   }
 ]

@@ -348,6 +348,21 @@ export function installThirdClassQuests() {
       const row = element('li');
       row.append(element('h4', step.title || stepTitles[index]));
       addInstructionList(row, step.text);
+      if (step.exchange?.length) {
+        const table = element('table', '', 'quest-exchange-table');
+        const heading = table.createTHead().insertRow();
+        for (const label of ['Materiał', 'Ilość', 'Koszt w kłach']) {
+          const cell = element('th', label);
+          cell.scope = 'col';
+          heading.append(cell);
+        }
+        const body = table.createTBody();
+        for (const reward of step.exchange) {
+          const line = body.insertRow();
+          for (const value of reward) line.insertCell().textContent = value;
+        }
+        row.append(table);
+      }
       if (step.dependencies?.length) row.append(dependencyList(step.dependencies));
       if (step.forumRoute) {
         row.append(element('p', 'Dojście: ' + step.forumRoute, 'third-class-forum-route'));

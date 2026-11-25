@@ -87,3 +87,8 @@
 .quest-epic-card .quest-epic-card-art{width:88px;height:66px;object-fit:cover;border:1px solid #8b713c;border-radius:4px}
 #memberZoneLayer .quest-catalogue-shortcut{text-decoration:none}
 @media(max-width:700px){#memberZoneLayer .quest-catalogue-shortcut.zone-nav{white-space:normal;text-align:center;font-size:9px}}
+
+.quest-exchange-table{width:min(100%,520px);border-collapse:collapse;margin:12px 0;background:#151715}
+.quest-exchange-table th,.quest-exchange-table td{padding:7px 9px;border-bottom:1px solid #534327;text-align:left}
+.quest-exchange-table th{color:#f3d79c;background:#261e12}
+.quest-exchange-table :is(th,td):not(:first-child){text-align:right}
