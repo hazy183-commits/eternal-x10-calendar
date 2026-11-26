@@ -74,10 +74,41 @@
   .ob-gate-header::after {
     top:-8px; height:46px; background:url('/images/holiday/christmas-garland.png') center top/100% auto no-repeat;
   }
-  #memberZoneLayer .member-zone-box { padding-top:clamp(35px,5vw,62px)!important; }
+  /* Reserve a full band for the artwork without adding a row to the panel grid. */
+  #memberZoneLayer .member-zone-box {
+    --holiday-zone-trim: clamp(110px, 19vw, 166px);
+    padding-top: calc(var(--holiday-zone-trim) + 12px) !important;
+  }
   #memberZoneLayer .member-zone-box::after {
-    top:-8px; height:clamp(42px,7vw,84px);
-    background:url('/images/holiday/christmas-garland.png') center top/100% auto no-repeat;
+    top: 0;
+    inset-inline: 10px;
+    height: var(--holiday-zone-trim);
+    background: url('/images/holiday/christmas-garland.png') center top / auto 100% no-repeat,
+      radial-gradient(ellipse at center, rgba(203,142,52,.23), transparent 64%);
+    background-size: min(100%, calc(var(--holiday-zone-trim) * 3)), auto;
+    opacity: 1;
+  }
+  #memberZoneLayer .member-zone-box::before {
+    content: "Wesołych Świąt, Orły!";
+    position: absolute;
+    z-index: 1;
+    top: calc(var(--holiday-zone-trim) * .56);
+    inset-inline: 18%;
+    text-align: center;
+    pointer-events: none;
+    color: #ffe3a5;
+    font: italic 700 clamp(13px, 2.3vw, 22px) Cinzel, Georgia, serif;
+    text-shadow: 0 1px 5px #201008, 0 0 18px #a57026;
+  }
+  html[lang="en"] #memberZoneLayer .member-zone-box::before { content: "Merry Christmas, Eagles!"; }
+  @media (max-width: 900px) {
+    #memberZoneLayer .member-zone-box {
+      grid-template-rows: minmax(0, 27dvh) minmax(0, 1fr) !important;
+    }
+    #memberZoneLayer .member-zone-side { max-height: 27dvh; }
+  }
+  @media (max-height: 550px) {
+    #memberZoneLayer .member-zone-box { --holiday-zone-trim: 86px; }
   }
   @media (max-width:500px) {
     #top > .hero .clan-holiday-garland { top:0; }
