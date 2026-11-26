@@ -18,12 +18,41 @@
     <link rel="stylesheet" href="./src/clanBackground.css" />
     <style>html.access-checking body{visibility:hidden}</style>
     <script>document.documentElement.classList.add('access-checking');setTimeout(()=>document.documentElement.classList.remove('access-checking'),3500);</script>
-  </head>
+  
+<style id="christmas-edition">
+  :root { --holiday-gold:#e6c48a; --holiday-red:rgba(77,21,30,.88); }
+  .holiday-wishes {
+    display:flex; align-items:center; justify-content:center; gap:clamp(10px,2vw,22px);
+    margin-block:12px 18px; padding-block:13px; text-align:center;
+    border-block:1px solid rgba(200,151,87,.43);
+    background:linear-gradient(90deg,transparent,var(--holiday-red) 35%,var(--holiday-red) 65%,transparent);
+    color:var(--holiday-gold);
+    font:600 clamp(14px,2vw,20px) Cinzel,Georgia,serif;
+  }
+  .holiday-wishes span[aria-hidden] { font-size:.72em; flex:none; }
+  html[lang="en"] .holiday-wishes [lang="pl"],
+  html:not([lang="en"]) .holiday-wishes [lang="en"] { display:none; }
+  .brand-logo, .ob-gate-brand img[src*="clan-crest-christmas"] {
+    object-fit:contain;
+    filter:drop-shadow(0 0 6px rgba(201,86,51,.32));
+  }
+  #memberZoneLayer .member-zone-box, .ob-gate-shell {
+    box-shadow:inset 0 2px 0 rgba(200,151,87,.5),0 0 26px rgba(95,27,37,.26);
+  }
+  #memberZoneLayer .member-zone-main {
+    background-image:radial-gradient(ellipse at 50% 0,rgba(87,26,36,.27),transparent 46%);
+  }
+  @media(max-width:600px) {
+    .holiday-wishes { margin-block:8px 13px; padding-block:10px; }
+  }
+</style>
+</head>
   <body>
     <div class="page-glow"></div>
-    <header class="topbar"><div class="topbar-inner wrap"><a class="brand" href="#top" aria-label="Orzeł Biały"><img class="brand-logo" src="/images/logo-orzel-bialy.webp" alt="Orzeł Biały" /><span class="brand-copy">ORZEŁ BIAŁY<a class="brand-subtitle-link" href="https://l2reborn.org/" target="_blank" rel="noopener noreferrer">Lineage 2 Reborn</a></span></a><nav class="main-nav" aria-label="Główna nawigacja"><a href="#top">Strona główna</a><a href="https://lineage2wiki.org/interlude/" target="_blank" rel="noopener noreferrer">Drop Kalkulator</a><a href="#craft" class="craft-home-open" aria-controls="memberZoneLayer">Craft kalkulator</a><a href="#przydatne-questy">Przydatne questy</a><a href="https://discord.gg/HtTrJpp7K">Discord</a></nav><div class="header-actions"><div class="header-clock"><span>Server time</span><b id="headerTime">—</b></div><button class="admin-trigger" id="adminTrigger" type="button"><span>✦</span> Panel administratora</button></div></div></header>
+    <header class="topbar"><div class="topbar-inner wrap"><a class="brand" href="#top" aria-label="Orzeł Biały"><img class="brand-logo" src="/images/holiday/clan-crest-christmas.png" alt="Orzeł Biały" /><span class="brand-copy">ORZEŁ BIAŁY<a class="brand-subtitle-link" href="https://l2reborn.org/" target="_blank" rel="noopener noreferrer">Lineage 2 Reborn</a></span></a><nav class="main-nav" aria-label="Główna nawigacja"><a href="#top">Strona główna</a><a href="https://lineage2wiki.org/interlude/" target="_blank" rel="noopener noreferrer">Drop Kalkulator</a><a href="#craft" class="craft-home-open" aria-controls="memberZoneLayer">Craft kalkulator</a><a href="#przydatne-questy">Przydatne questy</a><a href="https://discord.gg/HtTrJpp7K">Discord</a></nav><div class="header-actions"><div class="header-clock"><span>Server time</span><b id="headerTime">—</b></div><button class="admin-trigger" id="adminTrigger" type="button"><span>✦</span> Panel administratora</button></div></div></header>
     <main id="top">
       <section class="hero wrap"><div class="hero-emblem">✦</div><div class="eyebrow">Wspólny kalendarz klanu</div><h1>ETERNAL <span>X10 MAIN</span></h1><p class="hero-subtitle">Lineage 2 Reborn</p><p class="hero-tagline">Więcej niż gra — to nasza społeczność</p><div class="server-clock" aria-live="polite"><span class="pulse"></span><span id="serverDate">—</span><b id="serverTime">—</b><small>Czas serwera</small></div></section>
+      <aside class="holiday-wishes wrap"><span aria-hidden="true">❄</span><span lang="pl">Wesołych Świąt, Orły!</span><span lang="en">Merry Christmas, Eagles!</span><span aria-hidden="true">❄</span></aside>
       <section class="wrap focus-section" aria-labelledby="nextTitle"><section class="pvp-hero-panel" aria-labelledby="pvpHeroTitle"><div class="pvp-hero-heading"><h2 id="pvpHeroTitle">AUTO PVP EVENTS</h2><span>FOR FUN EVENTS</span></div><div id="pvpSidebarEvents"></div></section><div class="section-heading"><div><span class="eyebrow">Najbliższe wydarzenie</span><h2 id="nextTitle">Przygotuj się do bitwy</h2></div></div><article class="next-event-card" id="nextEventCard"><div class="event-art event-art-large"><span>Boss artwork<br />coming soon</span></div><div class="event-aura"></div><div class="next-event-content"><div class="next-event-badges"><span class="type-chip" id="nextType">—</span><span class="next-owner-chip" id="nextOwner" hidden></span><span class="live-status" id="nextStatus">—</span></div><h3 id="nextName">Brak nadchodzących wydarzeń</h3><p id="nextMeta">Dodaj wydarzenie w panelu administratora.</p><div class="event-facts"><div class="featured-event-location"><svg class="event-fact-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 9c0 6-8 13-8 13S4 15 4 9a8 8 0 1 1 16 0Z"/><circle cx="12" cy="9" r="3"/></svg><span>LOKALIZACJA</span><b id="nextLocation">—</b></div><div class="next-start-time" id="nextStartTime" hidden><svg class="event-fact-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 5v7l5 3"/></svg><span>START WYDARZENIA</span><b>--:--</b></div></div><p class="next-description" id="nextDescription"></p></div><div class="countdown-block"><span id="countdownLabel">Do rozpoczęcia</span><div class="countdown" id="countdown" aria-live="polite"><b>00</b><i>:</i><b>00</b><i>:</i><b>00</b><i>:</i><b>00</b></div><small><span>dni</span><span>godz.</span><span>min.</span><span>sek.</span></small></div></article></section>
       <div class="schedule-layout wrap unified-calendar"><section id="calendar" class="calendar-section" aria-labelledby="calendarTitle"><div class="section-heading calendar-heading"><div><span class="eyebrow">Harmonogram</span><h2 id="calendarTitle">Kalendarz wydarzeń</h2></div></div><div class="calendar-strip"><button class="icon-btn calendar-strip-arrow" id="previousDay" type="button" aria-controls="calendarWeek" aria-label="Przewiń dni w lewo">←</button><div class="calendar-week" id="calendarWeek" role="group" aria-label="Wybierz dzień"></div><button class="icon-btn calendar-strip-arrow" id="nextDay" type="button" aria-controls="calendarWeek" aria-label="Przewiń dni w prawo">→</button></div><div class="calendar-toolbar"><div class="selected-date" id="selectedDate">—</div><button class="today-btn" id="todayButton" type="button" aria-controls="calendarWeek">Wróć do dzisiaj</button></div><div class="event-list" id="dailyEvents"></div></section><!-- Hidden event data is retained for the existing hero carousel. -->
       <div id="statistics" hidden aria-hidden="true"><span id="todayCount"></span><div id="todayEvents"></div><div id="upcomingEvents"></div></div></div>
