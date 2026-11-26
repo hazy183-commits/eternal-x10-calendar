@@ -448,7 +448,7 @@ const cinematicSvg = cinematic ? `<svg xmlns="http://www.w3.org/2000/svg" width=
 <text x="90" y="719" fill="#fff0d5" stroke="#190a0d" stroke-width="2" paint-order="stroke" font-size="${Math.min(31, Math.floor(1200 / (headline.length + 2)))}" font-family="DejaVu Serif" font-weight="700" letter-spacing=".35">„${esc(headline)}”</text>
 <text x="90" y="754" fill="#efb59a" font-size="22" font-family="DejaVu Sans">${esc(invitation)}</text>
 </svg>` : svg;
-const seasonalSvg = holiday ? cinematicSvg.replace('</svg>', holidayScenery(1200, sceneKey) + '</svg>') : cinematicSvg;
+const seasonalSvg = holiday ? cinematicSvg.replace('</svg>', holidayScenery(1200, sceneKey, kind) + '</svg>') : cinematicSvg;
 const overlay=new Resvg(seasonalSvg,{fitTo:{mode:'width',value:1200},font:{fontFiles,fontDirs:[fontDir],loadSystemFonts:true,defaultFontFamily:'DejaVu Sans'}}).render().asPng();
 const overlayPixels=await sharp(overlay).raw().toBuffer({resolveWithObject:true});
 let textPixels=0;
@@ -467,6 +467,19 @@ try{
  flag=await sharp(flagBytes).resize(cinematic ? 410 : 700, cinematic ? 137 : 233,{fit:'fill'}).png().toBuffer();
  if (!cinematic) layers.push({input:flag,left:500,top:567});
 }catch(error){console.warn('Polish flag artwork could not be rendered',String(error));}
+if (holiday && cinematic && sceneKey === 'baium') {
+  try {
+    const response = await fetch(imageHost + '/images/holiday/baium-santa-hat.png', { signal: AbortSignal.timeout(4500) });
+    if (!response.ok) throw new Error('Baium hat HTTP ' + response.status);
+    const hat = await sharp(Buffer.from(await response.arrayBuffer()))
+      .trim({ background: '#0000', threshold: 15 })
+      .resize(115, 78, { fit: 'contain', background: '#0000' }).png().toBuffer();
+    layers.push({ input: hat, left: 430, top: 2 });
+    res.setHeader('X-Card-Boss-Holiday-Detail', 'santa-hat');
+  } catch (error) {
+    console.warn('Baium holiday artwork unavailable', String(error));
+  }
+}
 layers.push({input:overlay});
 if (cinematic && flag) layers.push({input:flag,left:790,top:663});
 // Place the original Lineage II clan crest where the reference shows the eagle.
