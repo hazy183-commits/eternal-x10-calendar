@@ -69,7 +69,7 @@ export function installPremiumLanding(){
   shell.innerHTML=`
     <header class="ob-gate-header">
       <div class="ob-gate-brand">
-        <img src="/images/logo-orzel-bialy.webp" alt="Orzeł Biały" />
+        <img src="/images/holiday/clan-crest-christmas.png" alt="Orzeł Biały" />
         <div>
           <span>LINEAGE 2 REBORN · ETERNAL X10</span>
           <h1>ORZEŁ BIAŁY</h1>
