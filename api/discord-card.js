@@ -1,4 +1,5 @@
 import sharp from 'sharp';
+import { christmasCard, CHRISTMAS_CREST, holidayScenery } from '../lib/discordChristmas.js';
 import { Resvg } from '@resvg/resvg-js';
 const ASSETS={antharas:'/images/bosses/antharas.webp',baium:'/images/bosses/baium.webp',core:'/images/bosses/core.webp',frintezza:'/images/bosses/frintezza.webp',orfen:'/images/bosses/orfen.webp','queen-ant':'/images/bosses/queen-ant.webp',valakas:'/images/bosses/valakas.webp',zaken:'/images/bosses/zaken.webp',rb:'/images/eternal-hero-approved.webp',aden:'/images/castles/aden.jpg',dion:'/images/castles/dion.jpg',giran:'/images/castles/giran.jpg',gludio:'/images/castles/gludio.jpg',goddard:'/images/castles/goddard.jpg',innadril:'/images/castles/innadril.jpg',oren:'/images/castles/oren.jpg',rune:'/images/castles/rune.jpg',schuttgart:'/images/castles/schuttgart.jpg','fortress-of-resistance':'/images/fortress-of-resistance.jpg','devastated-castle':'/images/devastated-castle.jpg','bandit-stronghold':'/images/bandit-stronghold.jpg','rainbow-spring-chateau':'/images/Rainbow%20Springs%20Chateau.jpg','wild-beast-reserve':'/images/Wild%20Beast%20Reserve.jpg','fortress-of-the-dead':'/images/fortress-of-the-dead.jpg',pvp:'/images/events/clan-pvp.webp',colloseum:'/images/events/colloseum-training.webp',olympiad:'/images/events/olympiad.jpg',default:'/images/eternal-hero-approved.webp'};
 const SCENE_EFFECTS = {
@@ -351,6 +352,7 @@ function rallyLines(name, date, time, kind, quote) {
 export default async function handler(req,res){
 try{
 const u=new URL(req.url,'https://'+(req.headers['x-forwarded-host']||req.headers.host||'orzelbialy.eu'));
+const holiday=christmasCard(u.searchParams);
 const name=(dec(u.searchParams.get('n'))||'Wydarzenie klanowe').slice(0,80),date=(dec(u.searchParams.get('d'))||'--.--.----').slice(0,20),time=(dec(u.searchParams.get('t'))||'--:--').slice(0,10),location=(dec(u.searchParams.get('l'))||'Lokalizacja do ustalenia').slice(0,80),type=(dec(u.searchParams.get('k'))||'EVENT').slice(0,30);
 const gathering=(dec(u.searchParams.get('g'))||'').slice(0,120);const gatheringParts=gathering.split('|');const gatherLine1=gatheringParts[0]||'';const gatherLine2=gatheringParts[1]||'';const kind=type.toLowerCase().trim();
 const key=eventScene(name, kind);
@@ -446,7 +448,8 @@ const cinematicSvg = cinematic ? `<svg xmlns="http://www.w3.org/2000/svg" width=
 <text x="90" y="719" fill="#fff0d5" stroke="#190a0d" stroke-width="2" paint-order="stroke" font-size="${Math.min(31, Math.floor(1200 / (headline.length + 2)))}" font-family="DejaVu Serif" font-weight="700" letter-spacing=".35">„${esc(headline)}”</text>
 <text x="90" y="754" fill="#efb59a" font-size="22" font-family="DejaVu Sans">${esc(invitation)}</text>
 </svg>` : svg;
-const overlay=new Resvg(cinematicSvg,{fitTo:{mode:'width',value:1200},font:{fontFiles,fontDirs:[fontDir],loadSystemFonts:true,defaultFontFamily:'DejaVu Sans'}}).render().asPng();
+const seasonalSvg = holiday ? cinematicSvg.replace('</svg>', holidayScenery(1200, sceneKey) + '</svg>') : cinematicSvg;
+const overlay=new Resvg(seasonalSvg,{fitTo:{mode:'width',value:1200},font:{fontFiles,fontDirs:[fontDir],loadSystemFonts:true,defaultFontFamily:'DejaVu Sans'}}).render().asPng();
 const overlayPixels=await sharp(overlay).raw().toBuffer({resolveWithObject:true});
 let textPixels=0;
 const textZones=[{x1:240,x2:970,y1:60,y2:170},{x1:120,x2:1080,y1:195,y2:340},{x1:280,x2:935,y1:360,y2:630},{x1:165,x2:1035,y1:650,y2:739}];
@@ -469,10 +472,10 @@ if (cinematic && flag) layers.push({input:flag,left:790,top:663});
 // Place the original Lineage II clan crest where the reference shows the eagle.
 let crest=null;
 try{
- const crestResponse=await fetch(imageHost+'/images/discord/clan-crest.svg',{signal:AbortSignal.timeout(4500)});
+ const crestResponse=await fetch(imageHost+(holiday ? CHRISTMAS_CREST : '/images/discord/clan-crest.svg'),{signal:AbortSignal.timeout(4500)});
  if(!crestResponse.ok)throw new Error('Clan crest HTTP '+crestResponse.status);
  const crestBytes=Buffer.from(await crestResponse.arrayBuffer());
- if (cinematic) {
+ if (cinematic && !holiday) {
    const { data, info } = await sharp(crestBytes, { density: 180 })
      .resize(146, 91).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
    for (let y = 0; y < info.height; y++) {
@@ -490,11 +493,11 @@ try{
    crest = await sharp(data, { raw: { width: info.width, height: info.height, channels: 4 } }).png().toBuffer();
    layers.push({ input: crest, left: 33, top: 43 });
  } else {
-   crest = await sharp(crestBytes, { density: 180 }).resize(180, 112, { fit: 'fill' }).png().toBuffer();
-   layers.push({ input: crest, left: 27, top: 29 });
+   crest = await sharp(crestBytes, { density: 180 }).resize(holiday && cinematic ? 146 : 180, holiday && cinematic ? 91 : 112, { fit: 'contain', background: '#0000' }).png().toBuffer();
+   layers.push({ input: crest, left: holiday && cinematic ? 33 : 27, top: holiday && cinematic ? 43 : 29 });
  }
 }catch(error){console.warn('Clan crest could not be rendered',String(error));}
 const card = await sharp(cinematic ? eventSceneImage : background).composite(layers).png().toBuffer();
-res.statusCode=200;res.setHeader('Content-Type','image/png');res.setHeader('Cache-Control','public, max-age=60, s-maxage=300');res.setHeader('X-Card-Image-Source',sceneKey);res.setHeader('X-Card-Scene-Effect',sceneKey);res.setHeader('X-Card-Template',cinematic ? 'cinematic-embers' : templateArtwork ? 'core-style-crest-v6' : 'dynamic-event-v4');res.setHeader('X-Card-Size',String(card.length));res.setHeader('X-Card-Text-Pixels',String(textPixels));res.setHeader('X-Card-Text-Verified',textPixels>1500?'true':'false');res.end(card);
+res.statusCode=200;res.setHeader('Content-Type','image/png');res.setHeader('Cache-Control','public, max-age=60, s-maxage=300');res.setHeader('X-Card-Image-Source',sceneKey);res.setHeader('X-Card-Scene-Effect',sceneKey);res.setHeader('X-Card-Season',holiday ? 'christmas' : 'standard');res.setHeader('X-Card-Template',cinematic ? 'cinematic-embers' : templateArtwork ? 'core-style-crest-v6' : 'dynamic-event-v4');res.setHeader('X-Card-Size',String(card.length));res.setHeader('X-Card-Text-Pixels',String(textPixels));res.setHeader('X-Card-Text-Verified',textPixels>1500?'true':'false');res.end(card);
 }catch(e){console.error('Discord card render failed',e);res.statusCode=500;res.setHeader('Content-Type','text/plain');res.end(String(e?.stack||e))}
 }

@@ -1,4 +1,5 @@
 import sharp from 'sharp';
+import { christmasCard, CHRISTMAS_CREST, holidayScenery } from '../lib/discordChristmas.js';
 import { Resvg } from '@resvg/resvg-js';
 
 const BG = '/images/discord/daily-plan-background.webp';
@@ -86,6 +87,7 @@ function textWidthSafe(value, max = 52) {
 export default async function handler(req, res) {
   try {
     const url = new URL(req.url, 'https://' + (req.headers['x-forwarded-host'] || req.headers.host || 'orzelbialy.eu'));
+    const holiday = christmasCard(url.searchParams);
     const payload = JSON.parse(decode(url.searchParams.get('p') || ''));
     const date = textWidthSafe(payload.date || '--.--.----', 24);
     const events = Array.isArray(payload.events) ? payload.events.slice(0, 16) : [];
@@ -284,17 +286,18 @@ export default async function handler(req, res) {
 
     const fontDir = new URL('../node_modules/dejavu-fonts-ttf/ttf/', import.meta.url).pathname;
     const fontFiles = ['DejaVuSans.ttf', 'DejaVuSans-Bold.ttf', 'DejaVuSerif.ttf', 'DejaVuSerif-Bold.ttf'].map(file => fontDir + file);
-    const overlay = new Resvg(svg, {
+    const seasonalSvg = holiday ? svg.replace('</svg>', holidayScenery(width) + '</svg>') : svg;
+    const overlay = new Resvg(seasonalSvg, {
       fitTo: { mode: 'width', value: width },
       font: { fontFiles, fontDirs: [fontDir], loadSystemFonts: true, defaultFontFamily: 'DejaVu Sans' }
     }).render().asPng();
     const verified = (svg.includes('PLAN DNIA') || svg.includes('Plan dnia') || svg.includes('DZIENNIK WYPRAW')) && svg.includes(esc(date));
     const layers = [{ input: overlay }];
     if (!newspaper) try {
-      const crestResponse = await fetch(imageHost + '/images/discord/clan-crest.svg', { signal: AbortSignal.timeout(4500) });
+      const crestResponse = await fetch(imageHost + (holiday ? CHRISTMAS_CREST : '/images/discord/clan-crest.svg'), { signal: AbortSignal.timeout(4500) });
       if (!crestResponse.ok) throw new Error('Clan crest HTTP ' + crestResponse.status);
       const crest = await sharp(Buffer.from(await crestResponse.arrayBuffer()), { density: 180 })
-         .resize(quest || board ? 86 : cinematic ? 108 : 150, quest || board ? 54 : cinematic ? 68 : 94, { fit: 'contain' }).png().toBuffer();
+         .resize(quest || board ? 86 : cinematic ? 108 : 150, quest || board ? 54 : cinematic ? 68 : 94, { fit: 'contain', background: '#0000' }).png().toBuffer();
       layers.push({ input: crest, left: quest || board ? 48 : cinematic ? 49 : 52, top: quest || board ? 46 : cinematic ? 59 : 43 });
     } catch (error) {
       console.warn('Daily plan clan crest unavailable', String(error));
@@ -303,6 +306,7 @@ export default async function handler(req, res) {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'image/png');
     res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=300');
+    res.setHeader('X-Card-Season', holiday ? 'christmas' : 'standard');
     res.setHeader('X-Daily-Plan-Events', String(events.length));
     res.setHeader('X-Daily-Plan-Style', quest ? 'quest-journal-preview' : newspaper ? 'newspaper-preview' : board ? 'clan-board-preview' : cinematic ? 'cinematic-series-preview' : refined ? 'classic-refined-preview' : 'fixed-clan-art-daily-rotation-v2');
     res.setHeader('X-Daily-Plan-Artwork', artworkPath);
