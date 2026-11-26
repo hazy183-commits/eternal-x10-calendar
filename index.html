@@ -68,6 +68,41 @@
       radial-gradient(ellipse at center,#8e342c,#481426 57%,#1a0d13);
     pointer-events:none;
   }
+
+  :root {
+    --clan-background:linear-gradient(rgba(5,11,16,.4),rgba(5,11,16,.74)),url('/images/holiday/winter-fortress.png');
+    --holiday-snow-edge:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20640%2022%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22s%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23fff%22%2F%3E%3Cstop%20offset%3D%22.55%22%20stop-color%3D%22%23eaf5ff%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%239dbdd8%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Cpath%20fill%3D%22url(%23s)%22%20d%3D%22M0%207Q13%201%2033%205T76%204T110%205T148%204T190%205T230%204T271%205T313%205T356%204T401%206T446%204T496%205T542%204T590%205T640%206V12L629%2012l-3%209-3-9-12%201-2%205-4-5Q578%2010%20555%2012T505%2011T452%2012T402%2011T351%2012T303%2011T247%2012T195%2011T142%2012T94%2011T47%2012L30%2012l-3%206-3-6-8%201-4%208-3-9L0%2013Z%22%2F%3E%3C%2Fsvg%3E");
+  }
+  #top > .hero {
+    background-image:linear-gradient(90deg,rgba(7,10,12,.92),rgba(7,10,12,.76) 68%,rgba(7,10,12,.15)),
+      url('/images/holiday/winter-fortress.png') !important;
+    background-size:cover!important;
+    background-position:center 67%!important;
+  }
+  #top .holiday-wishes.illustrated-snow,
+  #top :is(.pvp-hero-panel,#nextEventCard,.calendar-section,.boss-gallery),
+  .ob-gate-shell, #memberZoneLayer .member-zone-box { position:relative; }
+  #top :is(.holiday-wishes.illustrated-snow,.pvp-hero-panel,#nextEventCard,.calendar-section,.boss-gallery)::after,
+  .ob-gate-shell::after, #memberZoneLayer .member-zone-box::after {
+    content:""; position:absolute; z-index:4; pointer-events:none;
+    top:0; inset-inline:0; height:clamp(7px,1.5vw,16px);
+    background:var(--holiday-snow-edge) center top / 100% 100% no-repeat;
+    filter:drop-shadow(0 2px 2px rgba(3,10,17,.55));
+  }
+  .holiday-wishes-illustrated {
+    background:
+      radial-gradient(circle at 9% 18%,#ffd281 0 2px,transparent 7px),
+      radial-gradient(circle at 21% 82%,#f07896 0 2px,transparent 8px),
+      radial-gradient(circle at 88% 22%,#89dbaa 0 2px,transparent 9px),
+      radial-gradient(circle at 94% 74%,#ffc169 0 2px,transparent 8px),
+      radial-gradient(ellipse at 28% 65%,#aa5838,transparent 62%),
+      linear-gradient(110deg,#701d36,#54132a 68%,#28111e);
+    padding-top:clamp(13px,2vw,23px);
+  }
+  @media(max-width:700px) {
+    :root { --clan-background:linear-gradient(rgba(5,11,16,.5),rgba(5,11,16,.78)),url('/images/holiday/winter-fortress.png'); }
+    #top > .hero {background-position:right 67%!important;}
+  }
 </style>
 </head>
   <body>
@@ -75,7 +110,7 @@
     <header class="topbar"><div class="topbar-inner wrap"><a class="brand" href="#top" aria-label="Orzeł Biały"><img class="brand-logo" src="/images/holiday/clan-crest-christmas.png" alt="Orzeł Biały" /><span class="brand-copy">ORZEŁ BIAŁY<a class="brand-subtitle-link" href="https://l2reborn.org/" target="_blank" rel="noopener noreferrer">Lineage 2 Reborn</a></span></a><nav class="main-nav" aria-label="Główna nawigacja"><a href="#top">Strona główna</a><a href="https://lineage2wiki.org/interlude/" target="_blank" rel="noopener noreferrer">Drop Kalkulator</a><a href="#craft" class="craft-home-open" aria-controls="memberZoneLayer">Craft kalkulator</a><a href="#przydatne-questy">Przydatne questy</a><a href="https://discord.gg/HtTrJpp7K">Discord</a></nav><div class="header-actions"><div class="header-clock"><span>Server time</span><b id="headerTime">—</b></div><button class="admin-trigger" id="adminTrigger" type="button"><span>✦</span> Panel administratora</button></div></div></header>
     <main id="top">
       <section class="hero wrap"><div class="hero-emblem">✦</div><div class="eyebrow">Wspólny kalendarz klanu</div><h1>ETERNAL <span>X10 MAIN</span></h1><p class="hero-subtitle">Lineage 2 Reborn</p><p class="hero-tagline">Więcej niż gra — to nasza społeczność</p><div class="server-clock" aria-live="polite"><span class="pulse"></span><span id="serverDate">—</span><b id="serverTime">—</b><small>Czas serwera</small></div></section>
-      <aside class="holiday-wishes holiday-wishes-illustrated wrap"><img alt="" src="/images/holiday/clan-christmas-tree.png"><div class="holiday-message"><span lang="pl"><strong>Wesołych Świąt, Orły!</strong><small>Niech pod choinką dropią same konkrety.</small></span><span lang="en"><strong>Merry Christmas, Eagles!</strong><small>May your tree drop only the good stuff.</small></span></div></aside>
+      <aside class="holiday-wishes holiday-wishes-illustrated illustrated-snow wrap"><img alt="" src="/images/holiday/clan-christmas-tree.png"><div class="holiday-message"><span lang="pl"><strong>Wesołych Świąt, Orły!</strong><small>Niech pod choinką dropią same konkrety.</small></span><span lang="en"><strong>Merry Christmas, Eagles!</strong><small>May your tree drop only the good stuff.</small></span></div></aside>
       <section class="wrap focus-section" aria-labelledby="nextTitle"><section class="pvp-hero-panel" aria-labelledby="pvpHeroTitle"><div class="pvp-hero-heading"><h2 id="pvpHeroTitle">AUTO PVP EVENTS</h2><span>FOR FUN EVENTS</span></div><div id="pvpSidebarEvents"></div></section><div class="section-heading"><div><span class="eyebrow">Najbliższe wydarzenie</span><h2 id="nextTitle">Przygotuj się do bitwy</h2></div></div><article class="next-event-card" id="nextEventCard"><div class="event-art event-art-large"><span>Boss artwork<br />coming soon</span></div><div class="event-aura"></div><div class="next-event-content"><div class="next-event-badges"><span class="type-chip" id="nextType">—</span><span class="next-owner-chip" id="nextOwner" hidden></span><span class="live-status" id="nextStatus">—</span></div><h3 id="nextName">Brak nadchodzących wydarzeń</h3><p id="nextMeta">Dodaj wydarzenie w panelu administratora.</p><div class="event-facts"><div class="featured-event-location"><svg class="event-fact-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 9c0 6-8 13-8 13S4 15 4 9a8 8 0 1 1 16 0Z"/><circle cx="12" cy="9" r="3"/></svg><span>LOKALIZACJA</span><b id="nextLocation">—</b></div><div class="next-start-time" id="nextStartTime" hidden><svg class="event-fact-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 5v7l5 3"/></svg><span>START WYDARZENIA</span><b>--:--</b></div></div><p class="next-description" id="nextDescription"></p></div><div class="countdown-block"><span id="countdownLabel">Do rozpoczęcia</span><div class="countdown" id="countdown" aria-live="polite"><b>00</b><i>:</i><b>00</b><i>:</i><b>00</b><i>:</i><b>00</b></div><small><span>dni</span><span>godz.</span><span>min.</span><span>sek.</span></small></div></article></section>
       <div class="schedule-layout wrap unified-calendar"><section id="calendar" class="calendar-section" aria-labelledby="calendarTitle"><div class="section-heading calendar-heading"><div><span class="eyebrow">Harmonogram</span><h2 id="calendarTitle">Kalendarz wydarzeń</h2></div></div><div class="calendar-strip"><button class="icon-btn calendar-strip-arrow" id="previousDay" type="button" aria-controls="calendarWeek" aria-label="Przewiń dni w lewo">←</button><div class="calendar-week" id="calendarWeek" role="group" aria-label="Wybierz dzień"></div><button class="icon-btn calendar-strip-arrow" id="nextDay" type="button" aria-controls="calendarWeek" aria-label="Przewiń dni w prawo">→</button></div><div class="calendar-toolbar"><div class="selected-date" id="selectedDate">—</div><button class="today-btn" id="todayButton" type="button" aria-controls="calendarWeek">Wróć do dzisiaj</button></div><div class="event-list" id="dailyEvents"></div></section><!-- Hidden event data is retained for the existing hero carousel. -->
       <div id="statistics" hidden aria-hidden="true"><span id="todayCount"></span><div id="todayEvents"></div><div id="upcomingEvents"></div></div></div>
