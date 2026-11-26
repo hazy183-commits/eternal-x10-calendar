@@ -78,7 +78,7 @@ export function installPremiumLanding(){
       </div>
       <div class="ob-gate-status"><i></i> STREFA KLANU</div>
     </header>
-    <aside class="holiday-wishes holiday-wishes-illustrated"><img alt="" src="/images/holiday/christmas-lanterns.png"><span lang="pl">Wesołych Świąt, Orły!</span><span lang="en">Merry Christmas, Eagles!</span><img alt="" src="/images/holiday/christmas-lanterns.png"></aside>
+    <aside class="holiday-wishes holiday-wishes-illustrated"><img alt="" src="/images/holiday/clan-christmas-tree.png"><div class="holiday-message"><span lang="pl"><strong>Wesołych Świąt, Orły!</strong><small>Niech pod choinką dropią same konkrety.</small></span><span lang="en"><strong>Merry Christmas, Eagles!</strong><small>May your tree drop only the good stuff.</small></span></div></aside>
     <div class="ob-gate-grid">
       <div class="ob-gate-login-slot"></div>
       <aside class="ob-gate-media">
