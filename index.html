@@ -114,6 +114,37 @@
     #top > .hero .clan-holiday-garland { top:0; }
     .ob-gate-header { padding-top:33px!important; }
   }
+
+  :root {
+    --clan-background: linear-gradient(rgba(4,10,17,.16),rgba(4,10,17,.5)),
+      url('/images/holiday/winter-fortress.png');
+  }
+  html body #memberAuthLayer, html body #memberZoneLayer {
+    background: var(--clan-background) center top / cover no-repeat !important;
+  }
+  #top > .hero {
+    background-image: radial-gradient(ellipse at 50% 85%,rgba(185,100,27,.28),transparent 66%),
+      linear-gradient(105deg,rgba(12,25,40,.92),rgba(7,12,15,.78),rgba(23,24,28,.9)) !important;
+  }
+  #top .calendar-heading, #top .boss-gallery > .section-heading {
+    border-bottom: 1px solid rgba(224,190,124,.38);
+    box-shadow: inset 0 8px 22px -23px #ffe3a5;
+  }
+  #memberZoneLayer .member-zone-box::after {
+    background-image: url('/images/holiday/christmas-garland.png'),
+      radial-gradient(ellipse at center,rgba(232,154,58,.35),transparent 69%);
+  }
+  .clan-holiday-snow { opacity:.48; }
+  @media(max-width:700px) {
+    :root {
+      --clan-background: linear-gradient(rgba(5,11,16,.35),rgba(5,11,16,.62)),
+        url('/images/holiday/winter-fortress.png');
+    }
+    body::before, html body #memberAuthLayer, html body #memberZoneLayer {
+      background-position: 76% top !important;
+    }
+    .clan-holiday-snow { opacity:.36; }
+  }
 </style>
   </head>
   <body>
