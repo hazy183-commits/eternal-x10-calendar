@@ -9,7 +9,7 @@ async function requireAuthenticated() {
 
 export class SupabaseSiegeScheduleRepository {
   async getAll() {
-    if (!supabase) return SIEGE_REFERENCE_DEFAULTS.map(normalizeSiegeRow).filter(Boolean);
+    if (!supabase) return [];
     try {
       const { data, error } = await supabase.schema('public').from('siege_schedule').select('*').order('castle').abortSignal(AbortSignal.timeout(5000));
       if (error || !Array.isArray(data)) {

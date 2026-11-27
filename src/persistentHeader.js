@@ -24,6 +24,35 @@ if (typeof document !== 'undefined') {
     new ResizeObserver(updateHeight).observe(header);
     updateHeight();
   }
+  const syncCurrentNavigation = () => {
+    const offset = Math.ceil(header?.getBoundingClientRect().height || 72) + 28;
+    for (const nav of document.querySelectorAll('.main-nav, #mobileHeaderMenu .mobile-menu-panel')) {
+      const links = [...nav.querySelectorAll('a[href^="#"]')];
+      let current = '#top';
+      for (const link of links) {
+        const selector = link.getAttribute('href');
+        const section = document.querySelector(selector);
+        if (section && !section.closest('dialog') && section.getBoundingClientRect().top <= offset) current = selector;
+      }
+      links.forEach((link) => {
+        if (link.getAttribute('href') === current) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+    }
+  };
+  let navigationFrame = 0;
+  const scheduleNavigationSync = () => {
+    if (navigationFrame) return;
+    navigationFrame = requestAnimationFrame(() => {
+      navigationFrame = 0;
+      syncCurrentNavigation();
+    });
+  };
+  window.addEventListener('scroll', scheduleNavigationSync, { passive:true });
+  window.addEventListener('resize', scheduleNavigationSync);
+  window.addEventListener('hashchange', scheduleNavigationSync);
+  window.addEventListener('orzel:nav-mounted', scheduleNavigationSync);
+  syncCurrentNavigation();
   const selector = { admin:'#adminModal', clan:'#memberZoneLayer' };
   const switcher = createPanelSwitcher({
     isOpen: (panel) => document.querySelector(selector[panel])?.classList.contains('open'),

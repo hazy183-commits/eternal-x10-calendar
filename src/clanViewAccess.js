@@ -10,7 +10,8 @@ export function canAccessClanView(profile, view) {
 export function switchClanView(zone, profile, requestedView) {
   const view = canAccessClanView(profile, requestedView) ? requestedView : 'home';
   zone.querySelectorAll('.zone-nav').forEach(b => b.classList.toggle('active', b.dataset.zoneView === view));
-  zone.querySelectorAll('.zone-view').forEach(p => p.classList.toggle('active', p.dataset.zonePanel === view));
+  const panelView = view === 'group-craft' ? 'craft' : view;
+  zone.querySelectorAll('.zone-view').forEach(p => p.classList.toggle('active', p.dataset.zonePanel === panelView));
   const main = zone.querySelector('.member-zone-main');
   if (main) main.scrollTop = 0;
   return view;

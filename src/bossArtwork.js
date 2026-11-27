@@ -11,7 +11,12 @@ import './mobileVisualFixes.css';
 
 // Vite serves public/ directly and copies it unchanged into production builds.
 const artworkBase = `${import.meta.env.BASE_URL}images/bosses/`;
-const eventArtwork = { olympiad: '/images/events/olympiad.jpg' };
+const eventArtwork = new Map([
+  ['olympiad', '/images/events/olympiad.jpg'],
+  ['klanowe pvp', '/images/events/clan-pvp.webp'],
+  ['ćwiczenia colloseum', '/images/events/colloseum-training.webp'],
+  ['cwiczenia colloseum', '/images/events/colloseum-training.webp'],
+]);
 const clanHallArtwork = new Map([
   ['fortress of resistance', '/images/fortress-of-resistance.jpg'],
   ['devastated castle', '/images/devastated-castle.jpg'],
@@ -47,6 +52,7 @@ const artworkObserver = typeof IntersectionObserver === 'undefined' ? null : new
 }, { rootMargin: '400px 0px' });
 
 export function bossArtworkUrl(name = '') {
+  if (typeof name === 'string' && /^\/images\//i.test(name.trim())) return name.trim();
   const key = name.trim().toLowerCase().replace(/\s+/g, ' ');
   const bossSlug = bosses.get(key);
   if (bossSlug) return `${artworkBase}${bossSlug}.webp`;
@@ -54,7 +60,7 @@ export function bossArtworkUrl(name = '') {
   if (clanHallUrl) return clanHallUrl;
   const castleSlug = [...castleArtwork.entries()].find(([castle]) => key.includes(castle))?.[1];
   if (castleSlug) return `${import.meta.env.BASE_URL}images/castles/${castleSlug}.jpg?v=20260920`;
-  return eventArtwork[key] ?? '';
+  return eventArtwork.get(key) ?? '';
 }
 
 function imageLoads(url) {
@@ -76,6 +82,13 @@ function paintArtwork(element, url) {
   // Ignore a previous request if this card now represents another event.
   if (assigned.get(element) !== url) return;
   element.style.setProperty('--boss-art', `url(${JSON.stringify(url)})`);
+  // Keep artwork visible even if production CSS drops its helper selector.
+  element.style.backgroundImage = `url(${JSON.stringify(url)})`;
+  element.style.backgroundPosition = 'center';
+  element.style.backgroundSize = 'cover';
+  element.style.backgroundRepeat = 'no-repeat';
+  const placeholder = element.querySelector(':scope > span');
+  if (placeholder) placeholder.style.visibility = 'hidden';
   element.classList.add('has-boss-art');
 }
 
@@ -99,6 +112,12 @@ export function applyBossArtwork(element, name = '') {
   assigned.set(element, url);
   element.classList.remove('has-boss-art');
   element.style.removeProperty('--boss-art');
+  element.style.removeProperty('background-image');
+  element.style.removeProperty('background-position');
+  element.style.removeProperty('background-size');
+  element.style.removeProperty('background-repeat');
+  const placeholder = element.querySelector(':scope > span');
+  if (placeholder) placeholder.style.removeProperty('visibility');
   artworkObserver?.unobserve(element);
   if (!url) return;
   pending.set(element, url);

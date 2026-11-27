@@ -13,3 +13,119 @@
 .ob-gate-footer{position:relative;z-index:1;display:flex;align-items:center;gap:16px;padding:12px 32px;border-top:1px solid rgba(90,68,35,.45);background:#060808}.ob-gate-footer span{color:#9e793b;font:800 8px Inter,Arial,sans-serif;letter-spacing:.18em}.ob-gate-footer p{margin:0;color:#67635c;font:500 10px Inter,Arial,sans-serif}
 @media(max-width:980px){#memberAuthLayer{padding:8px!important}.ob-gate-shell{min-height:0}.ob-gate-header{padding:18px}.ob-gate-brand img{width:76px;height:62px}.ob-gate-brand h1{font-size:25px}.ob-gate-brand p{font-size:9px}.ob-gate-status{display:none}.ob-gate-grid{grid-template-columns:1fr;padding:18px}.ob-gate-videos{grid-template-columns:1fr 1fr}.ob-gate-video{min-height:180px}.ob-gate-footer{padding:11px 18px}}
 @media(max-width:620px){.ob-gate-header{justify-content:center;text-align:center}.ob-gate-brand{display:block}.ob-gate-brand img{width:88px;height:72px}.ob-gate-grid{padding:11px}.ob-gate-login-slot .member-auth-box{padding:22px!important}.ob-recruit-box{padding:20px}.ob-recruit-box h3{font-size:20px}.ob-gate-videos{grid-template-columns:1fr}.ob-gate-video{min-height:185px}.ob-gate-info{grid-template-columns:1fr}.ob-recruit-actions{align-items:flex-start;flex-direction:column;gap:8px}.ob-gate-footer{display:block}.ob-gate-footer p{margin-top:6px;line-height:1.45}}
+
+/* Login screen: make the member entry easy to scan and comfortable to use. */
+.ob-gate-login-slot .member-auth-box{
+  position:relative;
+  border-color:rgba(201,158,77,.76)!important;
+  border-left:3px solid #c59a4f!important;
+  background:radial-gradient(circle at 14% 0,rgba(183,134,51,.12),transparent 42%),linear-gradient(180deg,#0b1010,#070a0a)!important;
+}
+.ob-gate-login-slot .member-auth-lead{
+  color:#b2ab9f!important;
+  font:500 14px/1.55 Inter,Arial,sans-serif!important;
+}
+.ob-gate-login-slot .member-tabs{
+  gap:5px;
+  padding:4px;
+  border:1px solid rgba(106,82,43,.55);
+  background:#050808;
+}
+.ob-gate-login-slot .member-tabs button{
+  min-height:44px;
+  border:1px solid transparent;
+  color:#a9a294;
+  font:700 13px/1.3 Inter,Arial,sans-serif;
+  transition:background .18s ease,border-color .18s ease,color .18s ease;
+}
+.ob-gate-login-slot .member-tabs button.active{
+  border-color:rgba(190,143,59,.68);
+  border-bottom:1px solid rgba(190,143,59,.68);
+  background:linear-gradient(145deg,#332510,#17120b);
+  color:#f0d18b;
+}
+.ob-gate-login-slot .member-auth-box label{
+  color:#c4bcad!important;
+  font-size:14px!important;
+  letter-spacing:.035em!important;
+}
+.ob-gate-login-slot .member-auth-box input{
+  min-height:48px;
+  padding:13px 14px;
+  border-color:#55472f!important;
+  color:#f3ecdf;
+  font:500 15px/1.4 Inter,Arial,sans-serif;
+  transition:border-color .18s ease,box-shadow .18s ease,background .18s ease;
+}
+.ob-gate-login-slot .member-auth-box input::placeholder{color:#77756f}
+.ob-gate-login-slot .member-auth-box input:focus{
+  border-color:#d0a24c!important;
+  background:#080c0c!important;
+  box-shadow:0 0 0 3px rgba(208,162,76,.16),0 0 20px rgba(208,162,76,.08)!important;
+}
+.ob-gate-login-slot .member-submit{
+  min-height:52px;
+  border-color:#e0b760;
+  background:linear-gradient(135deg,#e3bb68,#b47e2c);
+  box-shadow:0 10px 26px rgba(177,124,43,.19);
+  color:#171109;
+  font:900 13px/1.2 Inter,Arial,sans-serif;
+  letter-spacing:.08em;
+  transition:transform .18s ease,box-shadow .18s ease,filter .18s ease;
+}
+.ob-gate-login-slot .member-submit:hover{
+  transform:translateY(-2px);
+  border-color:#f3d58d;
+  box-shadow:0 14px 32px rgba(177,124,43,.28);
+  filter:brightness(1.06);
+}
+.ob-gate-login-slot .member-auth-box :focus-visible,
+.ob-gate-login-slot .member-tabs button:focus-visible{
+  outline:2px solid #edc66f;
+  outline-offset:3px;
+}
+#memberAuthFeedback{font-size:13px;line-height:1.5}
+@media(max-width:620px){
+  .ob-gate-login-slot .member-auth-lead{font-size:14px!important}
+  .ob-gate-login-slot .member-auth-box label{font-size:14px!important}
+  .ob-gate-login-slot .member-auth-box input{min-height:50px;font-size:16px}
+  .ob-gate-login-slot .member-submit{min-height:54px}
+}
+
+/* Follow the existing full-screen image so the animated patches stay in place. */
+.ob-landing-background-motion {
+  position:fixed;
+  inset:0 auto auto 0;
+  width:0;
+  height:0;
+  object-fit:cover;
+  object-position:center top;
+  pointer-events:none;
+  filter:brightness(.65);
+}
+#memberAuthLayer .ob-gate-shell { z-index:1; }
+@media (prefers-reduced-motion:reduce) {
+  .ob-landing-background-motion { display:none; }
+}
+
+#memberAuthLayer .ob-gate-shell {
+  background:linear-gradient(145deg,#070a0ad4,#040606ed);
+}
+@media (max-width:760px) {
+  html body #memberAuthLayer:has(.ob-landing-background-motion) {
+    background-position:right top!important;
+  }
+  .ob-landing-background-motion { object-position:right top; }
+}
+
+.ob-page-background-motion { z-index:-1; }
+html.member-locked .ob-page-background-motion,
+body:has(#memberAuthLayer.open) .ob-page-background-motion { display:none; }
+/* The open clan panel overlays the same scene as the signed-in homepage. */
+html body #memberZoneLayer.open { background:transparent!important; }
+@media (max-width:700px) {
+  body > .ob-page-background-motion { object-position:24% top; filter:brightness(.46); }
+}
+@media (min-width:701px) {
+  body > .ob-page-background-motion { object-position:center top; }
+}

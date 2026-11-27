@@ -7,7 +7,9 @@ import {
   updateCraftProject,
 } from './craftWorkspace.js';
 import { craftItemIconMarkup, craftItemIconPath } from './craftItemIcons.js';
+import { renderInventorySelect, renderItemPicker } from './craftGroupPlannerUi.js';
 import { summarizeCraftProject } from './craftHomeSummary.js';
+import { summarizeMainMissing, summarizeMainProgress } from './craftHierarchyEnhancer.js';
 
 const escapeHtml = (value = '') => String(value)
   .replaceAll('&', '&amp;')
@@ -60,9 +62,9 @@ function renderRequirementRows(project, workspace) {
 }
 
 function renderProjectCard(project, workspace) {
-  const missingTotal = project.missing.reduce((sum, row) => sum + Number(row.quantity || 0), 0);
+  const missingTotal = summarizeMainMissing(project, workspace);
   const targetItem = findItem(workspace, project.targetItemKey);
-  const progress = summarizeCraftProject(project);
+  const progress = summarizeMainProgress(project, workspace);
   const collapsed = collapsedProjectIds.has(String(project.id));
   return `
     <article class="craft-project-card ${project.status === 'active' ? 'is-active' : 'is-paused'}${collapsed ? ' is-collapsed' : ''}" data-craft-project="${escapeHtml(project.id)}">
@@ -178,12 +180,6 @@ function targetOptions(workspace) {
     .join('');
 }
 
-function allItemOptions(workspace) {
-  return workspace.items
-    .map(item => `<option value="${escapeHtml(item.item_key)}">${escapeHtml(item.name)}</option>`)
-    .join('');
-}
-
 function selectedIconStyle(workspace, itemKey) {
   const item = findItem(workspace, itemKey);
   const iconPath = craftItemIconPath(item.item_key, item.game_item_id);
@@ -196,6 +192,19 @@ function ensureUiShell() {
   const main = layer?.querySelector('.member-zone-main');
   if (!layer || !side || !main) return null;
 
+  // The original member-zone shell does not contain a Craft button. Add it
+  // before the menu organizer groups the navigation entries, so Craft is
+  // always reachable from Narzędzia on desktop and mobile.
+  if (!side.querySelector('[data-zone-view="craft"]')) {
+    const nav = document.createElement('button');
+    nav.type = 'button';
+    nav.className = 'zone-nav';
+    nav.dataset.zoneView = 'craft';
+    nav.innerHTML = '<span>Craft</span>';
+    const spacer = side.querySelector('.zone-side-spacer');
+    side.insertBefore(nav, spacer || null);
+  }
+
   let panel = main.querySelector('[data-zone-panel="craft"]');
   if (!panel) {
     panel = document.createElement('section');
@@ -207,7 +216,8 @@ function ensureUiShell() {
         <h3>CRAFT WORKSPACE</h3>
         <p>Twój magazyn, wiele projektów i automatyczne liczenie braków.</p>
       </div>
-      <div id="craftWorkspaceRoot" class="craft-workspace"><p class="craft-muted">Otwórz zakładkę Craft, aby wczytać dane.</p></div>`;
+      <div id="craftWorkspaceRoot" class="craft-workspace"><p class="craft-muted">Otwórz zakładkę Craft, aby wczytać dane.</p></div>
+      <div id="craftGroupWorkspaceRoot" class="craft-group-workspace" hidden></div>`;
     main.appendChild(panel);
   }
 
@@ -287,7 +297,7 @@ export function installCraftPlannerUi(supabase) {
             <div class="craft-step-head"><span class="craft-step-number">2</span><div><small class="craft-step-kicker">TWÓJ STAN</small><h4>Uzupełnij magazyn</h4></div></div>
             <p>Wpisujesz realny stan. Projekty nie zmieniają go fizycznie — tylko pokazują, ile jest zarezerwowane.</p>
             <form class="craft-form" id="craftStockForm">
-              <label class="craft-control"><span>Materiał</span><select name="itemKey" required>${allItemOptions(workspace)}</select></label>
+              <label class="craft-control"><span>Materiał lub recepta</span>${renderInventorySelect(workspace, { name: 'itemKey' })}</label>
               <label class="craft-control"><span>Ile masz</span><input name="quantity" type="number" min="0" step="1" value="0" required></label>
               <button type="submit">Zapisz</button>
             </form>
@@ -307,7 +317,12 @@ export function installCraftPlannerUi(supabase) {
     }
   };
 
-  window.addEventListener('orzel:craft-workspace-opened', () => refresh());
+  window.addEventListener('orzel:craft-workspace-opened', event => {
+    const groupActive = event.detail?.view === 'group-craft';
+    ui.root.hidden = groupActive;
+    document.querySelector('#craftGroupWorkspaceRoot')?.toggleAttribute('hidden', !groupActive);
+    if (!groupActive) refresh();
+  });
 
   ui.root.addEventListener('submit', async event => {
     if (!(event.target instanceof HTMLFormElement)) return;

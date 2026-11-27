@@ -9,3 +9,20 @@
 .admin-dashboard-tabs button i.admin-clan-icon>.clan-nav-art{grid-column:auto;margin:0!important}
 @media(max-width:900px){#memberZoneLayer .member-zone-side i[data-clan-icon]{flex-basis:30px;width:30px;height:30px}.admin-dashboard-tabs button{grid-template-columns:30px 1fr!important}.admin-dashboard-tabs button i.admin-clan-icon{width:30px;height:30px}}
 
+
+#memberZoneLayer .member-zone-side i[data-clan-icon]>.clan-nav-enchant-art {
+  position: relative;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(ellipse, #69441d 0%, #211607 48%, #080d0d 76%);
+  color: #edc977;
+  font-size: 17px;
+}
+.clan-nav-enchant-art::after {
+  position: absolute;
+  inset: 2px;
+  content: "";
+  border-radius: 3px;
+  background: url('https://l2db.info/uploads/images/icons/etc_blessed_scrl_of_ench_wp_s_i05.png') center / contain no-repeat;
+  filter: drop-shadow(0 0 3px #d69e5b);
+}

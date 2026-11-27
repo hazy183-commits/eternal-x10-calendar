@@ -1,0 +1,1292 @@
+[
+  {
+    "name": "Subclassa",
+    "title": "Fate’s Whisper · Mimir’s Elixir",
+    "category": "Rozwój postaci",
+    "level": "75+",
+    "icon": "subclass",
+    "steps": [
+      {
+        "title": "Odbierz quest u Reorina",
+        "text": "Z Town of Oren kieruj się na wschód do Skyshadow Meadow. Maestro Reorin stoi na polanie. Sprawdź pinezkę na mapie i weź Fate’s Whisper.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/reorin.webp",
+            "Reorin · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-oren.webp",
+            "Mapa miasta · Town of Oren"
+          ],
+          [
+            "/quest-maps/world.jpg",
+            "Zaznaczony punkt · Maestro Reorin, Skyshadow Meadow",
+            [
+              1184,
+              1191
+            ]
+          ]
+        ],
+        "waypoints": [
+          [
+            "Maestro Reorin",
+            "92743, 55523, -3370"
+          ]
+        ]
+      },
+      {
+        "title": "Cabrio na cmentarzu",
+        "text": "Teleportuj się z Aden w okolice Seal of Shilen. Podejdź do północnej części The Cemetery, do ogrodzonej polany zaznaczonej na mapie. Po śmierci Cabrio kliknij skrzynię Coffer of the Dead, odbierz Reiria’s Soul Orb i wróć do Reorina.",
+        "images": [
+          [
+            "/quest-maps/world.jpg",
+            "Zaznaczony punkt · Cabrio, północna część The Cemetery",
+            [
+              1513,
+              1023
+            ]
+          ]
+        ],
+        "waypoints": [
+          [
+            "Shilen’s Messenger Cabrio",
+            "180986, 11919, -2580"
+          ]
+        ]
+      },
+      {
+        "title": "Trzy berła z Tower of Insolence",
+        "text": "Odbierz berła ze skrzyń po Hallate na 3. piętrze, Kernonie na 8. i Golkondzie na 11. Wróć z kompletem do Reorina.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/reorin.webp",
+            "Reorin · portret"
+          ],
+          [
+            "/quest-maps/world.jpg",
+            "Death Lord Hallate · Tower of Insolence, piętro 3",
+            [
+              1261,
+              1042
+            ]
+          ],
+          [
+            "/quest-maps/world.jpg",
+            "Kernon · Tower of Insolence, piętro 8",
+            [
+              1261,
+              1039
+            ]
+          ],
+          [
+            "/quest-maps/world.jpg",
+            "Longhorn Golkonda · Tower of Insolence, piętro 11",
+            [
+              1272,
+              1038
+            ]
+          ]
+        ],
+        "waypoints": [
+          [
+            "Tower of Insolence · wejście",
+            "121168, 15968, -4993"
+          ]
+        ]
+      },
+      {
+        "title": "Narzędzia Reorina",
+        "text": "Odbierz Infernium Varnish od Cliffa w magazynie w Oren i oddaj Reorinowi. Potem odbierz młot od Ferrisa w kuźni w Aden i ponownie wróć do Reorina. Po formę idź do Zenkin w sklepie z bronią w Oren.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/reorin.webp",
+            "Reorin · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-oren.webp",
+            "Mapa miasta · Town of Oren"
+          ],
+          [
+            "/quest-maps/world.jpg",
+            "Cliff · magazyn w Oren",
+            [
+              1141,
+              1189
+            ]
+          ],
+          [
+            "/quest-maps/world.jpg",
+            "Ferris · kuźnia w Aden",
+            [
+              1400,
+              1089
+            ]
+          ],
+          [
+            "/quest-maps/world.jpg",
+            "Zenkin · sklep w Oren",
+            [
+              1133,
+              1184
+            ]
+          ]
+        ]
+      },
+      {
+        "title": "Pipette na Eternal",
+        "text": "Porozmawiaj z Kasparem w Hardin’s Academy. Z otrzymaną Pipette udaj się do Marii po Red Pipette. Oddaj ją Kasparowi w zamian za formę i zanieś ją do Reorina.",
+        "images": [
+          [
+            "/quest-maps/world.jpg",
+            "Kaspar · Hardin’s Academy",
+            [
+              1230,
+              1408
+            ]
+          ]
+        ],
+        "dependencies": [
+          {
+            "title": "An Arrogant Search · tylko wariant z Baiumem",
+            "text": "Jeśli na Twoim serwerze Kaspar wymaga uderzenia Baiuma, zacznij u Hanellin w gildii mrocznych elfów w Aden i zdobądź Blooded Fabric do wejścia na ostatnie piętro Tower of Insolence. Na opisanej ścieżce Eternal z Red Pipette od Marii ten dodatkowy quest nie jest wymagany."
+          }
+        ]
+      },
+      {
+        "title": "Zakończ Fate’s Whisper i odbierz Star of Destiny",
+        "text": "Oddaj Reorinowi broń B i 984 kryształy B albo wybierz dostępny na Eternal wariant z kuponem na broń A. Kupon wymienisz później u Marii za broń B i 984 kryształy B. Odbierz Star of Destiny i sprawdź opcję dodania subclassy u Grand Mastera, High Priesta lub innego mistrza odpowiedniej gildii.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/reorin.webp",
+            "Reorin · portret"
+          ],
+          [
+            "/quest-maps/world.jpg",
+            "Zaznaczony punkt · powrót do Reorina",
+            [
+              1184,
+              1191
+            ]
+          ]
+        ]
+      },
+      {
+        "title": "Jeśli mistrz wymaga eliksiru, zacznij u Ladda",
+        "text": "Oficjalny opis Eternal wymienia Fate’s Whisper jako warunek subclassy. W klasycznym Interlude dochodzi Mimir’s Elixir. Gdy opcja dodania subclassy nadal jest zablokowana, zabierz Star of Destiny do Magister Ladd na 4. piętrze Ivory Tower i sprawdź, czy oferuje quest.",
+        "images": [
+          [
+            "/quest-maps/world.jpg",
+            "Ladd · Ivory Tower, piętro mrocznych elfów",
+            [
+              1155,
+              1042
+            ]
+          ]
+        ],
+        "waypoints": [
+          [
+            "Magister Ladd",
+            "84985, 15991, -1769"
+          ]
+        ],
+        "dependencies": [
+          {
+            "title": "Fate’s Whisper · warunek Mimir’s Elixir",
+            "text": "Najpierw ukończ Fate’s Whisper. Star of Destiny od Reorina jest potrzebna, żeby rozpocząć Mimir’s Elixir u Ladda. Na Eternal sprawdź najpierw, czy mistrz już pozwala dodać subclassę."
+          }
+        ]
+      },
+      {
+        "title": "Mimir’s Elixir · Pure Silver",
+        "text": "W podziemiach Ivory Tower odbierz Supplier of Reagents od Wesley’a. W urnie na temperaturze 1 (Salamander) połącz 10 Moonstone Shard z 1 Volcanic Ash, aby uzyskać Moon Dust. Połącz 10 Moon Dust z 1 Quicksilver na Lunargent, a następnie 1 Lunargent z 1 Quicksilver na Pure Silver. Jeśli kupisz Lunargent, wystarczy ostatnia mieszanka. Pokaż Pure Silver Laddowi.",
+        "images": [
+          [
+            "/quest-maps/world.jpg",
+            "Wesley · podziemia Ivory Tower",
+            [
+              1157,
+              1045
+            ]
+          ],
+          [
+            "/quest-maps/world.jpg",
+            "Alchemist’s Mixing Urn · naprzeciwko Wesley’a",
+            [
+              1157,
+              1043
+            ]
+          ]
+        ],
+        "waypoints": [
+          [
+            "Magic Trader Wesley",
+            "85655, 16767, -4271"
+          ]
+        ],
+        "dependencies": [
+          {
+            "title": "Supplier of Reagents · dostęp do urny",
+            "text": "W podziemiach Ivory Tower weź Supplier of Reagents od Magic Trader Wesley. Składniki wypadają m.in. z potworów w Tower of Insolence i Blazing Swamp. Możesz też kupić gotowe składniki od graczy. Do mieszanek w Alchemist’s Mixing Urn użyj temperatury 1 (Salamander)."
+          }
+        ]
+      },
+      {
+        "title": "Mimir’s Elixir · True Gold i Blood Fire",
+        "text": "Porozmawiaj z Magister Joan na 3. piętrze. Zdobądź Sage’s Stone z Chimera Piece w Silent Valley i zanieś go Joan po True Gold. Wróć do Ladda po Mixing Stone. W Lair of Antharas zdobądź Blood Fire z Bloody Guardian.",
+        "images": [
+          [
+            "/quest-maps/world.jpg",
+            "Joan · trzecie piętro Ivory Tower",
+            [
+              1155,
+              1042
+            ]
+          ],
+          [
+            "/quest-maps/world.jpg",
+            "Chimera Piece · Silent Valley",
+            [
+              1487,
+              1188
+            ]
+          ],
+          [
+            "/quest-maps/world.jpg",
+            "Bloody Guardian · Lair of Antharas",
+            [
+              1406,
+              1415
+            ]
+          ]
+        ],
+        "waypoints": [
+          [
+            "Magister Joan",
+            "84985, 15991, -2285"
+          ]
+        ]
+      },
+      {
+        "title": "Mimir’s Elixir · mieszanie i wybór klasy",
+        "text": "W podziemiach Ivory Tower użyj Mixing Stone w Alchemist’s Mixing Urn. Połącz Pure Silver, True Gold i Blood Fire na temperaturze 3 (Phoenix). Wróć do Ladda i wypij eliksir przez opcję w dialogu. Następnie wybierz subclassę u mistrza właściwej gildii.",
+        "images": [
+          [
+            "/quest-maps/world.jpg",
+            "Alchemist’s Mixing Urn · podziemia Ivory Tower",
+            [
+              1157,
+              1043
+            ]
+          ],
+          [
+            "/quest-maps/world.jpg",
+            "Ladd · oddanie eliksiru",
+            [
+              1155,
+              1042
+            ]
+          ]
+        ]
+      }
+    ],
+    "quickStart": "Oren → Skyshadow Meadow",
+    "prepare": "Poziom 75. Na Eternal przygotuj miejsce w ekwipunku na przedmioty z czterech bossów.",
+    "outcome": "Możliwość dodania subclassy"
+  },
+  {
+    "name": "Noblesse",
+    "title": "Possessor of a Precious Soul I–IV",
+    "category": "Rozwój postaci",
+    "level": "50 / 60 / 65 / 75 na subclassie",
+    "icon": "noblesse",
+    "steps": [
+      {
+        "title": "Część I — Talien · poziom 50",
+        "text": "W Aden odbierz quest od Taliena, po wschodniej stronie schodów do świątyni Einhasad. W Giran porozmawiaj z Gabrielle, potem z Gilmore w Dragon Valley. Pokonaj Baraham w okolicy Bee Hive i zanieś Legend of Seventeen Talienowi.",
+        "images": [
+          [
+            "https://mxtqtlphmsjbkwiwsmvj.supabase.co/storage/v1/object/public/site-assets/blog/talien-aden-stairs-map-301fcd9d.webp",
+            "Zaznaczony punkt · Talien · wschodnie schody świątyni w Aden"
+          ],
+          [
+            "https://mxtqtlphmsjbkwiwsmvj.supabase.co/storage/v1/object/public/site-assets/blog/gabrielle-giran-square-map-7d252673.webp",
+            "Zaznaczony punkt · Gabrielle · plac Giran"
+          ],
+          [
+            "https://mxtqtlphmsjbkwiwsmvj.supabase.co/storage/v1/object/public/site-assets/blog/baraham-cave-of-trials-fa1c5fe3.webp",
+            "Zaznaczony punkt · Baraham · jaskinia przy Bee Hive"
+          ],
+          [
+            "https://la2wiki.com/npc/talien.webp",
+            "Talien · portret"
+          ]
+        ],
+        "dependencies": [
+          {
+            "title": "Subclassa · wymagana przed rozpoczęciem",
+            "text": "Weź pierwszą część na aktywnej subclassie po osiągnięciu poziomu 50. Kolejne części odblokują się po ukończeniu poprzednich i wbiciu poziomów 60, 65 i 75.",
+            "guide": "Subclassa"
+          }
+        ]
+      },
+      {
+        "title": "Nagranie i księga",
+        "text": "Odwiedź Kantabilona w Heine. Zbierz 10 Malruk Succubus Claw od Malruk Succubus lub Malruk Succubus Turen w Dragon Valley. Oddaj je Kantabilonowi, a kryształ z nagraniem Talienowi. Odbierz Faded Poetry Book od Stedmiela w Hunters Village i zanieś Talienowi.",
+        "images": [
+          [
+            "https://mxtqtlphmsjbkwiwsmvj.supabase.co/storage/v1/object/public/site-assets/blog/kantabilon-heine-grocery-map-f613d47f.webp",
+            "Zaznaczony punkt · Kantabilon · sklep w Heine"
+          ],
+          [
+            "https://mxtqtlphmsjbkwiwsmvj.supabase.co/storage/v1/object/public/site-assets/blog/malruk-succubus-turen-map-801x383-288904d4.webp",
+            "Zaznaczony punkt · Malruk Succubus Turen · miejsce farmy"
+          ],
+          [
+            "https://mxtqtlphmsjbkwiwsmvj.supabase.co/storage/v1/object/public/site-assets/blog/stedmiel-hunters-village-map-f3c8e59f.webp",
+            "Zaznaczony punkt · Stedmiel · gildia wojowników"
+          ],
+          [
+            "https://la2wiki.com/npc/talien.webp",
+            "Talien · portret"
+          ]
+        ]
+      },
+      {
+        "title": "Lek i przedmioty dla Noela",
+        "text": "W Rune porozmawiaj kolejno z Virgilem, Ogmarem i Rahoraktim. Zbierz 5 Crimson Moss ze Splinter Stakato Drone w Swamp of Screams. Lek od Rahoraktiego oddaj Kassandrze i wróć do Virgila. W Goddard odwiedź Caradine i Noela. Daj Noelowi 5 Lunargent i 1 Hellfire Oil, potem odbierz list od Caradine.",
+        "images": [
+          [
+            "https://mxtqtlphmsjbkwiwsmvj.supabase.co/storage/v1/object/public/site-assets/blog/stakato-drone-swamp-of-screams-map-1bce5ef4.webp",
+            "Zaznaczony punkt · Splinter Stakato Drone · Swamp of Screams"
+          ],
+          [
+            "https://la2wiki.com/npc/caradine.webp",
+            "Caradine · portret"
+          ]
+        ],
+        "dependencies": [
+          {
+            "title": "Supplier of Reagents · jeśli sam robisz Lunargent i Hellfire Oil",
+            "text": "W podziemiach Ivory Tower weź Supplier of Reagents od Magic Trader Wesley. Składniki wypadają m.in. z potworów w Tower of Insolence i Blazing Swamp. Możesz też kupić gotowe składniki od graczy. Do mieszanek w Alchemist’s Mixing Urn użyj temperatury 1 (Salamander). Na 1 Lunargent wymieszaj 10 Moon Dust i 1 Quicksilver. Na 1 Hellfire Oil połącz 1 Fire Essence i 1 Draconic Essence. Gotowe 5 Lunargent i 1 Hellfire Oil możesz kupić i oddać Noelowi bez robienia questa Wesleya."
+          }
+        ]
+      },
+      {
+        "title": "Część II — Virgil · poziom 60",
+        "text": "W Rune porozmawiaj z Virgilem, Kassandrą i Ogmarem. W okolicy Swamp of Screams znajdź Mysterious Dark Knighta. Sprawdź Corpse of Angel, odbierz Strand of Golden Hair i wróć do rycerza.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/r-a-fighterguild-teacher-mdarkelf-m00-06a396.webp",
+            "Virgil · portret"
+          ],
+          [
+            "/quest-maps/rune.webp",
+            "Mapa miasta · Rune Township"
+          ]
+        ]
+      },
+      {
+        "title": "Uwolnij jednorożca",
+        "text": "Zanieś włosy Witch Kalis. Odwiedź Alchemist Matild przy Sea of Spores i wróć do Kalis ze składnikiem. W Valley of Saints odszukaj Fallen Unicorn, zbierz 4 Orb of Binding z Restrainer of Glory i uwolnij jednorożca. Na koniec wróć do Kassandry.",
+        "images": []
+      },
+      {
+        "title": "Część III — Caradine · poziom 65",
+        "text": "W Goddard porozmawiaj z Caradine i Ossianem. W Valley of Saints zdobądź Waterbinder z Pilgrim of Splendor oraz EverGreen z Judge of Splendor. Oddaj oba Ossianowi przed pójściem na Barakiela.",
+        "images": [
+          [
+            "https://mxtqtlphmsjbkwiwsmvj.supabase.co/storage/v1/object/public/site-assets/blog/pilgrim-of-splendor-map-801x383-9b756d32.webp",
+            "Zaznaczony punkt · Pilgrim of Splendor · Valley of Saints"
+          ],
+          [
+            "https://mxtqtlphmsjbkwiwsmvj.supabase.co/storage/v1/object/public/site-assets/blog/judge-of-splendor-map-801x383-d6c6e160.webp",
+            "Zaznaczony punkt · Judge of Splendor · Valley of Saints"
+          ],
+          [
+            "https://la2wiki.com/npc/caradine.webp",
+            "Caradine · portret"
+          ]
+        ]
+      },
+      {
+        "title": "Barakiel na Eternal",
+        "text": "Zdobądź Rain Song z Barakiela. Na Eternal jeśli Twoja grupa nie zada ostatniego ciosu, możesz uzbierać 15 fragmentów Rain Song, które automatycznie połączą się w laskę. Oddaj ją Ossianowi, a Relic Box zanieś Laddowi w Ivory Tower.",
+        "images": [
+          [
+            "https://masterwork.wiki/upload/25-Flame-of-Splendor-Barakiel-63bea54136010.jpg",
+            "Barakiel · wygląd bossa"
+          ]
+        ],
+        "waypoints": [
+          [
+            "Flame of Splendor Barakiel",
+            "91532, -86872, -2800"
+          ]
+        ]
+      },
+      {
+        "title": "Część IV — Caradine · poziom 75",
+        "text": "Na aktywnej subclassie wróć do Caradine w Goddard. Skorzystaj z teleportu w dialogu i porozmawiaj z Lady of the Lake, aby otrzymać Noblesse.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/caradine.webp",
+            "Caradine · portret"
+          ],
+          [
+            "https://la2wiki.com/town/c-goddard.webp",
+            "Mapa miasta · Town of Goddard"
+          ]
+        ]
+      }
+    ],
+    "quickStart": "Aden → schody do świątyni Einhasad",
+    "prepare": "Aktywuj subclassę. Do części I przygotuj 5 × Lunargent i 1 × Hellfire Oil.",
+    "outcome": "Status Noblesse i umiejętności noblesse"
+  },
+  {
+    "name": "Wejście do Pagan’s Temple",
+    "title": "Truth Beyond the Gate · Through the Gate Once More",
+    "category": "Dostęp do lokacji",
+    "level": "73+",
+    "icon": "pagan-entry",
+    "steps": [
+      {
+        "title": "Visitor’s Mark",
+        "text": "W Rune, na dolnym poziomie świątyni, odbierz quest od Eliyah. Wejdź wyżej do Flaurona po Visitor’s Mark.",
+        "images": [
+          [
+            "https://lineage2dex.com/template/site/dex/storage/images/paganstemple1.jpg",
+            "Podejście do Eliyah · dolna część świątyni"
+          ],
+          [
+            "https://lineage2dex.com/template/site/dex/storage/images/paganstemple2.jpg",
+            "Podejście do Flaurona · poziom wyżej"
+          ],
+          [
+            "https://la2wiki.com/npc/eliyah.webp",
+            "Eliyah · portret"
+          ],
+          [
+            "/quest-maps/rune.webp",
+            "Mapa miasta · Rune Township"
+          ]
+        ]
+      },
+      {
+        "title": "Pierwsze wejście",
+        "text": "Zejdź wejściem za Flauronem. Przejdź przez Triol’s Mirror i podejdź do Temple Gatekeepera. Użyj Visitor’s Mark w dialogu. Gdy otrzymasz Faded Visitor’s Mark, wróć do Flaurona.",
+        "images": [
+          [
+            "https://lineage2dex.com/template/site/dex/storage/images/paganstemple3.jpg",
+            "Triol’s Mirror · punkt teleportacji"
+          ],
+          [
+            "https://lineage2dex.com/template/site/dex/storage/images/paganstemple4.jpg",
+            "Temple Gatekeeper · brama do świątyni"
+          ],
+          [
+            "https://la2wiki.com/npc/flauron.webp",
+            "Flauron · portret"
+          ]
+        ]
+      },
+      {
+        "title": "Pagan’s Mark",
+        "text": "Weź Through the Gate Once More. W Forest of the Dead zbierz 10 Necromancer’s Heart, m.in. z Bone Animatorów. Oddaj serca i Faded Visitor’s Mark Flauronowi, żeby dostać Pagan’s Mark. Pagan’s Mark pozwala wracać do świątyni, ale niektóre wewnętrzne drzwi nadal wymagają osobnego klucza.",
+        "images": [
+          [
+            "https://lineage2dex.com/template/site/dex/storage/images/paganstemple6.jpg",
+            "Forest of the Dead · miejsce polowania"
+          ],
+          [
+            "https://la2wiki.com/npc/flauron.webp",
+            "Flauron · portret"
+          ],
+          [
+            "/quest-maps/rune.webp",
+            "Mapa miasta · Rune Township"
+          ]
+        ],
+        "dependencies": [
+          {
+            "title": "Truth Beyond the Gate → Through the Gate Once More",
+            "text": "Najpierw odbierz Visitor’s Mark w Truth Beyond the Gate i użyj go przy pierwszym wejściu. Z Faded Visitor’s Mark wróć do Flaurona. Dopiero wtedy weź Through the Gate Once More, żeby zdobyć stały dostęp."
+          }
+        ]
+      }
+    ],
+    "quickStart": "Rune → dolny poziom świątyni",
+    "prepare": "Poziom 73. Zacznij u Eliyah, a po pierwszej wizycie wróć do Flaurona.",
+    "outcome": "Pagan’s Mark i stały dostęp"
+  },
+  {
+    "name": "Pagan’s Temple · enchanty S",
+    "title": "Seekers of the Holy Grail",
+    "category": "Farm i wymiany",
+    "level": "73+",
+    "icon": "pagan-totem",
+    "steps": [
+      {
+        "title": "Innocentin w Rune",
+        "text": "Zacznij quest u High Priest Innocentin. Przygotuj dostęp do świątyni, żeby móc wracać na farmę.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/innocentin.webp",
+            "Innocentin · portret"
+          ],
+          [
+            "/quest-maps/rune.webp",
+            "Mapa miasta · Rune Township"
+          ],
+          [
+            "https://masterwork.wiki/upload/Innocentin-6648c50b8b04f.jpg",
+            "Innocentin · świątynia w Rune"
+          ]
+        ],
+        "dependencies": [
+          {
+            "title": "Wejście do Pagan’s Temple · dostęp do farmy",
+            "text": "Żeby móc wracać do świątyni, zdobądź Pagan’s Mark z łańcucha Truth Beyond the Gate i Through the Gate Once More.",
+            "guide": "Wejście do Pagan’s Temple"
+          }
+        ]
+      },
+      {
+        "title": "2 000 Pagan Totem",
+        "text": "Poluj na potwory w Pagan’s Temple i zbieraj Pagan Totem w ekwipunku questowym.",
+        "images": []
+      },
+      {
+        "title": "Oddaj totemy Innocentinowi",
+        "text": "W standardowym Interlude nagroda za 2 000 totemów jest losowa. Możesz otrzymać adenę, EAS albo EWS. Sprawdź wariant wymiany w dialogu na Eternal.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/innocentin.webp",
+            "Innocentin · portret"
+          ],
+          [
+            "https://masterwork.wiki/upload/Innocentin-6648c50b8b04f.jpg",
+            "Innocentin · miejsce oddania totemów"
+          ]
+        ]
+      }
+    ],
+    "quickStart": "Rune → High Priest Innocentin",
+    "prepare": "Poziom 73. Zrób wcześniej wejście do Pagan’s Temple.",
+    "outcome": "Szansa na enchant S za 2 000 Pagan Totem"
+  },
+  {
+    "name": "MoS · enchanty S",
+    "title": "Guardians of the Holy Grail",
+    "category": "Farm i wymiany",
+    "level": "73+",
+    "icon": "mos-grail",
+    "steps": [
+      {
+        "title": "Dominic w Rune",
+        "text": "Weź quest u Priest Dominic, następnie udaj się do Monastery of Silence. Monk’s Scripture wypadają z miejscowych mnichów i strażników.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/dominic.webp",
+            "Dominic · portret"
+          ],
+          [
+            "/quest-maps/rune.webp",
+            "Mapa miasta · Rune Township"
+          ]
+        ]
+      },
+      {
+        "title": "Odszukaj Gremory’ego",
+        "text": "W klasztorze odszukaj Priest Gremory w ukrytym pomieszczeniu. Porozmawiaj z nim przed wejściem do Room of Splendor.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/gremory.webp",
+            "Gremory · portret"
+          ],
+          [
+            "https://masterwork.wiki/upload/secret-room-64644fcd88b27.jpg",
+            "Plan ukrytego pomieszczenia w Monastery of Silence"
+          ]
+        ]
+      },
+      {
+        "title": "Zbierz wodę z Graala",
+        "text": "Na najwyższym poziomie klasztoru wejdź do Room of Splendor, używając Key of Splendor Room. Kliknij Holy Grail i zanieś Gremory’emu butelkę z wodą. W pomieszczeniu może stać agresywny Anays. Po wejściu skup się na zebraniu wody. Do tej czynności nie musisz pokonywać Anaysa.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/gremory.webp",
+            "Gremory · portret"
+          ]
+        ]
+      },
+      {
+        "title": "Wymień Monk’s Scripture",
+        "text": "W standardowym Interlude Gremory wymienia 400 Monk’s Scripture na EAS, a 4 000 na EWS. Oddanie skryptów Dominicowi daje adenę. Sprawdź progi u Gremory’ego na Eternal.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/gremory.webp",
+            "Gremory · portret"
+          ]
+        ]
+      }
+    ],
+    "quickStart": "Rune → Priest Dominic",
+    "prepare": "Poziom 73. Zabierz klucz do Room of Splendor, gdy już go zdobędziesz. Skrypty zbierasz po przyjęciu questa.",
+    "outcome": "Wymiana skryptów na enchanty S"
+  },
+  {
+    "name": "Primeval Isle · recepty A",
+    "title": "A Powerful Primeval Creature",
+    "category": "Farm i wymiany",
+    "level": "75+",
+    "icon": "pi-recipe",
+    "steps": [
+      {
+        "title": "Dinn na przystani",
+        "text": "Odbierz quest u Dinna na Primeval Isle Wharf.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/dinn.webp",
+            "Dinn · portret"
+          ]
+        ]
+      },
+      {
+        "title": "Zbierz tkanki i jajko",
+        "text": "Zbierz 150 Dinosaur Tissue z Deinonychus, Ornithomimus, Velociraptor lub Pterosaur. Z Ancient Egg w dżungli zdobądź 1 Dinosaur Egg.",
+        "images": []
+      },
+      {
+        "title": "Wybierz receptę u Dinna",
+        "text": "Oddaj 150 tkanek i jajko przez opcję wymiany zestawu. Wybierz receptę broni A (60%). Opcja oddania samych tkanek wypłaca adenę. Quest jest powtarzalny. Przygotuj osobny komplet materiałów na każdą receptę.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/dinn.webp",
+            "Dinn · portret"
+          ]
+        ]
+      }
+    ],
+    "quickStart": "Primeval Isle Wharf → Dinn",
+    "prepare": "Poziom 75. Na jedną receptę zbierz 150 × Dinosaur Tissue i 1 × Dinosaur Egg.",
+    "outcome": "Recepta broni A (60%)"
+  },
+  {
+    "name": "Primeval Isle · części broni A",
+    "title": "Rise and Fall of the Elroki Tribe",
+    "category": "Farm i wymiany",
+    "level": "75+",
+    "icon": "pi-bones",
+    "steps": [
+      {
+        "title": "Singsing na przystani",
+        "text": "Weź quest od Singsinga na Primeval Isle Wharf.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/singsing.webp",
+            "Singsing · portret"
+          ],
+          [
+            "/quest-maps/world.jpg",
+            "Singsing · przystań Primeval Isle",
+            [
+              874,
+              888
+            ]
+          ]
+        ]
+      },
+      {
+        "title": "Zbierz kości",
+        "text": "Na Primeval Plains pokonuj Pachycephalosaurus i Wild Strider. Zbierz 300 Bones of a Plains Dinosaur.",
+        "images": []
+      },
+      {
+        "title": "Wymiana u Karakawei",
+        "text": "Odszukaj Orahochin i przejdź do wioski Elroki. Oddaj kości Karakawei, żeby odebrać części do broni A. U Singsinga kości możesz oddać za adenę. W standardowym Interlude Karakawei daje pięć losowych części. Przed oddaniem kości sprawdź nagrodę w dialogu na Eternal.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/singsing.webp",
+            "Singsing · portret"
+          ],
+          [
+            "/quest-maps/world.jpg",
+            "Orahochin · teleport do wioski Elroki",
+            [
+              863,
+              962
+            ]
+          ],
+          [
+            "https://l2-servera.com/wp-content/uploads/2025/01/karakawei.jpg",
+            "Karakawei · miejsce wymiany kości"
+          ]
+        ]
+      }
+    ],
+    "quickStart": "Primeval Isle Wharf → Singsing",
+    "prepare": "Poziom 75. Jedna wymiana wymaga 300 × Bones of a Plains Dinosaur.",
+    "outcome": "Części do craftu broni A"
+  },
+  {
+    "name": "Primeval Isle · enchant broni A",
+    "title": "Meeting the Elroki · The Name of Evil I–II",
+    "category": "Farm i wymiany",
+    "level": "75 / 76 / 77",
+    "icon": "pi-enchant",
+    "steps": [
+      {
+        "title": "Meeting the Elroki · poziom 75",
+        "text": "Zacznij u Marqueza na przystani. W wiosce porozmawiaj z Mushiką, Asamahem i Karakawei. Zabierz Mantarasa Egg z przystani i oddaj Asamahowi.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/marquez.webp",
+            "Marquez · portret"
+          ]
+        ]
+      },
+      {
+        "title": "The Name of Evil I · poziom 76",
+        "text": "Weź quest od Mushiki, potem porozmawiaj z Karakawei. Zdobądź 2 Deinonychus Bone Fragment i 2 Ornithomimus Claw. Oddaj je Karakawei, następnie odwiedź kolejno Ulu Kaimu, Balu Kaimu i Chuta Kaimu. Zanieś Epitaph of Wisdom do Mushiki.",
+        "images": [],
+        "waypoints": [
+          [
+            "Mushika",
+            "6568, -2500, -2944"
+          ],
+          [
+            "Ulu Kaimu",
+            "23707, -19108, -2820"
+          ],
+          [
+            "Balu Kaimu",
+            "27723, -11684, -2302"
+          ],
+          [
+            "Chuta Kaimu",
+            "18714, -9635, -2795"
+          ]
+        ],
+        "dependencies": [
+          {
+            "title": "Meeting the Elroki · wymagana część pierwsza",
+            "text": "Dokończ Meeting the Elroki u Asamaha, zanim zaczniesz The Name of Evil I u Mushiki na poziomie 76."
+          }
+        ]
+      },
+      {
+        "title": "The Name of Evil II · poziom 77",
+        "text": "Zacznij u Asamaha. Odwiedź te same trzy kamienie w tej samej kolejności. Odczytaj od nich trzy części melodii i wprowadź je przy Warrior’s Grave: Do Mi Fa Sol Fa, Fa Sol Ti Sol Fa, Sol Fa Mi Fa Mi. Ti może występować jako Si.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/asamah.webp",
+            "Asamah · portret"
+          ]
+        ],
+        "waypoints": [
+          [
+            "Asamah",
+            "6375, -2527, -2944"
+          ],
+          [
+            "Ulu Kaimu",
+            "23707, -19108, -2820"
+          ],
+          [
+            "Balu Kaimu",
+            "27723, -11684, -2302"
+          ],
+          [
+            "Chuta Kaimu",
+            "18714, -9635, -2795"
+          ],
+          [
+            "Warrior’s Grave",
+            "13123, -8895, -3122"
+          ]
+        ],
+        "dependencies": [
+          {
+            "title": "The Name of Evil I · wymagana część druga",
+            "text": "Oddaj Epitaph of Wisdom Mushice, żeby zakończyć część I. Na poziomie 77 przejdź do Asamaha po część II."
+          }
+        ]
+      },
+      {
+        "title": "Oddaj Bone Powder",
+        "text": "Zanieś Bone Powder do Shilen’s Stone Statue. Wróć do Asamaha, a następnie do Mushiki. Standardowa nagroda to jednorazowy EWA. Ten etap otwiera też dalszy quest do Sailrena. Nagroda EWA jest jednorazowa na postać; do powtarzalnej farmy na wyspie służą osobne questy u Dinna i Singsinga.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/asamah.webp",
+            "Asamah · portret"
+          ]
+        ]
+      }
+    ],
+    "quickStart": "Primeval Isle Wharf → Marquez",
+    "prepare": "Zacznij od Meeting the Elroki na poziomie 75. Następne części odblokują się na 76 i 77.",
+    "outcome": "Jednorazowy enchant broni A i kolejny quest do Sailrena"
+  },
+  {
+    "name": "Stakato Nest · materiały",
+    "title": "The Zero Hour · wymiana Fang of Stakato",
+    "alias": "stakato fang kły matsy Kahman Maria",
+    "category": "Farm i wymiany",
+    "level": "66+",
+    "icon": "pi-bones",
+    "quickStart": "Mercenary Kahman przy punkcie teleportu Swamp of Screams (teleport z Rune Township).",
+    "prepare": "Hunt of the Golden Ram Mercenary Force → In Search of the Nest → The Zero Hour.",
+    "outcome": "Na Eternal wymienisz Fang of Stakato na materiały u Marii.",
+    "steps": [
+      {
+        "title": "1. Dołącz do Golden Ram u Kahmana",
+        "text": "Z Rune Township teleportuj się do Swamp of Screams. W obozie obok punktu teleportu porozmawiaj z Mercenary Kahman i weź Hunt of the Golden Ram Mercenary Force. Upoluj Splinter Stakato, Walker, Soldier lub Drone w bagnie. Oddaj pierwsze 100 Splinter Stakato Chitin Kahmanowi, aby dostać Golden Ram Badge – Recruit. Podejdź do Pierce’a i sprawdź, czy oferuje In Search of the Nest.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/kahman.webp",
+            "Mercenary Kahman · zdjęcie NPC"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-87.jpg",
+            "Mapa regionu · Swamp of Screams"
+          ],
+          [
+            "https://mxtqtlphmsjbkwiwsmvj.supabase.co/storage/v1/object/public/site-assets/blog/stakato-drone-swamp-of-screams-map-1bce5ef4.webp",
+            "Zaznaczony punkt · Splinter Stakato Drone · Swamp of Screams"
+          ]
+        ],
+        "dependencies": [
+          {
+            "title": "Jeśli Pierce wymaga rangi Soldier",
+            "text": "Wróć do Kahmana, przyjmij awans i zbierz kolejne 100 Splinter Stakato Chitin oraz 100 Needle Stakato Chitin. Needle Stakato znajdziesz dalej w bagnie. Oddaj komplet Kahmanowi, odbierz Golden Ram Badge – Soldier i wróć do Pierce’a."
+          }
+        ]
+      },
+      {
+        "title": "2. Znajdź zwiadowcę i odblokuj farmę",
+        "text": "Weź In Search of the Nest od Mercenary Captain Pierce w tym samym obozie. Podążaj za znacznikiem questa do wejścia do Stakato Nest. Kliknij Scout’s Corpse przy wejściu i odbierz Scout’s Memo. Zanieś notatkę Pierce’owi, a po rozmowie przejdź do stojącego obok Kahmana, żeby zamknąć zadanie.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/pierce.webp",
+            "Mercenary Captain Pierce · zdjęcie NPC"
+          ],
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Mapa regionu · okolice Stakato Nest"
+          ]
+        ]
+      },
+      {
+        "title": "3. Weź The Zero Hour i zbieraj kły w gnieździe",
+        "text": "U Kahmana wybierz The Zero Hour przed powrotem do gniazda. W Stakato Nest poluj na Spiked Stakato, ich Workerów, Guardów, Soldierów, Drone’y, Captainów, Nurse’y, Shamanów, Sorcererów, samce, samice i Cannibalistic Stakato Leader. Fang of Stakato wpada do ekwipunku questowego. Farm w grupie i zacznij od komnat bliżej wejścia. Zbieraj tyle kłów, ile potrzebujesz na wybraną wymianę.",
+        "images": [
+          [
+            "https://la2wiki.com/map/il/4-90.jpg",
+            "Mapa regionu · okolice Stakato Nest"
+          ],
+          [
+            "https://la2wiki.com/npc/spiked-stakato-drone.webp",
+            "Spiked Stakato Drone · zdjęcie NPC"
+          ]
+        ]
+      },
+      {
+        "title": "4. Wymień Fang of Stakato u Marii",
+        "text": "Na Eternal podejdź do NPC Maria w mieście. Otwórz sklep wymiany Fang of Stakato i wybierz materiał. Koszt w tabeli dotyczy całej paczki z kolumny Ilość. Osiem stawek odczytano ze sklepu na Eternal. Przy Enrii zrzut pokazuje jedną sztukę, a koszt 12 kłów pochodzi z tabeli Interlude i wymaga potwierdzenia w grze.",
+        "images": [],
+        "exchange": [
+          [
+            "Asofe",
+            1,
+            6
+          ],
+          [
+            "Thons",
+            1,
+            6
+          ],
+          [
+            "Enria",
+            1,
+            "12 (Interlude)"
+          ],
+          [
+            "Compound Braid",
+            10,
+            30
+          ],
+          [
+            "Synthetic Cokes",
+            5,
+            33
+          ],
+          [
+            "Varnish of Purity",
+            10,
+            81
+          ],
+          [
+            "Oriharukon",
+            5,
+            123
+          ],
+          [
+            "Mithril Alloy",
+            10,
+            131
+          ],
+          [
+            "Durable Metal Plate",
+            10,
+            150
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Sojusz z Ketrą",
+    "title": "Alliance with Ketra Orcs",
+    "alias": "ally allay alliance Ketra Varka Wahkan",
+    "category": "Sojusze",
+    "level": "74+ · bossy od 75",
+    "icon": "ketra-alliance",
+    "quickStart": "Wahkan · Ketra Orc Outpost · teleport z Town of Goddard.",
+    "prepare": "Zbieraj odznaki wyłącznie z mobów Varki. U Ketry bierzesz zadanie i oddajesz odznaki.",
+    "outcome": "Mark of Ketra’s Alliance do poziomu 5. Poziom 2 otwiera quest po Divine Stone of Wisdom.",
+    "steps": [
+      {
+        "title": "Poziom 1 · 100 Soldier",
+        "text": "Teleportuj się z Town of Goddard do Ketra Orc Outpost. Weź Alliance with Ketra Orcs u Wahkan, w pobliżu punktu teleportu. Na farmę teleportuj się z Goddard do Varka Silenos Barracks. Zbieraj Varka’s Badge – Soldier z następujących mobów: Varka Silenos Recruit, Footman, Scout, Hunter i Shaman. Oddaj 100 odznak u posłańca i odbierz Mark of Ketra’s Alliance – Level 1. Nie atakuj mobów po sprzymierzonej stronie i pilnuj, żeby party też ich nie biło. Możesz przez to stracić rangę sojuszu.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/wahkan.webp",
+            "Wahkan · zdjęcie NPC"
+          ],
+          [
+            "/quest-maps/world.jpg",
+            "Obszary farmy · Varka Silenos Outpost",
+            [
+              1310,
+              827.9999999999999
+            ],
+            [],
+            {
+              "area": "varka",
+              "tier": 1
+            }
+          ]
+        ],
+        "waypoints": [
+          [
+            "Wahkan",
+            "146980, -67483, -3656"
+          ]
+        ]
+      },
+      {
+        "title": "Poziom 2 · 200 Soldier i 100 Captain",
+        "text": "Weź kolejny etap u tego samego posłańca. Zbierz od nowa 200 Soldier i 100 Captain. Captain wypada m.in. z: Varka Silenos Priest, Warrior, Medium, Magus i Officer. Oddaj komplet wraz z odznaką sojuszu pierwszego poziomu. Jeśli robisz tylko trzecią profesję, poziom 2 wystarczy, żeby rozpocząć quest po kamień.",
+        "dependencies": [
+          {
+            "title": "Magical Power of Water – Part 1 · Divine Stone of Wisdom",
+            "text": "Po zdobyciu drugiej rangi weź quest u Wahkan. Porozmawiaj z NPC Asefa w wiosce sojusznika. Kup Thief Key w sklepie w Goddard i idź do Varka Silenos Village po totem ze skrzyni NPC Udan Mardui. Omiń strażników. Jeśli dostaniesz klątwę, wróć do szamana po ponowną próbę. Oddaj totem szamanowi po kamień. Wystarczy jedna ścieżka i tylko część pierwsza."
+          }
+        ],
+        "images": [
+          [
+            "https://la2wiki.com/npc/wahkan.webp",
+            "Wahkan · zdjęcie NPC"
+          ],
+          [
+            "/quest-maps/world.jpg",
+            "Obszary farmy · Varka Silenos Outpost",
+            [
+              1286,
+              799
+            ],
+            [],
+            {
+              "area": "varka",
+              "tier": 2
+            }
+          ]
+        ]
+      },
+      {
+        "title": "Poziom 3 · 300 Soldier, 200 Captain, 100 General",
+        "text": "Zbierz nowe odznaki trzech typów. Odznaki General wypadają m.in. z: Varka Silenos General, Great Magus, Great Seer, Prophet i Head Magus. Szukaj tych mobów głębiej na terenie wroga. Oddaj 300 Soldier, 200 Captain, 100 General oraz poprzednią odznakę posłańcowi.",
+        "images": [
+          [
+            "/quest-maps/world.jpg",
+            "Obszary farmy · Varka Silenos Outpost",
+            [
+              1255,
+              790
+            ],
+            [],
+            {
+              "area": "varka",
+              "tier": 3
+            }
+          ]
+        ]
+      },
+      {
+        "title": "Poziom 4 · odznaki i raid boss",
+        "text": "Zbierz 300 Soldier, 300 Captain i 200 General. Zrób Prove Your Courage, żeby zdobyć Totem of Valor. Oddaj przedmiot, odznaki oraz poprzedni znak sojuszu u Wahkan.",
+        "dependencies": [
+          {
+            "title": "Prove Your Courage · Varka’s Hero Shadith",
+            "text": "Od poziomu 75 weź zadanie u Kadun Zu Ketra w Ketra Orc Village, po zdobyciu 3. rangi sojuszu. Dołącz do party na Varka’s Hero Shadith po stronie wroga. Sprawdź, czy po walce masz Head of Shadith w ekwipunku questowym. Wróć z głową do NPC Kadun Zu Ketra i odbierz Totem of Valor."
+          }
+        ],
+        "images": [
+          [
+            "https://la2wiki.com/npc/kadun-zu-ketra.webp",
+            "Kadun Zu Ketra · zdjęcie NPC"
+          ],
+          [
+            "/quest-maps/world.jpg",
+            "Raid boss · Varka’s Hero Shadith",
+            [
+              1269,
+              829.9999999999999
+            ],
+            [
+              {
+                "x": 61.962890625,
+                "y": 42.17479674796748,
+                "label": "Raid boss · Varka’s Hero Shadith"
+              }
+            ],
+            {
+              "area": "varka",
+              "tier": 3
+            }
+          ]
+        ],
+        "waypoints": [
+          [
+            "Varka’s Hero Shadith",
+            "115552, -39200, -2480"
+          ]
+        ]
+      },
+      {
+        "title": "Poziom 5 · odznaki i raid boss",
+        "text": "Zbierz 400 Soldier, 400 Captain i 200 General. Zrób Slay the Enemy Commander, żeby zdobyć Totem of Wisdom. Oddaj przedmiot, odznaki oraz poprzedni znak sojuszu u Wahkan.",
+        "dependencies": [
+          {
+            "title": "Slay the Enemy Commander · Varka’s Commander Mos",
+            "text": "Od poziomu 75 weź zadanie u Kadun Zu Ketra w Ketra Orc Village, po zdobyciu 4. rangi sojuszu. Dołącz do party na Varka’s Commander Mos po stronie wroga. Sprawdź, czy po walce masz Head of Mos w ekwipunku questowym. Wróć z głową do NPC Kadun Zu Ketra i odbierz Totem of Wisdom."
+          }
+        ],
+        "images": [
+          [
+            "https://la2wiki.com/npc/kadun-zu-ketra.webp",
+            "Kadun Zu Ketra · zdjęcie NPC"
+          ],
+          [
+            "/quest-maps/world.jpg",
+            "Raid boss · Varka’s Commander Mos",
+            [
+              1245.3076923076924,
+              841.525998492841
+            ],
+            [
+              {
+                "x": 60.80603966346154,
+                "y": 42.76046740309152,
+                "label": "Raid boss · Varka’s Commander Mos"
+              }
+            ],
+            {
+              "area": "varka",
+              "tier": 3
+            }
+          ]
+        ],
+        "waypoints": [
+          [
+            "Varka’s Commander Mos",
+            "109216, -36160, -938"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Sojusz z Varką",
+    "title": "Alliance with Varka Silenos",
+    "alias": "ally allay alliance Varka Ketra Naran Ashanuk",
+    "category": "Sojusze",
+    "level": "74+ · bossy od 75",
+    "icon": "varka-alliance",
+    "quickStart": "Naran Ashanuk · Varka Silenos Barracks · teleport z Town of Goddard.",
+    "prepare": "Zbieraj odznaki wyłącznie z orków Ketra. U Varki bierzesz zadanie i oddajesz odznaki.",
+    "outcome": "Mark of Varka’s Alliance do poziomu 5. Poziom 2 otwiera quest po Divine Stone of Wisdom.",
+    "steps": [
+      {
+        "title": "Poziom 1 · 100 Soldier",
+        "text": "Teleportuj się z Town of Goddard do Varka Silenos Barracks. Weź Alliance with Varka Silenos u Naran Ashanuk, w pobliżu punktu teleportu. Na farmę teleportuj się z Goddard do Ketra Orc Outpost. Zbieraj Ketra’s Badge – Soldier z następujących mobów: Ketra Orc Footman, Raider, Scout, Shaman i Ketra’s War Hound. Oddaj 100 odznak u posłańca i odbierz Mark of Varka’s Alliance – Level 1. Nie atakuj mobów po sprzymierzonej stronie i pilnuj, żeby party też ich nie biło. Możesz przez to stracić rangę sojuszu.",
+        "images": [
+          [
+            "https://la2wiki.com/npc/naran-ashanuk.webp",
+            "Naran Ashanuk · zdjęcie NPC"
+          ],
+          [
+            "/quest-maps/world.jpg",
+            "Obszary farmy · Ketra Orc Outpost",
+            [
+              1366,
+              682
+            ],
+            [],
+            {
+              "area": "ketra",
+              "tier": 1
+            }
+          ]
+        ],
+        "waypoints": [
+          [
+            "Naran Ashanuk",
+            "125440, -40944, -3701"
+          ]
+        ]
+      },
+      {
+        "title": "Poziom 2 · 200 Soldier i 100 Captain",
+        "text": "Weź kolejny etap u tego samego posłańca. Zbierz od nowa 200 Soldier i 100 Captain. Captain wypada m.in. z: Ketra Orc Warrior, Lieutenant, Medium, Elite Soldier, White Captain i Seer. Oddaj komplet wraz z odznaką sojuszu pierwszego poziomu. Jeśli robisz tylko trzecią profesję, poziom 2 wystarczy, żeby rozpocząć quest po kamień.",
+        "dependencies": [
+          {
+            "title": "Magical Power of Fire – Part 1 · Divine Stone of Wisdom",
+            "text": "Po zdobyciu drugiej rangi weź quest u Naran Ashanuk. Porozmawiaj z NPC Udan Mardui w wiosce sojusznika. Kup Thief Key w sklepie w Goddard i idź do Ketra Orc Village po totem ze skrzyni NPC Asefa. Omiń strażników. Jeśli dostaniesz klątwę, wróć do szamana po ponowną próbę. Oddaj totem szamanowi po kamień. Wystarczy jedna ścieżka i tylko część pierwsza."
+          }
+        ],
+        "images": [
+          [
+            "https://la2wiki.com/npc/naran-ashanuk.webp",
+            "Naran Ashanuk · zdjęcie NPC"
+          ],
+          [
+            "/quest-maps/world.jpg",
+            "Obszary farmy · Ketra Orc Outpost",
+            [
+              1385,
+              708.9999999999999
+            ],
+            [],
+            {
+              "area": "ketra",
+              "tier": 2
+            }
+          ]
+        ]
+      },
+      {
+        "title": "Poziom 3 · 300 Soldier, 200 Captain, 100 General",
+        "text": "Zbierz nowe odznaki trzech typów. Odznaki General wypadają m.in. z: Ketra Orc General, Battalion Commander, Grand Seer, Head Shaman i Prophet. Szukaj tych mobów głębiej na terenie wroga. Oddaj 300 Soldier, 200 Captain, 100 General oraz poprzednią odznakę posłańcowi.",
+        "images": [
+          [
+            "/quest-maps/world.jpg",
+            "Obszary farmy · Ketra Orc Outpost",
+            [
+              1401,
+              673
+            ],
+            [],
+            {
+              "area": "ketra",
+              "tier": 3
+            }
+          ]
+        ]
+      },
+      {
+        "title": "Poziom 4 · odznaki i raid boss",
+        "text": "Zbierz 300 Soldier, 300 Captain i 200 General. Zrób Prove Your Courage, żeby zdobyć Feather of Valor. Oddaj przedmiot, odznaki oraz poprzedni znak sojuszu u Naran Ashanuk.",
+        "dependencies": [
+          {
+            "title": "Prove Your Courage · Ketra’s Hero Hekaton",
+            "text": "Od poziomu 75 weź zadanie u Ashas Varka Durai w Varka Silenos Village, po zdobyciu 3. rangi sojuszu. Dołącz do party na Ketra’s Hero Hekaton po stronie wroga. Sprawdź, czy po walce masz Head of Hekaton w ekwipunku questowym. Wróć z głową do NPC Ashas Varka Durai i odbierz Feather of Valor."
+          }
+        ],
+        "images": [
+          [
+            "https://la2wiki.com/npc/ashas-varka-durai.webp",
+            "Ashas Varka Durai · zdjęcie NPC"
+          ],
+          [
+            "/quest-maps/world.jpg",
+            "Raid boss · Ketra’s Hero Hekaton",
+            [
+              1390.931623931624,
+              698.7856066314996
+            ],
+            [
+              {
+                "x": 67.91658319978633,
+                "y": 35.507398710950184,
+                "label": "Raid boss · Ketra’s Hero Hekaton"
+              }
+            ],
+            {
+              "area": "ketra",
+              "tier": 3
+            }
+          ]
+        ],
+        "waypoints": [
+          [
+            "Ketra’s Hero Hekaton",
+            "148160, -73808, -4919"
+          ]
+        ]
+      },
+      {
+        "title": "Poziom 5 · odznaki i raid boss",
+        "text": "Zbierz 400 Soldier, 400 Captain i 200 General. Zrób Slay the Enemy Commander, żeby zdobyć Feather of Wisdom. Oddaj przedmiot, odznaki oraz poprzedni znak sojuszu u Naran Ashanuk.",
+        "dependencies": [
+          {
+            "title": "Slay the Enemy Commander · Ketra’s Commander Tayr",
+            "text": "Od poziomu 75 weź zadanie u Ashas Varka Durai w Varka Silenos Village, po zdobyciu 4. rangi sojuszu. Dołącz do party na Ketra’s Commander Tayr po stronie wroga. Sprawdź, czy po walce masz Head of Tayr w ekwipunku questowym. Wróć z głową do NPC Ashas Varka Durai i odbierz Feather of Wisdom."
+          }
+        ],
+        "images": [
+          [
+            "https://la2wiki.com/npc/ashas-varka-durai.webp",
+            "Ashas Varka Durai · zdjęcie NPC"
+          ],
+          [
+            "/quest-maps/world.jpg",
+            "Raid boss · Ketra’s Commander Tayr",
+            [
+              1381,
+              669.0000000000001
+            ],
+            [
+              {
+                "x": 67.431640625,
+                "y": 33.993902439024396,
+                "label": "Raid boss · Ketra’s Commander Tayr"
+              }
+            ],
+            {
+              "area": "ketra",
+              "tier": 3
+            }
+          ]
+        ],
+        "waypoints": [
+          [
+            "Ketra’s Commander Tayr",
+            "145504, -81664, -6016"
+          ]
+        ]
+      }
+    ]
+  }
+]

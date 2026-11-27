@@ -169,3 +169,16 @@ export class TerritoryOwnershipRepository {
     if (error) throw new Error(`Nie udało się zapisać właścicieli: ${error.message}`);
   }
 }
+
+export function ownershipCropRect(width, height, territoryType = 'castle') {
+  const clanColumnEnd = territoryType === 'clan_hall' ? 0.455 : 0.515;
+  // Eternal tables are: number | territory | clan | leader | siege date.
+  // Clan Hall names need more horizontal room, but both crops stop before the
+  // Leader column so OCR never receives leader names or dates.
+  return {
+    x: 0,
+    y: Math.round(height * 0.035),
+    width: Math.round(width * clanColumnEnd),
+    height: Math.round(height * 0.945),
+  };
+}

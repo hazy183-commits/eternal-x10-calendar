@@ -1,10 +1,9 @@
 import { gameCopy } from './translationsGame.js';
 // UI copy only. Player names, authored content and game item names are not translated.
-const pairs = ` 
-Poniedziałek–piątek. Server time: 20:30–21:30 UTC. Cykl tygodniowy.|Monday–Friday. Server time: 20:30–21:30 UTC. Weekly cycle.
-Trwa budowanie wersji publicznej. Poczekaj około minuty, a następnie odśwież stan.|The public version is being built. Wait about a minute, then refresh the status. 
+const pairs = `
 Wersja testowa|Test version
 Sprawdź nowe zmiany przed publikacją. Otwiera się w nowej karcie.|Review new changes before publishing. Opens in a new tab.
+TYLKO DLA WŁAŚCICIELA|OWNER ONLY
 Strona główna|Home
 Poradniki|Guides
 Poradniki / Bossowie|Guides / Bosses
@@ -1016,33 +1015,6 @@ Menu mobilne|Mobile menu
 To konto jest zablokowane.|This account is blocked.
 Wpisz poprawny nick w grze lub login.|Enter a valid in-game nickname or login.
 Do ustalenia|To be confirmed
-TYLKO DLA WŁAŚCICIELA|OWNER ONLY
-Zmiany i publikacja|Changes and publishing
-Ładowanie wersji…|Loading versions…
-Panel jest przygotowany. Publikowanie wymaga jeszcze bezpiecznego połączenia z hostingiem.|The panel is prepared. Publishing still requires a secure connection to the hosting service.
-Nowe zmiany pozostają w wersji testowej do czasu Twojej decyzji.|New changes stay in preview until you decide to publish them.
-Najpierw otwórz podgląd i sprawdź zmiany. Udostępnienie wersji zmieni stronę dla wszystkich.|Open the preview and test the changes first. Publishing will update the website for everyone.
-Wersja publiczna:|Public version:
-POWRÓT DO POPRZEDNIEJ WERSJI|RESTORE A PREVIOUS VERSION
-GOTOWE DO TWOICH TESTÓW|READY FOR YOUR TESTS
-Otwórz prywatny podgląd ↗|Open private preview ↗
-Sprawdziłem tę wersję i chcę udostępnić ją wszystkim.|I have tested this version and want to publish it for everyone.
-Udostępnij wszystkim|Publish for everyone
-Przywróć tę wersję|Restore this version
-Odśwież stan|Refresh status
-Nie ma nowych wersji oczekujących na publikację.|There are no new versions waiting to be published.
-Zaloguj się jako właściciel strony.|Sign in as the website owner.
-Panel publikacji wymaga uruchomienia na hostingu.|The publishing panel must run on the hosting service.
-Nie udało się pobrać wersji.|Could not load versions.
-Przywrócić wybraną wersję strony dla wszystkich?|Restore the selected website version for everyone?
-Udostępnić przetestowaną wersję strony wszystkim?|Publish the tested website version for everyone?
-Wysyłanie zlecenia do hostingu…|Sending the request to the hosting service…
-Hosting przyjął zlecenie. Odśwież stan, aby potwierdzić aktywną wersję.|The hosting service accepted the request. Refresh the status to confirm the active version.
-Hosting nie potwierdził operacji. Odśwież stan przed ponowną próbą.|The hosting service did not confirm the operation. Refresh the status before trying again.
-Prywatna wersja testowa|Private preview
-Zmiany wyglądu widzisz tylko tutaj. Edycja danych klanu może zmienić prawdziwe dane.|Design changes are visible only here. Editing clan data may change real data.
-Otwórz wersję publiczną|Open public website
-Zamknij dostęp do podglądu|Sign out of private preview
 `;
 
 export const english = new Map((pairs.trim() + '\n' + gameCopy.trim()).split('\n').map(line => {

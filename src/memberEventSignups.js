@@ -66,7 +66,7 @@ export function installMemberEventSignups(supabase){
   const localKey=u=>`ob-event-signups-${u.id}`;
   const readLocal=u=>{try{return new Map(Object.entries(JSON.parse(localStorage.getItem(localKey(u))||'{}')))}catch{return new Map()}};
   const writeLocal=(u,id,s)=>{const m=readLocal(u);m.set(String(id),s);localStorage.setItem(localKey(u),JSON.stringify(Object.fromEntries(m)));return m};
-  const art=e=>bossArtworkUrl(e.boss||e.name||e.location||'');
+  const art=e=>bossArtworkUrl(e.artwork||e.boss||e.name||e.location||'');
   const thumb=e=>{const src=art(e);return src?`<img class="zone-event-thumb" src="${src}" alt="${esc(e.name||'Wydarzenie')}" loading="lazy">`:`<span class="zone-event-thumb placeholder">✦</span>`};
 
   function ensureProfileUi(){

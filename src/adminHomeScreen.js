@@ -1,16 +1,16 @@
+import { refreshReleases, hideReleases, installPreviewNotice } from './releaseManager.js';
 import { updatePreviewShortcut } from './ownerPreviewShortcut.js';
 import { adminClanIcon } from './adminClanIcons.js';
 import { refreshVisitStats, hideVisitStats } from './siteVisitStats.js';
-import { refreshReleases, hideReleases, installPreviewNotice } from './releaseManager.js';
 import './adminDashboardHome.css';
 import './adminWorkspace.css';
 import './adminEventDayGroups.js';
 import { supabase } from './supabaseClient.js';
 
 export function installAdminHomeScreen(supabaseClient){
+  installPreviewNotice();
   if(!supabaseClient||window.__obAdminHomeInstalled)return;
   window.__obAdminHomeInstalled=true;
-  installPreviewNotice();
 
   const waitForDashboard=()=>{
     const panel=document.querySelector('#adminModal .admin-panel');
@@ -90,15 +90,16 @@ export function installAdminHomeScreen(supabaseClient){
     async function refreshHome(){
       const revision=++homeRevision;
       updatePreviewShortcut(home,null);
-      hideVisitStats(home);
       hideReleases(home);
+      hideVisitStats(home);
       const {session,profile}=await readProfile();
       if(revision!==homeRevision||!session)return;
       updatePreviewShortcut(home,profile);
       const role=String(profile?.role||'').toLowerCase();
-      const owner=profile?.status==='approved'&&role==='owner'&&!profile?.removed_at;
+      const owner=profile?.status==='approved'&&role==='owner';
       void refreshVisitStats(supabaseClient,home,owner);
-      void refreshReleases(supabaseClient,home,owner);
+      if (owner) void refreshReleases(supabaseClient,home,true);
+      else hideReleases(home);
       const admin=profile?.status==='approved'&&role==='admin';
       const legacy=!profile;
       const limited=admin&&!owner;
@@ -142,7 +143,7 @@ export function installAdminHomeScreen(supabaseClient){
     });
     observer.observe(modal,{attributes:true,attributeFilter:['class']});
 
-    supabaseClient.auth.onAuthStateChange(()=>{homeRevision++;updatePreviewShortcut(home,null);hideVisitStats(home);hideReleases(home);setTimeout(()=>{if(modal.classList.contains('open'))refreshHome();},0);});
+    supabaseClient.auth.onAuthStateChange(()=>{homeRevision++;updatePreviewShortcut(home,null);hideReleases(home);hideVisitStats(home);setTimeout(()=>{if(modal.classList.contains('open'))refreshHome();},0);});
   };
 
   waitForDashboard();
@@ -151,4 +152,3 @@ export function installAdminHomeScreen(supabaseClient){
 // Wait until the module graph has initialized the shared Supabase client.
 // Member features also import artwork, which imports this screen.
 queueMicrotask(() => installAdminHomeScreen(supabase));
-

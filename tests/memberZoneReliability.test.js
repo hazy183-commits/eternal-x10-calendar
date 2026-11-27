@@ -12,6 +12,14 @@ test('homepage craft button opens the Craft view', () => {
   assert.equal(memberZoneViewForClickTarget(targetMatching('.craft-home-open')), 'craft');
 });
 
+test('sidebar Craft navigation also opens the Craft view', () => {
+  assert.equal(memberZoneViewForClickTarget(targetMatching('[data-zone-view="craft"]')), 'craft');
+});
+
+test('sidebar Group Craft navigation opens the separate group-craft view', () => {
+  assert.equal(memberZoneViewForClickTarget(targetMatching('[data-zone-view="group-craft"]')), 'group-craft');
+});
+
 test('member-zone header button opens the home view', () => {
   assert.equal(memberZoneViewForClickTarget(targetMatching('.member-auth-entry:not(.logout)')), 'home');
 });

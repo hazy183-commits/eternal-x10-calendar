@@ -41,7 +41,7 @@ const countdown = (event) => {
   if (hours) return `za ${hours}h ${pad(minutes)}m`;
   return `za ${minutes}m`;
 };
-const artwork = (event) => bossArtworkUrl(event?.boss || event?.name || event?.location || '');
+const artwork = (event) => bossArtworkUrl(event?.artwork || event?.boss || event?.name || event?.location || '');
 
 export function installTodayClanDashboard(supabase) {
   if (!supabase || window.__obTodayClanDashboardInstalled) return;

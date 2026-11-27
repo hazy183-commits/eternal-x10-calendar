@@ -47,6 +47,8 @@ export function installMemberAuth(supabase) {
         <button class="zone-nav" data-zone-view="events">▣ <span>Wydarzenia</span></button>
         <button class="zone-nav" data-zone-view="signups">✓ <span>Moje zapisy</span></button>
         <button class="zone-nav" data-zone-view="announcements">◆ <span>Ogłoszenia</span></button>
+        <button class="zone-nav" type="button" data-zone-action="quests" aria-controls="usefulQuestCatalogue" aria-haspopup="dialog"><span>Przydatne questy</span></button>
+        <button class="zone-nav" type="button" data-zone-action="enchant" aria-controls="enchantSimulator" aria-haspopup="dialog"><span>Symulator enchantu S</span></button>
         <div class="zone-side-spacer"></div>
         <button class="zone-logout">↪ <span>WYLOGUJ SIĘ</span></button>
         <div class="zone-side-foot"><small>ETERNAL X10</small><b>LINEAGE 2 REBORN</b></div>
@@ -54,6 +56,7 @@ export function installMemberAuth(supabase) {
       <main class="member-zone-main">
         <header><div><span class="member-kicker">PANEL CZŁONKA KLANU</span><h2>Witaj, <strong id="memberZoneNick">—</strong>!</h2><p>Dobrze, że jesteś z nami.</p><em>„Siła klanu tkwi w ludziach, nie w pixelach.”</em></div><small id="memberZoneRole">MEMBER</small></header>
         <section class="zone-view active" data-zone-panel="home">
+
           <div class="member-zone-grid"><div><b>⚔ KLAN</b><span>Orzeł Biały</span></div><div><b>✦ SERWER</b><span>Eternal x10</span></div><div><b>♛ RANGA</b><span id="memberRankCard">Member</span></div><div><b>● STATUS</b><span class="status-active">Aktywny</span></div></div>
           <div class="zone-columns"><section class="zone-card"><div class="zone-card-title"><div><small>▣ W KOLEJCE</small><h3>NAJBLIŻSZE WYDARZENIA</h3></div><button class="zone-link" data-zone-go="events">Zobacz wszystkie →</button></div><div id="memberUpcomingEvents" class="zone-event-list"><p class="zone-muted">Ładowanie wydarzeń…</p></div></section><section class="zone-card"><div class="zone-card-title"><div><small>📣 KLAN</small><h3>OGŁOSZENIA KLANOWE</h3></div><button class="zone-link" data-zone-go="announcements">Zobacz wszystkie →</button></div><div class="zone-announcement"><b>Witaj w Strefie Klanu</b><p>Najważniejsze informacje dla członków będą pojawiać się właśnie tutaj.</p></div><div class="zone-announcement"><b>Discord</b><p>Pamiętaj, aby być na Discordzie podczas wspólnych akcji i PvP.</p></div></section></div>
           <div class="zone-bottom"><section class="zone-card"><div class="zone-card-title"><div><small>TWÓJ UDZIAŁ</small><h3>MOJE ZAPISY</h3></div></div><p class="zone-muted">Twoje deklaracje wydarzeń znajdziesz w zakładce „Moje zapisy”.</p></section><section class="zone-stack"><a href="https://discord.gg/HtTrJpp7K" target="_blank">◉ Discord klanu <b>↗</b></a><a href="https://www.youtube.com/@orzelbialyfirstofight" target="_blank">▶ YouTube klanu <b>↗</b></a><a href="https://l2reborn.org" target="_blank">◎ Strona serwera <b>↗</b></a></section></div>
@@ -78,9 +81,10 @@ export function installMemberAuth(supabase) {
         button.prepend(icon);
       }
       const icon = button.querySelector(':scope > .zone-nav-icon');
-      if (icon.dataset.clanIcon !== button.dataset.zoneView) {
-        icon.dataset.clanIcon = button.dataset.zoneView;
-        icon.innerHTML = clanZoneIcon(button.dataset.zoneView);
+      const iconKey = button.dataset.zoneView || button.dataset.zoneAction || 'home';
+      if (icon.dataset.clanIcon !== iconKey) {
+        icon.dataset.clanIcon = iconKey;
+        icon.innerHTML = clanZoneIcon(iconKey);
       }
     }
     for (const icon of zone.querySelectorAll('.ob-menu-group-icon')) {
@@ -112,6 +116,153 @@ export function installMemberAuth(supabase) {
     .member-tabs{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #382e1e;margin:20px 0}.member-tabs button{padding:12px;border:0;background:none;color:#777;font-weight:800;cursor:pointer}.member-tabs .active{color:#e4b95e;border-bottom:2px solid #e4b95e}
     .member-auth-box label{display:block;text-align:left;margin:12px 0;color:#a29b8d;font-size:11px;font-weight:800}.member-auth-box input{box-sizing:border-box;width:100%;margin-top:7px;padding:13px;border:1px solid #42392b;background:#090d0d;color:#eee}
     .member-submit{width:100%;padding:14px;margin-top:10px;font-weight:900;cursor:pointer;border:1px solid #bd8d3c;background:linear-gradient(#3a2811,#20160b);color:#f0cf83}#memberAuthFeedback{min-height:18px;color:#d6b46d;font-size:12px;line-height:1.45}
+
+    /* Refined clan sign-in */
+    #memberAuthLayer {
+      background:radial-gradient(ellipse at 50% 14%,#473213b8 0%,#17140d 35%,#030506 76%);
+      backdrop-filter:blur(12px);
+    }
+    #memberAuthLayer .member-auth-box {
+      position:relative;
+      isolation:isolate;
+      overflow:hidden;
+      width:min(460px,100%);
+      box-sizing:border-box;
+      padding:38px;
+      border:1px solid transparent;
+      background:linear-gradient(155deg,#101514,#070a0b 72%) padding-box,linear-gradient(135deg,#e0bd70,#765725 46%,#3c321f) border-box;
+      box-shadow:inset 0 1px 0 #f6e3ac20,0 32px 100px #000d,0 0 50px #c28b2520;
+    }
+    #memberAuthLayer .member-auth-box::before {
+      position:absolute;
+      inset:7px;
+      z-index:-1;
+      border:1px solid #c59c4a30;
+      content:"";
+      pointer-events:none;
+    }
+    #memberAuthLayer .member-auth-box>* { position:relative; }
+    #memberAuthLayer .member-auth-box>img {
+      display:block;
+      width:92px;
+      height:76px;
+      box-sizing:border-box;
+      object-fit:contain;
+      margin:0 auto 14px;
+      padding:7px;
+      border:1px solid #a9823e80;
+      background:radial-gradient(circle,#b88b3d1b,#070a0a 72%);
+      filter:drop-shadow(0 5px 14px #d2a14230);
+    }
+    #memberAuthLayer .member-kicker { color:#d9b561; letter-spacing:.22em; }
+    #memberAuthLayer .member-auth-box h2 {
+      margin:9px 0 8px;
+      color:#f3d58e;
+      font:700 30px/1.15 Cinzel,Georgia,serif;
+      letter-spacing:.07em;
+      text-shadow:0 2px 18px #d4a64b22;
+    }
+    #memberAuthLayer .member-auth-lead {
+      max-width:340px;
+      margin:0 auto;
+      color:#aaa69c;
+      font-size:13px;
+      line-height:1.6;
+    }
+    #memberAuthLayer .member-tabs {
+      gap:5px;
+      margin:22px 0 20px;
+      padding:4px;
+      border:1px solid #77603975;
+      background:#050808;
+    }
+    #memberAuthLayer .member-tabs button {
+      min-height:42px;
+      padding:10px 12px;
+      border:1px solid transparent;
+      color:#aaa18e;
+      font-size:12px;
+      letter-spacing:.04em;
+      transition:color .16s ease,border-color .16s ease,background .16s ease;
+    }
+    #memberAuthLayer .member-tabs button:hover { color:#f0d99e; }
+    #memberAuthLayer .member-tabs .active {
+      border-color:#bd9348;
+      background:linear-gradient(135deg,#3b2b12,#20190e);
+      color:#f1ce7c;
+      box-shadow:inset 0 1px #f4d99120,0 3px 12px #0006;
+    }
+    #memberAuthLayer .member-auth-box label {
+      margin:15px 0;
+      color:#c5b99f;
+      font-size:10px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+    #memberAuthLayer .member-auth-box input {
+      min-height:47px;
+      margin-top:8px;
+      padding:12px 14px;
+      border:1px solid #57472c;
+      background:linear-gradient(180deg,#050808,#0b1010);
+      color:#f2eee5;
+      font:500 14px Inter,Arial,sans-serif;
+      letter-spacing:normal;
+      text-transform:none;
+      transition:border-color .16s ease,box-shadow .16s ease,background .16s ease;
+    }
+    #memberAuthLayer .member-auth-box input::placeholder { color:#706b60; }
+    #memberAuthLayer .member-auth-box input:focus {
+      border-color:#d0a54f;
+      outline:0;
+      background:#090d0d;
+      box-shadow:0 0 0 3px #d0a54f20,0 0 18px #d0a54f12;
+    }
+    #memberAuthLayer .member-submit {
+      min-height:48px;
+      margin-top:8px;
+      border:1px solid #d1a54f;
+      background:linear-gradient(135deg,#62451a,#37260f 58%,#20180c);
+      color:#ffdf91;
+      font:800 12px Inter,Arial,sans-serif;
+      letter-spacing:.12em;
+      box-shadow:inset 0 1px #f8e2a52b,0 6px 18px #0006;
+      transition:filter .16s ease,transform .16s ease,box-shadow .16s ease;
+    }
+    #memberAuthLayer .member-submit:hover {
+      filter:brightness(1.14);
+      transform:translateY(-1px);
+      box-shadow:inset 0 1px #f8e2a545,0 9px 24px #0008,0 0 18px #d0a54f20;
+    }
+    #memberAuthLayer .member-submit:active { transform:translateY(0); }
+    #memberAuthLayer .member-submit:disabled { cursor:wait; opacity:.7; transform:none; }
+    #memberAuthLayer .member-auth-box :focus-visible { outline:2px solid #e4bf69; outline-offset:3px; }
+    #memberAuthLayer #memberAuthFeedback {
+      min-height:22px;
+      margin:11px 0 0;
+      color:#e0bd70;
+      font-size:12px;
+      line-height:1.5;
+    }
+    @keyframes ob-auth-enter {
+      from { opacity:0; transform:translateY(12px) scale(.985); }
+      to { opacity:1; transform:translateY(0) scale(1); }
+    }
+    #memberAuthLayer.open .member-auth-box { animation:ob-auth-enter .32s cubic-bezier(.2,.8,.2,1) both; }
+    @media(max-width:520px) {
+      #memberAuthLayer { padding:12px; }
+      #memberAuthLayer .member-auth-box { padding:29px 21px; }
+      #memberAuthLayer .member-auth-box h2 { font-size:26px; }
+    }
+    @media(max-height:560px) {
+      #memberAuthLayer { align-items:start; overflow:auto; }
+      #memberAuthLayer .member-auth-box { margin:auto 0; }
+    }
+    @media(prefers-reduced-motion:reduce) {
+      #memberAuthLayer.open .member-auth-box { animation:none; }
+      #memberAuthLayer .member-tabs button,#memberAuthLayer .member-auth-box input,#memberAuthLayer .member-submit { transition:none; }
+    }
+
     .member-zone-box{position:relative;display:grid;grid-template-columns:230px 1fr;width:min(1420px,calc(100vw - 32px));height:min(850px,calc(100vh - 32px));overflow:hidden;border:1px solid #765721;background:linear-gradient(145deg,#091010,#060909);box-shadow:0 35px 110px #000;color:#d8d4ca}.member-zone-close{position:absolute;right:16px;top:10px;border:0;background:none;color:#8d887d;font-size:28px;cursor:pointer;z-index:5}
     .member-zone-side{display:flex;flex-direction:column;padding:22px 18px;border-right:1px solid #392c18;background:linear-gradient(180deg,#0d1212,#070a0a)}.member-zone-side img{width:100px;height:82px;object-fit:contain;margin:0 auto 8px}.member-zone-side>.member-kicker{text-align:center}.member-zone-side h3{text-align:center;margin:5px 0 22px;color:#f0cf7e;font:700 22px Georgia}.zone-nav{display:flex;gap:11px;align-items:center;margin:2px 0;padding:9px 11px;border:1px solid transparent;background:transparent;color:#999389;text-align:left;font-weight:800;cursor:pointer}.zone-nav:hover,.zone-nav.active{border-color:#665026;background:linear-gradient(90deg,#3a2812,#18140d);color:#efc56a}.zone-nav-icon{display:block;flex:0 0 30px;width:30px;height:30px;background-image:url("/images/ui-clan-zone-icons-v1.png");background-repeat:no-repeat;background-size:120px 90px;filter:saturate(.82) brightness(.82);transition:filter .15s ease,transform .15s ease}.zone-nav:hover .zone-nav-icon,.zone-nav.active .zone-nav-icon{filter:saturate(1.08) brightness(1.12) drop-shadow(0 0 5px rgba(220,168,66,.42));transform:translateY(-1px)}.zone-nav[data-zone-view="home"] .zone-nav-icon{background-position:0 0}.zone-nav[data-zone-view="events"] .zone-nav-icon{background-position:33.333% 0}.zone-nav[data-zone-view="signups"] .zone-nav-icon{background-position:66.667% 0}.zone-nav[data-zone-view="announcements"] .zone-nav-icon{background-position:100% 0}.zone-nav[data-zone-view="profile"] .zone-nav-icon{background-position:0 50%}.zone-nav[data-zone-view="recruitment"] .zone-nav-icon{background-position:33.333% 50%}.zone-nav[data-zone-view="content-editor"] .zone-nav-icon{background-position:66.667% 50%}.zone-nav[data-zone-view="members"] .zone-nav-icon{background-position:100% 50%}.zone-nav[data-zone-view="needed-rb"] .zone-nav-icon{background-position:0 100%}.zone-nav[data-zone-view="craft"] .zone-nav-icon{background-position:33.333% 100%}.zone-nav[data-zone-view="attendance"] .zone-nav-icon{background-position:66.667% 100%}.zone-side-spacer{flex:1}.zone-logout{padding:14px;border:1px solid #9a722f;background:#17130d;color:#e2b85f;font-weight:900;cursor:pointer}.zone-side-foot{padding:18px 10px 4px;margin-top:14px;border-top:1px solid #302719;color:#777168}.zone-side-foot small,.zone-side-foot b{display:block;font-size:9px;letter-spacing:.14em}
     .member-zone-main{overflow:auto;padding:28px 32px}.member-zone-main>header{display:flex;padding-bottom:20px;border-bottom:1px solid #352b1d}.member-zone-main>header h2{margin:4px 0 2px;color:#eee8dc;font:700 34px Georgia}.member-zone-main>header h2 strong{color:#efcb78}.member-zone-main>header p{margin:0;color:#8b877e}.member-zone-main>header em{display:block;margin-top:7px;color:#716d65;font-size:13px}.member-zone-main>header>small{margin-left:auto;margin-right:28px;height:max-content;padding:9px 12px;border:1px solid #745a29;color:#e0b75d;font-weight:900}.zone-view{display:none}.zone-view.active{display:block}
@@ -212,7 +363,7 @@ export function installMemberAuth(supabase) {
 
   window.addEventListener('orzel:open-craft-workspace', async () => {
     const opened = await openZone('craft');
-    if (opened) window.dispatchEvent(new CustomEvent('orzel:craft-workspace-opened'));
+    if (opened) window.dispatchEvent(new CustomEvent('orzel:craft-workspace-opened', { detail: { view: 'craft' } }));
   });
 
   layer.querySelector('.member-tabs').addEventListener('click', (e) => {

@@ -1,6 +1,7 @@
 import { BOSS_RESPAWN_BOSSES, publicRespawnEvents, publicEventKey, localDateTimeToDate } from './bossRespawns.js';
 import { publicSiegeEvents, castleFromEvent, siegePublicKey } from './siegeSchedules.js';
 import { withOlympiadEvents } from './olympiadSchedule.js';
+import { withClanActivityEvents } from './clanActivitySchedule.js';
 import { applyTerritoryOwners } from './territoryOwnership.js';
 
 const normalized = value => String(value || '').trim().replace(/\s+/g, ' ').toLowerCase();
@@ -10,11 +11,11 @@ export function clanUpcomingEvents(ordinary, bosses, sieges, now = new Date(), o
   const managed = new Set(BOSS_RESPAWN_BOSSES.map(normalized));
   const siegeKeys = new Set(siegeEvents.map(siegePublicKey));
   const manualIds = new Map(ordinary.filter(e => /^\d+$/.test(String(e.id))).map(e => [publicEventKey(e), String(e.id)]));
-  const merged = withOlympiadEvents([
+  const merged = withClanActivityEvents(withOlympiadEvents([
     ...ordinary.filter(e => !e.isPvpSchedule && ![e.boss,e.name].some(n => managed.has(normalized(n)))
       && !(e.type === 'Siege' && castleFromEvent(e) && siegeKeys.has(siegePublicKey(e)))),
     ...respawns, ...siegeEvents,
-  ], now);
+  ], now), now);
   return applyTerritoryOwners(merged, ownership).map(e => {
     const start = e.startAt ? new Date(e.startAt) : localDateTimeToDate(e.date, e.time);
     const end = e.endAt ? new Date(e.endAt) : new Date(start?.getTime() + (e.duration || 60) * 60000);

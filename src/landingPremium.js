@@ -1,3 +1,5 @@
+import { animateLandingFlags } from './landingFlagMotion.js';
+
 const YOUTUBE_CHANNEL='https://www.youtube.com/@orzelbialyfirstofight';
 
 function safeText(value=''){
@@ -109,7 +111,20 @@ export function installPremiumLanding(){
     </div>
     <footer class="ob-gate-footer"><span>PRIVATE CLAN AREA</span><p>Dostęp do kalendarza, zapisów i informacji klanowych mają wyłącznie zatwierdzeni członkowie.</p></footer>`;
 
+  const flags = document.createElement('canvas');
+  flags.className = 'ob-landing-background-motion';
+  flags.width = 1672;
+  flags.height = 941;
+  flags.setAttribute('aria-hidden', 'true');
+  layer.prepend(flags);
   layer.appendChild(shell);
+  animateLandingFlags(flags, layer);
+  const pageFlags = flags.cloneNode();
+  pageFlags.classList.add('ob-page-background-motion');
+  document.body.prepend(pageFlags);
+  animateLandingFlags(pageFlags, document.documentElement, () =>
+    !document.documentElement.classList.contains('member-locked') && !layer.classList.contains('open'));
+
   shell.querySelector('.ob-gate-login-slot').appendChild(authBox);
   authBox.querySelector('img')?.classList.add('ob-auth-old-logo');
   authBox.querySelector('.member-auth-close')?.setAttribute('aria-hidden','true');
