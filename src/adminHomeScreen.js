@@ -1,3 +1,4 @@
+import { showFeaturePanel, hideFeaturePanel } from './ownerFeaturePanel.js';
 import { updatePreviewShortcut } from './ownerPreviewShortcut.js';
 import { adminClanIcon } from './adminClanIcons.js';
 import { refreshVisitStats, hideVisitStats } from './siteVisitStats.js';
@@ -87,11 +88,12 @@ export function installAdminHomeScreen(supabaseClient){
     let homeRevision=0;
     async function refreshHome(){
       const revision=++homeRevision;
-      updatePreviewShortcut(home,null);
+      updatePreviewShortcut(home,null);hideFeaturePanel(home);
       hideVisitStats(home);
       const {session,profile}=await readProfile();
       if(revision!==homeRevision||!session)return;
       updatePreviewShortcut(home,profile);
+      showFeaturePanel(supabaseClient,home,profile);
       const role=String(profile?.role||'').toLowerCase();
       const owner=profile?.status==='approved'&&role==='owner';
       void refreshVisitStats(supabaseClient,home,owner);
@@ -138,7 +140,7 @@ export function installAdminHomeScreen(supabaseClient){
     });
     observer.observe(modal,{attributes:true,attributeFilter:['class']});
 
-    supabaseClient.auth.onAuthStateChange(()=>{homeRevision++;updatePreviewShortcut(home,null);hideVisitStats(home);setTimeout(()=>{if(modal.classList.contains('open'))refreshHome();},0);});
+    supabaseClient.auth.onAuthStateChange(()=>{homeRevision++;updatePreviewShortcut(home,null);hideFeaturePanel(home);hideVisitStats(home);setTimeout(()=>{if(modal.classList.contains('open'))refreshHome();},0);});
   };
 
   waitForDashboard();

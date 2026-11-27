@@ -34,14 +34,14 @@ html.holiday-website #top > .hero .holiday-greeting {
 }
 html.holiday-website .brand .brand-logo { object-fit:contain; width:auto; }
 /* Snow stays in the winter landscape, behind the dashboard. */
-html.holiday-website .page-glow::before, html.holiday-website .page-glow::after {
+html.holiday-snow .page-glow::before, html.holiday-snow .page-glow::after {
   content:'';
   position:absolute;
   inset:-80px 0;
   pointer-events:none;
   mask-image:linear-gradient(90deg,#000 5%,transparent 22% 78%,#000 95%);
 }
-html.holiday-website .page-glow::before {
+html.holiday-snow .page-glow::before {
   background-image:
     radial-gradient(circle at 4% 12%, #e4f0ff 0.315px, transparent 1.35px),
     radial-gradient(circle at 8% 34%, #e4f0ff 0.54px, transparent 1.85px),
@@ -62,7 +62,7 @@ html.holiday-website .page-glow::before {
   opacity:.42;
   animation:winter-flurry-far 24s linear infinite;
 }
-html.holiday-website .page-glow::after {
+html.holiday-snow .page-glow::after {
   background-image:
     radial-gradient(circle at 6% 22%, #e4f0ff 0.765px, transparent 2.35px),
     radial-gradient(circle at 17% 58%, #e4f0ff 0.54px, transparent 1.85px),
@@ -89,11 +89,11 @@ html.holiday-website .page-glow::after {
   100% { transform:translate3d(25px,101px,0); opacity:0; }
 }
 @media(prefers-reduced-motion:reduce) {
-  html.holiday-website .page-glow::before, html.holiday-website .page-glow::after { animation:none; }
+  html.holiday-snow .page-glow::before, html.holiday-snow .page-glow::after { animation:none; }
 }
 @media(max-width:700px){
   html.holiday-website body::before { background-image:linear-gradient(#080c12a6,#080c12d9),url('/images/holiday/website-winter-forest.png'); }
-  html.holiday-website .page-glow::before, html.holiday-website .page-glow::after { display:none; }
+  html.holiday-snow .page-glow::before, html.holiday-snow .page-glow::after { display:none; }
   html.holiday-website #top > .hero { min-height:200px !important; background-position:right center !important; }
   html.holiday-website #top > .hero .holiday-greeting { margin-top:.4rem; }
   html.holiday-website { --clan-background:linear-gradient(#070b11dd,#080b10ee),var(--holiday-courtyard); }
