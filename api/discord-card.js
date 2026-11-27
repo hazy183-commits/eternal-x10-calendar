@@ -1,3 +1,4 @@
+import { quoteTrial } from '../lib/quoteTrial.js';
 import { christmasIllustration } from '../lib/christmasIllustration.js';
 import sharp from 'sharp';
 import { christmasCard, CHRISTMAS_CREST, holidayScenery, winterArtwork } from '../lib/discordChristmas.js';
@@ -394,7 +395,10 @@ const gatheringMinutes = startMinutes === null ? null : (startMinutes + 1410) % 
 const gatheringTime = gatheringMinutes === null ? '' :
   String(Math.floor(gatheringMinutes / 60)).padStart(2, '0') + ':' + String(gatheringMinutes % 60).padStart(2, '0');
 const gatheringLabel = gatheringTime ? 'Zbiórka ' + gatheringTime + ' · Hunter Village' : 'Zbiórka w Hunter Village';
-const rallySvg = rallyLines(name, date, time, kind, u.searchParams.get('q')).map((line, index) =>
+const trialIndex = u.searchParams.get('q');
+const cardQuote = u.searchParams.get('quotes') === 'trial' && /^\d{1,15}$/.test(trialIndex ?? '')
+  ? quoteTrial(Number(trialIndex)) : rallyLines(name, date, time, kind, trialIndex);
+const rallySvg = cardQuote.map((line, index) =>
   `<text x="600" y="${687 + index * 39}" text-anchor="middle" fill="${index === 0 ? 'url(#gold)' : '#f6f0e6'}" stroke="#100b08" stroke-width="3" paint-order="stroke" font-size="${index === 0 ? 35 : 26}" font-family="DejaVu Serif" font-weight="${index === 0 ? 700 : 400}" font-style="${index === 0 ? 'normal' : 'italic'}">${esc(line)}</text>`
 ).join('');
 const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
@@ -415,7 +419,7 @@ ${rallySvg}
 const fontDir=new URL('../node_modules/dejavu-fonts-ttf/ttf/',import.meta.url).pathname;
 const fontFiles=['DejaVuSans.ttf','DejaVuSans-Bold.ttf','DejaVuSerif.ttf','DejaVuSerif-Bold.ttf','DejaVuSerif-Italic.ttf'].map(p=>fontDir+p);
 const cinematic = u.searchParams.get('layout') !== 'classic';
-const [headline, invitation] = rallyLines(name, date, time, kind, u.searchParams.get('q'));
+const [headline, invitation] = cardQuote;
 const [glow, particle, intensity, shape, count, rightGlow = glow] = await sceneEffects(sceneKey, eventSceneImage);
 const cinematicSvg = cinematic ? `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
 <defs>
