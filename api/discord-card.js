@@ -126,6 +126,7 @@ const RALLY_EVENT_OPENERS = {
 };
 
 function rallyLines(name, date, time, kind, quote) {
+  if (quote === 'none') return ['', ''];
   if (/^[0-9]{1,15}$/.test(quote ?? '')) {
     const index = Number(quote);
     return discordQuote(index);
@@ -245,7 +246,7 @@ const cinematicSvg = cinematic ? `<svg xmlns="http://www.w3.org/2000/svg" width=
 <text x="838" y="651" fill="#f5d9c7" font-size="20">${esc(date)}</text>
 </g>
 <path d="M68 689V761" stroke="#ed785a" stroke-width="4" stroke-linecap="round"/>
-<text x="90" y="719" fill="#fff0d5" stroke="#190a0d" stroke-width="2" paint-order="stroke" font-size="${Math.min(31, Math.floor(1200 / (headline.length + 2)))}" font-family="DejaVu Serif" font-weight="700" letter-spacing=".35">„${esc(headline)}”</text>
+<text x="90" y="719" fill="#fff0d5" stroke="#190a0d" stroke-width="2" paint-order="stroke" font-size="${Math.min(31, Math.floor(1200 / (headline.length + 2)))}" font-family="DejaVu Serif" font-weight="700" letter-spacing=".35">${headline ? `„${esc(headline)}”` : ''}</text>
 <text x="90" y="754" fill="#efb59a" font-size="22" font-family="DejaVu Sans">${esc(invitation)}</text>
 </svg>` : svg;
 const seasonalSvg = holiday && !holidayIllustration ? cinematicSvg.replace('</svg>', holidayScenery(1200, sceneKey, kind) + '</svg>') : cinematicSvg;
