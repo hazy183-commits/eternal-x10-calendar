@@ -33,26 +33,36 @@ body::before {
   text-shadow:0 2px 12px #160c07,0 0 28px #f5a14175;
 }
 .brand .brand-logo { object-fit:contain; width:auto; }
-.pvp-hero-panel, .next-event-card, .calendar-heading, .boss-gallery > .section-heading { position: relative; }
+.pvp-hero-panel, .next-event-card, .calendar-heading, .boss-gallery > .section-heading { position:relative; }
 .pvp-hero-panel::after, .next-event-card::after, .calendar-heading::after, .boss-gallery > .section-heading::after {
   content:'';
   position:absolute;
   z-index:3;
-  inset:-18px 0 auto;
-  height:38px;
+  inset:-13px 0 auto;
+  height:26px;
   pointer-events:none;
-  background: url('/images/holiday/website-powder-snow.png') center 52% / 100% var(--snow-height,67px) no-repeat;
-  filter:drop-shadow(0 2px 2px #071019a8);
-  opacity:.90;
+  background: var(--snow-patches);
+  filter:drop-shadow(0 2px 2px #020a11b3);
+  opacity:.92;
 }
-.pvp-hero-panel::after { --snow-height:77px; left:2px; right:14px; }
-.next-event-card::after { inset:-14px 0 auto; --snow-height:64px; }
-.calendar-heading::after { --snow-height:59px; left:18px; right:5px; }
-.boss-gallery > .section-heading::after { --snow-height:56px; left:7%; right:2%; }
+.pvp-hero-panel::after {
+  --snow-patches: url('/images/holiday/website-powder-snow.png') 7% center / min(84%,300px) 78px no-repeat;
+}
+.next-event-card::after {
+  inset:-9px 0 auto;
+  --snow-patches: url('/images/holiday/website-powder-snow.png') 5% center / min(43%,410px) 92px no-repeat,
+                  url('/images/holiday/website-powder-snow.png') 95% center / min(31%,290px) 65px no-repeat;
+}
+.calendar-heading::after {
+  --snow-patches: url('/images/holiday/website-powder-snow.png') 97% center / min(41%,440px) 95px no-repeat;
+}
+.boss-gallery > .section-heading::after {
+  --snow-patches: url('/images/holiday/website-powder-snow.png') 14% center / min(39%,400px) 82px no-repeat;
+}
 @media(max-width:700px){
   body::before { background-image:linear-gradient(#080c12a6,#080c12d9),url('/images/holiday/website-winter-forest.png'); }
-  .pvp-hero-panel::after, .next-event-card::after, .calendar-heading::after, .boss-gallery > .section-heading::after {
-    --snow-height:52px;
+  .next-event-card::after {
+    --snow-patches: url('/images/holiday/website-powder-snow.png') 9% center / 63% 65px no-repeat;
   }
   #top > .hero { min-height:200px !important; background-position:right center !important; }
   #top > .hero .holiday-greeting { margin-top:.4rem; }
