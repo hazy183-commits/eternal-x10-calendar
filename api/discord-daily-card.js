@@ -1,3 +1,4 @@
+import { christmasIllustration } from '../lib/christmasIllustration.js';
 import sharp from 'sharp';
 import { christmasCard, CHRISTMAS_CREST, holidayScenery, winterArtwork } from '../lib/discordChristmas.js';
 import { Resvg } from '@resvg/resvg-js';
@@ -103,7 +104,11 @@ export default async function handler(req, res) {
 
     const imageHost = 'https://orzelbialy.eu';
     const artworkPath = artworkForDate(date);
-    const background = newspaper ? null : await (async () => {
+    const holidayIllustration = holiday && !newspaper ? await christmasIllustration(imageHost, 'daily', width, height).catch(error => {
+      console.warn('Seasonal daily illustration unavailable', String(error));
+      return null;
+    }) : null;
+    const background = holidayIllustration ?? (newspaper ? null : await (async () => {
     let backgroundResponse;
     try {
       backgroundResponse = await fetch(imageHost + artworkPath, { signal: AbortSignal.timeout(7000) });
@@ -117,7 +122,7 @@ export default async function handler(req, res) {
       .resize(width, height, { fit: 'cover', position: 'right' })
       .modulate({ brightness: 0.86, saturation: 1.12 });
     return holiday ? winterArtwork(sourceArtwork) : sourceArtwork.png().toBuffer();
-    })();
+    })());
 
     const rows = events.length ? events.map((event, index) => {
       const y = top + index * rowHeight;
@@ -286,7 +291,7 @@ export default async function handler(req, res) {
 
     const fontDir = new URL('../node_modules/dejavu-fonts-ttf/ttf/', import.meta.url).pathname;
     const fontFiles = ['DejaVuSans.ttf', 'DejaVuSans-Bold.ttf', 'DejaVuSerif.ttf', 'DejaVuSerif-Bold.ttf'].map(file => fontDir + file);
-    const seasonalSvg = holiday ? svg.replace('</svg>', holidayScenery(width) + '</svg>') : svg;
+    const seasonalSvg = holiday && !holidayIllustration ? svg.replace('</svg>', holidayScenery(width) + '</svg>') : svg;
     const overlay = new Resvg(seasonalSvg, {
       fitTo: { mode: 'width', value: width },
       font: { fontFiles, fontDirs: [fontDir], loadSystemFonts: true, defaultFontFamily: 'DejaVu Sans' }
@@ -307,7 +312,7 @@ export default async function handler(req, res) {
     res.setHeader('Content-Type', 'image/png');
     res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=300');
     res.setHeader('X-Card-Season', holiday ? 'christmas' : 'standard');
-if (holiday) res.setHeader('X-Card-Winter-Artwork', 'snow-v2');
+if (holiday) res.setHeader('X-Card-Winter-Artwork', holidayIllustration ? 'christmas-illustration' : 'snow-v2');
 
     res.setHeader('X-Daily-Plan-Events', String(events.length));
     res.setHeader('X-Daily-Plan-Style', quest ? 'quest-journal-preview' : newspaper ? 'newspaper-preview' : board ? 'clan-board-preview' : cinematic ? 'cinematic-series-preview' : refined ? 'classic-refined-preview' : 'fixed-clan-art-daily-rotation-v2');
