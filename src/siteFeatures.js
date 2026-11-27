@@ -2,6 +2,7 @@
 export const PREVIEW_ORIGIN = 'https://orzel-bialy-git-preview-owner-releases-eternal-x10.vercel.app';
 export const FEATURE_SETTING_PREFIX = 'feature:';
 export const SITE_FEATURES = Object.freeze([
+  { id: 'christmas-tree', title: 'Choinka Orłów', description: 'Bombki z życzeniami członków klanu od 6 do 27 grudnia. Podgląd używa wpisów testowych.', defaultEnabled: false },
   { id: 'christmas-theme', title: 'Świąteczny wygląd strony', description: 'Zimowy las, świąteczny dziedziniec i herb. Działa od 6 do 27 grudnia.', defaultEnabled: true },
   { id: 'christmas-snow', title: 'Padający śnieg', description: 'Drobne płatki po bokach strony od 6 do 27 grudnia.', defaultEnabled: true },
 ]);

@@ -34,6 +34,7 @@ if (typeof document !== 'undefined') {
       { installEpicRespawnScreenshotImport },
       { installTerritoryOwnershipScreenshotImport },
       { installTodayClanDashboard },
+      { installChristmasTree },
       { installCraftPlannerUi },
       { installCraftGroupPlannerUi },
       { installCraftHierarchyEnhancer },
@@ -62,6 +63,7 @@ if (typeof document !== 'undefined') {
       import('./epicRespawnScreenshotImport.js'),
       import('./territoryOwnershipScreenshotImport.js'),
       import('./todayClanDashboard.js'),
+      import('./christmasTree.js'),
       import('./craftPlannerUi.js'),
       import('./craftGroupPlannerUi.js'),
       import('./craftHierarchyEnhancer.js'),
@@ -93,6 +95,7 @@ if (typeof document !== 'undefined') {
     installEpicRespawnScreenshotImport(supabase);
     installTerritoryOwnershipScreenshotImport(supabase);
     installTodayClanDashboard(supabase);
+    installChristmasTree(supabase);
     installCraftPlannerUi(supabase);
     installCraftGroupPlannerUi(supabase);
     installCraftHierarchyEnhancer(supabase);

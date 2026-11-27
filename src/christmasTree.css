@@ -1,0 +1,36 @@
+.clan-christmas-tree {
+  display:grid; grid-template-columns:minmax(0, .95fr) minmax(0, 1fr);
+  max-width:980px; overflow:hidden; margin:1rem auto 1.6rem;
+  border:1px solid #80653b; background:#101715; color:#f4e7cc;
+}
+.clan-tree-scene { position:relative; align-self:start; width:100%; }
+.clan-tree-scene img { display:block; width:100%; height:auto; }
+.clan-tree-scene [data-tree-ornaments] { position:absolute; inset:0; pointer-events:none; }
+.clan-bauble {
+  --shine:#d46063; --shade:#610d20; pointer-events:auto;
+  position:absolute; transform:translate(-50%,-50%); border:1px solid #ddbc79; border-radius:50%;
+  width:clamp(26px,3.3vw,40px); aspect-ratio:1; padding:0; cursor:pointer;
+  background:radial-gradient(circle at 31% 24%,#fff6d1 0%,var(--shine) 25%,var(--shade) 70%);
+  box-shadow:0 4px 12px #000b,0 0 9px #ffe8ab55;
+}
+.clan-bauble:before { content:''; position:absolute; top:-5px; left:37%; width:26%; height:6px; border-radius:2px; background:#d7b676; }
+.clan-bauble.gold { --shine:#f7d579; --shade:#8f4b0d; }
+.clan-bauble.pine { --shine:#87caa3; --shade:#18543a; }
+.clan-bauble.blue { --shine:#8fc5e8; --shade:#264a81; }
+.clan-tree-content { padding:clamp(16px,3vw,34px); min-width:0; }
+.clan-tree-content h3 { margin:0 0 9px; color:#ffe1a0; font:700 clamp(1.6rem,3vw,2.8rem)/1.12 Georgia,serif; }
+.clan-tree-content p { color:#e1d4b7; margin:.6rem 0; white-space:pre-wrap; overflow-wrap:anywhere; }
+.clan-tree-content form, .clan-tree-content label { display:grid; gap:7px; }
+.clan-tree-content form { margin-top:18px; gap:12px; }
+.clan-tree-content textarea, .clan-tree-content select { background:#0a100f; color:#fff3d8; border:1px solid #80653b; padding:9px; font:inherit; }
+.clan-tree-content textarea { resize:vertical; min-height:75px; }
+.clan-tree-content button { width:fit-content; min-height:36px; padding:6px 10px; background:#342617; border:1px solid #aa8245; color:#ffe1a0; cursor:pointer; font:inherit; }
+.clan-tree-content button:disabled { opacity:.65; cursor:wait; }
+.clan-christmas-tree :is(button, textarea, select):focus-visible { outline:2px solid #fae6ad; outline-offset:3px; }
+.clan-tree-content [data-tree-message] { margin:14px 0; padding:12px; border:1px solid #887245; background:#18221a; }
+.clan-tree-names { display:flex; flex-wrap:wrap; gap:6px; max-height:144px; overflow:auto; margin-top:12px; }
+.clan-tree-content .clan-tree-demo { color:#ffe2a0; font-size:.88rem; }
+@media(max-width:680px) {
+  .clan-christmas-tree { grid-template-columns:minmax(0,1fr); max-width:min(100%,460px); }
+  .clan-tree-content { padding:17px; }
+}
