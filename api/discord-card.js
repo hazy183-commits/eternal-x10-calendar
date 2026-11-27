@@ -129,7 +129,7 @@ function rallyLines(name, date, time, kind, quote) {
   if (quote === 'none') return ['', ''];
   if (/^[0-9]{1,15}$/.test(quote ?? '')) {
     const index = Number(quote);
-    return discordQuote(index);
+    return discordQuote(index, kind === 'siege' ? 'siege' : eventScene(name, kind));
   }
   const openers = Object.hasOwn(RALLY_EVENT_OPENERS, kind) ? RALLY_EVENT_OPENERS[kind] : RALLY_OPENERS;
   const isoDate = date.replace(/^(\d{1,2})[.\/-](\d{1,2})[.\/-](\d{4})$/, (_, day, month, year) =>
