@@ -33,37 +33,67 @@ body::before {
   text-shadow:0 2px 12px #160c07,0 0 28px #f5a14175;
 }
 .brand .brand-logo { object-fit:contain; width:auto; }
-.pvp-hero-panel, .next-event-card, .calendar-heading, .boss-gallery > .section-heading { position:relative; }
-.pvp-hero-panel::after, .next-event-card::after, .calendar-heading::after, .boss-gallery > .section-heading::after {
+/* Snow stays in the winter landscape, behind the dashboard. */
+.page-glow::before, .page-glow::after {
   content:'';
   position:absolute;
-  z-index:3;
-  inset:-13px 0 auto;
-  height:26px;
+  inset:-80px 0;
   pointer-events:none;
-  background: var(--snow-patches);
-  filter:drop-shadow(0 2px 2px #020a11b3);
-  opacity:.92;
+  mask-image:linear-gradient(90deg,#000 5%,transparent 22% 78%,#000 95%);
 }
-.pvp-hero-panel::after {
-  --snow-patches: url('/images/holiday/website-powder-snow.png') 7% center / min(84%,300px) 78px no-repeat;
+.page-glow::before {
+  background-image:
+    radial-gradient(circle at 4% 12%, #e4f0ff 0.315px, transparent 1.35px),
+    radial-gradient(circle at 8% 34%, #e4f0ff 0.54px, transparent 1.85px),
+    radial-gradient(circle at 13% 74%, #e4f0ff 0.36000000000000004px, transparent 1.4500000000000002px),
+    radial-gradient(circle at 3% 87%, #e4f0ff 0.45px, transparent 1.65px),
+    radial-gradient(circle at 16% 22%, #e4f0ff 0.315px, transparent 1.35px),
+    radial-gradient(circle at 10% 61%, #e4f0ff 0.27px, transparent 1.25px),
+    radial-gradient(circle at 5% 48%, #e4f0ff 0.405px, transparent 1.55px),
+    radial-gradient(circle at 18% 47%, #e4f0ff 0.27px, transparent 1.25px),
+    radial-gradient(circle at 84% 20%, #e4f0ff 0.315px, transparent 1.35px),
+    radial-gradient(circle at 89% 50%, #e4f0ff 0.45px, transparent 1.65px),
+    radial-gradient(circle at 96% 70%, #e4f0ff 0.45px, transparent 1.65px),
+    radial-gradient(circle at 94% 14%, #e4f0ff 0.315px, transparent 1.35px),
+    radial-gradient(circle at 81% 80%, #e4f0ff 0.27px, transparent 1.25px),
+    radial-gradient(circle at 98% 42%, #e4f0ff 0.54px, transparent 1.85px),
+    radial-gradient(circle at 91% 93%, #e4f0ff 0.36000000000000004px, transparent 1.4500000000000002px),
+    radial-gradient(circle at 87% 67%, #e4f0ff 0.27px, transparent 1.25px);
+  opacity:.42;
+  animation:winter-flurry-far 24s linear infinite;
 }
-.next-event-card::after {
-  inset:-9px 0 auto;
-  --snow-patches: url('/images/holiday/website-powder-snow.png') 5% center / min(43%,410px) 92px no-repeat,
-                  url('/images/holiday/website-powder-snow.png') 95% center / min(31%,290px) 65px no-repeat;
+.page-glow::after {
+  background-image:
+    radial-gradient(circle at 6% 22%, #e4f0ff 0.765px, transparent 2.35px),
+    radial-gradient(circle at 17% 58%, #e4f0ff 0.54px, transparent 1.85px),
+    radial-gradient(circle at 3% 63%, #e4f0ff 0.7200000000000001px, transparent 2.25px),
+    radial-gradient(circle at 12% 82%, #e4f0ff 0.6075px, transparent 2px),
+    radial-gradient(circle at 86% 38%, #e4f0ff 0.6525px, transparent 2.1px),
+    radial-gradient(circle at 96% 53%, #e4f0ff 0.675px, transparent 2.15px),
+    radial-gradient(circle at 93% 78%, #e4f0ff 0.855px, transparent 2.55px),
+    radial-gradient(circle at 84% 9%, #e4f0ff 0.54px, transparent 1.85px),
+    radial-gradient(circle at 9% 5%, #e4f0ff 0.6075px, transparent 2px),
+    radial-gradient(circle at 97% 6%, #e4f0ff 0.63px, transparent 2.05px);
+  opacity:.36;
+  filter:blur(.55px);
+  animation:winter-flurry-near 17s linear -8s infinite;
 }
-.calendar-heading::after {
-  --snow-patches: url('/images/holiday/website-powder-snow.png') 97% center / min(41%,440px) 95px no-repeat;
+@keyframes winter-flurry-far {
+  0% { transform:translate3d(-6px,-56px,0); opacity:0; }
+  14%,82% { opacity:.42; }
+  100% { transform:translate3d(14px,88px,0); opacity:0; }
 }
-.boss-gallery > .section-heading::after {
-  --snow-patches: url('/images/holiday/website-powder-snow.png') 14% center / min(39%,400px) 82px no-repeat;
+@keyframes winter-flurry-near {
+  0% { transform:translate3d(3px,-54px,0); opacity:0; }
+  12%,83% { opacity:.36; }
+  100% { transform:translate3d(25px,101px,0); opacity:0; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .page-glow::before, .page-glow::after { animation:none; }
 }
 @media(max-width:700px){
   body::before { background-image:linear-gradient(#080c12a6,#080c12d9),url('/images/holiday/website-winter-forest.png'); }
-  .next-event-card::after {
-    --snow-patches: url('/images/holiday/website-powder-snow.png') 9% center / 63% 65px no-repeat;
-  }
+  .page-glow::before, .page-glow::after { display:none; }
   #top > .hero { min-height:200px !important; background-position:right center !important; }
   #top > .hero .holiday-greeting { margin-top:.4rem; }
   :root { --clan-background:linear-gradient(#070b11dd,#080b10ee),var(--holiday-courtyard); }
