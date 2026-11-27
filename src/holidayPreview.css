@@ -1,4 +1,11 @@
-/* Seasonal artwork is isolated from the live dashboard layout. */
+/* The flag canvas samples the regular backdrop, so its rectangular crops
+   cannot be drawn over the independently composed winter illustration. */
+body > canvas.ob-page-background-motion { display:none !important; }
+
+body::before {
+  background-image: radial-gradient(ellipse at 50% 10%, #23384c 0%, #101a23 33%, #080c10 72%);
+}
+
 :root {
   --holiday-courtyard: url('/images/holiday/website-courtyard-2026.png');
   --clan-background: linear-gradient(90deg,#060b10d9,#080b10f4 21%,#080b10f4 79%,#060b10d9), var(--holiday-courtyard);
@@ -31,9 +38,9 @@
   inset:0 0 auto;
   height:7px;
   pointer-events:none;
-  opacity:.92;
-  background:radial-gradient(ellipse 33px 6px at 19px -1px,#f1f6fa 30%,#bcc9d4 67%,transparent 100%) 0 0 / 97px 8px repeat-x,
-             radial-gradient(ellipse 47px 4px at 48px 0,#f3f7fc 35%,#a8becd 74%,transparent 100%) 11px 0 / 107px 8px repeat-x;
+  opacity:.78;
+  background:radial-gradient(ellipse 31px 7px at 17px -1px,#f1f6fa 24%,#bcc9d4 62%,transparent 100%) 0 0 / 127px 8px repeat-x,
+             radial-gradient(ellipse 42px 4px at 47px 0,#f3f7fc 26%,#a8becd 67%,transparent 100%) 11px 0 / 149px 8px repeat-x;
 }
 @media(max-width:700px){
   #top > .hero { min-height:200px !important; background-position:right center !important; }
