@@ -1,5 +1,5 @@
 import sharp from 'sharp';
-import { christmasCard, CHRISTMAS_CREST, holidayScenery } from '../lib/discordChristmas.js';
+import { christmasCard, CHRISTMAS_CREST, holidayScenery, winterArtwork } from '../lib/discordChristmas.js';
 import { Resvg } from '@resvg/resvg-js';
 const ASSETS={antharas:'/images/bosses/antharas.webp',baium:'/images/bosses/baium.webp',core:'/images/bosses/core.webp',frintezza:'/images/bosses/frintezza.webp',orfen:'/images/bosses/orfen.webp','queen-ant':'/images/bosses/queen-ant.webp',valakas:'/images/bosses/valakas.webp',zaken:'/images/bosses/zaken.webp',rb:'/images/eternal-hero-approved.webp',aden:'/images/castles/aden.jpg',dion:'/images/castles/dion.jpg',giran:'/images/castles/giran.jpg',gludio:'/images/castles/gludio.jpg',goddard:'/images/castles/goddard.jpg',innadril:'/images/castles/innadril.jpg',oren:'/images/castles/oren.jpg',rune:'/images/castles/rune.jpg',schuttgart:'/images/castles/schuttgart.jpg','fortress-of-resistance':'/images/fortress-of-resistance.jpg','devastated-castle':'/images/devastated-castle.jpg','bandit-stronghold':'/images/bandit-stronghold.jpg','rainbow-spring-chateau':'/images/Rainbow%20Springs%20Chateau.jpg','wild-beast-reserve':'/images/Wild%20Beast%20Reserve.jpg','fortress-of-the-dead':'/images/fortress-of-the-dead.jpg',pvp:'/images/events/clan-pvp.webp',colloseum:'/images/events/colloseum-training.webp',olympiad:'/images/events/olympiad.jpg',default:'/images/eternal-hero-approved.webp'};
 const SCENE_EFFECTS = {
@@ -369,7 +369,9 @@ try{
    templateArtwork=await sharp(bytes).resize(1200,800,{fit:'fill'}).png().toBuffer();
  }
 }catch(error){console.warn('Poster artwork not yet available',String(error));}
-const eventSceneImage=await sharp(original).resize(1200,800,{fit:'cover',position:'attention'}).modulate({brightness:1.22,saturation:1.16}).sharpen({sigma:0.7,m1:0.8,m2:1.2}).png().toBuffer();
+const sourceArtwork = sharp(original).resize(1200,800,{fit:'cover',position:'attention'})
+  .modulate({brightness:1.22,saturation:1.16}).sharpen({sigma:0.7,m1:0.8,m2:1.2});
+const eventSceneImage = await (holiday ? winterArtwork(sourceArtwork, sceneKey) : sourceArtwork).png().toBuffer();
 // Use the full boss scene as the poster background, then layer the transparent frame artwork over it.
 const scene=templateArtwork
  ? await sharp(eventSceneImage).composite([{input:templateArtwork,left:0,top:0}]).png().toBuffer()
@@ -511,6 +513,8 @@ try{
  }
 }catch(error){console.warn('Clan crest could not be rendered',String(error));}
 const card = await sharp(cinematic ? eventSceneImage : background).composite(layers).png().toBuffer();
-res.statusCode=200;res.setHeader('Content-Type','image/png');res.setHeader('Cache-Control','public, max-age=60, s-maxage=300');res.setHeader('X-Card-Image-Source',sceneKey);res.setHeader('X-Card-Scene-Effect',sceneKey);res.setHeader('X-Card-Season',holiday ? 'christmas' : 'standard');res.setHeader('X-Card-Template',cinematic ? 'cinematic-embers' : templateArtwork ? 'core-style-crest-v6' : 'dynamic-event-v4');res.setHeader('X-Card-Size',String(card.length));res.setHeader('X-Card-Text-Pixels',String(textPixels));res.setHeader('X-Card-Text-Verified',textPixels>1500?'true':'false');res.end(card);
+res.statusCode=200;res.setHeader('Content-Type','image/png');res.setHeader('Cache-Control','public, max-age=60, s-maxage=300');res.setHeader('X-Card-Image-Source',sceneKey);res.setHeader('X-Card-Scene-Effect',sceneKey);res.setHeader('X-Card-Season',holiday ? 'christmas' : 'standard');
+if (holiday) res.setHeader('X-Card-Winter-Artwork', 'graded');
+res.setHeader('X-Card-Template',cinematic ? 'cinematic-embers' : templateArtwork ? 'core-style-crest-v6' : 'dynamic-event-v4');res.setHeader('X-Card-Size',String(card.length));res.setHeader('X-Card-Text-Pixels',String(textPixels));res.setHeader('X-Card-Text-Verified',textPixels>1500?'true':'false');res.end(card);
 }catch(e){console.error('Discord card render failed',e);res.statusCode=500;res.setHeader('Content-Type','text/plain');res.end(String(e?.stack||e))}
 }
