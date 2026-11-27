@@ -1,3 +1,4 @@
+import { PREVIEW_ORIGIN } from './siteFeatures.js';
 import { adminClanIcon } from './adminClanIcons.js';
 
 export function updatePreviewShortcut(root, profile) {
@@ -10,7 +11,7 @@ export function updatePreviewShortcut(root, profile) {
   link.className = 'admin-home-card';
   link.style.marginBottom = '12px';
   link.style.textDecoration = 'none';
-  link.href = 'https://orzel-bialy-git-preview-owner-releases-eternal-x10.vercel.app/';
+  link.href = PREVIEW_ORIGIN + '/';
   link.target = '_blank';
   link.rel = 'noopener noreferrer';
   link.innerHTML = `<span class="admin-home-icon">${adminClanIcon('content')}</span><small>TYLKO DLA WŁAŚCICIELA</small><h4>Wersja testowa</h4><p>Sprawdź nowe zmiany przed publikacją. Otwiera się w nowej karcie.</p><em>OTWÓRZ →</em>`;

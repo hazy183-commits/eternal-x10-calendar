@@ -1,0 +1,10 @@
+.owner-features { padding:16px; margin:0 0 14px; border:1px solid #b3904d55; background:#101515; color:#f1dfbc; }
+.owner-features h4 { margin:0 0 5px; font-size:1.2rem; }
+.owner-features p { margin:4px 0 10px; color:#bcb4a0; }
+.owner-features article { display:grid; grid-template-columns:minmax(0,1fr) auto auto; align-items:center; gap:12px; padding:12px 0; border-top:1px solid #b3904d44; }
+.owner-features article a, .owner-features article button { padding:8px 10px; border:1px solid #b3904d77; background:#211a0f; color:#ffe2a2; font: inherit; }
+.owner-features small { color:#e2bf79; }
+@media(max-width:620px) {
+  .owner-features article { grid-template-columns:1fr auto; }
+  .owner-features article div { grid-column:1/-1; }
+}
