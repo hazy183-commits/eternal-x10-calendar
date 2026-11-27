@@ -116,7 +116,7 @@ export default async function handler(req, res) {
     const sourceArtwork = sharp(Buffer.from(await backgroundResponse.arrayBuffer()))
       .resize(width, height, { fit: 'cover', position: 'right' })
       .modulate({ brightness: 0.86, saturation: 1.12 });
-    return (holiday ? winterArtwork(sourceArtwork) : sourceArtwork).png().toBuffer();
+    return holiday ? winterArtwork(sourceArtwork) : sourceArtwork.png().toBuffer();
     })();
 
     const rows = events.length ? events.map((event, index) => {
@@ -307,7 +307,7 @@ export default async function handler(req, res) {
     res.setHeader('Content-Type', 'image/png');
     res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=300');
     res.setHeader('X-Card-Season', holiday ? 'christmas' : 'standard');
-if (holiday) res.setHeader('X-Card-Winter-Artwork', 'graded');
+if (holiday) res.setHeader('X-Card-Winter-Artwork', 'snow-v2');
 
     res.setHeader('X-Daily-Plan-Events', String(events.length));
     res.setHeader('X-Daily-Plan-Style', quest ? 'quest-journal-preview' : newspaper ? 'newspaper-preview' : board ? 'clan-board-preview' : cinematic ? 'cinematic-series-preview' : refined ? 'classic-refined-preview' : 'fixed-clan-art-daily-rotation-v2');
