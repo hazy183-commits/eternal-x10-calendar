@@ -1,10 +1,17 @@
-.owner-features { padding:16px; margin:0 0 14px; border:1px solid #b3904d55; background:#101515; color:#f1dfbc; }
-.owner-features h4 { margin:0 0 5px; font-size:1.2rem; }
-.owner-features p { margin:4px 0 10px; color:#bcb4a0; }
-.owner-features article { display:grid; grid-template-columns:minmax(0,1fr) auto auto; align-items:center; gap:12px; padding:12px 0; border-top:1px solid #b3904d44; }
-.owner-features article a, .owner-features article button { padding:8px 10px; border:1px solid #b3904d77; background:#211a0f; color:#ffe2a2; font: inherit; }
-.owner-features small { color:#e2bf79; }
-@media(max-width:620px) {
-  .owner-features article { grid-template-columns:1fr auto; }
-  .owner-features article div { grid-column:1/-1; }
-}
+.owner-features { margin:0 0 14px; border:1px solid #b3904d55; background:#101515; color:#f1dfbc; }
+.owner-features summary { display:flex; align-items:center; gap:9px; padding:10px 14px; list-style:none; cursor:pointer; }
+.owner-features summary::-webkit-details-marker { display:none; }
+.owner-features summary::before { content:'›'; flex:none; width:12px; color:#e2bf79; font:700 1.2rem/1 system-ui; }
+.owner-features details[open] > summary::before, .owner-features[open] > summary::before { transform:rotate(90deg); }
+.owner-features summary:focus-visible { outline:2px solid #e2bf79; outline-offset:-3px; }
+.owner-features-heading { font-weight:700; font-size:1.12rem; min-height:44px; }
+.owner-features-count { margin-inline-start:auto; border:1px solid #b3904d77; padding:1px 7px; color:#ffe2a2; font-size:.82rem; }
+.owner-feature { border-top:1px solid #b3904d44; }
+.owner-feature summary small { margin-inline-start:auto; text-align:right; color:#bcb4a0; }
+.owner-feature summary small[data-enabled=true] { color:#d9bf7d; }
+.owner-feature-body { padding:0 14px 12px 35px; }
+.owner-feature-body p, .owner-features [data-feature-status] { margin:0 0 8px; color:#bcb4a0; }
+.owner-features [data-feature-status]:not(:empty) { padding:8px 14px 0; }
+.owner-features [data-feature-status]:empty { display:none; }
+.owner-feature-actions { display:flex; flex-wrap:wrap; gap:8px; }
+.owner-feature-actions a, .owner-feature-actions button { padding:7px 10px; border:1px solid #b3904d77; background:#211a0f; color:#ffe2a2; font:inherit; }

@@ -8,12 +8,13 @@ export function hideFeaturePanel(root) {
 export function showFeaturePanel(client, root, profile) {
   if (profile?.role !== 'owner' || profile.status !== 'approved' || profile.removed_at) return;
   if (root.querySelector('[data-owner-features]')) return;
-  const panel = document.createElement('section');
+  const panel = document.createElement('details');
   panel.dataset.ownerFeatures = '';
   panel.className = 'owner-features';
-  panel.innerHTML = '<h4>Nowości i podgląd</h4><p>Sprawdź każdą zmianę osobno. Przycisk przy zmianie zapisuje tylko jej stan.</p><div data-feature-list></div><p role="status" data-feature-status></p>';
+  panel.innerHTML = '<summary class="owner-features-heading"><span>Nowości i podgląd</span><span class="owner-features-count"></span></summary><div data-feature-list></div><p role="status" data-feature-status></p>';
   root.querySelector('[data-owner-preview-shortcut]')?.after(panel);
   if (!panel.isConnected) return;
+  panel.querySelector('.owner-features-count').textContent = String(SITE_FEATURES.length);
   const list = panel.querySelector('[data-feature-list]');
   const status = panel.querySelector('[data-feature-status]');
   status.textContent = 'Pobieranie ustawień…';
@@ -25,8 +26,10 @@ export function showFeaturePanel(client, root, profile) {
     status.textContent = '';
     const settings = Object.fromEntries((data ?? []).map(row => [row.key, row.value]));
     for (const feature of SITE_FEATURES) {
-      const row = document.createElement('article');
-      row.innerHTML = '<div><strong></strong><p></p><small></small></div><a target="_blank" rel="noopener noreferrer">Sprawdź w wersji testowej ↗</a><button type="button"></button>';
+      const row = document.createElement('details');
+      row.className = 'owner-feature';
+      row.name = 'owner-feature-details';
+      row.innerHTML = '<summary><strong></strong><small></small></summary><div class="owner-feature-body"><p></p><div class="owner-feature-actions"><a target="_blank" rel="noopener noreferrer">Sprawdź w wersji testowej ↗</a><button type="button"></button></div></div>';
       row.querySelector('strong').textContent = feature.title;
       row.querySelector('p').textContent = feature.description;
       const link = row.querySelector('a');
@@ -36,6 +39,7 @@ export function showFeaturePanel(client, root, profile) {
       const sync = () => {
         const enabled = featureEnabled(feature.id, settings);
         state.textContent = enabled ? 'Włączone na stronie' : 'Wyłączone na stronie';
+        state.dataset.enabled = String(enabled);
         button.textContent = enabled ? 'Wyłącz' : 'Włącz';
       };
       sync();
