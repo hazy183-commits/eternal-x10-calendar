@@ -1,5 +1,5 @@
 import sharp from 'sharp';
-import { christmasCard, CHRISTMAS_CREST, holidayScenery } from '../lib/discordChristmas.js';
+import { christmasCard, CHRISTMAS_CREST, holidayScenery, winterArtwork } from '../lib/discordChristmas.js';
 import { Resvg } from '@resvg/resvg-js';
 
 const BG = '/images/discord/daily-plan-background.webp';
@@ -113,10 +113,10 @@ export default async function handler(req, res) {
       backgroundResponse = await fetch(imageHost + FALLBACK_BG, { signal: AbortSignal.timeout(7000) });
       if (!backgroundResponse.ok) throw new Error('Daily plan fallback background fetch failed: ' + backgroundResponse.status);
     }
-    return sharp(Buffer.from(await backgroundResponse.arrayBuffer()))
+    const sourceArtwork = sharp(Buffer.from(await backgroundResponse.arrayBuffer()))
       .resize(width, height, { fit: 'cover', position: 'right' })
-      .modulate({ brightness: 0.86, saturation: 1.12 })
-      .png().toBuffer();
+      .modulate({ brightness: 0.86, saturation: 1.12 });
+    return (holiday ? winterArtwork(sourceArtwork) : sourceArtwork).png().toBuffer();
     })();
 
     const rows = events.length ? events.map((event, index) => {
@@ -307,6 +307,8 @@ export default async function handler(req, res) {
     res.setHeader('Content-Type', 'image/png');
     res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=300');
     res.setHeader('X-Card-Season', holiday ? 'christmas' : 'standard');
+if (holiday) res.setHeader('X-Card-Winter-Artwork', 'graded');
+
     res.setHeader('X-Daily-Plan-Events', String(events.length));
     res.setHeader('X-Daily-Plan-Style', quest ? 'quest-journal-preview' : newspaper ? 'newspaper-preview' : board ? 'clan-board-preview' : cinematic ? 'cinematic-series-preview' : refined ? 'classic-refined-preview' : 'fixed-clan-art-daily-rotation-v2');
     res.setHeader('X-Daily-Plan-Artwork', artworkPath);
