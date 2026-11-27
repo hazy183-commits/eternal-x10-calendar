@@ -371,7 +371,7 @@ try{
 }catch(error){console.warn('Poster artwork not yet available',String(error));}
 const sourceArtwork = sharp(original).resize(1200,800,{fit:'cover',position:'attention'})
   .modulate({brightness:1.22,saturation:1.16}).sharpen({sigma:0.7,m1:0.8,m2:1.2});
-const eventSceneImage = await (holiday ? winterArtwork(sourceArtwork, sceneKey) : sourceArtwork).png().toBuffer();
+const eventSceneImage = await (holiday ? winterArtwork(sourceArtwork, sceneKey) : sourceArtwork.png().toBuffer());
 // Use the full boss scene as the poster background, then layer the transparent frame artwork over it.
 const scene=templateArtwork
  ? await sharp(eventSceneImage).composite([{input:templateArtwork,left:0,top:0}]).png().toBuffer()
@@ -514,7 +514,7 @@ try{
 }catch(error){console.warn('Clan crest could not be rendered',String(error));}
 const card = await sharp(cinematic ? eventSceneImage : background).composite(layers).png().toBuffer();
 res.statusCode=200;res.setHeader('Content-Type','image/png');res.setHeader('Cache-Control','public, max-age=60, s-maxage=300');res.setHeader('X-Card-Image-Source',sceneKey);res.setHeader('X-Card-Scene-Effect',sceneKey);res.setHeader('X-Card-Season',holiday ? 'christmas' : 'standard');
-if (holiday) res.setHeader('X-Card-Winter-Artwork', 'graded');
+if (holiday) res.setHeader('X-Card-Winter-Artwork', 'snow-v2');
 res.setHeader('X-Card-Template',cinematic ? 'cinematic-embers' : templateArtwork ? 'core-style-crest-v6' : 'dynamic-event-v4');res.setHeader('X-Card-Size',String(card.length));res.setHeader('X-Card-Text-Pixels',String(textPixels));res.setHeader('X-Card-Text-Verified',textPixels>1500?'true':'false');res.end(card);
 }catch(e){console.error('Discord card render failed',e);res.statusCode=500;res.setHeader('Content-Type','text/plain');res.end(String(e?.stack||e))}
 }
