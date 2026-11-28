@@ -164,7 +164,16 @@ try{
    templateArtwork=await sharp(bytes).resize(1200,800,{fit:'fill'}).png().toBuffer();
  }
 }catch(error){console.warn('Poster artwork not yet available',String(error));}
-const sourceArtwork = sharp(original).resize(1200,800,{fit:'cover',position:'attention'})
+const artwork = sharp(original);
+// Keep Frintezza's face above the card title in the portrait source.
+if (sceneKey === 'frintezza') {
+  const { width, height } = await artwork.metadata();
+  if (width && height && height > width) {
+    const cropHeight = Math.round(width * 2 / 3);
+    artwork.extract({ left: 0, top: Math.min(Math.round(height * .24), height - cropHeight), width, height: cropHeight });
+  }
+}
+const sourceArtwork = artwork.resize(1200,800,{fit:'cover',position:'attention'})
   .modulate({brightness:1.22,saturation:1.16}).sharpen({sigma:0.7,m1:0.8,m2:1.2});
 const holidayIllustration = holiday ? await christmasIllustration(imageHost, /potrzebne/i.test(name) && key === 'rb' ? 'raid-needed' : key).catch(error => {
   console.warn('Seasonal event illustration unavailable', key, String(error));
