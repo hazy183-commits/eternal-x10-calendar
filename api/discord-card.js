@@ -3,7 +3,7 @@ import { christmasIllustration } from '../lib/christmasIllustration.js';
 import sharp from 'sharp';
 import { christmasCard, CHRISTMAS_CREST, holidayScenery, winterArtwork } from '../lib/discordChristmas.js';
 import { Resvg } from '@resvg/resvg-js';
-const ASSETS={antharas:'/images/bosses/antharas.webp',baium:'/images/bosses/baium.webp',core:'/images/bosses/core.webp',frintezza:'/images/bosses/frintezza.webp',orfen:'/images/bosses/orfen.webp','queen-ant':'/images/bosses/queen-ant.webp',valakas:'/images/bosses/valakas.webp',zaken:'/images/bosses/zaken.webp',rb:'/images/eternal-hero-approved.webp',aden:'/images/castles/aden.jpg',dion:'/images/castles/dion.jpg',giran:'/images/castles/giran.jpg',gludio:'/images/castles/gludio.jpg',goddard:'/images/castles/goddard.jpg',innadril:'/images/castles/innadril.jpg',oren:'/images/castles/oren.jpg',rune:'/images/castles/rune.jpg',schuttgart:'/images/castles/schuttgart.jpg','fortress-of-resistance':'/images/fortress-of-resistance.jpg','devastated-castle':'/images/devastated-castle.jpg','bandit-stronghold':'/images/bandit-stronghold.jpg','rainbow-spring-chateau':'/images/Rainbow%20Springs%20Chateau.jpg','wild-beast-reserve':'/images/Wild%20Beast%20Reserve.jpg','fortress-of-the-dead':'/images/fortress-of-the-dead.jpg',pvp:'/images/events/clan-pvp.webp',colloseum:'/images/events/colloseum-training.webp',olympiad:'/images/events/olympiad.jpg',default:'/images/eternal-hero-approved.webp'};
+const ASSETS={antharas:'/images/bosses/antharas.webp',baium:'/images/bosses/baium.webp',core:'/images/bosses/core.webp',frintezza:'/images/discord/frintezza-organ-hd.png',orfen:'/images/bosses/orfen.webp','queen-ant':'/images/bosses/queen-ant.webp',valakas:'/images/bosses/valakas.webp',zaken:'/images/bosses/zaken.webp',rb:'/images/eternal-hero-approved.webp',aden:'/images/castles/aden.jpg',dion:'/images/castles/dion.jpg',giran:'/images/castles/giran.jpg',gludio:'/images/castles/gludio.jpg',goddard:'/images/castles/goddard.jpg',innadril:'/images/castles/innadril.jpg',oren:'/images/castles/oren.jpg',rune:'/images/castles/rune.jpg',schuttgart:'/images/castles/schuttgart.jpg','fortress-of-resistance':'/images/fortress-of-resistance.jpg','devastated-castle':'/images/devastated-castle.jpg','bandit-stronghold':'/images/bandit-stronghold.jpg','rainbow-spring-chateau':'/images/Rainbow%20Springs%20Chateau.jpg','wild-beast-reserve':'/images/Wild%20Beast%20Reserve.jpg','fortress-of-the-dead':'/images/fortress-of-the-dead.jpg',pvp:'/images/events/clan-pvp.webp',colloseum:'/images/events/colloseum-training.webp',olympiad:'/images/events/olympiad.jpg',default:'/images/eternal-hero-approved.webp'};
 const SCENE_EFFECTS = {
   "zaken": ["#ff240b","#ffad6e",0.65,"spark",38],
   "antharas": ["#637d4d","#cad297",0.38,"dust",25],
@@ -164,16 +164,7 @@ try{
    templateArtwork=await sharp(bytes).resize(1200,800,{fit:'fill'}).png().toBuffer();
  }
 }catch(error){console.warn('Poster artwork not yet available',String(error));}
-const artwork = sharp(original);
-// Keep Frintezza's face above the card title in the portrait source.
-if (sceneKey === 'frintezza') {
-  const { width, height } = await artwork.metadata();
-  if (width && height && height > width) {
-    const cropHeight = Math.round(width * 2 / 3);
-    artwork.extract({ left: 0, top: Math.min(Math.round(height * .24), height - cropHeight), width, height: cropHeight });
-  }
-}
-const sourceArtwork = artwork.resize(1200,800,{fit:'cover',position:'attention'})
+const sourceArtwork = sharp(original).resize(1200,800,{fit:'cover',position:'attention'})
   .modulate({brightness:1.22,saturation:1.16}).sharpen({sigma:0.7,m1:0.8,m2:1.2});
 const holidayIllustration = holiday ? await christmasIllustration(imageHost, /potrzebne/i.test(name) && key === 'rb' ? 'raid-needed' : key).catch(error => {
   console.warn('Seasonal event illustration unavailable', key, String(error));
